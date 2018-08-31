@@ -1,0 +1,62 @@
+function senhaHash(objeto){
+    var crypto = require('crypto');
+    var hash = crypto.createHash('sha256');
+
+    hash.update(objeto.senha);
+    objeto.senha = hash.digest('hex');
+    return objeto;
+}
+
+
+var http = require('http');
+//var querystring = require('querystring');
+
+var dados = {
+    nome: "Thales",
+    email: "meuemail@teste.com",
+    senha: "senha123",
+    prontuario: 1690312
+};
+dados = senhaHash(dados);
+console.log(dados);
+
+
+var texto = JSON.stringify(dados);
+var opcoes = {
+    hostname: "127.0.0.1",
+    port: 8080,
+    method: 'GET',
+    headers: {
+          'Content-Type': 'application/json',    
+          'Content-Length': Buffer.byteLength(texto)
+      }
+};
+
+
+try{
+var req = http.request(opcoes, (res) => {
+        console.log("Chegou a resposta!");
+        res.setEncoding('utf8');
+        //console.log(res);        
+        res.on('data', function (chunk) {
+            console.log('Response: ' + chunk);
+        });
+});    
+}catch(er){
+        console.log("ERRO 405");
+        console.log(err.message);
+}
+
+//req.on('error', (e) => {
+//  console.error(`problem with request: ${e.message}`);
+//});
+
+console.log(texto);
+try{
+    req.write(texto);
+    console.log("Escrevi texto");
+    req.end();
+    console.log("Mandei texto");
+}catch(er){
+    console.log("ERROZAO DA PORRA");
+}
