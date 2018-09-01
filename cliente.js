@@ -25,10 +25,11 @@ var texto = JSON.stringify(dados);
 var opcoes = {
     hostname: "127.0.0.1",
     port: 8080,
-    method: 'GET',
+    method: 'POST',
     headers: {
           'Content-Type': 'application/json',    
-          'Content-Length': Buffer.byteLength(texto)
+          'Content-Length': Buffer.byteLength(texto),
+          'Objeto': 'Usuario'
       }
 };
 

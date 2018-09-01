@@ -14,6 +14,16 @@ http.createServer(function(req, res){
         //msgRqs = '\"'+msgRqs+'\"';
         jsonRqs = JSON.parse(msgRqs);
         console.log(jsonRqs); 
+        switch(req.method){
+            case 'GET':
+                console.log('foi get');
+                console.log('Objeto = ' + req.headers['objeto']);
+                break;
+            case 'POST':
+                console.log('foi post');
+                console.log('Objeto = ' + req.headers['objeto']);
+                break;
+        }
         res.write('Hello World!');
         res.end();
     })    
