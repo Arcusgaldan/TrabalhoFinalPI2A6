@@ -1,14 +1,21 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = {
-	inserir: function(usuario){
+	validar: function(usuario){
 		var validates = require('./../validates.js');
-		if(!validates.exact(usuario.prontuario, 7) || 	!validates.req(usuario.nome) || 
-			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || 
-			!validates.req(usuario.lattes) ||  !validates.req(usuario.dataCad) || 
-			!validates.req(usuario.primeiroAcesso)){
-				console.log("Falhou a validação");
+		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
+			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.lattes) ||
+			!validates.req(usuario.dataCad) || !validates.req(usuario.primeiroAcesso)){
 				return false;
 		}else{
+			return true;
+		}
+	},
+	
+	inserir: function(usuario){
+		if(!this.validar(usuario)){
+				return false;
+		}else{
+			usuario['id'] = 0;
 			var sql = "INSERT INTO TBUsuario (";
 			var campos = "";
 			var valores = "";
@@ -31,6 +38,27 @@ module.exports = {
 			sql += campos + ") values (" + valores + ");";
 			console.log(sql);
 		}
+	},
+
+	alterar: function(usuario){
+		if(!this.validar(usuario)){
+			return false;
+		}else{
+			var sql = "UPDATE TBUsuario SET ";
+			var campos = "";
+			for(var key in usuario){
+				if(key == 'id')
+					continue;
+
+				if(campos == ""){
+					sql += key + " = " + usuario[key];
+				}else{
+					sql += ", " + key + " = " + usuario[key];
+				}
+			}
+			sql += campos + " WHERE id = " + usuario['id'] + ";";
+			console.log(sql);
+		}
 	}
 }
 },{"./../validates.js":4}],2:[function(require,module,exports){
@@ -46,6 +74,8 @@ usuario.foto = 'C:/Foto.jpg';
 usuario.dataCad = '04/09/2018';
 usuario.primeiroAcesso = true;
 controller.inserir(usuario);
+usuario.id = 10;
+controller.alterar(usuario);
 },{"./../modelo/mUsuario.js":3,"./cUsuario.js":1}],3:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){

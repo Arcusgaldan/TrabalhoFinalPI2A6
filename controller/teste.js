@@ -10,3 +10,5 @@ usuario.foto = 'C:/Foto.jpg';
 usuario.dataCad = '04/09/2018';
 usuario.primeiroAcesso = true;
 controller.inserir(usuario);
+usuario.id = 10;
+controller.alterar(usuario);
