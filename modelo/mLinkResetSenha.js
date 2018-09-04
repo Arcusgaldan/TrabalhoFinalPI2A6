@@ -1,13 +1,16 @@
 module.exports = {
 	especifica: function(objeto){
-		this.link = objeto.link;
-		this.dataReset = objeto.dataReset;
-		this.codUsuario = objeto.codUsuario;
+		var final = {};
+		final.link = objeto.link;
+		final.dataReset = objeto.dataReset;
+		final.codUsuario = objeto.codUsuario;
+		return final;
 	},
-
 	novo: function(){
-		this.link = "";
-		this.dataReset = "";
-		this.codUsuario = 0;
+		var final = {};
+		final.link = "";
+		final.dataReset = "";
+		final.codUsuario = 0;
+		return final;
 	}
 }

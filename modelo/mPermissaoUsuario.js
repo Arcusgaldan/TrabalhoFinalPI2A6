@@ -1,10 +1,14 @@
 module.exports = {
 	especifica: function(objeto){
-		this.codUsuario = objeto.codUsuario;
-		this.codPermissao = objeto.codPermissao;
+		var final = {};
+		final.codUsuario = objeto.codUsuario;
+		final.codPermissao = objeto.codPermissao;
+		return final;
 	},
 	novo: function(){
-		this.codUsuario = 0;
-		this.codPermissao = 0;
+		var final = {};
+		final.codUsuario = 0;
+		final.codPermissao = 0;
+		return final;
 	}
 }

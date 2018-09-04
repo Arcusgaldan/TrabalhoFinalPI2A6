@@ -1,13 +1,17 @@
 module.exports = {
 	especifica: function(objeto){
-		this.senhaAntiga = objeto.senhaAntiga;
-		this.dataTroca = objeto.dataTroca;
-		this.codUsuario = objeto.codUsuario;
+		var final = {};
+		final.senhaAntiga = objeto.senhaAntiga;
+		final.dataTroca = objeto.dataTroca;
+		final.codUsuario = objeto.codUsuario;
+		return final;
 	},
 
 	novo: function(){
-		this.senhaAntiga = "";
-		this.dataTroca = "";
-		this.codUsuario = 0;
+		var final = {};
+		final.senhaAntiga = "";
+		final.dataTroca = "";
+		final.codUsuario = 0;
+		return final;
 	}
 }

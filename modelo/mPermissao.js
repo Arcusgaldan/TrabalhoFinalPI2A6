@@ -1,11 +1,14 @@
 module.exports = {
 	especifica: function(objeto){
-		this.id = objeto.id;
-		this.nome = objeto.nome;
+		var final = {};
+		final.id = objeto.id;
+		final.nome = objeto.nome;
+		return final;
 	},
->>>>>>> master
 	novo: function(){
-		this.id = 0;
-		this.nome = "";
+		var final = {};
+		final.id = 0;
+		final.nome = "";
+		return final;
 	}
 }
