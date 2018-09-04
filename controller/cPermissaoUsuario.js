@@ -1,25 +1,25 @@
 module.exports = {
-	validar: function(usuario){
+	validar: function(permissaoUsuario){
 		var validates = require('./../validates.js');
-		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
-			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.lattes) ||
-			!validates.req(usuario.dataCad) || !validates.req(usuario.primeiroAcesso)){
+		if(!validates.req(permissaoUsuario.id) || !validates.exact(permissaoUsuario.prontuario, 7) || !validates.req(permissaoUsuario.nome) || 
+			!validates.req(permissaoUsuario.email) || !validates.exact(permissaoUsuario.senha, 64) || !validates.req(permissaoUsuario.lattes) ||
+			!validates.req(permissaoUsuario.dataCad) || !validates.req(permissaoUsuario.primeiroAcesso)){
 				return false;
 		}else{
 			return true;
 		}
 	},
 
-	inserir: function(usuario){
-		if(!this.validar(usuario)){
+	inserir: function(permissaoUsuario){
+		if(!this.validar(permissaoUsuario)){
 				return false;
 		}else{
-			usuario['id'] = 0;
-			var sql = "INSERT INTO TBUsuario (";
+			permissaoUsuario['id'] = 0;
+			var sql = "INSERT INTO TBPermissaoUsuario (";
 			var campos = "";
 			var valores = "";
-			for(var key in usuario){
-				if(usuario[key] == null)
+			for(var key in permissaoUsuario){
+				if(permissaoUsuario[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -29,9 +29,9 @@ module.exports = {
 				}
 
 				if(valores == ""){
-					valores += usuario[key];
+					valores += permissaoUsuario[key];
 				}else{
-					valores += ", " + usuario[key];
+					valores += ", " + permissaoUsuario[key];
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -39,39 +39,39 @@ module.exports = {
 		}
 	},
 
-	alterar: function(usuario){
-		if(!this.validar(usuario)){
+	alterar: function(permissaoUsuario){
+		if(!this.validar(permissaoUsuario)){
 			return false;
 		}else{
-			var sql = "UPDATE TBUsuario SET ";
+			var sql = "UPDATE TBPermissaoUsuario SET ";
 			var campos = "";
-			for(var key in usuario){
+			for(var key in permissaoUsuario){
 				if(key == 'id')
 					continue;
 
 				if(campos == ""){
-					sql += key + " = " + usuario[key];
+					sql += key + " = " + permissaoUsuario[key];
 				}else{
-					sql += ", " + key + " = " + usuario[key];
+					sql += ", " + key + " = " + permissaoUsuario[key];
 				}
 			}
-			sql += campos + " WHERE id = " + usuario['id'] + ";";
+			sql += campos + " WHERE codUsuario = " + permissaoUsuario['codUsuario'] + " AND codPermissao = " + permissaoUsuario['codPermissao'] + ";";
 			console.log(sql);
 		}
 	},
 
-	excluir: function(id){
-		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+	excluir: function(codUsuario, codPermissao){
+		var sql = "DELETE FROM TBPermissaoUsuario WHERE codUsuario = " + codUsuario + " AND codPermissao = " + codPermissao + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBUsuario;";
+		var sql = "SELECT * FROM TBPermissaoUsuario;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBPermissaoUsuario WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }

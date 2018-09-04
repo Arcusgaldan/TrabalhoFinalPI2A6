@@ -1,25 +1,24 @@
 module.exports = {
-	validar: function(usuario){
+	validar: function(historicoSenha){
 		var validates = require('./../validates.js');
-		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
-			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.lattes) ||
-			!validates.req(usuario.dataCad) || !validates.req(usuario.primeiroAcesso)){
+		if(!validates.req(historicoSenha.id) || !validates.exact(historicoSenha.prontuario, 7) || !validates.req(historicoSenha.nome) || 
+			!validates.req(historicoSenha.email) || !validates.exact(historicoSenha.senha, 64) || !validates.req(historicoSenha.lattes) ||
+			!validates.req(historicoSenha.dataCad) || !validates.req(historicoSenha.primeiroAcesso)){
 				return false;
 		}else{
 			return true;
 		}
 	},
 
-	inserir: function(usuario){
-		if(!this.validar(usuario)){
+	inserir: function(historicoSenha){
+		if(!this.validar(historicoSenha)){
 				return false;
 		}else{
-			usuario['id'] = 0;
-			var sql = "INSERT INTO TBUsuario (";
+			var sql = "INSERT INTO TBHistoricoSenha (";
 			var campos = "";
 			var valores = "";
-			for(var key in usuario){
-				if(usuario[key] == null)
+			for(var key in historicoSenha){
+				if(historicoSenha[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -29,9 +28,9 @@ module.exports = {
 				}
 
 				if(valores == ""){
-					valores += usuario[key];
+					valores += historicoSenha[key];
 				}else{
-					valores += ", " + usuario[key];
+					valores += ", " + historicoSenha[key];
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -39,39 +38,39 @@ module.exports = {
 		}
 	},
 
-	alterar: function(usuario){
-		if(!this.validar(usuario)){
+	alterar: function(historicoSenha){
+		if(!this.validar(historicoSenha)){
 			return false;
 		}else{
-			var sql = "UPDATE TBUsuario SET ";
+			var sql = "UPDATE TBHistoricoSenha SET ";
 			var campos = "";
-			for(var key in usuario){
-				if(key == 'id')
+			for(var key in historicoSenha){
+				if(key == 'codUsuario')
 					continue;
 
 				if(campos == ""){
-					sql += key + " = " + usuario[key];
+					sql += key + " = " + historicoSenha[key];
 				}else{
-					sql += ", " + key + " = " + usuario[key];
+					sql += ", " + key + " = " + historicoSenha[key];
 				}
 			}
-			sql += campos + " WHERE id = " + usuario['id'] + ";";
+			sql += campos + " WHERE codUsuario = " + historicoSenha['codUsuario'] + ";";
 			console.log(sql);
 		}
 	},
 
 	excluir: function(id){
-		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBHistoricoSenha WHERE codUsuario = " + codUsuario + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBUsuario;";
+		var sql = "SELECT * FROM TBHistoricoSenha;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBHistoricoSenha WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }

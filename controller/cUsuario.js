@@ -3,7 +3,7 @@ module.exports = {
 		var validates = require('./../validates.js');
 		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
 			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.lattes) ||
-			!validates.req(usuario.dataCad) || !validates.req(usuario.primeiroAcesso)){
+			!validates.req(usuario.data) || !validates.req(usuario.primeiroAcesso)){
 				return false;
 		}else{
 			return true;
