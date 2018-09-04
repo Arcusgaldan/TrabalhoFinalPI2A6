@@ -1,25 +1,31 @@
 module.exports = {
 	especifica: function(objeto){
-		this.id = objeto.id;
-		this.prontuario = objeto.prontuario;
-		this.nome = objeto.nome;
-		this.email = objeto.email;
-		this.senha = objeto.senha;
-		this.lattes = objeto.lattes;
-		this.foto = objeto.foto;
-		this.dataCad = objeto.dataCad;
-		this.primeiroAcesso = objeto.primeiroAcesso;
-	}
+		var final = {};
+		final.id = objeto.id;
+		final.prontuario = objeto.prontuario;
+		final.nome = objeto.nome;
+		final.email = objeto.email;
+		final.senha = objeto.senha;
+		final.lattes = objeto.lattes;
+		final.foto = objeto.foto;
+		final.dataCad = objeto.dataCad;
+		final.primeiroAcesso = objeto.primeiroAcesso;
+
+		return final;
+	},
 
 	novo: function(objeto){
-		this.id = 0;
-		this.prontuario = "";
-		this.nome = "";
-		this.email = "";
-		this.senha = "";
-		this.lattes = "";
-		this.foto = "";
-		this.dataCad = "";
-		this.primeiroAcesso = true;
+		var final = {};
+		final.id = 0;
+		final.prontuario = "";
+		final.nome = "";
+		final.email = "";
+		final.senha = "";
+		final.lattes = "";
+		final.foto = "";
+		final.dataCad = "";
+		final.primeiroAcesso = true;
+
+		return final;
 	}
 }

@@ -25,7 +25,7 @@ module.exports = {
 			return true;
 		else
 			return false;
-	}
+	},
 
 	req: function(palavra){
 		if(palavra == null)
