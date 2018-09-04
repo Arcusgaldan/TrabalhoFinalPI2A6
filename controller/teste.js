@@ -12,3 +12,6 @@ usuario.primeiroAcesso = true;
 controller.inserir(usuario);
 usuario.id = 10;
 controller.alterar(usuario);
+controller.excluir(10);
+controller.listar();
+controller.buscar("nome", "Thales");

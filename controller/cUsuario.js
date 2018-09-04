@@ -9,7 +9,7 @@ module.exports = {
 			return true;
 		}
 	},
-	
+
 	inserir: function(usuario){
 		if(!this.validar(usuario)){
 				return false;
@@ -58,5 +58,20 @@ module.exports = {
 			sql += campos + " WHERE id = " + usuario['id'] + ";";
 			console.log(sql);
 		}
+	},
+
+	excluir: function(id){
+		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+		console.log(sql);
+	},
+
+	listar: function(){
+		var sql = "SELECT * FROM TBUsuario;";
+		console.log(sql);
+	},
+
+	buscar: function(campo, valor){
+		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		console.log(sql);
 	}
 }

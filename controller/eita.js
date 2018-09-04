@@ -10,7 +10,7 @@ module.exports = {
 			return true;
 		}
 	},
-	
+
 	inserir: function(usuario){
 		if(!this.validar(usuario)){
 				return false;
@@ -59,6 +59,21 @@ module.exports = {
 			sql += campos + " WHERE id = " + usuario['id'] + ";";
 			console.log(sql);
 		}
+	},
+
+	excluir: function(id){
+		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+		console.log(sql);
+	},
+
+	listar: function(){
+		var sql = "SELECT * FROM TBUsuario;";
+		console.log(sql);
+	},
+
+	buscar: function(campo, valor){
+		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		console.log(sql);
 	}
 }
 },{"./../validates.js":4}],2:[function(require,module,exports){
@@ -76,6 +91,9 @@ usuario.primeiroAcesso = true;
 controller.inserir(usuario);
 usuario.id = 10;
 controller.alterar(usuario);
+controller.excluir(10);
+controller.listar();
+controller.buscar("nome", "Thales");
 },{"./../modelo/mUsuario.js":3,"./cUsuario.js":1}],3:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
