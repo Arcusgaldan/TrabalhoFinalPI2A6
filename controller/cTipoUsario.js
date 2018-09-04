@@ -1,9 +1,7 @@
 module.exports = {
 	validar: function(tipoUsuario){
 		var validates = require('./../validates.js');
-		if(!validates.req(tipoUsuario.id) || !validates.exact(tipoUsuario.prontuario, 7) || !validates.req(tipoUsuario.nome) || 
-			!validates.req(tipoUsuario.email) || !validates.exact(tipoUsuario.senha, 64) || !validates.req(tipoUsuario.lattes) ||
-			!validates.req(tipoUsuario.dataCad) || !validates.req(tipoUsuario.primeiroAcesso)){
+		if(!validates.req(usuario.id) || !validates.req(usuario.nome)){
 				return false;
 		}else{
 			return true;

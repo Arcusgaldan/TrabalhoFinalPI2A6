@@ -1,9 +1,7 @@
 module.exports = {
 	validar: function(permissao){
 		var validates = require('./../validates.js');
-		if(!validates.req(permissao.id) || !validates.exact(permissao.prontuario, 7) || !validates.req(permissao.nome) || 
-			!validates.req(permissao.email) || !validates.exact(permissao.senha, 64) || !validates.req(permissao.lattes) ||
-			!validates.req(permissao.dataCad) || !validates.req(permissao.primeiroAcesso)){
+		if(!validates.req(permissao.id) || !validates.req(permissao.nome)){
 				return false;
 		}else{
 			return true;

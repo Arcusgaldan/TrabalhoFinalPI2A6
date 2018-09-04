@@ -1,9 +1,8 @@
 module.exports = {
 	validar: function(linkResetSenha){
 		var validates = require('./../validates.js');
-		if(!validates.req(linkResetSenha.id) || !validates.exact(linkResetSenha.prontuario, 7) || !validates.req(linkResetSenha.nome) || 
-			!validates.req(linkResetSenha.email) || !validates.exact(linkResetSenha.senha, 64) || !validates.req(linkResetSenha.lattes) ||
-			!validates.req(linkResetSenha.dataCad) || !validates.req(linkResetSenha.primeiroAcesso)){
+		if(!validates.req(linkResetSenha.id) || !validates.req(linkResetSenha.dataReset) || !validates.req(linkResetSenha.link) || 
+			!validates.req(linkResetSenha.codUsuario)){
 				return false;
 		}else{
 			return true;
