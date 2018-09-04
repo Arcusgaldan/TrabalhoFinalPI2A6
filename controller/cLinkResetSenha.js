@@ -1,25 +1,25 @@
 module.exports = {
-	validar: function(usuario){
+	validar: function(linkResetSenha){
 		var validates = require('./../validates.js');
-		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
-			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.lattes) ||
-			!validates.req(usuario.dataCad) || !validates.req(usuario.primeiroAcesso)){
+		if(!validates.req(linkResetSenha.id) || !validates.req(linkResetSenha.dataReset) || !validates.req(linkResetSenha.link) || 
+			!validates.req(linkResetSenha.codUsuario)){
 				return false;
 		}else{
 			return true;
 		}
 	},
-
-	inserir: function(usuario){
-		if(!this.validar(usuario)){
+ 
+		 
+	inserir: function(linkResetSenha){
+		if(!this.validar(linkResetSenha)){
 				return false;
 		}else{
-			usuario['id'] = 0;
-			var sql = "INSERT INTO TBUsuario (";
+			linkResetSenha['id'] = 0;
+			var sql = "INSERT INTO TBlinkResetSenha (";
 			var campos = "";
 			var valores = "";
-			for(var key in usuario){
-				if(usuario[key] == null)
+			for(var key in linkResetSenha){
+				if(linkResetSenha[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -29,9 +29,9 @@ module.exports = {
 				}
 
 				if(valores == ""){
-					valores += usuario[key];
+					valores += linkResetSenha[key];
 				}else{
-					valores += ", " + usuario[key];
+					valores += ", " + linkResetSenha[key];
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -39,39 +39,39 @@ module.exports = {
 		}
 	},
 
-	alterar: function(usuario){
-		if(!this.validar(usuario)){
+	alterar: function(linkResetSenha){
+		if(!this.validar(linkResetSenha)){
 			return false;
 		}else{
-			var sql = "UPDATE TBUsuario SET ";
+			var sql = "UPDATE TBlinkResetSenha SET ";
 			var campos = "";
-			for(var key in usuario){
+			for(var key in linkResetSenha){
 				if(key == 'id')
 					continue;
 
 				if(campos == ""){
-					sql += key + " = " + usuario[key];
+					sql += key + " = " + linkResetSenha[key];
 				}else{
-					sql += ", " + key + " = " + usuario[key];
+					sql += ", " + key + " = " + linkResetSenha[key];
 				}
 			}
-			sql += campos + " WHERE id = " + usuario['id'] + ";";
+			sql += campos + " WHERE id = " + linkResetSenha['id'] + ";";
 			console.log(sql);
 		}
 	},
 
 	excluir: function(id){
-		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBlinkResetSenha WHERE id = " + id + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBUsuario;";
+		var sql = "SELECT * FROM TBlinkResetSenha;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBlinkResetSenha WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }
