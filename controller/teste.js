@@ -1,0 +1,1 @@
+var teste = require('./cUsuario.js');
