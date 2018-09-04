@@ -34,7 +34,7 @@ var opcoes = {
 };
 
 
-try{
+
 var req = http.request(opcoes, (res) => {
         console.log("Chegou a resposta!");
         res.setEncoding('utf8');
@@ -43,10 +43,6 @@ var req = http.request(opcoes, (res) => {
             console.log('Response: ' + chunk);
         });
 });    
-}catch(er){
-        console.log("ERRO 405");
-        console.log(err.message);
-}
 
 //req.on('error', (e) => {
 //  console.error(`problem with request: ${e.message}`);
