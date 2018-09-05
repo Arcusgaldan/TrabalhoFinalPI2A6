@@ -3,12 +3,12 @@ module.exports = {
 		var final = {};
 		final.id = objeto.id;
 		final.nome = objeto.nome;
-		return fianl;
+		return final;
 	},
 	novo: function(){
 		var final = {};
 		final.id = 0;
 		final.nome = "";
-		return fianl;
+		return final;
 	}
 }
