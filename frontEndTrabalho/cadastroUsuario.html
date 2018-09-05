@@ -109,12 +109,22 @@
                       </thead> -->
                     <tbody>
                       <tr>
-                        <th scope="row">Permissão 003</th>
+                        <th>Usuário 003</th>
                         <td>
                           <button class="btn btn-success" data-toggle="modal" data-target="#cadastraModal">Cadastrar Modal</button>
                           <button class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Modal</button>
                           <button class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Modal</button>
+                          <button class="btn btn-info" scope="row" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> Mostra Dados <span class="fas fa-plus"></span></button>
                         </td>
+                        <div class="collapse" id="collapseExample"> 
+                          <div class="card card-body">
+                            <p><strong>Nome: </strong> Usuário numero um</p>
+                            <p><strong>Prontuário: </strong> 1590222</p>
+                            <p><strong>E-Mail: </strong> usuario@email.com</p>
+                            <p><strong>Link do Lattes: </strong> http://lattes.cnpq.br/1234567891112131415</p>
+                            <p><strong>Tipo de Usuário: </strong> Lider</p>
+                          </div>
+                        </div>
                       </tr>
                     </tbody>
                   </table>
@@ -224,14 +234,14 @@
 
                      
 
-                         <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a>
+                         <!-- <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a> -->
                    
                     <!--<input type="submit" value="Submit">-->
                   </form>
 
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cadastar</button>
+            <button class="btn btn-success" type="button" >Cadastar</button>
             
           </div>
         </div>
@@ -315,14 +325,14 @@
 
                      
 
-                         <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a>
+                         <!-- <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a> -->
                    
                     <!--<input type="submit" value="Submit">-->
                   </form>
 
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cadastar</button>
+            <button class="btn btn-success" type="button">Cadastar</button>
             
           </div>
         </div>
@@ -341,7 +351,7 @@
           </div>
           <div class="modal-body">Você realmnete deseja excluir esse usuário ?</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-primary" href="">Excluir</a>
           </div>
         </div>
