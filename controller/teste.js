@@ -19,6 +19,6 @@
 // --> FIM TESTE CLIENTE/SERVIDOR
 
 var dao = require('./../dao.js');
-var conexao = dao.conecta();
-var sql = "INSERT INTO TBUsuario VALUES (0, '1690311', 'Thales', 'thales@email.com', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'linkLattes.com/123', 'FOTO', '2018-09-05', 0)";
+var conexao = dao.criaConexao();
+var sql = 'INSERT INTO TBUsuario (id, prontuario, nome, email, senha, curriculoLattes, foto, data, primeiroAcesso, codTipoUsuario) VALUES (0, "1690311", "Thales", "thales@email.com", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "linkLattes.com/123", "FOTO", "2018-09-05", 0, 1)';
 dao.insere(conexao, sql);
