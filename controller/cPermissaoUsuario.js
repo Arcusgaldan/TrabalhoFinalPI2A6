@@ -13,7 +13,7 @@ module.exports = {
 				return false;
 		}else{
 			permissaoUsuario['id'] = 0;
-			var sql = "INSERT INTO TBpermissaoUsuario (";
+			var sql = "INSERT INTO TBPermissaoUsuario (";
 			var campos = "";
 			var valores = "";
 			for(var key in permissaoUsuario){
@@ -41,7 +41,7 @@ module.exports = {
 		if(!this.validar(permissaoUsuario)){
 			return false;
 		}else{
-			var sql = "UPDATE TBpermissaoUsuario SET ";
+			var sql = "UPDATE TBPermissaoUsuario SET ";
 			var campos = "";
 			for(var key in permissaoUsuario){
 				if(key == 'id')
@@ -53,23 +53,23 @@ module.exports = {
 					sql += ", " + key + " = " + permissaoUsuario[key];
 				}
 			}
-			sql += campos + " WHERE id = " + permissaoUsuario['id'] + ";";
+			sql += campos + " WHERE codUsuario = " + permissaoUsuario['codUsuario'] + " AND codPermissao = " + permissaoUsuario['codPermissao'] + ";";
 			console.log(sql);
 		}
 	},
 
-	excluir: function(id){
-		var sql = "DELETE FROM TBpermissaoUsuario WHERE id = " + id + ";";
+	excluir: function(codUsuario, codPermissao){
+		var sql = "DELETE FROM TBPermissaoUsuario WHERE codUsuario = " + codUsuario + " AND codPermissao = " + codPermissao + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBpermissaoUsuario;";
+		var sql = "SELECT * FROM TBPermissaoUsuario;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBpermissaoUsuario WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBPermissaoUsuario WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }

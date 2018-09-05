@@ -12,8 +12,7 @@ module.exports = {
 		if(!this.validar(historicoSenha)){
 				return false;
 		}else{
-			historicoSenha['codUsuario'] = 0;
-			var sql = "INSERT INTO TBhistoricoSenha (";
+			var sql = "INSERT INTO TBHistoricoSenha (";
 			var campos = "";
 			var valores = "";
 			for(var key in historicoSenha){
@@ -41,7 +40,7 @@ module.exports = {
 		if(!this.validar(historicoSenha)){
 			return false;
 		}else{
-			var sql = "UPDATE TBhistoricoSenha SET ";
+			var sql = "UPDATE TBHistoricoSenha SET ";
 			var campos = "";
 			for(var key in historicoSenha){
 				if(key == 'codUsuario')
@@ -59,17 +58,17 @@ module.exports = {
 	},
 
 	excluir: function(id){
-		var sql = "DELETE FROM TBhistoricoSenha WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBHistoricoSenha WHERE codUsuario = " + codUsuario + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBhistoricoSenha;";
+		var sql = "SELECT * FROM TBHistoricoSenha;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBhistoricoSenha WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBHistoricoSenha WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }

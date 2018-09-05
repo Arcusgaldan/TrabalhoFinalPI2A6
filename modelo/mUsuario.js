@@ -8,7 +8,7 @@ module.exports = {
 		final.senha = objeto.senha;
 		final.lattes = objeto.lattes;
 		final.foto = objeto.foto;
-		final.dataCad = objeto.dataCad;
+		final.data = objeto.dataCad;
 		final.primeiroAcesso = objeto.primeiroAcesso;
 		return final;
 	},
@@ -21,7 +21,7 @@ module.exports = {
 		final.senha = "";
 		final.lattes = "";
 		final.foto = "";
-		final.dataCad = "";
+		final.data = "";
 		final.primeiroAcesso = true;
 		return final;
 	}

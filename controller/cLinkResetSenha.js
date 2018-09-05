@@ -8,14 +8,13 @@ module.exports = {
 			return true;
 		}
 	},
- 
-		 
+
 	inserir: function(linkResetSenha){
 		if(!this.validar(linkResetSenha)){
 				return false;
 		}else{
 			linkResetSenha['id'] = 0;
-			var sql = "INSERT INTO TBlinkResetSenha (";
+			var sql = "INSERT INTO TBLinkResetSenha (";
 			var campos = "";
 			var valores = "";
 			for(var key in linkResetSenha){
@@ -43,7 +42,7 @@ module.exports = {
 		if(!this.validar(linkResetSenha)){
 			return false;
 		}else{
-			var sql = "UPDATE TBlinkResetSenha SET ";
+			var sql = "UPDATE TBLinkResetSenha SET ";
 			var campos = "";
 			for(var key in linkResetSenha){
 				if(key == 'id')
@@ -61,17 +60,17 @@ module.exports = {
 	},
 
 	excluir: function(id){
-		var sql = "DELETE FROM TBlinkResetSenha WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBLinkResetSenha WHERE id = " + id + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBlinkResetSenha;";
+		var sql = "SELECT * FROM TBLinkResetSenha;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBlinkResetSenha WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBLinkResetSenha WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }

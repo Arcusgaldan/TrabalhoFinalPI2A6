@@ -41,7 +41,7 @@ module.exports = {
 		if(!this.validar(permissao)){
 			return false;
 		}else{
-			var sql = "UPDATE TBpermissao SET ";
+			var sql = "UPDATE TBPermissao SET ";
 			var campos = "";
 			for(var key in permissao){
 				if(key == 'id')
@@ -59,17 +59,17 @@ module.exports = {
 	},
 
 	excluir: function(id){
-		var sql = "DELETE FROM TBpermissao WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBPermissao WHERE id = " + id + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBpermissao;";
+		var sql = "SELECT * FROM TBPermissao;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBpermissao WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBPermissao WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }

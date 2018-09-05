@@ -1,5 +1,5 @@
 module.exports = {
-	validar: function(usuario){
+	validar: function(tipoUsuario){
 		var validates = require('./../validates.js');
 		if(!validates.req(usuario.id) || !validates.req(usuario.nome)){
 				return false;
@@ -8,16 +8,16 @@ module.exports = {
 		}
 	},
 
-	inserir: function(usuario){
-		if(!this.validar(usuario)){
+	inserir: function(tipoUsuario){
+		if(!this.validar(tipoUsuario)){
 				return false;
 		}else{
-			usuario['id'] = 0;
-			var sql = "INSERT INTO TBUsuario (";
+			tipoUsuario['id'] = 0;
+			var sql = "INSERT INTO TBTipoUsuario (";
 			var campos = "";
 			var valores = "";
-			for(var key in usuario){
-				if(usuario[key] == null)
+			for(var key in tipoUsuario){
+				if(tipoUsuario[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -27,9 +27,9 @@ module.exports = {
 				}
 
 				if(valores == ""){
-					valores += usuario[key];
+					valores += tipoUsuario[key];
 				}else{
-					valores += ", " + usuario[key];
+					valores += ", " + tipoUsuario[key];
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -37,39 +37,39 @@ module.exports = {
 		}
 	},
 
-	alterar: function(usuario){
-		if(!this.validar(usuario)){
+	alterar: function(tipoUsuario){
+		if(!this.validar(tipoUsuario)){
 			return false;
 		}else{
-			var sql = "UPDATE TBUsuario SET ";
+			var sql = "UPDATE TBTipoUsuario SET ";
 			var campos = "";
-			for(var key in usuario){
+			for(var key in tipoUsuario){
 				if(key == 'id')
 					continue;
 
 				if(campos == ""){
-					sql += key + " = " + usuario[key];
+					sql += key + " = " + tipoUsuario[key];
 				}else{
-					sql += ", " + key + " = " + usuario[key];
+					sql += ", " + key + " = " + tipoUsuario[key];
 				}
 			}
-			sql += campos + " WHERE id = " + usuario['id'] + ";";
+			sql += campos + " WHERE id = " + tipoUsuario['id'] + ";";
 			console.log(sql);
 		}
 	},
 
 	excluir: function(id){
-		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBTipoUsuario WHERE id = " + id + ";";
 		console.log(sql);
 	},
 
 	listar: function(){
-		var sql = "SELECT * FROM TBUsuario;";
+		var sql = "SELECT * FROM TBTipoUsuario;";
 		console.log(sql);
 	},
 
 	buscar: function(campo, valor){
-		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		var sql = "SELECT * FROM TBTipoUsuario WHERE " + campo + " = " + valor + ";";
 		console.log(sql);
 	}
 }
