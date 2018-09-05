@@ -37,7 +37,7 @@
       </button>
 
       <!-- Navbar Search -->
-     <!--  <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 col-md-2">
+      <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 col-md-2">
         <div class="input-group ">
           <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
           <div class="input-group-append">
@@ -75,7 +75,7 @@
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="cadastroPermissoes.html">
+          <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-check"></i>
             <span>Cadastrar Permissões</span>
           </a>
@@ -88,61 +88,12 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Cadastro de Usuário</li>
+            <!-- <li class="breadcrumb-item">
+              <a href="#">Primeiro Acesso</a>
+            </li> -->
+            <li class="breadcrumb-item active">Sistema Interno</li>
           </ol>
 
-
-          <div class="container">
-              <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Cadastro de Usuário</div>
-                <div class="card-body">
-                  <p>Neste formulário serão inseridas as informações para o cadastro de usuários</p>
-                  
-                  <table class="table table-bordered table-dark text-center">
-
-                    <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col" class="">Lider</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Permissão 001</th>
-                        <td>
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Permissão 002</th>
-                        <td>
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Permissão 003</th>
-                        <td>
-<<<<<<< Updated upstream
-                          <button class="btn btn-primary" data-toggle="modal" data-target="#alteraModal"  >alteraModal</button>
-                          <button class="btn btn-primary" data-toggle="modal" data-target="#cadastraModal"  >cadastrsModal</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#excluirModal"  >excluirModal</button>
-=======
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                          </div>
->>>>>>> Stashed changes
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                 
-                </div>
-              </div>
-            </div>
 
         </div>
         <!-- /.container-fluid -->
@@ -167,9 +118,8 @@
       <i class="fas fa-angle-up"></i>
     </a>
 
-
-    <!-- Sucesso Modal-->
-    <div class="modal fade" id="SucessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -178,29 +128,10 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Seu cadasto foi efetuado com sucesso!</div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #01b601;color: #fff;">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <a class="btn btn-primary" href="cadastroUsuario.html">Cadastrar Novo Usuário</a>
-            <a class="btn btn-primary" href="cadastroPermissoes.html">Painel de permissões</a>
           </div>
         </div>
       </div>
