@@ -88,17 +88,77 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Cadastro de Usuário</li>
+            <li class="breadcrumb-item active">Gerenciamento de Usuário</li>
           </ol>
 
-
           <div class="container">
-              <div class="card card-register mx-auto mt-5 mb-5">
-                <div class="card-header">Cadastro de Usuário</div>
+              <div class="card mx-auto mt-5 mb-5">
+                <div class="card-header">Gerenciamento de Usuário</div>
                 <div class="card-body">
-                  <p>Neste formulário serão inseridas as informações para o cadastro de usuários</p>
+                  <p>
+                    
+                  </p>
                   
-                  <form action="http://localhost:8080" method="get" >
+                  <table class="table table-bordered table-dark text-center">
+
+                      <!-- <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col" class="">Lider</th>
+                        </tr>
+                      </thead> -->
+                    <tbody>
+                      <tr>
+                        <th scope="row">Permissão 003</th>
+                        <td>
+                          <button class="btn btn-success" data-toggle="modal" data-target="#cadastraModal">Cadastrar Modal</button>
+                          <button class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Modal</button>
+                          <button class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Modal</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                 
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © Neumann Project</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    
+    <div class="modal fade" id="cadastraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastrar usuário</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="get" >
 
                     <div class="form-group">
                       <div class="form-row">
@@ -169,50 +229,120 @@
                     <!--<input type="submit" value="Submit">-->
                   </form>
 
-
-                 
-                </div>
-              </div>
-            </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © Neumann Project</span>
-            </div>
           </div>
-        </footer>
-
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cadastar</button>
+            
+          </div>
+        </div>
       </div>
-      <!-- /.content-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
 
 
-    <!-- Sucesso Modal-->
-    <div class="modal fade" id="SucessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Alterar usuário</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Seu cadasto foi efetuado com sucesso!</div>
+          <div class="modal-body">
+            <form action="" method="get" >
+
+                    <div class="form-group">
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <div class="form-label-group">
+                            <input type="text" id="nome" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                            <label for="nome">Nome Completo</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-label-group">
+                            <input type="text" id="prontuario" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
+                            <label for="prontuario">Prontuário</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
+                        <label for="email">Email</label>
+                      </div>
+                    </div>
+ 
+                  <div class="form-group">
+                    <div class="form-row">
+                      <div class="col-md-12">
+                        <div class="input-group">
+                          <input type="url" class="form-control" id="linkLattes" placeholder="Link do Lattes">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">http://lattes.cnpq.br/****</div>
+                          </div>
+                        </div>
+                      </div>
+                     </div>
+                  </div>
+                 
+
+                    <div class="form-group">
+                      <div class="form-row">
+                        <div class="col-md-12 ">
+                          <div class="form-label-group">
+                            <input type="file" id="foto" class="form-control" placeholder="foote" required="required">
+                            <label for="foto">Foto de Perfil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="form-row">
+                        <div class="col-md-12 ">
+                          <label for="foto">Escolha um tipo de usuário</label>
+                          <div class="form-label-group">
+                           <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Lider</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                     
+
+                         <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a>
+                   
+                    <!--<input type="submit" value="Submit">-->
+                  </form>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cadastar</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sucesso Modal-->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Excluir usuário</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Você realmnete deseja excluir esse usuário ?</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="">Excluir</a>
           </div>
         </div>
       </div>
