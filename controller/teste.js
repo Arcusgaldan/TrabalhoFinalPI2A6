@@ -1,4 +1,4 @@
-// --> FIM TESTE CLIENTE/SERVIDOR
+// --> INICIO TESTE CLIENTE/SERVIDOR
 // var controller = require('./cUsuario.js');
 // var model = require('./../modelo/mUsuario.js');
 // var usuario = model.novo();
@@ -18,7 +18,13 @@
 // controller.buscar("nome", "Thales");
 // --> FIM TESTE CLIENTE/SERVIDOR
 
-var dao = require('./../dao.js');
-var conexao = dao.criaConexao();
-var sql = 'INSERT INTO TBUsuario (id, prontuario, nome, email, senha, curriculoLattes, foto, data, primeiroAcesso, codTipoUsuario) VALUES (0, "1690311", "Thales", "thales@email.com", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "linkLattes.com/123", "FOTO", "2018-09-05", 0, 1)';
-dao.insere(conexao, sql);
+// --> INICIO TESTE DAO
+// var dao = require('./../dao.js');
+// var conexao = dao.criaConexao();
+// var sql = 'INSERT INTO TBUsuario (id, prontuario, nome, email, senha, curriculoLattes, foto, data, primeiroAcesso, codTipoUsuario) VALUES (0, "1690311", "Thales", "thales@email.com", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "linkLattes.com/123", "FOTO", "2018-09-05", 0, 1)';
+// dao.insere(conexao, sql);
+// --> FIM TESTE DAO
+
+var historicoSenha = require('./../modelo/mHistoricoSenha.js');
+console.log("Retorno de isString para senhaAntiga: " + historicoSenha.isString('senhaAntiga'));
+console.log("Retorno de isString para codUsuario: " + historicoSenha.isString('codUsuario'));
