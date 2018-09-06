@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(linkResetSenha){
 		var validates = require('./../validates.js');
-		if(!validates.req(linkResetSenha.id) || !validates.req(linkResetSenha.dataReset) || !validates.req(linkResetSenha.link) || 
+		if(!validates.req(linkResetSenha.id) || !validates.req(linkResetSenha.data) || !validates.req(linkResetSenha.link) || 
 			!validates.req(linkResetSenha.codUsuario)){
 				return false;
 		}else{
@@ -11,6 +11,9 @@ module.exports = {
 
 	inserir: function(linkResetSenha){
 		if(!this.validar(linkResetSenha)){
+				console.log("Falha na validação.");
+				var validates = require('./../validates.js');
+				console.log("Validação: " + !validates.req(linkResetSenha.data) + "pois data = " + linkResetSenha.data);
 				return false;
 		}else{
 			linkResetSenha['id'] = 0;
@@ -31,8 +34,7 @@ module.exports = {
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + linkResetSenha[key] + '"';					
-					
+					aux = '"' + linkResetSenha[key] + '"';								
 				}
 				else
 					aux = linkResetSenha[key];

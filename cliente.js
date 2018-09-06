@@ -14,23 +14,46 @@ function senhaHash(objeto){
 var http = require('http');
 //var querystring = require('querystring');
 
-var dados = {
-    id: 0,
-    prontuario: '1690312',
-    nome: 'Gabiru',
-    email: 'Gabiruemail@teste.com',
-    senha: 'senhaGabiru',
-    curriculoLattes: 'curriculo.lates/123456',
-    foto: 'FOTOGABIRU',
-    data: '2018-08-06',
-    primeiroAcesso: 1,
-    codTipoUsuario: 1
-};
+// var dados = { //Objeto USUARIO
+//     id: 0,
+//     prontuario: '1690312',
+//     nome: 'Gabiru',
+//     email: 'Gabiruemail@teste.com',
+//     senha: 'senhaGabiru',
+//     curriculoLattes: 'curriculo.lates/123456',
+//     foto: 'FOTOGABIRU',
+//     data: '2018-08-06',
+//     primeiroAcesso: 1,
+//     codTipoUsuario: 1
+// };
 
-// var dados = {
+// var dados = { //Objeto TIPOUSUARIO
 //     id: 0,
 //     nome: "Lider"
 // };
+
+// var dados = { //Objeto PERMISSAO
+//     id: 0,
+//     nome: "Alterar site"
+// };
+
+// var dados = { //Objeto PERMISSAOUSUARIO
+//     codTipoUsuario: 1,
+//     codPermissao: 1
+// };
+
+// var dados = { //Objeto LINKRESETSENHA
+//     id: 0,
+//     link: "123456",
+//     data: "2018-09-06 17:42:00",
+//     codUsuario: 1
+// };
+
+var dados = { //Objeto HISTORICOSENHA
+    senhaAntiga: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    data: "2018-09-06 17:42:00",
+    codUsuario: 1
+};
 
 dados = senhaHash(dados);
 console.log(dados);
@@ -44,7 +67,7 @@ var opcoes = {
     headers: {
       'Content-Type': 'application/json',    
       'Content-Length': Buffer.byteLength(texto),
-      'Objeto': 'Usuario',
+      'Objeto': 'HistoricoSenha',
       'Operacao': 'INSERT'
     }
 };

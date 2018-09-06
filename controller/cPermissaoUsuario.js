@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(permissaoUsuario){
 		var validates = require('./../validates.js');
-		if(!validates.req(permissaoUsuario.codUsuario) || !validates.req(permissaoUsuario.codPermissao)){
+		if(!validates.req(permissaoUsuario.codTipoUsuario) || !validates.req(permissaoUsuario.codPermissao)){
 				return false;
 		}else{
 			return true;
@@ -12,7 +12,6 @@ module.exports = {
 		if(!this.validar(permissaoUsuario)){
 				return false;
 		}else{
-			permissaoUsuario['id'] = 0;
 			var sql = "INSERT INTO TBPermissaoUsuario (";
 			var campos = "";
 			var valores = "";

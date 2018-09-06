@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(historicoSenha){
 		var validates = require('./../validates.js');
-		if(!validates.exact(historicoSenha.senhaAntiga, 64) || !validates.req(historicoSenha.dataTroca) || !validates.req(historicoSenha.codUsuario) ){
+		if(!validates.exact(historicoSenha.senhaAntiga, 64) || !validates.req(historicoSenha.data) || !validates.req(historicoSenha.codUsuario) ){
 				return false;
 		}else{
 			return true;
