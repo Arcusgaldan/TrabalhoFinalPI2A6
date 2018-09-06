@@ -28,13 +28,10 @@ module.exports = {
 				var modelo = require('./../modelo/mHistoricoSenha.js');
 				var aux = "";
 
-				if(modelo.isString(key)){
-					aux = '"' + historicoSenha[key] + '"';					
-					console.log(historicoSenha[key] + " é string, botei aspas e no final ficou " + aux);
-				}
+				if(modelo.isString(key))
+					aux = '"' + historicoSenha[key] + '"';
 				else
 					aux = historicoSenha[key];
-				console.log(historicoSenha[key] + " NÃO é string");
 
 				if(valores == ""){
 					valores += aux;
