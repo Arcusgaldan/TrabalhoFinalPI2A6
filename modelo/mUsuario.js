@@ -26,5 +26,14 @@ module.exports = {
 		final.primeiroAcesso = 1;
 		final codTipoUsuario = 0;
 		return final;
+	},
+
+	isString: function(atributo){
+		var strings = ["prontuario", "nome","senha", "lattes","foto", "dataCad","primeiroAcesso"];
+		for (var i = strings.length - 1; i >= 0; i--) {
+			if(strings[i] == atributo)
+				return true;
+		}
+		return false;
 	}
 }

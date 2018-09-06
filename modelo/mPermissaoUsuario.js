@@ -10,5 +10,14 @@ module.exports = {
 		final.codTipoUsuario = 0;
 		final.codPermissao = 0;
 		return final;
+	},
+
+	isString: function(atributo){
+		var strings = [];
+		for (var i = strings.length - 1; i >= 0; i--) {
+			if(strings[i] == atributo)
+				return true;
+		}
+		return false;
 	}
 }
