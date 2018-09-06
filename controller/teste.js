@@ -28,3 +28,5 @@
 var historicoSenha = require('./../modelo/mHistoricoSenha.js');
 console.log("Retorno de isString para senhaAntiga: " + historicoSenha.isString('senhaAntiga'));
 console.log("Retorno de isString para codUsuario: " + historicoSenha.isString('codUsuario'));
+var controller = require('./cHistoricoSenha.js');
+controller.inserir({senhaAntiga: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', dataTroca: '2018-09-06 02:14:00', codUsuario: 1});
