@@ -38,9 +38,9 @@ module.exports = {
 					aux = linkResetSenha[key];
 
 				if(valores == ""){
-					valores += linkResetSenha[key];
+					valores += aux;
 				}else{
-					valores += ", " + linkResetSenha[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -69,9 +69,9 @@ module.exports = {
 					aux = linkResetSenha[key];
 
 				if(campos == ""){
-					sql += key + " = " + linkResetSenha[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + linkResetSenha[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE id = " + linkResetSenha['id'] + ";";

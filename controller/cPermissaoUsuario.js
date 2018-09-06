@@ -26,7 +26,7 @@ module.exports = {
 					campos += ", " + key;
 				}
 
-				var modelo = require('./../modelo/mpermissaoUsuario.js');
+				var modelo = require('./../modelo/mPermissaoUsuario.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
@@ -37,9 +37,9 @@ module.exports = {
 					aux = permissaoUsuario[key];
 
 				if(valores == ""){
-					valores += permissaoUsuario[key];
+					valores += aux;
 				}else{
-					valores += ", " + permissaoUsuario[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -68,9 +68,9 @@ module.exports = {
 					aux = permissaoUsuario[key];
 
 				if(campos == ""){
-					sql += key + " = " + permissaoUsuario[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + permissaoUsuario[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE codUsuario = " + permissaoUsuario['codUsuario'] + " AND codPermissao = " + permissaoUsuario['codPermissao'] + ";";

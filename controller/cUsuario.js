@@ -2,7 +2,7 @@ module.exports = {
 	validar: function(usuario){
 		var validates = require('./../validates.js');
 		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
-			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.lattes) ||
+			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.curriculoLattes) ||
 			!validates.req(usuario.data) || !validates.req(usuario.primeiroAcesso)){
 				return false;
 		}else{
@@ -11,7 +11,11 @@ module.exports = {
 	},
 
 	inserir: function(usuario){
-		if(!this.validar(usuario)){
+		console.log('Entrei em cUsuario::inserir!');
+		if(!this.validar(usuario)){							
+				console.log('Porém a validação não passou');
+				var validates = require('./../validates.js');
+				console.log('VALIDATE: ' + !validates.exact(usuario.senha, 64));
 				return false;
 		}else{
 			usuario['id'] = 0;
@@ -28,7 +32,7 @@ module.exports = {
 					campos += ", " + key;
 				}
 
-				var modelo = require('./../modelo/musuario.js');
+				var modelo = require('./../modelo/mUsuario.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
@@ -39,13 +43,14 @@ module.exports = {
 					aux = usuario[key];
 
 				if(valores == ""){
-					valores += usuario[key];
+					valores += aux;
 				}else{
-					valores += ", " + usuario[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -70,9 +75,9 @@ module.exports = {
 					aux = usuario[key];
 
 				if(campos == ""){
-					sql += key + " = " + usuario[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + usuario[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE id = " + usuario['id'] + ";";

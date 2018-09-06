@@ -5,13 +5,13 @@ module.exports = {
 		var con = mysql.createConnection({
 			host: 'localhost',
 			user: 'root',
-			password: 'toor',
+			password: 'cpd00mjh',
 			database: 'DBPronn'
 		});
 		return con;
 	},
 
-	insere: function(con, comando){		
+	inserir: function(con, comando){		
 		con.connect(function(err){
 			if(err) throw err;
 			console.log("Conectado ao banco!");

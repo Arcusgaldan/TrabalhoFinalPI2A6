@@ -70,9 +70,9 @@ module.exports = {
 					aux = historicoSenha[key];
 
 				if(campos == ""){
-					sql += key + " = " + historicoSenha[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + historicoSenha[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE codUsuario = " + historicoSenha['codUsuario'] + ";";
