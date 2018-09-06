@@ -27,6 +27,16 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mlinkResetSenha.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + linkResetSenha[key] + '"';					
+					
+				}
+				else
+					aux = linkResetSenha[key];
+
 				if(valores == ""){
 					valores += linkResetSenha[key];
 				}else{
@@ -47,6 +57,16 @@ module.exports = {
 			for(var key in linkResetSenha){
 				if(key == 'id')
 					continue;
+
+				var modelo = require('./../modelo/mlinkResetSenha.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + linkResetSenha[key] + '"';
+					
+				}
+				else
+					aux = linkResetSenha[key];
 
 				if(campos == ""){
 					sql += key + " = " + linkResetSenha[key];

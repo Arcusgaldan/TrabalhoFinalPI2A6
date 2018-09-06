@@ -25,16 +25,17 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				// <!-- COLOCAR ENTRE O IF EL DE CAMPO E VALORES-->
 				var modelo = require('./../modelo/mHistoricoSenha.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
 					aux = '"' + historicoSenha[key] + '"';					
-					console.log(historicoSenha[key] + " é string, botei aspas e no final ficou " + aux);
+					
 				}
 				else
 					aux = historicoSenha[key];
-				console.log(historicoSenha[key] + " NÃO é string");
+				
 
 				if(valores == ""){
 					valores += aux;
@@ -57,12 +58,13 @@ module.exports = {
 				if(key == 'codUsuario')
 					continue;
 
+				//ANTES DO IF ELSE DOS CAMPOS
 				var modelo = require('./../modelo/mHistoricoSenha.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
 					aux = '"' + historicoSenha[key] + '"';
-					console.log(historicoSenha[key] + " é string, botei aspas e no final ficou " + aux);
+					
 				}
 				else
 					aux = historicoSenha[key];
