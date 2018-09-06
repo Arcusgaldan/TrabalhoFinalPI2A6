@@ -10,6 +10,7 @@ module.exports = {
 		final.foto = objeto.foto;
 		final.data = objeto.dataCad;
 		final.primeiroAcesso = objeto.primeiroAcesso;
+		final.codTipoUsuario = objeto.codTipoUsuario;
 		return final;
 	},
 	novo: function(objeto){
@@ -22,7 +23,8 @@ module.exports = {
 		final.curriculoLattes = "";
 		final.foto = "";
 		final.data = "";
-		final.primeiroAcesso = true;
+		final.primeiroAcesso = 1;
+		final codTipoUsuario = 0;
 		return final;
 	}
 }
