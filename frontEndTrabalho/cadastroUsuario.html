@@ -30,7 +30,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html">Neumann</a>
+      <a class="navbar-brand mr-1" href="index.html">Pronn</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -136,15 +136,6 @@
         </div>
         <!-- /.container-fluid -->
 
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © Neumann Project</span>
-            </div>
-          </div>
-        </footer>
-
       </div>
       <!-- /.content-wrapper -->
 
@@ -167,100 +158,84 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
+
           <div class="modal-body">
+            <p>
+              Neste formulário serão inseridas as informações para o cadastro de usuários
+            </p>
+
             <form action="" method="get" >
-=======
-            <li class="breadcrumb-item active">Cadastro de Usuário</li>
-          </ol>
-
-
-          <div class="container">
-              <div class="card card-register mx-auto mt-5 mb-5">
-                <div class="card-header">Cadastro de Usuário</div>
-                <div class="card-body">
-                  <p>Neste formulário serão inseridas as informações para o cadastro de usuários</p>
-                  
-                  <form action="http://localhost:8080" method="get" >
->>>>>>> Stashed changes
-
-                    <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-6">
-                          <div class="form-label-group">
-                            <input type="text" id="nome" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                            <label for="nome">Nome Completo</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-label-group">
-                            <input type="text" id="prontuario" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
-                            <label for="prontuario">Prontuário</label>
-                          </div>
-                        </div>
-                      </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="nome" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nome">Nome Completo</label>
                     </div>
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
-                        <label for="email">Email</label>
-                      </div>
-                    </div>
- 
-                  <div class="form-group">
-                    <div class="form-row">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <input type="url" class="form-control" id="linkLattes" placeholder="Link do Lattes">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                          </div>
-                        </div>
-                      </div>
-                     </div>
                   </div>
-                 
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="prontuario" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
+                      <label for="prontuario">Prontuário</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                    <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-12 ">
-                          <div class="form-label-group">
-                            <input type="file" id="foto" class="form-control" placeholder="foote" required="required">
-                            <label for="foto">Foto de Perfil</label>
-                          </div>
-                        </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
+                  <label for="email">Email</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="url" class="form-control" id="linkLattes" placeholder="Link do Lattes">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
 
-                    <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-12 ">
-                          <label for="foto">Escolha um tipo de usuário</label>
-                          <div class="form-label-group">
-                           <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Lider</option>
-                          </select>
-                          </div>
-                        </div>
-                      </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12 ">
+                    <div class="form-label-group">
+                      <input type="file" id="foto" class="form-control" placeholder="foote" required="required">
+                      <label for="foto">Foto de Perfil</label>
                     </div>
+                  </div>
+                </div>
+              </div>
 
-                     
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12 ">
+                    <label for="foto">Escolha um tipo de usuário</label>
+                    <div class="form-label-group">
+                      <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Lider</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
 
-                         <!-- <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a> -->
-                   
-                    <!--<input type="submit" value="Submit">-->
-                  </form>
-
-<<<<<<< Updated upstream
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-success" type="button" >Cadastar</button>
-            
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" >Cadastar</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
 
 
     <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -273,6 +248,9 @@
             </button>
           </div>
           <div class="modal-body">
+             <p>
+              Neste formulário serão inseridas as informações para o cadastro de usuários
+            </p>
             <form action="" method="get" >
 
                     <div class="form-group">
@@ -353,21 +331,43 @@
       </div>
     </div>
 
-    <!-- Sucesso Modal-->
-    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Excluir usuário</h5>
-=======
-
-                 
-                </div>
-              </div>
+    <!-- EXCLUIR Modal-->
+      <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Deseja excluirModal  ?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
             </div>
-
+            <div class="modal-body">Você deseja realmente excluir esta entrada?</div>
+            <div class="modal-footer">
+              <button class="btn btn-success">SIM</button>
+              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
+            </div>
+          </div>
         </div>
-        <!-- /.container-fluid -->
+      </div>
+
+    <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Você deseja realmente sair do sistema?</div>
+            <div class="modal-footer">
+              <button class="btn btn-success">SIM</button>
+              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -388,53 +388,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-
-    <!-- Sucesso Modal-->
-    <div class="modal fade" id="SucessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
->>>>>>> Stashed changes
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-<<<<<<< Updated upstream
-          <div class="modal-body">Você realmnete deseja excluir esse usuário ?</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="">Excluir</a>
-=======
-          <div class="modal-body">Seu cadasto foi efetuado com sucesso!</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
->>>>>>> Stashed changes
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Você deseja realmente sair do sistema?</div>
-          <div class="modal-footer">
-            <a class="btn btn-success" href="index.html">SIM</a>
-            <a class="btn btn-danger" href="">CANCELAR</a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
