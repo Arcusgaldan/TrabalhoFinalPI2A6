@@ -88,7 +88,6 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-<<<<<<< Updated upstream
             <li class="breadcrumb-item active">Gerenciamento de Usuário</li>
           </ol>
 
@@ -112,10 +111,10 @@
                       <tr>
                         <th>Usuário 003</th>
                         <td>
-                          <button class="btn btn-success" data-toggle="modal" data-target="#cadastraModal">Cadastrar Modal</button>
-                          <button class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Modal</button>
-                          <button class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Modal</button>
                           <button class="btn btn-info" scope="row" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> Mostra Dados <span class="fas fa-plus"></span></button>
+                          <button class="btn btn-success" data-toggle="modal" data-target="#cadastraModal">Cadastrar Usuário</button>
+                          <button class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Usuário</button>
+                          <button class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Usuário</button>
                         </td>
                         <div class="collapse" id="collapseExample"> 
                           <div class="card card-body">
@@ -170,19 +169,6 @@
           </div>
           <div class="modal-body">
             <form action="" method="get" >
-=======
-            <li class="breadcrumb-item active">Cadastro de Usuário</li>
-          </ol>
-
-
-          <div class="container">
-              <div class="card card-register mx-auto mt-5 mb-5">
-                <div class="card-header">Cadastro de Usuário</div>
-                <div class="card-body">
-                  <p>Neste formulário serão inseridas as informações para o cadastro de usuários</p>
-                  
-                  <form action="http://localhost:8080" method="get" >
->>>>>>> Stashed changes
 
                     <div class="form-group">
                       <div class="form-row">
@@ -253,7 +239,6 @@
                     <!--<input type="submit" value="Submit">-->
                   </form>
 
-<<<<<<< Updated upstream
           </div>
           <div class="modal-footer">
             <button class="btn btn-success" type="button" >Cadastar</button>
@@ -360,59 +345,14 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Excluir usuário</h5>
-=======
-
-                 
-                </div>
-              </div>
-            </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © Neumann Project</span>
-            </div>
-          </div>
-        </footer>
-
-      </div>
-      <!-- /.content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-
-    <!-- Sucesso Modal-->
-    <div class="modal fade" id="SucessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
->>>>>>> Stashed changes
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-<<<<<<< Updated upstream
           <div class="modal-body">Você realmnete deseja excluir esse usuário ?</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-primary" href="">Excluir</a>
-=======
-          <div class="modal-body">Seu cadasto foi efetuado com sucesso!</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
@@ -421,17 +361,17 @@
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #01b601;color: #fff;">
+        <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Você deseja realmente sair do sistema?</div>
           <div class="modal-footer">
-            <a class="btn btn-primary" href="cadastroUsuario.html">Cadastrar Novo Usuário</a>
-            <a class="btn btn-primary" href="cadastroPermissoes.html">Painel de permissões</a>
+            <a class="btn btn-success" href="index.html">SIM</a>
+            <a class="btn btn-danger" href="">CANCELAR</a>
           </div>
         </div>
       </div>
