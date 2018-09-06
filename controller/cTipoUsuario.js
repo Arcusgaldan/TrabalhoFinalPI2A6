@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(tipoUsuario){
 		var validates = require('./../validates.js');
-		if(!validates.req(usuario.id) || !validates.req(usuario.nome)){
+		if(!validates.req(tipoUsuario.id) || !validates.req(tipoUsuario.nome)){
 				return false;
 		}else{
 			return true;
@@ -43,7 +43,8 @@ module.exports = {
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -74,22 +75,26 @@ module.exports = {
 				}
 			}
 			sql += campos + " WHERE id = " + tipoUsuario['id'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(id){
 		var sql = "DELETE FROM TBTipoUsuario WHERE id = " + id + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBTipoUsuario;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBTipoUsuario WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }

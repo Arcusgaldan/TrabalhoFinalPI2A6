@@ -2,6 +2,9 @@ function senhaHash(objeto){
     var crypto = require('crypto');
     var hash = crypto.createHash('sha256');
 
+    if(objeto.senha == null)
+        return objeto;
+
     hash.update(objeto.senha);
     objeto.senha = hash.digest('hex');
     return objeto;
@@ -23,6 +26,12 @@ var dados = {
     primeiroAcesso: 1,
     codTipoUsuario: 1
 };
+
+// var dados = {
+//     id: 0,
+//     nome: "Lider"
+// };
+
 dados = senhaHash(dados);
 console.log(dados);
 

@@ -22,7 +22,6 @@ http.createServer(function(req, res){
                     console.log("Caminho = " + caminho);
                     var controller = require(caminho);
                     controller.inserir(jsonRqs);
-                    console.log("FEZ O INSERT NO SERVER.JS GRAZADEUS");
                     break;
                 case 'UPDATE':
                     
@@ -33,6 +32,8 @@ http.createServer(function(req, res){
                 case 'SELECT':
 
                     break;                
+                default:
+                    break;
             }            
         }
         res.write('Hello World!');

@@ -44,7 +44,8 @@ module.exports = {
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -75,22 +76,26 @@ module.exports = {
 				}
 			}
 			sql += campos + " WHERE id = " + linkResetSenha['id'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(id){
 		var sql = "DELETE FROM TBLinkResetSenha WHERE id = " + id + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBLinkResetSenha;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBLinkResetSenha WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }

@@ -13,9 +13,6 @@ module.exports = {
 	inserir: function(usuario){
 		console.log('Entrei em cUsuario::inserir!');
 		if(!this.validar(usuario)){							
-				console.log('Porém a validação não passou');
-				var validates = require('./../validates.js');
-				console.log('VALIDATE: ' + !validates.exact(usuario.senha, 64));
 				return false;
 		}else{
 			usuario['id'] = 0;
@@ -81,22 +78,26 @@ module.exports = {
 				}
 			}
 			sql += campos + " WHERE id = " + usuario['id'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(id){
 		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBUsuario;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }

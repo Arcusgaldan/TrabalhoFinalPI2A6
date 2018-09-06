@@ -43,7 +43,8 @@ module.exports = {
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -74,22 +75,26 @@ module.exports = {
 				}
 			}
 			sql += campos + " WHERE codUsuario = " + permissaoUsuario['codUsuario'] + " AND codPermissao = " + permissaoUsuario['codPermissao'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(codUsuario, codPermissao){
 		var sql = "DELETE FROM TBPermissaoUsuario WHERE codUsuario = " + codUsuario + " AND codPermissao = " + codPermissao + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBPermissaoUsuario;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBPermissaoUsuario WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }
