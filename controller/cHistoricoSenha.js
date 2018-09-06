@@ -25,10 +25,21 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mHistoricoSenha.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + historicoSenha[key] + '"';					
+					console.log(historicoSenha[key] + " é string, botei aspas e no final ficou " + aux);
+				}
+				else
+					aux = historicoSenha[key];
+				console.log(historicoSenha[key] + " NÃO é string");
+
 				if(valores == ""){
-					valores += historicoSenha[key];
+					valores += aux;
 				}else{
-					valores += ", " + historicoSenha[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
@@ -45,6 +56,16 @@ module.exports = {
 			for(var key in historicoSenha){
 				if(key == 'codUsuario')
 					continue;
+
+				var modelo = require('./../modelo/mHistoricoSenha.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + historicoSenha[key] + '"';
+					console.log(historicoSenha[key] + " é string, botei aspas e no final ficou " + aux);
+				}
+				else
+					aux = historicoSenha[key];
 
 				if(campos == ""){
 					sql += key + " = " + historicoSenha[key];
