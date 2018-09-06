@@ -11,15 +11,30 @@ module.exports = {
 		return con;
 	},
 
-	insere: function(comando){		
+	insere: function(con, comando){		
 		con.connect(function(err){
 			if(err) throw err;
 			console.log("Conectado ao banco!");
 			con.query(comando, function(err, res){
-				if(err){ console.log("Erro: " + err); throw err;}
+				if(err){ console.log("Erro: " + err); throw err;}				
+				console.log("Deu bom inserindo");
 				console.log('Resultado: ' + res);
+				con.destroy();
 			});
 		});
-		console.log("Deu bom inserindo");
+	},
+
+	buscar: function(con, comando){
+		con.connect(function(err){
+			if(err) throw err;
+			console.log("Conectado ao banco!");
+			con.query(comando, function(err, res){
+				if(err){console.log("Erro " + err); throw err;}
+				console.log("Deu bom inserindo");
+				console.log("Resultado: " + res);
+				con.destroy();
+				return res;
+			});
+		});
 	}
 }
