@@ -28,6 +28,16 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/musuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + usuario[key] + '"';
+					
+				}
+				else
+					aux = usuario[key];
+
 				if(valores == ""){
 					valores += usuario[key];
 				}else{
@@ -48,6 +58,16 @@ module.exports = {
 			for(var key in usuario){
 				if(key == 'id')
 					continue;
+
+				var modelo = require('./../modelo/musuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + usuario[key] + '"';
+					
+				}
+				else
+					aux = usuario[key];
 
 				if(campos == ""){
 					sql += key + " = " + usuario[key];

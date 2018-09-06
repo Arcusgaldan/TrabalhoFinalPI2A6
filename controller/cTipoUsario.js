@@ -26,6 +26,16 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mtipoUsuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + tipoUsuario[key] + '"';
+					
+				}
+				else
+					aux = tipoUsuario[key];
+
 				if(valores == ""){
 					valores += tipoUsuario[key];
 				}else{
@@ -46,6 +56,16 @@ module.exports = {
 			for(var key in tipoUsuario){
 				if(key == 'id')
 					continue;
+
+				var modelo = require('./../modelo/mtipoUsuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + tipoUsuario[key] + '"';
+					
+				}
+				else
+					aux = tipoUsuario[key];
 
 				if(campos == ""){
 					sql += key + " = " + tipoUsuario[key];

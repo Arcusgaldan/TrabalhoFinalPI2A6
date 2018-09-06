@@ -26,6 +26,16 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mpermissao.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + permissao[key] + '"';
+					
+				}
+				else
+					aux = permissao[key];
+
 				if(valores == ""){
 					valores += permissao[key];
 				}else{
@@ -46,6 +56,16 @@ module.exports = {
 			for(var key in permissao){
 				if(key == 'id')
 					continue;
+
+				var modelo = require('./../modelo/mpermissao.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + permissao[key] + '"';
+					
+				}
+				else
+					aux = permissao[key];
 
 				if(campos == ""){
 					sql += key + " = " + permissao[key];
