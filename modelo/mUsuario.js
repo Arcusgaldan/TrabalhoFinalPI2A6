@@ -13,7 +13,7 @@ module.exports = {
 		final.codTipoUsuario = objeto.codTipoUsuario;
 		return final;
 	},
-	novo: function(objeto){
+	novo: function(){
 		var final = {};
 		final.id = 0;
 		final.prontuario = "";
@@ -22,7 +22,8 @@ module.exports = {
 		final.senha = "";
 		final.curriculoLattes = "";
 		final.foto = "";
-		final.data = "";
+		var dataAux = new Date();
+		final.data = "2018-01-01";
 		final.primeiroAcesso = 1;
 		final.codTipoUsuario = 0;
 		return final;
