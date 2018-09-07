@@ -10,7 +10,7 @@ module.exports = {
 		}
 	},
 
-	inserir: function(usuario){
+	inserir: function(usuario, cb){
 		console.log('Entrei em cUsuario::inserir!');
 		if(!this.validar(usuario)){							
 				return false;
@@ -47,7 +47,10 @@ module.exports = {
 			}
 			sql += campos + ") values (" + valores + ");";
 			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql);
+			dao.inserir(dao.criaConexao(), sql, function(codRes){
+				console.log("CODRES: " + codRes);
+				cb(codRes);
+			});
 		}
 	},
 

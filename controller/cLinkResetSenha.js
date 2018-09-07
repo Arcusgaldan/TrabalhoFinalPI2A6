@@ -47,7 +47,7 @@ module.exports = {
 			}
 			sql += campos + ") values (" + valores + ");";
 			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql);
+			return dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 

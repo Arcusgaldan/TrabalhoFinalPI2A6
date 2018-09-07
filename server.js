@@ -21,8 +21,12 @@ http.createServer(function(req, res){
                     var caminho = './controller/c' + objeto + '.js';
                     console.log("Caminho = " + caminho);
                     var controller = require(caminho);
-                    controller.inserir(jsonRqs);
-                    break;
+                    var sucesso = controller.inserir(jsonRqs, function(codRes){
+                        if(codRes == 200)
+                        res.statusCode = 200;
+                    else
+                        res.statusCode = 400;
+                    });                    
                 case 'UPDATE':
                     
                     break;

@@ -24719,9 +24719,12 @@ function cadastra(){
 	    console.log("Chegou a resposta!");
 	    res.setEncoding('utf8');
 	    //console.log(res);        
-	    res.on('data', function (chunk) {
-	        console.log('Response: ' + chunk);
-	    });
+	    if(res.statusCode == 200){
+	    	alert("Cadastro realizado com sucesso!");
+	    	document.getElementById("fechaCadastraModal").click();
+	    }
+	    else
+	    	console.log("FALHA NO CADASTRO");
 	}); 	
     req.write(texto);
     req.end();
