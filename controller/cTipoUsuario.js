@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(tipoUsuario){
 		var validates = require('./../validates.js');
-		if(!validates.req(usuario.id) || !validates.req(usuario.nome)){
+		if(!validates.req(tipoUsuario.id) || !validates.req(tipoUsuario.nome)){
 				return false;
 		}else{
 			return true;
@@ -26,14 +26,25 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mTipoUsuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + tipoUsuario[key] + '"';
+					
+				}
+				else
+					aux = tipoUsuario[key];
+
 				if(valores == ""){
-					valores += tipoUsuario[key];
+					valores += aux;
 				}else{
-					valores += ", " + tipoUsuario[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -47,29 +58,43 @@ module.exports = {
 				if(key == 'id')
 					continue;
 
+				var modelo = require('./../modelo/mtipoUsuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + tipoUsuario[key] + '"';
+					
+				}
+				else
+					aux = tipoUsuario[key];
+
 				if(campos == ""){
-					sql += key + " = " + tipoUsuario[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + tipoUsuario[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE id = " + tipoUsuario['id'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(id){
 		var sql = "DELETE FROM TBTipoUsuario WHERE id = " + id + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBTipoUsuario;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBTipoUsuario WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }

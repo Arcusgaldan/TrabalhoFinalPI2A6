@@ -3,7 +3,7 @@ module.exports = {
 		var final = {};
 		final.id = objeto.id;
 		final.link = objeto.link;
-		final.dataReset = objeto.dataReset;
+		final.data = objeto.data;
 		final.codUsuario = objeto.codUsuario;
 		return final;
 	},
@@ -11,8 +11,18 @@ module.exports = {
 		var final = {};
 		final.id = "";
 		final.link = "";
-		final.dataReset = "";
+		final.data = "";
 		final.codUsuario = 0;
 		return final;
+	}
+	,
+
+	isString: function(atributo){
+		var strings = ["link", "data"];
+		for (var i = strings.length - 1; i >= 0; i--) {
+			if(strings[i] == atributo)
+				return true;
+		}
+		return false;
 	}
 }

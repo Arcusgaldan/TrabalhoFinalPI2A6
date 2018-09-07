@@ -26,14 +26,25 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mPermissao.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + permissao[key] + '"';
+					
+				}
+				else
+					aux = permissao[key];
+
 				if(valores == ""){
-					valores += permissao[key];
+					valores += aux;
 				}else{
-					valores += ", " + permissao[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -47,29 +58,43 @@ module.exports = {
 				if(key == 'id')
 					continue;
 
+				var modelo = require('./../modelo/mpermissao.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + permissao[key] + '"';
+					
+				}
+				else
+					aux = permissao[key];
+
 				if(campos == ""){
-					sql += key + " = " + permissao[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + permissao[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE id = " + permissao['id'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(id){
 		var sql = "DELETE FROM TBPermissao WHERE id = " + id + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBPermissao;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBPermissao WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }

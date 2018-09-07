@@ -16,12 +16,23 @@ http.createServer(function(req, res){
         console.log(jsonRqs); 
         if(req.headers['objeto'] != null){
             var objeto = req.headers['objeto'];
-            switch(req.method){
-                case 'GET':
+            switch(req.headers['operacao']){
+                case 'INSERT':
+                    var caminho = './controller/c' + objeto + '.js';
+                    console.log("Caminho = " + caminho);
+                    var controller = require(caminho);
+                    controller.inserir(jsonRqs);
+                    break;
+                case 'UPDATE':
                     
                     break;
-                case 'POST':
-                    
+                case 'DELETE':
+
+                    break;
+                case 'SELECT':
+
+                    break;                
+                default:
                     break;
             }            
         }

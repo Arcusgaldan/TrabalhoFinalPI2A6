@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(permissaoUsuario){
 		var validates = require('./../validates.js');
-		if(!validates.req(permissaoUsuario.codUsuario) || !validates.req(permissaoUsuario.codPermissao)){
+		if(!validates.req(permissaoUsuario.codTipoUsuario) || !validates.req(permissaoUsuario.codPermissao)){
 				return false;
 		}else{
 			return true;
@@ -12,7 +12,6 @@ module.exports = {
 		if(!this.validar(permissaoUsuario)){
 				return false;
 		}else{
-			permissaoUsuario['id'] = 0;
 			var sql = "INSERT INTO TBPermissaoUsuario (";
 			var campos = "";
 			var valores = "";
@@ -26,14 +25,25 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				var modelo = require('./../modelo/mPermissaoUsuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + permissaoUsuario[key] + '"';
+					
+				}
+				else
+					aux = permissaoUsuario[key];
+
 				if(valores == ""){
-					valores += permissaoUsuario[key];
+					valores += aux;
 				}else{
-					valores += ", " + permissaoUsuario[key];
+					valores += ", " + aux;
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -47,29 +57,43 @@ module.exports = {
 				if(key == 'id')
 					continue;
 
+				var modelo = require('./../modelo/mpermissaoUsuario.js');
+				var aux = "";
+
+				if(modelo.isString(key)){
+					aux = '"' + permissaoUsuario[key] + '"';
+					
+				}
+				else
+					aux = permissaoUsuario[key];
+
 				if(campos == ""){
-					sql += key + " = " + permissaoUsuario[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + permissaoUsuario[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE codUsuario = " + permissaoUsuario['codUsuario'] + " AND codPermissao = " + permissaoUsuario['codPermissao'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(codUsuario, codPermissao){
 		var sql = "DELETE FROM TBPermissaoUsuario WHERE codUsuario = " + codUsuario + " AND codPermissao = " + codPermissao + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBPermissaoUsuario;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBPermissaoUsuario WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }

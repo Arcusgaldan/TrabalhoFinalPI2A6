@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(historicoSenha){
 		var validates = require('./../validates.js');
-		if(!validates.exact(historicoSenha.senhaAntiga, 64) || !validates.req(historicoSenha.dataTroca) || !validates.req(historicoSenha.codUsuario) ){
+		if(!validates.exact(historicoSenha.senhaAntiga, 64) || !validates.req(historicoSenha.data) || !validates.req(historicoSenha.codUsuario) ){
 				return false;
 		}else{
 			return true;
@@ -25,6 +25,7 @@ module.exports = {
 					campos += ", " + key;
 				}
 
+				// <!-- COLOCAR ENTRE O IF EL DE CAMPO E VALORES-->
 				var modelo = require('./../modelo/mHistoricoSenha.js');
 				var aux = "";
 
@@ -40,7 +41,8 @@ module.exports = {
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
@@ -54,39 +56,44 @@ module.exports = {
 				if(key == 'codUsuario')
 					continue;
 
+				//ANTES DO IF ELSE DOS CAMPOS
 				var modelo = require('./../modelo/mHistoricoSenha.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
 					aux = '"' + historicoSenha[key] + '"';
-					console.log(historicoSenha[key] + " é string, botei aspas e no final ficou " + aux);
+					
 				}
 				else
 					aux = historicoSenha[key];
 
 				if(campos == ""){
-					sql += key + " = " + historicoSenha[key];
+					sql += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + historicoSenha[key];
+					sql += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE codUsuario = " + historicoSenha['codUsuario'] + ";";
-			console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 		}
 	},
 
 	excluir: function(id){
 		var sql = "DELETE FROM TBHistoricoSenha WHERE codUsuario = " + codUsuario + ";";
-		console.log(sql);
+			var dao = require('./../dao.js');
+			dao.inserir(dao.criaConexao(), sql);
 	},
 
 	listar: function(){
 		var sql = "SELECT * FROM TBHistoricoSenha;";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	},
 
 	buscar: function(campo, valor){
 		var sql = "SELECT * FROM TBHistoricoSenha WHERE " + campo + " = " + valor + ";";
-		console.log(sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql);
 	}
 }
