@@ -49,26 +49,26 @@ var http = require('http');
 //     codUsuario: 1
 // };
 
-var dados = { //Objeto HISTORICOSENHA
-    senhaAntiga: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    data: "2018-09-06 17:42:00",
-    codUsuario: 1
-};
+// var dados = { //Objeto HISTORICOSENHA
+//     senhaAntiga: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+//     data: "2018-09-06 17:42:00",
+//     codUsuario: 1
+// };
 
-dados = senhaHash(dados);
-console.log(dados);
+//dados = senhaHash(dados);
+//console.log(dados);
 
 
-var texto = JSON.stringify(dados);
+//var texto = JSON.stringify(dados);
 var opcoes = {
     hostname: "127.0.0.1",
     port: 8080,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',    
-      'Content-Length': Buffer.byteLength(texto),
-      'Objeto': 'HistoricoSenha',
-      'Operacao': 'INSERT'
+      'Content-Length': 0, //Buffer.byteLength(texto),
+      'Objeto': 'Usuario',
+      'Operacao': 'LISTAR'
     }
 };
 
@@ -87,12 +87,12 @@ var req = http.request(opcoes, (res) => {
 //  console.error(`problem with request: ${e.message}`);
 //});
 
-console.log(texto);
+//console.log(texto);
 try{
-    req.write(texto);
-    console.log("Escrevi texto");
+    //req.write(texto);
+    //console.log("Escrevi texto");
     req.end();
-    console.log("Mandei texto");
+    //console.log("Mandei texto");
 }catch(er){
     console.log("ERROZAO DA PORRA");
 }

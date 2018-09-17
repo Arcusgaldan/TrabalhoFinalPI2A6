@@ -54,7 +54,7 @@ module.exports = {
 		}
 	},
 
-	alterar: function(usuario){
+	alterar: function(usuario, cb){
 		if(!this.validar(usuario)){
 			return false;
 		}else{
@@ -64,7 +64,7 @@ module.exports = {
 				if(key == 'id')
 					continue;
 
-				var modelo = require('./../modelo/musuario.js');
+				var modelo = require('./../modelo/mUsuario.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
@@ -75,32 +75,40 @@ module.exports = {
 					aux = usuario[key];
 
 				if(campos == ""){
-					sql += key + " = " + aux;
+					campos += key + " = " + aux;
 				}else{
-					sql += ", " + key + " = " + aux;
+					campos += ", " + key + " = " + aux;
 				}
 			}
 			sql += campos + " WHERE id = " + usuario['id'] + ";";
 			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql);
+			dao.inserir(dao.criaConexao(), sql, function(codRes){
+				cb(codRes);
+			});
 		}
 	},
 
-	excluir: function(id){
+	excluir: function(id, cb){
 		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
 		var dao = require('./../dao.js');
-		dao.inserir(dao.criaConexao(), sql);
+		dao.inserir(dao.criaConexao(), sql, function(codRes){
+			cb(codRes);
+		});
 	},
 
-	listar: function(){
+	listar: function(cb){
 		var sql = "SELECT * FROM TBUsuario;";
 		var dao = require('./../dao.js');
-		dao.buscar(dao.criaConexao(), sql);
+		dao.buscar(dao.criaConexao(), sql, function(resultado){
+			cb(resultado);
+		});
 	},
 
-	buscar: function(campo, valor){
+	buscar: function(campo, valor, cb){
 		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
 		var dao = require('./../dao.js');
-		dao.buscar(dao.criaConexao(), sql);
+		dao.buscar(dao.criaConexao(), sql, function(resultado){
+			cb(resultado);
+		});
 	}
 }
