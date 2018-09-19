@@ -55,8 +55,16 @@ var http = require('http');
 //     codUsuario: 1
 // };
 
-//dados = senhaHash(dados);
-//console.log(dados);
+var dados = {
+    campo: "nome",
+    valor: "Gabiru"
+};
+
+dados = senhaHash(dados);
+console.log("Dados: " + dados);
+
+var texto = JSON.stringify(dados);
+console.log("Texto: " + texto);
 
 
 //var texto = JSON.stringify(dados);
@@ -66,9 +74,9 @@ var opcoes = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',    
-      'Content-Length': 0, //Buffer.byteLength(texto),
+      'Content-Length': Buffer.byteLength(texto),
       'Objeto': 'Usuario',
-      'Operacao': 'LISTAR'
+      'Operacao': 'BUSCAR'
     }
 };
 
@@ -89,7 +97,7 @@ var req = http.request(opcoes, (res) => {
 
 //console.log(texto);
 try{
-    //req.write(texto);
+    req.write(texto);
     //console.log("Escrevi texto");
     req.end();
     //console.log("Mandei texto");

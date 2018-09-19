@@ -6,6 +6,7 @@ http.createServer(function(req, res){
     console.log("Pacote recebido!");
     req.on('readable', function(){
             var texto = req.read();
+            console.log("TEXTO: " + texto);
             if(texto != null){
                 msgRqs += texto;
             }
@@ -80,6 +81,8 @@ http.createServer(function(req, res){
                 case 'BUSCAR':
                     var campo = jsonRqs['campo'];
                     var valor = jsonRqs['valor'];
+                    console.log("Campo: " + campo);
+                    console.log("Valor: " + valor);
                     if(campo == null || valor == null){
                         res.statusCode = 400;
                         res.write('Campo ou valor inexistente para busca no banco.');
@@ -89,7 +92,9 @@ http.createServer(function(req, res){
                         controller.buscar(campo, valor, function(resultado){
                             if(resultado != null){
                                 res.statusCode = 200;
-                                res.write(resultado);
+                                var resposta = JSON.stringify(resultado);
+                                console.log("Resposta será " + resposta);
+                                res.write(resposta);
                                 res.end();
                             }else{
                                 res.statusCode = 400;

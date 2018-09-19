@@ -105,7 +105,8 @@ module.exports = {
 	},
 
 	buscar: function(campo, valor, cb){
-		var sql = "SELECT * FROM TBUsuario WHERE " + campo + " = " + valor + ";";
+		var sql = 'SELECT * FROM TBUsuario WHERE ' + campo + ' = "' + valor + '";';
+		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
