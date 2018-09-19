@@ -66,14 +66,22 @@ http.createServer(function(req, res){
                     break;
                 case 'LISTAR':
                     controller.listar(function(resultado){
-                        if(resultado != null){
+                        if(resultado != ""){
+                            console.log("Resposta será " + resultado);
                             res.statusCode = 200;
                             var resposta = JSON.stringify(resultado);
                             res.write(resposta);
                             res.end();
-                        }else{
+                        }else if(resultado == null){
+                            console.log("Erro fatal na busca.");
                             res.statusCode = 400;
-                            res.write('Erro ao listar ' + objeto);
+                            res.write("Erro fatal na busca");
+                            res.end();
+                        }
+
+                        else{
+                            res.statusCode = 747;
+                            res.write('Não há ' + objeto + "s cadastrados");
                             res.end();
                         }
                     });
@@ -84,7 +92,7 @@ http.createServer(function(req, res){
                     console.log("Campo: " + campo);
                     console.log("Valor: " + valor);
                     if(campo == null || valor == null){
-                        res.statusCode = 400;
+                        res.statusCode = 746;
                         res.write('Campo ou valor inexistente para busca no banco.');
                         res.end();
                         break;
@@ -97,7 +105,7 @@ http.createServer(function(req, res){
                                 res.write(resposta);
                                 res.end();
                             }else{
-                                res.statusCode = 400;
+                                res.statusCode = 747;
                                 res.write('Erro ao buscar ' + objeto);
                                 res.end();                                
                             }
