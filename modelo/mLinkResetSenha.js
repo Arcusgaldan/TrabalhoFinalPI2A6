@@ -9,7 +9,7 @@ module.exports = {
 	},
 	novo: function(){
 		var final = {};
-		final.id = "";
+		final.id = 0;
 		final.link = "";
 		final.data = "";
 		final.codUsuario = 0;

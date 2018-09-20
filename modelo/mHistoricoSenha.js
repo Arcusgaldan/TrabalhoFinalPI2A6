@@ -1,6 +1,7 @@
 module.exports = {
 	especifica: function(objeto){
 		var final = {};
+		final.id = objeto.id;
 		final.senhaAntiga = objeto.senhaAntiga;
 		final.data = objeto.data;
 		final.codUsuario = objeto.codUsuario;
@@ -9,6 +10,7 @@ module.exports = {
 
 	novo: function(){
 		var final = {};
+		final.id = "";
 		final.senhaAntiga = "";
 		final.data = "";
 		final.codUsuario = 0;
