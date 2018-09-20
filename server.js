@@ -30,38 +30,41 @@ http.createServer(function(req, res){
             switch(req.headers['operacao']){
                 case 'INSERIR':
                     controller.inserir(jsonRqs, function(codRes){
-                    if(codRes == 200){
-                        res.statusCode = 200;
-                        res.write(objeto + ' inserido com sucesso!');
-                        res.end();
-                    }else
-                        res.statusCode = 400;
-                        res.write('Falha ao inserir ' + objeto);
-                        res.end();
+                        if(codRes == 200){
+                            res.statusCode = 200;
+                            res.write(objeto + ' inserido com sucesso!');
+                            res.end();
+                        }else{
+                            res.statusCode = 400;
+                            res.write('Falha ao inserir ' + objeto);
+                            res.end();
+                        }
                     });
                     break;                    
                 case 'ALTERAR':
                     controller.alterar(jsonRqs, function(codRes){
-                    if(codRes == 200){
-                        res.statusCode = 200;
-                        res.write(objeto + ' alterado com sucesso!');
-                        res.end();  
-                    }else
-                        res.statusCode = 400;
-                        res.write('Falha ao alterar ' + objeto);
-                        res.end();
+                        if(codRes == 200){
+                            res.statusCode = 200;
+                            res.write(objeto + ' alterado com sucesso!');
+                            res.end();  
+                        }else{
+                            res.statusCode = 400;
+                            res.write('Falha ao alterar ' + objeto);
+                            res.end();
+                        }
                     });
                     break;
                 case 'EXCLUIR':
                     controller.excluir(jsonRqs['id'], function(codRes){
-                    if(codRes == 200){
-                        res.statusCode = 200;
-                        res.write(objeto + ' alterado com sucesso!');
-                        res.end();
-                    }else
-                        res.statusCode = 400;
-                        res.write('Falha ao alterar ' + objeto);
-                        res.end();
+                        if(codRes == 200){
+                            res.statusCode = 200;
+                            res.write(objeto + ' alterado com sucesso!');
+                            res.end();
+                        }else{
+                            res.statusCode = 400;
+                            res.write('Falha ao alterar ' + objeto);
+                            res.end();
+                        }
                     });
                     break;
                 case 'LISTAR':
@@ -77,9 +80,7 @@ http.createServer(function(req, res){
                             res.statusCode = 400;
                             res.write("Erro fatal na busca");
                             res.end();
-                        }
-
-                        else{
+                        }else{
                             res.statusCode = 747;
                             res.write('Não há ' + objeto + "s cadastrados");
                             res.end();
