@@ -5,3 +5,4 @@
 - Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco);
 - Padronizar os controllers ao cUsuario.js;
 - Tentar generalizar JS de FrontEnd;
+- Cabeçalho que burla segurança do Chrome
