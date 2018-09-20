@@ -24,7 +24,7 @@ function cadastra(){
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
 	opcoesHTTP.headers.Objeto = "Usuario";
-	opcoesHTTP.headers.Operacao = "INSERT";
+	opcoesHTTP.headers.Operacao = "INSERIR";
 
 	console.log("Opções: " + JSON.stringify(opcoesHTTP));
 
