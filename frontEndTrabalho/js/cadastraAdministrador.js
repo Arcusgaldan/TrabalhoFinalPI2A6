@@ -3,9 +3,12 @@ window.onload = function(){
 }
 
 function cadastra(){
+	console.log("Entrou na função");
 	var modelo = require('./../../modelo/mUsuario.js');
 	var utils = require('./../../utils.js');
+	var controller = require('./../../controller/cUsuario.js');
 	var http = require('http');
+	console.log("Fez require");
 	var usuario = modelo.novo();
 	usuario.id = 0;
 	usuario.nome = document.getElementById("nome").value;
@@ -14,11 +17,16 @@ function cadastra(){
 	usuario.email = document.getElementById("email").value;
 	usuario.curriculoLattes = document.getElementById("linkLattes").value;
 	usuario.foto = document.getElementById("foto").value;
-	usuario.primeiroAcesso = 1;
-	usuario.codTipoUsuario = document.getElementById("codTipoUsuario").selectedIndex + 1;
+	usuario.primeiroAcesso = 0;
+	usuario.codTipoUsuario = 2;
 
 	usuario = utils.senhaHash(usuario);
 	var texto = JSON.stringify(usuario);
+
+	if(!controller.validar(usuario)){
+		console.log("Deu ruim");//Adicionar mensagem de falta de campos em modal/alert
+		return;
+	}
 
 	console.log("TEXTO: " + texto);
 
@@ -34,7 +42,6 @@ function cadastra(){
 	    //console.log(res);        
 	    if(res.statusCode == 200){
 	    	alert("Cadastro realizado com sucesso!");
-	    	document.getElementById("fechaCadastraModal").click();
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");

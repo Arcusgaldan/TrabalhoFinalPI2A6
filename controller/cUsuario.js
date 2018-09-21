@@ -109,7 +109,8 @@ module.exports = {
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
-			cb(resultado);
+			
+			(resultado);
 		});
 	}
 }

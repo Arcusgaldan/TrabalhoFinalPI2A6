@@ -6,6 +6,7 @@ function cadastra(){
 	var modelo = require('./../../modelo/mUsuario.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
+	var controller = require('./../../controller/cUsuario.js');
 	var usuario = modelo.novo();
 	usuario.id = 0;
 	usuario.nome = document.getElementById("nome").value;
@@ -15,10 +16,15 @@ function cadastra(){
 	usuario.curriculoLattes = document.getElementById("linkLattes").value;
 	usuario.foto = document.getElementById("foto").value;
 	usuario.primeiroAcesso = 1;
-	usuario.codTipoUsuario = document.getElementById("codTipoUsuario").selectedIndex + 1;
+	usuario.codTipoUsuario = 1;
 
 	usuario = utils.senhaHash(usuario);
 	var texto = JSON.stringify(usuario);
+
+	if(!controller.validar(usuario)){
+		console.log("Deu ruim"); //Adicionar mensagem de falta de campos em modal/alert
+		return;
+	}
 
 	console.log("TEXTO: " + texto);
 
