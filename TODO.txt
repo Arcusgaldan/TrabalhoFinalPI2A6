@@ -9,5 +9,6 @@
 [-] Inserir tipo usuário AO SUBIR O BANCO;
 [-] Redirecionar após o administrador se cadastrar
 [-] Revisar todo o layuot em versões de telas menores
+[V] Alterar na modelagem o link do link reset senha pra 64 caracteres
 
 

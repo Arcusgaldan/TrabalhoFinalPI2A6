@@ -28,7 +28,7 @@ module.exports = {
 	},
 
 	req: function(palavra){
-		if(palavra == null)
+		if(palavra == null || palavra === "")
 			return false;
 		return true;
 	}

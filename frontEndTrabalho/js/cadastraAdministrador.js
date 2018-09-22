@@ -20,10 +20,16 @@ function cadastra(){
 	usuario.primeiroAcesso = 0;
 	usuario.codTipoUsuario = 2;
 
-	usuario = utils.senhaHash(usuario);
+	if(usuario.senha != ""){
+		usuario = utils.senhaHash(usuario);
+		console.log(JSON.stringify(usuario));
+	}
+
 	var texto = JSON.stringify(usuario);
+	console.log(JSON.stringify(usuario));
 
 	if(!controller.validar(usuario)){
+		console.log("abrindo modal");
 		$('#preencherModal').modal('show');
 		return;
 	}

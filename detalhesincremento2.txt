@@ -11,11 +11,10 @@ Data de fundação
 
 TBLogLider
 Id
-LiderAntigo
 LiderAtual
 Data
 
-TBParagrafo
+TBTextoIndex
 Id
 Titulo
 Texto
@@ -43,7 +42,7 @@ select - Novo Lider( listar membros do grupo).
 btnSalvar
 
 
-Grupos.html
+grupos.html
 <title>SIGLA_DO_GRUPO - NOME_DO_GRUPO - PRONN.</title>
 Nesta página deve haver logotipo, nome, sigla,
 descrição, nome do líder atual, data de início do grupo, link do lattes. 
@@ -55,11 +54,8 @@ logo do grupo
 
 index.html
 mostrar cadastramento de grupos e produção cientifica
-e tecnológica
+e tecnológica(textos e títulos), link para pagina grupos.html
 
-gerencimentoIndex.html
-texto - titulo
-texto - texto
 
 
 

@@ -4,7 +4,8 @@ module.exports = {
 		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
 			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.curriculoLattes) ||
 			!validates.req(usuario.data) || !validates.req(usuario.primeiroAcesso)){
-				return false;
+			console.log("Objeto usuario em cUsuario::validar: " + JSON.stringify(usuario));
+			return false;
 		}else{
 			return true;
 		}
