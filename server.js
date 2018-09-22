@@ -94,6 +94,7 @@ http.createServer(function(req, res){
                     console.log("Valor: " + valor);
                     if(campo == null || valor == null){
                         res.statusCode = 746;
+                        console.log('Campo ou valor inexistente para busca no banco.');
                         res.write('Campo ou valor inexistente para busca no banco.');
                         res.end();
                         break;
@@ -102,11 +103,12 @@ http.createServer(function(req, res){
                             if(resultado != null){
                                 res.statusCode = 200;
                                 var resposta = JSON.stringify(resultado);
-                                console.log("Resposta será " + resposta);
+                                console.log("Resposta será " + JSON.stringify(resposta));
                                 res.write(resposta);
                                 res.end();
                             }else{
                                 res.statusCode = 747;
+                                console.log('Erro ao buscar ' + objeto);
                                 res.write('Erro ao buscar ' + objeto);
                                 res.end();                                
                             }

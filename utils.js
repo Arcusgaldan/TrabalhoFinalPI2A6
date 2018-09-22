@@ -34,5 +34,15 @@ module.exports = {
 	    	}
 	    }
 		return retorno;
+	},
+
+	stringHash: function(string){
+		var crypto = require('crypto');
+    	var hash = crypto.createHash('sha256');
+	    
+
+	    hash.update(string);
+	    string = hash.digest('hex');
+	    return string;
 	}
 };
