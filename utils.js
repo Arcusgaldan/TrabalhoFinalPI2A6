@@ -44,5 +44,11 @@ module.exports = {
 	    hash.update(string);
 	    string = hash.digest('hex');
 	    return string;
+	},
+
+	dataAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+		return data;
 	}
 };

@@ -30,7 +30,7 @@ function login(){
 		    res.on('data', function (chunk) {
 		    	if(chunk != null){
 				    if(JSON.parse(chunk).resultado[0].senha == senha){
-				    	console.log("Login com sucesso!")
+				    	console.log("Login com sucesso!");
 				    }else{
 				    	console.log("Falha no login");
 				    }

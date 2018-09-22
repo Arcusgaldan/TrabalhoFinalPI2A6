@@ -22,8 +22,8 @@ module.exports = {
 		final.senha = "";
 		final.curriculoLattes = "";
 		final.foto = "";
-		var dataAux = new Date();
-		final.data = "2018-01-01";
+		var d = new Date();
+		final.data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 		final.primeiroAcesso = 1;
 		final.codTipoUsuario = 0;
 		return final;

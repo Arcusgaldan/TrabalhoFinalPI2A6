@@ -15,17 +15,19 @@ http.createServer(function(req, res){
         //msgRqs = '\"'+msgRqs+'\"';
         if(msgRqs != "")
             jsonRqs = JSON.parse(msgRqs);
-        //console.log(jsonRqs); 
+        //console.log(jsonRqs);
         if(req.headers['objeto'] != null){
             var objeto = req.headers['objeto'];
             var caminho = './controller/c' + objeto + '.js';
-            var controller = require(caminho);
-            if(controller == null){
-                res.statusCode = 400;
-                res.write('Objeto inexistente.');
-                console.log('Objeto inexistente.');
-                res.end();
-                return false;
+            if(objeto != "Email"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+                var controller = require(caminho);
+                if(controller == null){
+                    res.statusCode = 400;
+                    res.write('Objeto inexistente.');
+                    console.log('Objeto inexistente.');
+                    res.end();
+                    return false;
+                }                
             }
             switch(req.headers['operacao']){
                 case 'INSERIR':
@@ -35,7 +37,7 @@ http.createServer(function(req, res){
                             res.write(objeto + ' inserido com sucesso!');
                             res.end();
                         }else{
-                            res.statusCode = 400;
+                            res.statusCode = codRes;
                             res.write('Falha ao inserir ' + objeto);
                             res.end();
                         }
@@ -48,7 +50,7 @@ http.createServer(function(req, res){
                             res.write(objeto + ' alterado com sucesso!');
                             res.end();  
                         }else{
-                            res.statusCode = 400;
+                            res.statusCode = codRes;
                             res.write('Falha ao alterar ' + objeto);
                             res.end();
                         }
@@ -61,7 +63,7 @@ http.createServer(function(req, res){
                             res.write(objeto + ' alterado com sucesso!');
                             res.end();
                         }else{
-                            res.statusCode = 400;
+                            res.statusCode = codRes;
                             res.write('Falha ao alterar ' + objeto);
                             res.end();
                         }
@@ -118,6 +120,20 @@ http.createServer(function(req, res){
                         });
                     }   
                     break;
+                // case 'GERARLINK':
+                //     if(req.headers['objeto'] != 'LinkResetSenha'){
+                //         console.log('Gerar link só pode ser chamado com objeto LinkResetSenha');
+                //         res.write('Gerar link só pode ser chamado com objeto LinkResetSenha');
+                //         res.end();
+                //     }else{
+                //         controller.inserir(jsonRqs, function(resultado, link){
+                //             res.statusCode = resultado;
+                //             res.write(link);
+                //             res.end();
+                //         });
+                //     }
+                case 'EMAIL':
+
                 default:
                     console.log("Operação " + operacao + " não suportada.");
                     res.statusCode = 400;
