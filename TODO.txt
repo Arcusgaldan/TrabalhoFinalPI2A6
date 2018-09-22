@@ -2,7 +2,12 @@
 "V" = Sucesso
 "X" = Falha
 
-- Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco);
-- Padronizar os controllers ao cUsuario.js;
-- Tentar generalizar JS de FrontEnd;
-- Cabeçalho que burla segurança do Chrome
+[V] Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco);
+[-] Padronizar os controllers ao cUsuario.js;
+[-] Tentar generalizar JS de FrontEnd;
+[-] Cabeçalho que burla segurança do Chrome;
+[-] Inserir tipo usuário AO SUBIR O BANCO;
+[-] Redirecionar após o administrador se cadastrar
+[-] Revisar todo o layuot em versões de telas menores
+
+
