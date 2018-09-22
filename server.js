@@ -18,8 +18,8 @@ http.createServer(function(req, res){
         //console.log(jsonRqs);
         if(req.headers['objeto'] != null){
             var objeto = req.headers['objeto'];
-            var caminho = './controller/c' + objeto + '.js';
             if(objeto != "Email"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+                var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
                 if(controller == null){
                     res.statusCode = 400;
@@ -132,8 +132,6 @@ http.createServer(function(req, res){
                 //             res.end();
                 //         });
                 //     }
-                case 'EMAIL':
-
                 default:
                     console.log("Operação " + operacao + " não suportada.");
                     res.statusCode = 400;
