@@ -1,5 +1,5 @@
 window.onload = function(){
-	document.getElementById("btnGerarLink").addEventListener("click", verificaEmail);
+	document.getElementById("btnVerificaEmail").addEventListener("click", verificaEmail);
 }
 
 function verificaEmail(){
@@ -22,8 +22,10 @@ function verificaEmail(){
 		if(res.statusCode == 200){
 			console.log("Ok, vou enviar email!");
 			res.on('data', function (chunk) {
+				console.log("A resposta em esqueceuSenha::verificaEmail foi: " + chunk);
 		    	if(chunk != null){
-				    geraLink(JSON.parse(chunk).resultado[0].codUsuario, JSON.parse(chunk).resultado[0].email);
+		    		console.log("Entrando em geraLink com codUsuario = " + JSON.parse(chunk).resultado[0].id + "!");
+				    geraLink(JSON.parse(chunk).resultado[0].id, JSON.parse(chunk).resultado[0].email);
 				}
 		    });
 		}else{
@@ -40,12 +42,17 @@ function verificaEmail(){
 }
 
 function geraLink(codUsuario, email){
+	console.log("Entrei em geraLink!");
 	var http = require('http');
 	var modelo = require('./../../modelo/mLinkResetSenha.js');
+	var utils = require('./../../utils.js');
+
 	var linkResetSenha = modelo.novo();
 	linkResetSenha.codUsuario = codUsuario;
 
 	var texto = JSON.stringify(linkResetSenha);
+
+	console.log("Texto em esqueceuSenha::geraLink = " + texto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
 	opcoesHTTP.headers.Objeto = "LinkResetSenha";
@@ -61,6 +68,9 @@ function geraLink(codUsuario, email){
 			console.log("Falha ao enviar email. Contate o suporte.");
 		}
 	});
+
+	req.write(texto);
+	req.end();
 }
 
 

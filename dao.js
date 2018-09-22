@@ -55,12 +55,13 @@ module.exports = {
 		};
 
 		transporter.sendMail(mailOptions, function(err, info){
-			if(err)
+			if(err){
 				console.log(err);
-				cb(400);
-			else
+				cb(400);				
+			}else{
 				console.log(info);
 				cb(200);
+			}
 		});
 	}
 }

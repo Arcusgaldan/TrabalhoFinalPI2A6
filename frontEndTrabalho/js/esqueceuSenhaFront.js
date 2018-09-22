@@ -24686,7 +24686,7 @@ function extend() {
 
 },{}],167:[function(require,module,exports){
 window.onload = function(){
-	document.getElementById("btnGerarLink").addEventListener("click", verificaEmail);
+	document.getElementById("btnVerificaEmail").addEventListener("click", verificaEmail);
 }
 
 function verificaEmail(){
@@ -24708,7 +24708,13 @@ function verificaEmail(){
 		console.log("Chegou a reposta!");
 		if(res.statusCode == 200){
 			console.log("Ok, vou enviar email!");
-
+			res.on('data', function (chunk) {
+				console.log("A resposta em esqueceuSenha::verificaEmail foi: " + chunk);
+		    	if(chunk != null){
+		    		console.log("Entrando em geraLink com codUsuario = " + JSON.parse(chunk).resultado[0].id + "!");
+				    geraLink(JSON.parse(chunk).resultado[0].id, JSON.parse(chunk).resultado[0].email);
+				}
+		    });
 		}else{
 			console.log("Este email não está cadastrado no sistema");
 		}
@@ -24722,9 +24728,71 @@ function verificaEmail(){
 	}
 }
 
+function geraLink(codUsuario, email){
+	console.log("Entrei em geraLink!");
+	var http = require('http');
+	var modelo = require('./../../modelo/mLinkResetSenha.js');
+	var utils = require('./../../utils.js');
+
+	var linkResetSenha = modelo.novo();
+	linkResetSenha.codUsuario = codUsuario;
+
+	var texto = JSON.stringify(linkResetSenha);
+
+	console.log("Texto em esqueceuSenha::geraLink = " + texto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "LinkResetSenha";
+	opcoesHTTP.headers.Operacao = "INSERIR";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida!");
+		if(res.statusCode == 200){
+			console.log("Email enviado!");
+		}else if(res.statusCode == 400){
+			console.log("Erro fatal ao tentar recuperar senha");
+		}else{
+			console.log("Falha ao enviar email. Contate o suporte.");
+		}
+	});
+
+	req.write(texto);
+	req.end();
+}
 
 
-},{"./../../utils.js":168,"http":155}],168:[function(require,module,exports){
+
+
+},{"./../../modelo/mLinkResetSenha.js":168,"./../../utils.js":169,"http":155}],168:[function(require,module,exports){
+module.exports = {
+	especifica: function(objeto){
+		var final = {};
+		final.id = objeto.id;
+		final.link = objeto.link;
+		final.data = objeto.data;
+		final.codUsuario = objeto.codUsuario;
+		return final;
+	},
+	novo: function(){
+		var final = {};
+		final.id = 0;
+		final.link = "";
+		final.data = "";
+		final.codUsuario = 0;
+		return final;
+	}
+	,
+
+	isString: function(atributo){
+		var strings = ["link", "data"];
+		for (var i = strings.length - 1; i >= 0; i--) {
+			if(strings[i] == atributo)
+				return true;
+		}
+		return false;
+	}
+}
+},{}],169:[function(require,module,exports){
 (function (Buffer){
 module.exports = {
 	geraSenhaAleatoria: function(){
@@ -24772,6 +24840,12 @@ module.exports = {
 	    hash.update(string);
 	    string = hash.digest('hex');
 	    return string;
+	},
+
+	dataAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+		return data;
 	}
 };
 }).call(this,require("buffer").Buffer)

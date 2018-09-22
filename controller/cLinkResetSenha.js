@@ -12,6 +12,7 @@ module.exports = {
 	inserir: function(linkResetSenha, cb){
 		var email;
 		var link;
+		var enviarEmail = this.enviarEmail;
 		if(linkResetSenha.codUsuario == null){
 				console.log("Falha na validação.");
 				return false;
@@ -20,24 +21,22 @@ module.exports = {
 			var controllerUsuario = require('./cUsuario.js');
 			var utils = require('./../utils.js');
 			controllerUsuario.buscar("id", linkResetSenha.codUsuario, function(res){
+				console.log("Recebi resposta em cLinkResetSenha::inserir");
 				if(res == null){
 					cb(400);
 					return;
 				}
-				res.on('data', function (chunk) {
-			    	if(chunk != null){
-						linkResetSenha.link = utils.stringHash(new Date() + JSON.parse(chunk).resultado[0].email);
-						link = linkResetSenha.link;
-						linkResetSenha.data = utils.dataAtual();
-						email = 
-						console.log("Link gerado: " + linkResetSenha.link);
-						console.log("Data atual: " + linkResetSenha.data);
-						email = JSON.parse(chunk).resultado[0].email;
-					}else{
-						cb(400);
-						return;
-					}
-			    });
+		    	if(res != ""){
+					linkResetSenha.link = utils.stringHash(new Date() + res[0].email);
+					link = linkResetSenha.link;
+					linkResetSenha.data = utils.dataAtual();
+					email = res[0].email;
+					console.log("Link gerado: " + linkResetSenha.link);
+					console.log("Data atual: " + linkResetSenha.data);
+				}else{
+					cb(400);
+					return;
+				}
 				var sql = "INSERT INTO TBLinkResetSenha (";
 				var campos = "";
 				var valores = "";
