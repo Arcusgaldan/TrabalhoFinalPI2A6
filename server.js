@@ -100,10 +100,13 @@ http.createServer(function(req, res){
                         break;
                     }else{
                         controller.buscar(campo, valor, function(resultado){
-                            if(resultado != null){
-                                res.statusCode = 200;
-                                var resposta = JSON.stringify(resultado);
+                            if(resultado != ""){
+                                res.statusCode = 200;                    
+                                var resultadoFinal = {"resultado": resultado};
+                                var resposta = JSON.stringify(resultadoFinal);
                                 console.log("Resposta será " + JSON.stringify(resposta));
+                                var respostaFinal = resposta.replace("\\\"", "\"");
+                                console.log("Resposta final: " + respostaFinal);
                                 res.write(resposta);
                                 res.end();
                             }else{

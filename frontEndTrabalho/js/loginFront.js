@@ -14577,7 +14577,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Aluno\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -24713,15 +24713,25 @@ function login(){
 		console.log("Chegou a resposta!");
 		if(res.statusCode == 200){
 			console.log("Teve resultado!");
+			res.setEncoding('utf8');
+		    res.on('data', function (chunk) {
+		    	if(chunk != null){
+				    if(JSON.parse(chunk).resultado[0].senha == senha){
+				    	console.log("Login com sucesso!")
+				    }else{
+				    	console.log("Falha no login");
+				    }
+				}
+		    });
+	    	//let jsonRes = JSON.parse(res);
+	    	// for(var k in jsonRes){
+	    	// 	console.log("Key: " + k + "\nValor: " + jsonRes[k]);
+	    	// }
 		}else if(res.statusCode == 747){
 			console.log("Não teve resultado!");
 		}else{
 			console.log("Erro fatal.");
 		}
-    	let jsonRes = JSON.parse(res);
-    	for(var k in jsonRes){
-    		console.log("Key: " + k + "\nValor: " + jsonRes[k]);
-    	}
 	}); 
 
 	req.write(texto);
