@@ -1,0 +1,8 @@
+DUVIDAS PRONN
+
+cadastraUsuarioFront.JS (Não consegui entender o Arquivo)
+
+falta comparar a senha do adm antes de enviar o pacote (cadastraUsuarioFront.JS)
+
+
+Fiz o arquivo cadastraAdministradorFront.JS e não ta funcionando

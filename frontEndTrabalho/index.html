@@ -23,6 +23,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
+    <script type="text/javascript" src="js/primeiroAcessoFront.js"></script>
+    <script type="text/javascript" src="js/loginFront.js"></script>
 
   </head>
 
@@ -52,18 +54,18 @@
 	 <form class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-7">
       	<div class="form-row align-items-center">
       		<div class="col-sm-4 my-1">
-      			<label class="sr-only" for="usuarioLogin">Usuário</label>
-      			<input type="text" class="form-control" id="inlineFormInputName" placeholder="Usuário">
+      			<label class="sr-only" for="usuarioLogin">Email</label>
+      			<input type="text" class="form-control" id="emailLogin" placeholder="Email">
       		</div>
       		<div class="col-sm-4 my-1">
       			<label class="sr-only" for="senhaLogin">Senha</label>
       			<div class="input-group">
-      				<input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Senha">
+      				<input type="text" class="form-control" id="senhaLogin" placeholder="Senha">
       			</div>
       		</div>
       	 
       		<div class="my-1">
-      			<button type="submit" class="btn btn-primary">ENTRAR</button>
+      			<button type="button" id="btnLogin" class="btn btn-primary">ENTRAR</button>
       		</div>
       	</div>
       </form>
