@@ -24,7 +24,7 @@ function cadastra(){
 	var texto = JSON.stringify(usuario);
 
 	if(!controller.validar(usuario)){
-		console.log("Deu ruim");//Adicionar mensagem de falta de campos em modal/alert
+		$('#preencherModal').modal('show');
 		return;
 	}
 
@@ -41,7 +41,9 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	alert("Cadastro realizado com sucesso!");
+	    	// alert("Cadastro realizado com sucesso!");
+	    	$('#sucessoModal').modal('show');
+	    	setTimeout(function(){location.href="index.html"} , 5000);   
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");

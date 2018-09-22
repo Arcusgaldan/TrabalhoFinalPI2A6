@@ -29,7 +29,7 @@
 
   </head>
 
-  <body id="page-top" class="sidebar-toggled" >
+  <body id="page-top" class="sidebar-toggled">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
@@ -38,21 +38,8 @@
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
-
-      <!-- Navbar Search -->
-      <!-- <form class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 col-md-2">
-        <div class="input-group ">
-          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
-          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
- 		-->
-	 <form class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-7">
+ 
+	 <form class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6">
       	<div class="form-row align-items-center">
       		<div class="col-sm-4 my-1">
       			<label class="sr-only" for="usuarioLogin">Email</label>
@@ -65,14 +52,13 @@
       			</div>
       		</div>
       	 
-      		<div class="my-1">
+      		<div class="col-sm-4 my-1">
       			<button type="button" id="btnLogin" class="btn btn-primary">ENTRAR</button>
-      		</div>
-      	</div>
-      </form>
 
-	 
-	  </form>
+            <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 16px;"><small>Redefinir senha</small></button>
+          </div>
+        </div>
+    </form>
 
       <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">
@@ -162,6 +148,39 @@
           </div>
         </div>
       </div>
+
+    <!--MODAL ONDE A O EMAIL DE RECUPERAÇÃO SERÁ SOLICITADO-->  
+    <div class="modal fade" id="recuperaEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastrar usuário</h5>
+            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p>
+              Digite o e-mail para qual deseja usar para recuperar a senha.
+            </p>
+
+            <form action="" method="get" >
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="email" id="emailGerarLink" class="form-control" name="email" placeholder="Email" required="required">
+                  <label for="email">Email</label>
+                </div>
+              </div>             
+            </form>
+
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" id="btnVerificaEmail">Cadastar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

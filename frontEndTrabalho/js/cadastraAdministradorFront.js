@@ -14579,7 +14579,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -25394,9 +25394,8 @@ module.exports = {
 		var sql = 'SELECT * FROM TBUsuario WHERE ' + campo + ' = "' + valor + '";';
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
-		dao.buscar(dao.criaConexao(), sql, function(resultado){
-			
-			(resultado);
+		dao.buscar(dao.criaConexao(), sql, function(resultado){			
+			cb(resultado);
 		});
 	}
 }
@@ -25467,7 +25466,7 @@ function cadastra(){
 	var texto = JSON.stringify(usuario);
 
 	if(!controller.validar(usuario)){
-		console.log("Deu ruim");
+		$('#preencherModal').modal('show');
 		return;
 	}
 
@@ -25484,8 +25483,9 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	alert("Cadastro realizado com sucesso!");
-	    	document.getElementById("fechaCadastraModal").click();
+	    	// alert("Cadastro realizado com sucesso!");
+	    	$('#sucessoModal').modal('show');
+	    	setTimeout(function(){location.href="index.html"} , 5000);   
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");
@@ -36796,6 +36796,16 @@ module.exports = {
 	    	}
 	    }
 		return retorno;
+	},
+
+	stringHash: function(string){
+		var crypto = require('crypto');
+    	var hash = crypto.createHash('sha256');
+	    
+
+	    hash.update(string);
+	    string = hash.digest('hex');
+	    return string;
 	}
 };
 }).call(this,require("buffer").Buffer)
