@@ -14577,7 +14577,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -24695,9 +24695,11 @@ var req = http.request(opcoesHTTP, (res) => {
 	res.on('data', function(chunk){
 		console.log("Chunk: " + chunk);
 		let vetor = JSON.parse(chunk);
-		for(var i = 0; i < vetor.length; i++){
-			console.log("Usuario #" + i + "\n Nome: " + vetor[i].nome);
-		}
+		// for(var i = 0; i < vetor.length; i++){
+		// 	console.log("Usuario #" + i + "\n Nome: " + vetor[i].nome);
+
+		// }
+		document.getElementById('nomeUsuaroioLista0').innerHTML = vetor[0].nome;
 	});
 });
 req.end();

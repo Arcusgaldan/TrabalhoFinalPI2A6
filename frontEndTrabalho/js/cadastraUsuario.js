@@ -9,12 +9,12 @@ function cadastra(){
 	var controller = require('./../../controller/cUsuario.js');
 	var usuario = modelo.novo();
 	usuario.id = 0;
-	usuario.nome = document.getElementById("nome").value;
-	usuario.prontuario = document.getElementById("prontuario").value;
+	usuario.nome = document.getElementById("nomeCadastrar").value;
+	usuario.prontuario = document.getElementById("prontuarioCadastrar").value;
 	usuario.senha = utils.geraSenhaAleatoria();
-	usuario.email = document.getElementById("email").value;
-	usuario.curriculoLattes = document.getElementById("linkLattes").value;
-	usuario.foto = document.getElementById("foto").value;
+	usuario.email = document.getElementById("emailCadastrar").value;
+	usuario.curriculoLattes = document.getElementById("linkLattesCadastrar").value;
+	usuario.foto = document.getElementById("fotoCadastrar").value;
 	usuario.primeiroAcesso = 1;
 	usuario.codTipoUsuario = 1;
 

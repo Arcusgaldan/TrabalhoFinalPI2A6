@@ -95,7 +95,9 @@
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Gerenciamento de Usuário</div>
+                <div class="card-header">Gerenciamento de Usuário 
+                  <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal">Cadastrar Usuário</button>
+                </div>
                 <div class="card-body">
                   <p>
                     
@@ -109,25 +111,11 @@
                           <th scope="col" class="">Lider</th>
                         </tr>
                       </thead> -->
-                    <tbody>
-                      <tr>
-                        <th>Usuário 003</th>
-                        <td>
-                          <button class="btn btn-info" scope="row" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> Mostra Dados <span class="fas fa-plus"></span></button>
-                          <button class="btn btn-success" data-toggle="modal" data-target="#cadastraModal">Cadastrar Usuário</button>
-                          <button class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Usuário</button>
-                          <button class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Usuário</button>
-                        </td>
-                        <div class="collapse" id="collapseExample"> 
-                          <div class="card card-body">
-                            <p><strong>Nome: </strong> Usuário numero um</p>
-                            <p><strong>Prontuário: </strong> 1590222</p>
-                            <p><strong>E-Mail: </strong> usuario@email.com</p>
-                            <p><strong>Link do Lattes: </strong> http://lattes.cnpq.br/1234567891112131415</p>
-                            <p><strong>Tipo de Usuário: </strong> Lider</p>
-                          </div>
-                        </div>
-                      </tr>
+                    <tbody id="tabelaUsuario">
+
+                      
+
+
                     </tbody>
                   </table>
                  
@@ -155,7 +143,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastrar usuário</h5>
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar usuário</h5>
             <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -171,13 +159,13 @@
                 <div class="form-row">
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="nome" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <input type="text" id="nomeCadastrar" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                       <label for="nome">Nome Completo</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="prontuario" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
+                      <input type="text" id="prontuarioCadastrar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
                       <label for="prontuario">Prontuário</label>
                     </div>
                   </div>
@@ -186,7 +174,7 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
+                  <input type="email" id="emailCadastrar" class="form-control" name="email" placeholder="Email" required="required">
                   <label for="email">Email</label>
                 </div>
               </div>
@@ -195,7 +183,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattes" placeholder="Link do Lattes">
+                      <input type="url" class="form-control" id="linkLattesCadastrar" placeholder="Link do Lattes">
                       <div class="input-group-prepend">
                         <div class="input-group-text">http://lattes.cnpq.br/****</div>
                       </div>
@@ -209,7 +197,7 @@
                 <div class="form-row">
                   <div class="col-md-12 ">
                     <div class="form-label-group">
-                      <input type="file" id="foto" class="form-control" placeholder="foote" required="required">
+                      <input type="file" id="fotoCadastrar" class="form-control" placeholder="foote" required="required">
                       <label for="foto">Foto de Perfil</label>
                     </div>
                   </div>
@@ -221,7 +209,7 @@
                   <div class="col-md-12 ">
                     <label for="foto">Escolha um tipo de usuário</label>
                     <div class="form-label-group">
-                      <select class="form-control" id="codTipoUsuario">
+                      <select class="form-control" id="codTipoUsuarioCadastrar">
                         <option>Lider</option>
                       </select>
                     </div>
@@ -259,13 +247,13 @@
                       <div class="form-row">
                         <div class="col-md-6">
                           <div class="form-label-group">
-                            <input type="text" id="nome" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                            <input type="text" id="nomeAlterar" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                             <label for="nome">Nome Completo</label>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-label-group">
-                            <input type="text" id="prontuario" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
+                            <input type="text" id="prontuarioAlterar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
                             <label for="prontuario">Prontuário</label>
                           </div>
                         </div>
@@ -274,7 +262,7 @@
 
                     <div class="form-group">
                       <div class="form-label-group">
-                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
+                        <input type="email" id="emailAlterar" class="form-control" name="email" placeholder="Email" required="required">
                         <label for="email">Email</label>
                       </div>
                     </div>
@@ -283,7 +271,7 @@
                     <div class="form-row">
                       <div class="col-md-12">
                         <div class="input-group">
-                          <input type="url" class="form-control" id="linkLattes" placeholder="Link do Lattes">
+                          <input type="url" class="form-control" id="linkLattesAlterar" placeholder="Link do Lattes">
                           <div class="input-group-prepend">
                             <div class="input-group-text">http://lattes.cnpq.br/****</div>
                           </div>
@@ -297,31 +285,13 @@
                       <div class="form-row">
                         <div class="col-md-12 ">
                           <div class="form-label-group">
-                            <input type="file" id="foto" class="form-control" placeholder="foote" required="required">
+                            <input type="file" id="fotoAlterar" class="form-control" placeholder="foote" required="required">
                             <label for="foto">Foto de Perfil</label>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-12 ">
-                          <label for="foto">Escolha um tipo de usuário</label>
-                          <div class="form-label-group">
-                           <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Lider</option>
-                          </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                     
-
-                         <!-- <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#logoutModal" >Enviar Dados</a> -->
-                   
-                    <!--<input type="submit" value="Submit">-->
                   </form>
 
           </div>
@@ -338,12 +308,12 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Deseja excluirModal  ?</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Deseja excluir <span id="nomeExcluir"></span> ?</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body">Você deseja realmente excluir esta entrada?</div>
+            <div class="modal-body">Você deseja realmente excluir este usuário ?</div>
             <div class="modal-footer">
               <button class="btn btn-success">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
