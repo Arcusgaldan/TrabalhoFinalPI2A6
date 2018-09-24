@@ -11,5 +11,13 @@
 [-] Revisar todo o layuot em versões de telas menores
 [V] Alterar na modelagem o link do link reset senha pra 64 caracteres
 [-] Fazer os modais de alterar usuário e o excluir usuário aparecerem os nomes do usuario selecionado, só aparece o ultimo usuário
+[-] Trocar as informações do menu, Quando for administrados mostrar apenas e a d adm, e o mesmo para lider.
+[-] Trocar flaticons sistemaInterno-Lider, SistemaInterno
 
+
+O administrador irá poder cadastar o grupo sem o lider, como ele irá aicionar o lider depois ?
+
+O lider Poderá adicionar lider aos grupos sem lideres ?
+
+O administrador podera visualizar a página interna do grupo de pesquisa, se sim, ele irá poder alterar as informações?
 
