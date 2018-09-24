@@ -10,5 +10,6 @@
 [-] Redirecionar após o administrador se cadastrar
 [-] Revisar todo o layuot em versões de telas menores
 [V] Alterar na modelagem o link do link reset senha pra 64 caracteres
+[-] Fazer os modais de alterar usuário e o excluir usuário aparecerem os nomes do usuario selecionado, só aparece o ultimo usuário
 
 

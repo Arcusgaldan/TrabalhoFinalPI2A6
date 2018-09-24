@@ -24723,27 +24723,28 @@ function criaElementos(listaUsuario){
 		}
 
 		var funcaoPreencheAlterar = preencheModalAlterar(listaUsuario[i]);
+		var funcaoPreencheModalExcluir = preencheModalExcluir(listaUsuario[i]);
 
 		document.getElementById("alterarUsuarioLista"+ i).addEventListener("click", funcaoPreencheAlterar);
 
-		document.getElementById("excluirUsuarioLista"+ i).addEventListener("click", function(){
-			preencheModalExcluir(listaUsuario[i]);
-		});
+		document.getElementById("excluirUsuarioLista"+ i).addEventListener("click", funcaoPreencheModalExcluir);
 
 	}
 }
 
 function preencheModalAlterar(usuario){
-	console.log("entrei no modal Alterar com usuario = " + JSON.stringify(usuario));
+	//console.log("entrei no modal Alterar com usuario = " + JSON.stringify(usuario));
+	// document.getElementById("alteraModal").id = alteraModal;
 	document.getElementById("nomeAlterar").value = usuario.nome;
 	document.getElementById("prontuarioAlterar").value = usuario.prontuario;
 	document.getElementById("emailAlterar").value = usuario.email;
-	document.getElementById("linkLattesAlterar").value = usuario.lattes;
-	document.getElementById("fotoAlterar").value = usuario.foto;
+	document.getElementById("linkLattesAlterar").value = usuario.curriculoLattes;
+	// document.getElementById("fotoAlterar").value = usuario.foto;
 }
 
 function preencheModalExcluir(usuario){
-	document.getElementById("nomeExcluir").innerHTML = "Você Realmente deseja excluir" + usuario.nome + "?";
+	console.log("entrei no modal Excluir com usuario = " + JSON.stringify(usuario.nome));
+	document.getElementById("nomeExcluir").innerHTML = usuario.nome;
 }
 
 var utils = require('./../../utils.js');
