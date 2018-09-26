@@ -2,7 +2,6 @@
 <html lang="en">
 
   <head>
-    <script type="text/javascript" src="js/cadastraUsuarioFront.js"></script>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +23,6 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-    <script type="text/javascript" src="js/listarUsuarioFront.js"></script>
 
   </head>
 
@@ -70,7 +68,7 @@
       <!-- Sidebar -->
       <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
       <ul class="sidebar navbar-nav toggled">
-        <li class="nav-item active">
+        <!-- <li class="nav-item active">
           <a class="nav-link" href="cadastroUsuario.html">
             <i class="fas fa-fw fa-user-alt "></i>
             <span>Cadastrar Usuário</span>
@@ -81,7 +79,7 @@
             <i class="fas fa-fw fa-check"></i>
             <span>Cadastrar Permissões</span>
           </a>
-        </li>
+        </li> -->
       </ul>
 
       <div id="content-wrapper">
@@ -90,13 +88,13 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Gerenciamento de Usuário</li>
+            <li class="breadcrumb-item active">Página Geral de Grupos</li>
           </ol>
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Gerenciamento de Usuário 
-                  <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal">Cadastrar Usuário</button>
+                <div class="card-header">Página Geral de Grupos
+                  <a href="cadastroGrupo.html" class="btn btn-success float-right">Cadastrar Grupo</a>
                 </div>
                 <div class="card-body">
                   <p>
@@ -104,35 +102,43 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-
-                      <!-- <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col" class="">Lider</th>
-                        </tr>
-                      </thead> -->
                     <tbody id="tabelaUsuario">
-
-                     
-                      <tr>
-        <th id="nomeUsuarioLista"></th>
-        <td>
-        <button class='btn btn-info scope='row' data-toggle='collapse' href='#collapseUsuarioLista"+ i +"' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
-        <button id='alterarUsuarioLista"+ i +"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Usuário</button>
-        <button id='excluirUsuarioLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Usuário</button>
-        <div id='collapseUsuarioLista"+ i +"' class='collapse mostraLista' >
-          <div class='card card-body'>
-            <p><strong>Nome: </strong><span id='nomeUsuarioDados"+i+"'></span></p>
-            <p><strong>Prontuário: </strong> <span id='prontuarioUsuarioDados"+i+"'></span></p>
-            <p><strong>E-Mail: </strong> <span id='emailUsuarioDados"+i+"'></span></p>
-            <p><strong>Link do Lattes: </strong> <span id='lattesUsuarioDados"+i+"'></span></p>
-            <p><strong>Tipo de Usuário: </strong> <span id='tipoUsuarioDados"+i+"'></span></p>
-          </div>
-        </div>
-        </td>
-      </tr>
-    
-
+                      <tr>        
+                      <th id="nomeUsuarioLista0">Sigla_Grupo</th>
+                        <td>    
+                        <button class="btn btn-info" scope="row" data-toggle="collapse" href="#collapseUsuarioLista0" role="button" aria-expanded="false" aria-controls="collapseExample"> Mostra Dados <span class="fas fa-plus"></span></button>
+                        <button id="alterarUsuarioLista0" class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button>
+                        <button id="excluirUsuarioLista0" class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Grupo</button>
+                        <div id="collapseUsuarioLista0" class="collapse mostraLista"> 
+                          <div class="card card-body">      
+                            <img src="images/favicon.png" class="rounded float-right fotoGrupo col-2 " alt="">
+                            <p>
+                              <strong>Nome do Grupo: </strong>
+                              <span id="nomeUsuarioDados0">Nome do Grupo 001</span>
+                            </p>      
+                            <p>
+                              <strong>Descrição  : </strong> 
+                              <span id="prontuarioUsuarioDados0">
+                                is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                              </span>
+                            </p>
+                            
+                            <p>
+                              <strong>Nome Lider Atual </strong>
+                              <span id="">Teste adm</span>
+                            </p> 
+                            <p>
+                              <strong>Link do Lattes: </strong> 
+                              <span id="">http://lattes.cnpq.br/grupoTeste001</span>
+                            </p>    
+                            <p>
+                              <strong>Data Inicio do Grupo: </strong> 
+                              <span id="">Administrador</span>
+                            </p> 
+                          </div>     
+                        </div>      
+                        </td>  
+                      </tr> 
                     </tbody>
                   </table>
                  
@@ -153,98 +159,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-
-    
-    <div class="modal fade" id="cadastraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar usuário</h5>
-            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuários
-            </p>
-
-            <form action="" method="get" >
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="nomeCadastrar" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nome">Nome Completo</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="prontuarioCadastrar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
-                      <label for="prontuario">Prontuário</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="email" id="emailCadastrar" class="form-control" name="email" placeholder="Email" required="required">
-                  <label for="email">Email</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattesCadastrar" placeholder="Link do Lattes">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12 ">
-                    <div class="form-label-group">
-                      <input type="file" id="fotoCadastrar" class="form-control" placeholder="foote" required="required">
-                      <label for="foto">Foto de Perfil</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12 ">
-                    <label for="foto">Escolha um tipo de usuário</label>
-                    <div class="form-label-group">
-                      <select class="form-control" id="codTipoUsuarioCadastrar">
-                        <option>Lider</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastro">Cadastar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
+ 
     <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -256,59 +171,55 @@
           </div>
           <div class="modal-body">
              <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuários
+              Neste formulário serão inseridas as informações para o cadastro de Grupo
             </p>
-            <form action="" method="get" >
+              <form action="" method="get">
 
                     <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-6">
-                          <div class="form-label-group">
-                            <input type="text" id="nomeAlterar" value="" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                            <label for="nome">Nome Completo</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-label-group">
-                            <input type="text" id="prontuarioAlterar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
-                            <label for="prontuario">Prontuário</label>
-                          </div>
-                        </div>
+                      <div class="form-label-group">
+                        <input type="text" id="nomeGrupo" class="form-control" name="nomeGrupo"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
+                        <label for="nome">Nome do Grupo</label>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <div class="form-label-group">
-                        <input type="email" id="emailAlterar" class="form-control" name="email" placeholder="Email" required="required">
+                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
                         <label for="email">Email</label>
                       </div>
                     </div>
- 
-                  <div class="form-group">
-                    <div class="form-row">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <input type="url" class="form-control" id="linkLattesAlterar" placeholder="Link do Lattes">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                          </div>
-                        </div>
-                      </div>
-                     </div>
-                  </div>
-                 
 
                     <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-12 ">
-                          <div class="form-label-group">
-                            <input type="file" id="fotoAlterar" class="form-control" placeholder="foote" required="required">
-                            <label for="foto">Foto de Perfil</label>
-                          </div>
-                        </div>
+                      <div class="form-label-group">
+                        <input type="text" id="sigla" class="form-control" name="sigla" placeholder="Sigla do Grupo" required="required">
+                        <label for="email">Sigla do Grupo</label>
                       </div>
                     </div>
 
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <select class="form-control form-control">
+                          <option value="" readonly>Selecione um Lider</option>
+                          <option>Lider 1</option>
+                          <option>Lider 2</option>
+                          <option>Lider 3</option>
+                          <option>Lider 4</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <select class="form-control form-control">
+                          <option value="" readonly>Status</option>
+                          <option>Ativo</option>
+                          <option>Inativo</option>
+                          <option>Aguardando líder</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    
                   </form>
 
           </div>
@@ -330,7 +241,7 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p id="nomeExcluir" style="color: #000"></p></div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Você reamente deseja excluir esse grupo?</p></div>
             <div class="modal-footer">
               <button class="btn btn-success">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>

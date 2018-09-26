@@ -14577,7 +14577,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -24685,11 +24685,10 @@ function extend() {
 }
 
 },{}],167:[function(require,module,exports){
-window.onload = function(){
-	document.getElementById("btnLogin").addEventListener("click", login);
-}
+document.getElementById("btnLogin").addEventListener("click", login);
 
 function login(){
+	console.log("Etrando em login");
 	var utils = require('./../../utils.js');
 	var http = require('http');
 
@@ -24717,7 +24716,7 @@ function login(){
 		    res.on('data', function (chunk) {
 		    	if(chunk != null){
 				    if(JSON.parse(chunk).resultado[0].senha == senha){
-				    	console.log("Login com sucesso!")
+				    	console.log("Login com sucesso!");
 				    }else{
 				    	console.log("Falha no login");
 				    }
@@ -24785,6 +24784,12 @@ module.exports = {
 	    hash.update(string);
 	    string = hash.digest('hex');
 	    return string;
+	},
+
+	dataAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+		return data;
 	}
 };
 }).call(this,require("buffer").Buffer)

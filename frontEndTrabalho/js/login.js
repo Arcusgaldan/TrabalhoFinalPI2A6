@@ -1,8 +1,7 @@
-window.onload = function(){
-	document.getElementById("btnLogin").addEventListener("click", login);
-}
+document.getElementById("btnLogin").addEventListener("click", login);
 
 function login(){
+	console.log("Etrando em login");
 	var utils = require('./../../utils.js');
 	var http = require('http');
 

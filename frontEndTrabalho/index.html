@@ -20,12 +20,10 @@
 
     <!-- Page level plugin CSS-->
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <script type="text/javascript"></script>
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-    <script type="text/javascript" src="js/primeiroAcessoFront.js"></script>
-    <script type="text/javascript" src="js/loginFront.js"></script>
-    <script type="text/javascript" src="js/esqueceuSenhaFront.js"></script>
 
   </head>
 
@@ -48,15 +46,15 @@
       		<div class="col-sm-4 my-1">
       			<label class="sr-only" for="senhaLogin">Senha</label>
       			<div class="input-group">
-      				<input type="text" class="form-control" id="senhaLogin" placeholder="Senha">
+      				<input type="password" class="form-control" id="senhaLogin" placeholder="Senha">
       			</div>
       		</div>
-      	 
-      		<div class="col-sm-4 my-1">
+         
       			<button type="button" id="btnLogin" class="btn btn-primary">ENTRAR</button>
+          <!-- <div class="col-sm-4 my-1"> -->
 
-            <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 15px;"><small>Redefinir senha</small></button>
-          </div>
+            <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 15px;margin-left: 10px;"><small>Redefinir senha</small></button>
+          <!-- </div> -->
         </div>
     </form>
 
@@ -196,6 +194,9 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
+    <script type="text/javascript" src="js/esqueceuSenhaFront.js"></script>
+    <script type="text/javascript" src="js/loginFront.js"></script>
+    <script type="text/javascript" src="js/primeiroAcessoFront.js"></script>
 
   </body>
 

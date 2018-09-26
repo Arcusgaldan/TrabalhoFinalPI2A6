@@ -1,6 +1,6 @@
-window.onload = function(){
-	document.getElementById("btnVerificaEmail").addEventListener("click", verificaEmail);
-}
+document.getElementById("btnVerificaEmail").addEventListener("click", verificaEmail);
+console.log("carregou esquece senha.js");
+
 
 function verificaEmail(){
 	var email = document.getElementById("emailGerarLink").value;

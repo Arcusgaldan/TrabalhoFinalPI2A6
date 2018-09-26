@@ -14577,7 +14577,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -24685,9 +24685,9 @@ function extend() {
 }
 
 },{}],167:[function(require,module,exports){
-window.onload = function(){
-	document.getElementById("btnVerificaEmail").addEventListener("click", verificaEmail);
-}
+document.getElementById("btnVerificaEmail").addEventListener("click", verificaEmail);
+console.log("carregou esquece senha.js");
+
 
 function verificaEmail(){
 	var email = document.getElementById("emailGerarLink").value;
