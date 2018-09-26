@@ -1,6 +1,4 @@
-window.onload = function(){
-	document.getElementById("btnCadastro").addEventListener("click", cadastra);
-}
+document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
 function cadastra(){
 	console.log("Entrou na função");
