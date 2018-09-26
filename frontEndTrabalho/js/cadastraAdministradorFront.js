@@ -33105,9 +33105,7 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":286}],192:[function(require,module,exports){
-window.onload = function(){
-	document.getElementById("btnCadastro").addEventListener("click", cadastra);
-}
+document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
 function cadastra(){
 	console.log("Entrou na função");
