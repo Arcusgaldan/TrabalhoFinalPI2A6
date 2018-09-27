@@ -75,7 +75,7 @@ var opcoes = {
     headers: {
       'Content-Type': 'application/json',    
       'Content-Length': Buffer.byteLength(texto),
-      'Objeto': 'Usuario',
+      'Objeto': 'TextoIndex',
       'Operacao': 'BUSCAR'
     }
 };
