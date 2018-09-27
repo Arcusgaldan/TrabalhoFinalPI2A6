@@ -102,7 +102,7 @@ http.createServer(function(req, res){
                         break;
                     }else{
                         controller.buscar(campo, valor, function(resultado){
-                            if(resultado != ""){
+                            if(resultado != null && resultado != ""){
                                 res.statusCode = 200;                    
                                 var resultadoFinal = {"resultado": resultado};
                                 var resposta = JSON.stringify(resultadoFinal);
