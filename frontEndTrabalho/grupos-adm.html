@@ -94,7 +94,7 @@
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
                 <div class="card-header">Página Geral de Grupos
-                  <a href="cadastroGrupo.html" class="btn btn-success float-right">Cadastrar Grupo</a>
+                  <button data-toggle="modal" data-target="#cadastraModal" class="btn btn-success float-right">Cadastrar Grupo</button>
                 </div>
                 <div class="card-body">
                   <p>
@@ -102,44 +102,8 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="tabelaUsuario">
-                      <tr>        
-                      <th id="">Sigla_Grupo</th>
-                        <td>    
-                        <button class="btn btn-info" scope="row" data-toggle="collapse" href="#collapseUsuarioLista0" role="button" aria-expanded="false" aria-controls="collapseExample"> Mostra Dados <span class="fas fa-plus"></span></button>
-                        <button id="" class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button>
-                        <button id="" class="btn btn-warning" data-toggle="modal" data-target="#alteraModal">Alterar Lider</button>
-                        <button id="excluirUsuarioLista0" class="btn btn-danger" data-toggle="modal" data-target="#excluirModal">Excluir Grupo</button>
-                        <div id="collapseUsuarioLista0" class="collapse mostraLista"> 
-                          <div class="card card-body">      
-                            <img src="images/favicon.png" class="rounded float-right fotoGrupo col-2 " alt="">
-                            <p>
-                              <strong>Nome do Grupo: </strong>
-                              <span id="">Nome do Grupo 001</span>
-                            </p>      
-                            <p>
-                              <strong>Descrição  : </strong> 
-                              <span id="">
-                                is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                              </span>
-                            </p>
-                            
-                            <p>
-                              <strong>Nome Lider Atual </strong>
-                              <span id="">Teste adm</span>
-                            </p> 
-                            <p>
-                              <strong>Link do Lattes: </strong> 
-                              <span id="">http://lattes.cnpq.br/grupoTeste001</span>
-                            </p>    
-                            <p>
-                              <strong>Data Inicio do Grupo: </strong> 
-                              <span id="">Administrador</span>
-                            </p> 
-                          </div>     
-                        </div>      
-                        </td>  
-                      </tr> 
+                    <tbody id="tabelaGrupo">
+                       
                     </tbody>
                   </table>
                  
@@ -160,73 +124,66 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
- 
-    <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal fade" id="cadastraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar usuário</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Cadastra Grupo</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
-             <p>
-              Neste formulário serão inseridas as informações para o cadastro de Grupo
-            </p>
-              <form action="" method="get">
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <input type="text" id="nomeGrupo" class="form-control" name="nomeGrupo"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
-                        <label for="nome">Nome do Grupo</label>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
-                        <label for="email">Email</label>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <input type="text" id="sigla" class="form-control" name="sigla" placeholder="Sigla do Grupo" required="required">
-                        <label for="email">Sigla do Grupo</label>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <select class="form-control form-control">
-                          <option value="" readonly>Selecione um Lider</option>
-                          <option>Lider 1</option>
-                          <option>Lider 2</option>
-                          <option>Lider 3</option>
-                          <option>Lider 4</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <select class="form-control form-control">
-                          <option value="" readonly>Status</option>
-                          <option>Ativo</option>
-                          <option>Inativo</option>
-                          <option>Aguardando líder</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    
-                  </form>
-
+            <form action="" method="get">
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="nomeGrupo" class="form-control" name="nomeGrupo"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
+                  <label for="nome">Nome do Grupo</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="sigla" class="form-control" name="sigla" placeholder="Sigla do Grupo" required="required">
+                  <label for="email">Sigla do Grupo</label>
+                </div>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button class="btn btn-success" type="button">Cadastar</button>
-            
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Grupo</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="get">
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="nomeGrupo" class="form-control" name="nomeGrupo"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
+                  <label for="nome">Nome do Grupo</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="sigla" class="form-control" name="sigla" placeholder="Sigla do Grupo" required="required">
+                  <label for="email">Sigla do Grupo</label>
+                </div>
+              </div>
+             </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" type="button">Alterar</button>
           </div>
         </div>
       </div>
@@ -308,6 +265,9 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
+
+    <script src="js/listarGrupoFront.js"></script>
+
 
   </body>
 

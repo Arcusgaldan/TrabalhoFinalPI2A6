@@ -8,7 +8,8 @@ module.exports = {
 		final.descricao = objeto.descricao;
 		final.dataFundacao = objeto.dataFundacao;
 		final.codUsuario = objeto.codUsuario;
-		final.logotipo = objeto.logotipo;		
+		final.logotipo = objeto.logotipo;
+		final.email = objeto.email;		
 		return final;
 	},
 
@@ -22,11 +23,12 @@ module.exports = {
 		final.dataFundacao = "";
 		final.codUsuario = 0;
 		final.logotipo = "";
+		final.email = "";
 		return final;
 	},
 
 	isString: function(atributo){
-		var strings = ["status", "nome", "sigla", "descricao", "dataFundacao", "logotipo"];
+		var strings = ["status", "nome", "sigla", "descricao", "dataFundacao", "logotipo", "email"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

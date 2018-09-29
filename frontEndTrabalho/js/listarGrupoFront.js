@@ -24685,66 +24685,70 @@ function extend() {
 }
 
 },{}],167:[function(require,module,exports){
-function criaElementos(listaUsuario){
-	console.log("Tamanho vetor" + listaUsuario.length);
-	for(var i=0;i<listaUsuario.length;i++){
-		$("#tabelaUsuario").append("\
+function criaElementos(listaGrupo){
+	console.log("Tamanho vetor" + listaGrupo.length);
+	for(var i=0;i<listaGrupo.length;i++){
+		$("#tabelaGrupo").append("\
 		<tr>\
-		    <th id='nomeUsuarioLista"+ i +"'></th>\
+		    <th id='nomeGrupoLista"+ i +"'></th>\
 		    <td>\
-				<button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseUsuarioLista"+ i +"' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
-				<button id='alterarUsuarioLista"+ i +"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Usuário</button>\
-				<button id='excluirUsuarioLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Usuário</button>\
-				<div id='collapseUsuarioLista"+ i +"' class='collapse mostraLista' >\
+				<button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseGrupoLista"+ i +"' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
+				<button id='alterarGrupoLista"+ i +"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Usuário</button>\
+				<button id='excluirGrupoLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Usuário</button>\
+				<div id='collapseGrupoLista"+ i +"' class='collapse mostraLista' >\
 				  <div class='card card-body'>\
-				    <p><strong>Nome: </strong><span id='nomeUsuarioDados"+i+"'></span></p>\
-				    <p><strong>Prontuário: </strong> <span id='prontuarioUsuarioDados"+i+"'></span></p>\
-				    <p><strong>E-Mail: </strong> <span id='emailUsuarioDados"+i+"'></span></p>\
-				    <p><strong>Link do Lattes: </strong> <span id='lattesUsuarioDados"+i+"'></span></p>\
-				    <p><strong>Tipo de Usuário: </strong> <span id='tipoUsuarioDados"+i+"'></span></p>\
+				    <p><strong>Nome do Grupo: </strong><span id='nomeGrupoDados"+i+"'></span></p>\
+				    <p><strong>Descrição do Grupo: </strong> <span id='descricaoGrupoDados"+i+"'></span></p>\
+				    <p><strong>Nome Lider Atual do Grupo: </strong> <span id='nomeLiderGrupoDados"+i+"'></span></p>\
+				    <p><strong>Data de Fundação do Grupo: </strong> <span id='fundGrupoDados"+i+"'></span></p>\
+				    <p><strong>E-mail do grupo: </strong> <span id='emailGrupoDados"+i+"'></span></p>\
 				  </div>\
 				</div>\
 		    </td>\
 		  </tr>\
 		");
 		//Puxa o nome que refenrencia o usuário na row
-		document.getElementById("nomeUsuarioLista" + i).innerHTML = listaUsuario[i].nome;
+		document.getElementById("nomeGrupoLista" + i).innerHTML = listaGrupo[i].nome;
 
 		//Puxa os dados para o collapse de exibição deusuário
-		document.getElementById("nomeUsuarioDados" + i).innerHTML = listaUsuario[i].nome;
-		document.getElementById("prontuarioUsuarioDados" + i).innerHTML = listaUsuario[i].prontuario;
-		document.getElementById("emailUsuarioDados" + i).innerHTML = listaUsuario[i].email;
-		document.getElementById("lattesUsuarioDados" + i).innerHTML = listaUsuario[i].curriculoLattes;
-		if(listaUsuario[i].codTipoUsuario  == 1){	
-			document.getElementById("tipoUsuarioDados" + i).innerHTML = "Lider";
+		document.getElementById("nomeGrupoDados" + i).innerHTML = listaGrupo[i].nome;
+		document.getElementById("descricaoGrupoDados" + i).innerHTML = listaGrupo[i].descricao;
+		document.getElementById("nomeLiderGrupoDados" + i).innerHTML = listaGrupo[i].codUsuario;
+		document.getElementById("fundGrupoDados" + i).innerHTML = listaGrupo[i].dataFundacao;
+		document.getElementById("emailGrupoDados" + i).innerHTML = listaGrupo[i].email;
+		
 
-		}else{
-			document.getElementById("tipoUsuarioDados" + i).innerHTML = "Administrador";
-		}
+		var funcaoPreencheAlterar = preencheModalAlterar(listaGrupo[i]);
+		var funcaoPreencheModalExcluir = preencheModalExcluir(listaGrupo[i]);
 
-		var funcaoPreencheAlterar = preencheModalAlterar(listaUsuario[i]);
-		var funcaoPreencheModalExcluir = preencheModalExcluir(listaUsuario[i]);
-
-		document.getElementById("alterarUsuarioLista"+ i).addEventListener("click", funcaoPreencheAlterar);
-
-		document.getElementById("excluirUsuarioLista"+ i).addEventListener("click", funcaoPreencheModalExcluir);
+		(function(){
+			console.log("Grupo na closure: " + JSON.stringify(listaGrupo[i]));
+			var grupo = listaGrupo[i];		
+			console.log("Grupo na closure: " + JSON.stringify(grupo));	
+			document.getElementById("alterarGrupoLista"+ i).addEventListener("click", function(){
+				preencheModalAlterar(grupo);
+			}, false);
+			document.getElementById("excluirGrupoLista"+ i).addEventListener("click", function(){
+				preencheModalExcluir(grupo);
+			}, false);
+		}());
 
 	}
 }
 
-function preencheModalAlterar(usuario){
-	//console.log("entrei no modal Alterar com usuario = " + JSON.stringify(usuario));
+function preencheModalAlterar(grupo){
+	//console.log("entrei no modal Alterar com grupo = " + JSON.stringify(grupo));
 	// document.getElementById("alteraModal").id = alteraModal;
-	document.getElementById("nomeAlterar").value = usuario.nome;
-	document.getElementById("prontuarioAlterar").value = usuario.prontuario;
-	document.getElementById("emailAlterar").value = usuario.email;
-	document.getElementById("linkLattesAlterar").value = usuario.curriculoLattes;
-	// document.getElementById("fotoAlterar").value = usuario.foto;
+	document.getElementById("nomeAlterar").value = grupo.nome;
+	document.getElementById("prontuarioAlterar").value = grupo.prontuario;
+	document.getElementById("emailAlterar").value = grupo.email;
+	document.getElementById("linkLattesAlterar").value = grupo.curriculoLattes;
+	// document.getElementById("fotoAlterar").value = grupo.foto;
 }
 
-function preencheModalExcluir(usuario){
-	console.log("entrei no modal Excluir com usuario = " + JSON.stringify(usuario.nome));
-	document.getElementById("nomeExcluir").innerHTML = usuario.nome;
+function preencheModalExcluir(grupo){
+	console.log("entrei no modal Excluir com grupo = " + JSON.stringify(grupo.nome));
+	document.getElementById("nomeExcluir").innerHTML = grupo.nome;
 }
 
 var utils = require('./../../utils.js');
@@ -24758,8 +24762,7 @@ var req = http.request(opcoesHTTP, (res) => {
 		res.on('data', function(chunk){
 			console.log("Chunk: " + chunk);
 			let vetor = JSON.parse(chunk);
-			//criaElementos(vetor);
-			console.log("Resposta = " + chunk);
+			criaElementos(vetor);
 		});
 	}else{
 		console.log("Não foi possível listar Grupos");

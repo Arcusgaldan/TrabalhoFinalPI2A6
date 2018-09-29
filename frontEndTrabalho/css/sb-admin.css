@@ -14,8 +14,11 @@
 }
 
 .mostraLista{
-  margin-top:20px; 
+  margin-top:20px;
+  width: 135%;
+  margin-left: -35.4%;
 }
+
 
 html {
   position: relative;

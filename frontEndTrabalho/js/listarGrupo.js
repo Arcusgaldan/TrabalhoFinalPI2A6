@@ -10,11 +10,11 @@ function criaElementos(listaGrupo){
 				<button id='excluirGrupoLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Usuário</button>\
 				<div id='collapseGrupoLista"+ i +"' class='collapse mostraLista' >\
 				  <div class='card card-body'>\
-				    <p><strong>Nome: </strong><span id='nomeGrupoDados"+i+"'></span></p>\
-				    <p><strong>Prontuário: </strong> <span id='prontuarioGrupoDados"+i+"'></span></p>\
-				    <p><strong>E-Mail: </strong> <span id='emailGrupoDados"+i+"'></span></p>\
-				    <p><strong>Link do Lattes: </strong> <span id='lattesGrupoDados"+i+"'></span></p>\
-				    <p><strong>Tipo de Usuário: </strong> <span id='tipoGrupoDados"+i+"'></span></p>\
+				    <p><strong>Nome do Grupo: </strong><span id='nomeGrupoDados"+i+"'></span></p>\
+				    <p><strong>Descrição do Grupo: </strong> <span id='descricaoGrupoDados"+i+"'></span></p>\
+				    <p><strong>Nome Lider Atual do Grupo: </strong> <span id='nomeLiderGrupoDados"+i+"'></span></p>\
+				    <p><strong>Data de Fundação do Grupo: </strong> <span id='fundGrupoDados"+i+"'></span></p>\
+				    <p><strong>E-mail do grupo: </strong> <span id='emailGrupoDados"+i+"'></span></p>\
 				  </div>\
 				</div>\
 		    </td>\
@@ -25,22 +25,26 @@ function criaElementos(listaGrupo){
 
 		//Puxa os dados para o collapse de exibição deusuário
 		document.getElementById("nomeGrupoDados" + i).innerHTML = listaGrupo[i].nome;
-		document.getElementById("prontuarioGrupoDados" + i).innerHTML = listaGrupo[i].prontuario;
+		document.getElementById("descricaoGrupoDados" + i).innerHTML = listaGrupo[i].descricao;
+		document.getElementById("nomeLiderGrupoDados" + i).innerHTML = listaGrupo[i].codUsuario;
+		document.getElementById("fundGrupoDados" + i).innerHTML = listaGrupo[i].dataFundacao;
 		document.getElementById("emailGrupoDados" + i).innerHTML = listaGrupo[i].email;
-		document.getElementById("lattesGrupoDados" + i).innerHTML = listaGrupo[i].curriculoLattes;
-		if(listaGrupo[i].codTipoGrupo  == 1){	
-			document.getElementById("tipoGrupoDados" + i).innerHTML = "Lider";
-
-		}else{
-			document.getElementById("tipoGrupoDados" + i).innerHTML = "Administrador";
-		}
+		
 
 		var funcaoPreencheAlterar = preencheModalAlterar(listaGrupo[i]);
 		var funcaoPreencheModalExcluir = preencheModalExcluir(listaGrupo[i]);
 
-		document.getElementById("alterarGrupoLista"+ i).addEventListener("click", funcaoPreencheAlterar);
-
-		document.getElementById("excluirGrupoLista"+ i).addEventListener("click", funcaoPreencheModalExcluir);
+		(function(){
+			console.log("Grupo na closure: " + JSON.stringify(listaGrupo[i]));
+			var grupo = listaGrupo[i];		
+			console.log("Grupo na closure: " + JSON.stringify(grupo));	
+			document.getElementById("alterarGrupoLista"+ i).addEventListener("click", function(){
+				preencheModalAlterar(grupo);
+			}, false);
+			document.getElementById("excluirGrupoLista"+ i).addEventListener("click", function(){
+				preencheModalExcluir(grupo);
+			}, false);
+		}());
 
 	}
 }
@@ -71,7 +75,7 @@ var req = http.request(opcoesHTTP, (res) => {
 		res.on('data', function(chunk){
 			console.log("Chunk: " + chunk);
 			let vetor = JSON.parse(chunk);
-			//criaElementos(vetor);
+			criaElementos(vetor);
 		});
 	}else{
 		console.log("Não foi possível listar Grupos");

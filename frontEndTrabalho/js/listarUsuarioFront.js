@@ -24715,24 +24715,29 @@ function criaElementos(listaUsuario){
 		document.getElementById("prontuarioUsuarioDados" + i).innerHTML = listaUsuario[i].prontuario;
 		document.getElementById("emailUsuarioDados" + i).innerHTML = listaUsuario[i].email;
 		document.getElementById("lattesUsuarioDados" + i).innerHTML = listaUsuario[i].curriculoLattes;
-		if(listaUsuario[i].codTipoUsuario == 1){	
+		if(listaUsuario[i].codTipoUsuario  == 1){	
 			document.getElementById("tipoUsuarioDados" + i).innerHTML = "Lider";
 
 		}else{
 			document.getElementById("tipoUsuarioDados" + i).innerHTML = "Administrador";
 		}
 
-		var funcaoPreencheAlterar = preencheModalAlterar(listaUsuario[i]);
-		var funcaoPreencheModalExcluir = preencheModalExcluir(listaUsuario[i]);
-
-		document.getElementById("alterarUsuarioLista"+ i).addEventListener("click", funcaoPreencheAlterar);
-
-		document.getElementById("excluirUsuarioLista"+ i).addEventListener("click", funcaoPreencheModalExcluir);
-
+		(function(){
+			console.log("Usuario na closure: " + JSON.stringify(listaUsuario[i]));
+			var usuario = listaUsuario[i];		
+			console.log("Usuario na closure: " + JSON.stringify(usuario));	
+			document.getElementById("alterarUsuarioLista"+ i).addEventListener("click", function(){
+				preencheModalAlterar(usuario);
+			}, false);
+			document.getElementById("excluirUsuarioLista"+ i).addEventListener("click", function(){
+				preencheModalExcluir(usuario);
+			}, false);
+		}());
 	}
 }
 
 function preencheModalAlterar(usuario){
+	console.log("Usuario em listarUsuario::preencheModalAlterar: " + JSON.stringify(usuario));
 	//console.log("entrei no modal Alterar com usuario = " + JSON.stringify(usuario));
 	// document.getElementById("alteraModal").id = alteraModal;
 	document.getElementById("nomeAlterar").value = usuario.nome;

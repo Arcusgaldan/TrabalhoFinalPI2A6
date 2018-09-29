@@ -3,21 +3,20 @@
 "X" = Falha
 
 [V] Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco);
+[V] Inserir tipo usuário AO SUBIR O BANCO;
+[V] Trocar página de cadastro de grupos para modal;
+[V] Alterar na modelagem o link do link reset senha pra 64 caracteres;
+[V] Primeiro cadastro de grupo só tem nome, sigla e líder;
+[V] Corrigir modal cadastro usuario;
 [-] Padronizar os controllers ao cUsuario.js;
 [-] Tentar generalizar JS de FrontEnd;
 [-] Cabeçalho que burla segurança do Chrome;
-[-] Inserir tipo usuário AO SUBIR O BANCO;
 [-] Redirecionar após o administrador se cadastrar
 [-] Revisar todo o layuot em versões de telas menores
-[V] Alterar na modelagem o link do link reset senha pra 64 caracteres
 [-] Fazer os modais de alterar usuário e o excluir usuário aparecerem os nomes do usuario selecionado, só aparece o ultimo usuário
 [-] Trocar as informações do menu, Quando for administrados mostrar apenas e a d adm, e o mesmo para lider.
-[-] Trocar flaticons sistemaInterno-Lider, SistemaInterno
+[-] Trocar flaticons sistemaInterno-Lider, SistemaInterno;
+[-] Função para preecher botão para alterar lider;
+[-] Corrigir nomes dos campos em TBGrupos (Adicionar campo email)
 
-
-O administrador irá poder cadastar o grupo sem o lider, como ele irá aicionar o lider depois ?
-
-O lider Poderá adicionar lider aos grupos sem lideres ?
-
-O administrador podera visualizar a página interna do grupo de pesquisa, se sim, ele irá poder alterar as informações?
-
+[-] Fazer função na página listarGrupo (ajustar append)

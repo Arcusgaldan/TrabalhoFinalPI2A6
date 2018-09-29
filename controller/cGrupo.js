@@ -2,8 +2,7 @@ module.exports = {
 	validar: function(grupo){
 		var validates = require('./../validates.js');
 		if(!validates.req(grupo.id) || !validates.req(grupo.status) || !validates.min(grupo.nome, 5) ||
-			!validates.min(grupo.sigla, 3) || !validates.req(grupo.descricao) || !validates.req(grupo.dataFundacao) ||
-			!validates.req(grupo.codGrupo) || !validates.req(grupo.logotipo)){ //Retirar campos opcionais desta validação						
+			!validates.min(grupo.sigla, 3) || !validates.req(grupo.codUsuario)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;

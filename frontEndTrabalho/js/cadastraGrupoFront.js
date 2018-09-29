@@ -32921,29 +32921,26 @@ function extend() {
 
 },{}],190:[function(require,module,exports){
 module.exports = {
-	validar: function(usuario){
+	validar: function(grupo){
 		var validates = require('./../validates.js');
-		if(!validates.req(usuario.id) || !validates.exact(usuario.prontuario, 7) || !validates.req(usuario.nome) || 
-			!validates.req(usuario.email) || !validates.exact(usuario.senha, 64) || !validates.req(usuario.curriculoLattes) ||
-			!validates.req(usuario.data) || !validates.req(usuario.primeiroAcesso)){
-			console.log("Objeto usuario em cUsuario::validar: " + JSON.stringify(usuario));
+		if(!validates.req(grupo.id) || !validates.req(grupo.status) || !validates.min(grupo.nome, 5) ||
+			!validates.min(grupo.sigla, 3) || !validates.req(grupo.codUsuario)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
 		}
 	},
 
-	inserir: function(usuario, cb){
-		console.log('Entrei em cUsuario::inserir!');
-		if(!this.validar(usuario)){							
+	inserir: function(grupo, cb){
+		if(!this.validar(grupo)){							
 				return false;
 		}else{
-			usuario['id'] = 0;
-			var sql = "INSERT INTO TBUsuario (";
+			grupo['id'] = 0;
+			var sql = "INSERT INTO TBGrupo (";
 			var campos = "";
 			var valores = "";
-			for(var key in usuario){
-				if(usuario[key] == null)
+			for(var key in grupo){
+				if(grupo[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -32952,15 +32949,15 @@ module.exports = {
 					campos += ", " + key;
 				}
 
-				var modelo = require('./../modelo/mUsuario.js');
+				var modelo = require('./../modelo/mGrupo.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + usuario[key] + '"';
+					aux = '"' + grupo[key] + '"';
 					
 				}
 				else
-					aux = usuario[key];
+					aux = grupo[key];
 
 				if(valores == ""){
 					valores += aux;
@@ -32977,25 +32974,25 @@ module.exports = {
 		}
 	},
 
-	alterar: function(usuario, cb){
-		if(!this.validar(usuario)){
+	alterar: function(grupo, cb){
+		if(!this.validar(grupo)){
 			return false;
 		}else{
-			var sql = "UPDATE TBUsuario SET ";
+			var sql = "UPDATE TBGrupo SET ";
 			var campos = "";
-			for(var key in usuario){
+			for(var key in grupo){
 				if(key == 'id')
 					continue;
 
-				var modelo = require('./../modelo/mUsuario.js');
+				var modelo = require('./../modelo/mGrupo.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + usuario[key] + '"';
+					aux = '"' + grupo[key] + '"';
 					
 				}
 				else
-					aux = usuario[key];
+					aux = grupo[key];
 
 				if(campos == ""){
 					campos += key + " = " + aux;
@@ -33003,7 +33000,7 @@ module.exports = {
 					campos += ", " + key + " = " + aux;
 				}
 			}
-			sql += campos + " WHERE id = " + usuario['id'] + ";";
+			sql += campos + " WHERE id = " + grupo['id'] + ";";
 			var dao = require('./../dao.js');
 			dao.inserir(dao.criaConexao(), sql, function(codRes){
 				cb(codRes);
@@ -33012,7 +33009,7 @@ module.exports = {
 	},
 
 	excluir: function(id, cb){
-		var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBGrupo WHERE id = " + id + ";";
 		var dao = require('./../dao.js');
 		dao.inserir(dao.criaConexao(), sql, function(codRes){
 			cb(codRes);
@@ -33020,7 +33017,7 @@ module.exports = {
 	},
 
 	listar: function(cb){
-		var sql = "SELECT * FROM TBUsuario;";
+		var sql = "SELECT * FROM TBGrupo;";
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
@@ -33028,7 +33025,7 @@ module.exports = {
 	},
 
 	buscar: function(campo, valor, cb){
-		var sql = 'SELECT * FROM TBUsuario WHERE ' + campo + ' = "' + valor + '";';
+		var sql = 'SELECT * FROM TBGrupo WHERE ' + campo + ' = "' + valor + '";';
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
@@ -33036,7 +33033,7 @@ module.exports = {
 		});
 	}
 }
-},{"./../dao.js":191,"./../modelo/mUsuario.js":193,"./../validates.js":269}],191:[function(require,module,exports){
+},{"./../dao.js":191,"./../modelo/mGrupo.js":193,"./../validates.js":269}],191:[function(require,module,exports){
 module.exports = {
 	criaConexao: function(){
 		var mysql = require('mysql');
@@ -33105,28 +33102,23 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":286}],192:[function(require,module,exports){
-document.getElementById("btnCadastro").addEventListener("click", cadastra);
+document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
 function cadastra(){
-	var modelo = require('./../../modelo/mUsuario.js');
+	var modelo = require('./../../modelo/mGrupo.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
-	var controller = require('./../../controller/cUsuario.js');
-	var usuario = modelo.novo();
-	usuario.id = 0;
-	usuario.nome = document.getElementById("nomeCadastrar").value;
-	usuario.prontuario = document.getElementById("prontuarioCadastrar").value;
-	usuario.senha = utils.geraSenhaAleatoria();
-	usuario.email = document.getElementById("emailCadastrar").value;
-	usuario.curriculoLattes = document.getElementById("linkLattesCadastrar").value;
-	usuario.foto = document.getElementById("fotoCadastrar").value;
-	usuario.primeiroAcesso = 1;
-	usuario.codTipoUsuario = 1;
+	var controller = require('./../../controller/cGrupo.js');
+	var grupo = modelo.novo();
+	grupo.id = 0;
+	grupo.nome = document.getElementById("nomeCadastrar").value;
+	grupo.sigla = document.getElementById("siglaCadastrar").value;
+	grupo.codUsuario = document.getElementById("liderCadastrar").value;
+	grupo.status = "Aguardando Lider";
 
-	usuario = utils.senhaHash(usuario);
-	var texto = JSON.stringify(usuario);
+	var texto = JSON.stringify(grupo);
 
-	if(!controller.validar(usuario)){
+	if(!controller.validar(grupo)){
 		console.log("Deu ruim"); //Adicionar mensagem de falta de campos em modal/alert
 		return;
 	}
@@ -33134,7 +33126,7 @@ function cadastra(){
 	console.log("TEXTO: " + texto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Usuario";
+	opcoesHTTP.headers.Objeto = "Grupo";
 	opcoesHTTP.headers.Operacao = "INSERIR";
 
 	console.log("Opções: " + JSON.stringify(opcoesHTTP));
@@ -33153,40 +33145,38 @@ function cadastra(){
     req.write(texto);
     req.end();
 }
-},{"./../../controller/cUsuario.js":190,"./../../modelo/mUsuario.js":193,"./../../utils.js":268,"http":176}],193:[function(require,module,exports){
+},{"./../../controller/cGrupo.js":190,"./../../modelo/mGrupo.js":193,"./../../utils.js":268,"http":176}],193:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
 		var final = {};
 		final.id = objeto.id;
-		final.prontuario = objeto.prontuario;
+		final.status = objeto.status;
 		final.nome = objeto.nome;
-		final.email = objeto.email;
-		final.senha = objeto.senha;
-		final.curriculoLattes = objeto.lattes;
-		final.foto = objeto.foto;
-		final.data = objeto.dataCad;
-		final.primeiroAcesso = objeto.primeiroAcesso;
-		final.codTipoUsuario = objeto.codTipoUsuario;
+		final.sigla = objeto.sigla;
+		final.descricao = objeto.descricao;
+		final.dataFundacao = objeto.dataFundacao;
+		final.codUsuario = objeto.codUsuario;
+		final.logotipo = objeto.logotipo;
+		final.email = objeto.email;		
 		return final;
 	},
+
 	novo: function(){
 		var final = {};
 		final.id = 0;
-		final.prontuario = "";
+		final.status = "";
 		final.nome = "";
+		final.sigla = "";
+		final.descricao = "";
+		final.dataFundacao = "";
+		final.codUsuario = 0;
+		final.logotipo = "";
 		final.email = "";
-		final.senha = "";
-		final.curriculoLattes = "";
-		final.foto = "";
-		var d = new Date();
-		final.data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-		final.primeiroAcesso = 1;
-		final.codTipoUsuario = 0;
 		return final;
 	},
 
 	isString: function(atributo){
-		var strings = ["prontuario", "email", "nome","senha", "curriculoLattes","foto", "data","primeiroAcesso"];
+		var strings = ["status", "nome", "sigla", "descricao", "dataFundacao", "logotipo", "email"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

@@ -141,7 +141,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar usuário</h5>
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Usuário</h5>
             <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -149,31 +149,34 @@
 
           <div class="modal-body">
             <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuários
+              Neste formulário serão inseridas as informações para o cadastro de usuário.
             </p>
 
             <form action="" method="get" >
               <div class="form-group">
                 <div class="form-row">
+
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="nomeCadastrar" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nome">Nome Completo</label>
+                      <input type="text" id="nomeCadastrar" class="form-control" name="nomeCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeCadastrar">Nome Completo</label>
                     </div>
                   </div>
+
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="prontuarioCadastrar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
-                      <label for="prontuario">Prontuário</label>
+                      <input type="text" id="prontuarioCadastrar" class="form-control" name="prontuarioCadastrar" placeholder="Prontuário" required="required">
+                      <label for="prontuarioCadastrar">Prontuário</label>
                     </div>
                   </div>
+
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="email" id="emailCadastrar" class="form-control" name="email" placeholder="Email" required="required">
-                  <label for="email">Email</label>
+                  <input type="email" id="emailCadastrar" class="form-control" name="emailCadastrar" placeholder="Email" required="required">
+                  <label for="emailCadastrar">Email</label>
                 </div>
               </div>
 
@@ -190,32 +193,17 @@
                 </div>
               </div>
 
-
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12 ">
                     <div class="form-label-group">
-                      <input type="file" id="fotoCadastrar" class="form-control" placeholder="foote" required="required">
-                      <label for="foto">Foto de Perfil</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12 ">
-                    <label for="foto">Escolha um tipo de usuário</label>
-                    <div class="form-label-group">
-                      <select class="form-control" id="codTipoUsuarioCadastrar">
-                        <option>Lider</option>
-                      </select>
+                      <input type="file" id="fotoCadastrar" class="form-control" placeholder="Foto de Perfil" required="required">
+                      <label for="fotoCadastrar">Foto de Perfil</label>
                     </div>
                   </div>
                 </div>
               </div>
             </form>
-
             <div class="modal-footer">
               <button class="btn btn-success" type="button" id="btnCadastro">Cadastar</button>
             </div>
@@ -283,7 +271,7 @@
                       <div class="form-row">
                         <div class="col-md-12 ">
                           <div class="form-label-group">
-                            <input type="file" id="fotoAlterar" class="form-control" placeholder="foote" required="required">
+                            <input type="file" id="fotoAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
                             <label for="foto">Foto de Perfil</label>
                           </div>
                         </div>
@@ -311,7 +299,7 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p id="nomeExcluir" style="color: #000"></p></div>
+            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir o usuário <span id="nomeExcluir" style="color: #000"></span> ?</p></div>
             <div class="modal-footer">
               <button class="btn btn-success">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
