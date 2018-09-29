@@ -107,33 +107,33 @@
               <button id="" class="btn float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>
             </div>
               <div class="card card-body">      
-                <img src="images/favicon.png" class="rounded float-right fotoGrupo col-2 " alt="">
+                <img id="logotipoGrupo" src="images/favicon.png" class="rounded float-right fotoGrupo col-2 " alt="">
                 <p>
                  <strong>Sigla do Grupo: </strong>
-                 <span id="nomeUsuarioDados0">Sigla do Grupo</span>
+                 <span id="siglaGrupo"></span>
                 </p>      
                 <p>
                  <strong>Nome do Grupo: </strong>
-                 <span id="nomeUsuarioDados0">Nome do Grupo 001</span>
+                 <span id="nomeGrupo"></span>
                 </p>      
                 <p>
                   <strong>Descrição  : </strong> 
-                  <span id="prontuarioUsuarioDados0">
-                   is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                  <span id="descicaoGrupo">
+                   
                   </span>
                 </p>
 
                 <p>
                  <strong>Nome Lider Atual </strong>
-                 <span id="">Teste adm</span>
+                 <span id="liderGrupo"></span>
                 </p> 
                 <p>
-                 <strong>Link do Lattes: </strong> 
-                 <span id="">http://lattes.cnpq.br/grupoTeste001</span>
+                 <strong>E-mail</strong> 
+                 <span id="emailGrupo"></span>
                 </p>    
                 <p>
                   <strong>Data Inicio do Grupo: </strong> 
-                  <span id="">27 de Agosto 1997</span>
+                  <span id="fundGrupo"></span>
                 </p> 
               </div>     
             </div>
@@ -308,6 +308,8 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
+
+    <script type="text/javascript" src="js/encaminharGrupoFront.js"></script>
 
   </body>
 

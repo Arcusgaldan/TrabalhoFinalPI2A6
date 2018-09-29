@@ -60,10 +60,8 @@
                   <form action="" method="get">
                     <div class="form-group">
                       <div class="form-label-group">
-                        <select class="form-control form-control-lg">
-                          <option value="" readonly>Selecione o Titúlo a ser alterado</option>
-                          <option>Cadastramento de grupos de pesquisa</option>
-                          <option>Produção Científica e Tecnológica</option>
+                        <select class="form-control form-control-lg" id="selectTitulo">
+                          <option value="" readonly>Selecione o texto que deseja alterar</option>
                         </select>
                       </div>
                     </div>
@@ -72,8 +70,8 @@
                       <div class="form-row">
                         <div class="col-md-12">
                           <div class="form-label-group">
-                            <input type="text" id="nome" class="form-control" name="nome"  placeholder="Digite um novo Titúlo" required="required" autofocus="autofocus">
-                            <label for="nome">Digite um novo Titúlo</label>
+                            <input type="text" id="tituloAlterar" class="form-control" name="titulo"  placeholder="Digite um novo titulo" required="required" autofocus="autofocus">
+                            <label for="tituloAlterar">Digite um novo título</label>
                           </div>
                         </div>
                       </div>
@@ -82,13 +80,12 @@
                       <div class="form-row">
                         <div class="col-md-12">
                           <div class="form-label-group">
-                            <textarea type="textarea" id="nome" class="form-control" name="nome" rows="10"  placeholder="" required="required" autofocus="autofocus"></textarea>
-                            <label for="nome">Digite um novo texto</label>
+                            <textarea type="textarea" id="textoAlterar" class="form-control" name="texto" rows="10" required="required" placeholder="Digite o novo texto" autofocus="autofocus"></textarea>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <button class="btn btn-success" type="button" id="">Cadastar</button>
+                    <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
                   </form>
                  
                 </div>
@@ -211,6 +208,8 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
+
+    <script type="text/javascript" src="js/cadastraInformativosFront.js"></script>
 
   </body>
 

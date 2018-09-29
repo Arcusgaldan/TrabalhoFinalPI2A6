@@ -1,18 +1,11 @@
 var http = require('http');
+var utils = require('../../utils.js');
 
-var opcoes = {
-    hostname: "127.0.0.1",
-    port: 8080,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',    
-      'Content-Length': 0,
-      'Objeto': 'Usuario',
-      'Operacao': 'LISTAR'
-    }
-};
+var opcoesHTTP = utils.opcoesHTTP("");
+opcoesHTTP.headers.Objeto = "Usuario";
+opcoesHTTP.headers.Operacao = "LISTAR";
 
-var req = http.request(opcoes, (res) => {
+var req = http.request(opcoesHTTP, (res) => {
     console.log("Chegou a resposta!");
     res.setEncoding('utf8');
     //console.log(res);

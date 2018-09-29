@@ -18,5 +18,7 @@
 [-] Trocar flaticons sistemaInterno-Lider, SistemaInterno;
 [-] Função para preecher botão para alterar lider;
 [-] Corrigir nomes dos campos em TBGrupos (Adicionar campo email)
+[-] Colocar novas tabelas como Autoincrement
+[-] Colocar TextoIndex no index, puxando do banco
 
 [-] Fazer função na página listarGrupo (ajustar append)
