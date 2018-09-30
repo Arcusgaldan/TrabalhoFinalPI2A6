@@ -2,23 +2,21 @@
 "V" = Sucesso
 "X" = Falha
 
-[V] Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco);
-[V] Inserir tipo usuário AO SUBIR O BANCO;
-[V] Trocar página de cadastro de grupos para modal;
-[V] Alterar na modelagem o link do link reset senha pra 64 caracteres;
-[V] Primeiro cadastro de grupo só tem nome, sigla e líder;
-[V] Corrigir modal cadastro usuario;
-[-] Padronizar os controllers ao cUsuario.js;
-[-] Tentar generalizar JS de FrontEnd;
-[-] Cabeçalho que burla segurança do Chrome;
-[-] Redirecionar após o administrador se cadastrar
-[-] Revisar todo o layuot em versões de telas menores
-[-] Fazer os modais de alterar usuário e o excluir usuário aparecerem os nomes do usuario selecionado, só aparece o ultimo usuário
-[-] Trocar as informações do menu, Quando for administrados mostrar apenas e a d adm, e o mesmo para lider.
-[-] Trocar flaticons sistemaInterno-Lider, SistemaInterno;
-[-] Função para preecher botão para alterar lider;
-[-] Corrigir nomes dos campos em TBGrupos (Adicionar campo email)
-[-] Colocar novas tabelas como Autoincrement
-[-] Colocar TextoIndex no index, puxando do banco
-
-[-] Fazer função na página listarGrupo (ajustar append)
+[V] Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco); <DOC>
+[V] Inserir tipo usuário AO SUBIR O BANCO; <BE>
+[V] Trocar página de cadastro de grupos para modal; <FE>
+[V] Alterar na modelagem o link do link reset senha pra 64 caracteres; <DOC>
+[V] Primeiro cadastro de grupo só tem nome, sigla e líder; <FE>
+[V] Corrigir modal cadastro usuario; <FE>
+[V] Colocar TextoIndex no index, puxando do banco <BE>
+[V] Fazer função na página listarGrupo (ajustar append) <FE>
+[V] Redirecionar após o administrador se cadastrar <FE>
+[V] Fazer os modais de alterar usuário e o excluir usuário aparecerem os nomes do usuario selecionado, só aparece o ultimo usuário <FE>
+[-] Padronizar os controllers ao cUsuario.js; <BE>
+[-] Tentar generalizar JS de FrontEnd; <FE>
+[-] Cabeçalho que burla segurança do Chrome; <BE>
+[-] Revisar todo o layuot em versões de telas menores <FE>
+[-] Trocar as informações do menu, Quando for administrados mostrar apenas e a d adm, e o mesmo para lider. <FE><BE>
+[-] Função para preecher botão para alterar lider; <BE>
+[-] Corrigir nomes dos campos em TBGrupos (Adicionar campo email) <DOC>
+[-] Colocar novas tabelas como Autoincrement <DOC>
