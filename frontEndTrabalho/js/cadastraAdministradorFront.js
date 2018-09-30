@@ -33055,7 +33055,7 @@ module.exports = {
 			if(err) throw err;
 			console.log("Conectado ao banco!");
 			con.query(comando, function(err, res){
-				if(err){ console.log("Erro: " + err); cb(400); throw err;}				
+				if(err){ console.log("Erro: " + err); cb(400); return;}				
 				console.log("Deu bom inserindo");
 				con.destroy();
 				cb(200);
@@ -33068,7 +33068,7 @@ module.exports = {
 			if(err) throw err;
 			console.log("Conectado ao banco!");
 			con.query(comando, function(err, res){
-				if(err){console.log("Erro " + err); cb(null);}
+				if(err){console.log("Erro " + err); cb(null); return;}
 				console.log("Deu bom buscando");
 				con.destroy();
 				cb(res);
@@ -33152,6 +33152,7 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
+	    	localStorage.id = 1;
 	    	// alert("Cadastro realizado com sucesso!");
 	    	$('#sucessoModal').modal('show');
 	    	setTimeout(function(){location.href="index.html"} , 5000);   

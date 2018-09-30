@@ -30,6 +30,7 @@ function login(){
 		    	if(chunk != null){
 				    if(JSON.parse(chunk).resultado[0].senha == senha){
 				    	console.log("Login com sucesso!");
+				    	localStorage.id = JSON.parse(chunk).resultado[0].id;
 				    }else{
 				    	console.log("Falha no login");
 				    }

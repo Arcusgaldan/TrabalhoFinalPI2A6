@@ -33107,6 +33107,34 @@ module.exports = {
 },{"mysql":198,"nodemailer":286}],192:[function(require,module,exports){
 document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
+function enviarEmail(mensagem, email, assunto){
+	console.log("Entrei na funçao cadastraUsuario::enviarEmail");
+	var utils = require('./../../utils.js');
+	var http = require('http');
+
+	var objeto = {
+		mensagem: mensagem,
+		assunto: assunto,
+		email: email
+	};
+
+	var texto = JSON.stringify(objeto);
+	console.log("O texto em cadastraUsuario::enviarEmail é" + texto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "Usuario";
+	opcoesHTTP.headers.Operacao = "EMAIL";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Chegou a resposta do email!!");
+		res.on('data', function(chunk){
+			console.log(chunk);
+		});
+	});
+	req.write(texto);
+	req.end();
+}
+
 function cadastra(){
 	var modelo = require('./../../modelo/mUsuario.js');
 	var utils = require('./../../utils.js');
@@ -33117,6 +33145,7 @@ function cadastra(){
 	usuario.nome = document.getElementById("nomeCadastrar").value;
 	usuario.prontuario = document.getElementById("prontuarioCadastrar").value;
 	usuario.senha = utils.geraSenhaAleatoria();
+	var senha = usuario.senha;
 	usuario.email = document.getElementById("emailCadastrar").value;
 	usuario.curriculoLattes = document.getElementById("linkLattesCadastrar").value;
 	usuario.foto = document.getElementById("fotoCadastrar").value;
@@ -33146,6 +33175,7 @@ function cadastra(){
 	    if(res.statusCode == 200){
 	    	alert("Cadastro realizado com sucesso!");
 	    	document.getElementById("fechaCadastraModal").click();
+	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");

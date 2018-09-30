@@ -24685,57 +24685,42 @@ function extend() {
 }
 
 },{}],167:[function(require,module,exports){
-document.getElementById("btnLogin").addEventListener("click", login);
+if(localStorage.id != null){
+	console.log("Está logado!");
+	document.getElementById('boxLogado').classList.remove('display-none');
 
-function login(){
-	console.log("Etrando em login");
-	var utils = require('./../../utils.js');
-	var http = require('http');
+	var utils = require("./../../utils.js");
+	var http = require("http");
 
-	var email = document.getElementById('emailLogin').value;
-	var senha = document.getElementById('senhaLogin').value;
-	senha = utils.stringHash(senha);
-
-	var parametrosBusca = {
-		campo: 'email',
-		valor: email
+	var objeto = { 
+		campo: "id",
+		valor: localStorage.id
 	};
 
-	var texto = JSON.stringify(parametrosBusca);
-	console.log(texto);
+	var texto = JSON.stringify(objeto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
 	opcoesHTTP.headers.Objeto = "Usuario";
 	opcoesHTTP.headers.Operacao = "BUSCAR";
 
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Chegou a resposta!");
+	var req = http.request(opcoesHTTP, (res) => { 
+		console.log("Chegou resposta");
 		if(res.statusCode == 200){
-			console.log("Teve resultado!");
-			res.setEncoding('utf8');
-		    res.on('data', function (chunk) {
-		    	if(chunk != null){
-				    if(JSON.parse(chunk).resultado[0].senha == senha){
-				    	console.log("Login com sucesso!");
-				    	localStorage.id = JSON.parse(chunk).resultado[0].id;
-				    }else{
-				    	console.log("Falha no login");
-				    }
+			res.on('data', function(chunk){
+				if(JSON.parse(chunk).resultado[0].codTipoUsuario == 1){
+					console.log("É lider");
+				}else{
+					console.log("É Administrador");
 				}
-		    });
-	    	//let jsonRes = JSON.parse(res);
-	    	// for(var k in jsonRes){
-	    	// 	console.log("Key: " + k + "\nValor: " + jsonRes[k]);
-	    	// }
-		}else if(res.statusCode == 747){
-			console.log("Não teve resultado!");
-		}else{
-			console.log("Erro fatal.");
+			});
 		}
-	}); 
+	});
+	 req.write(texto);
+	 req.end();
 
-	req.write(texto);
-	req.end();
+}else{
+	console.log("Não está logado!");
+	document.getElementById('formLogin').classList.remove('display-none');
 }
 },{"./../../utils.js":168,"http":155}],168:[function(require,module,exports){
 (function (Buffer){

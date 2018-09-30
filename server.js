@@ -120,20 +120,28 @@ http.createServer(function(req, res){
                         });
                     }   
                     break;
-                // case 'GERARLINK':
-                //     if(req.headers['objeto'] != 'LinkResetSenha'){
-                //         console.log('Gerar link só pode ser chamado com objeto LinkResetSenha');
-                //         res.write('Gerar link só pode ser chamado com objeto LinkResetSenha');
-                //         res.end();
-                //     }else{
-                //         controller.inserir(jsonRqs, function(resultado, link){
-                //             res.statusCode = resultado;
-                //             res.write(link);
-                //             res.end();
-                //         });
-                //     }
+                case 'EMAIL':
+                    var dao = require('./dao.js');
+                    var mensagem = jsonRqs['mensagem'];
+                    var email = jsonRqs['email'];
+                    var assunto = jsonRqs['assunto'];
+
+                    dao.email(email, mensagem, assunto, function(resultado){
+                        if(resultado == 400){
+                            console.log("Erro ao enviar o email. Contate o suporte.");
+                            res.statusCode(resultado);
+                            res.write("Erro ao enviar o email. Contate o suporte.");
+                            res.end();
+                        }else{
+                            console.log("Email enviado com sucesso!");
+                            res.statusCode(resultado);
+                            res.write("Email enviado com sucesso!");
+                            res.end();
+                        }
+                    });
+                    break;                    
                 default:
-                    console.log("Operação " + operacao + " não suportada.");
+                    console.log("Operação " + req.headers['operacao'] + " não suportada.");
                     res.statusCode = 400;
                     res.write('Operação " + operacao + " não suportada.');
                     res.end();

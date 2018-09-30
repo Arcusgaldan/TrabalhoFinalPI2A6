@@ -20,3 +20,7 @@
 [-] Função para preecher botão para alterar lider; <BE>
 [-] Corrigir nomes dos campos em TBGrupos (Adicionar campo email) <DOC>
 [-] Colocar novas tabelas como Autoincrement <DOC>
+[-] Verificar se banco está desligado e redirecionar para 404 se sim <BE><FE>
+[-] Fazer modais de sucesso e falha <FE>
+[-] Organizar sidebars <FE>
+[-] Organizar modelo padrão Bootstrap <FE>

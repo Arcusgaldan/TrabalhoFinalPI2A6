@@ -45,6 +45,7 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
+	    	localStorage.id = 1;
 	    	// alert("Cadastro realizado com sucesso!");
 	    	$('#sucessoModal').modal('show');
 	    	setTimeout(function(){location.href="index.html"} , 5000);   

@@ -8,6 +8,10 @@
   width: 190px; 
  }
 
+.display-none{
+  display: none!important;
+}
+
 .card-body p{
   text-align: left;
   color: #000;
