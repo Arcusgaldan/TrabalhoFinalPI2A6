@@ -48,7 +48,7 @@ function cadastra(){
 	    	localStorage.id = 1;
 	    	// alert("Cadastro realizado com sucesso!");
 	    	$('#sucessoModal').modal('show');
-	    	setTimeout(function(){location.href="index.html"} , 5000);   
+	    	setTimeout(function(){location.href="index.html"} , 2000);   
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");

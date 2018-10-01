@@ -33111,9 +33111,9 @@ function cadastra(){
 	var controller = require('./../../controller/cGrupo.js');
 	var grupo = modelo.novo();
 	grupo.id = 0;
-	grupo.nome = document.getElementById("nomeCadastrar").value;
-	grupo.sigla = document.getElementById("siglaCadastrar").value;
-	grupo.codUsuario = document.getElementById("liderCadastrar").value;
+	grupo.nome = document.getElementById("nomeGrupoCadastrar").value;
+	grupo.sigla = document.getElementById("siglaGrupoCadastrar").value;
+	grupo.codUsuario = document.getElementById("selectUsuario").value;
 	grupo.status = "Aguardando Lider";
 
 	var texto = JSON.stringify(grupo);
@@ -33138,6 +33138,7 @@ function cadastra(){
 	    if(res.statusCode == 200){
 	    	alert("Cadastro realizado com sucesso!");
 	    	document.getElementById("fechaCadastraModal").click();
+	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");
@@ -33168,7 +33169,7 @@ module.exports = {
 		final.nome = "";
 		final.sigla = "";
 		final.descricao = "";
-		final.dataFundacao = "";
+		final.dataFundacao = null;
 		final.codUsuario = 0;
 		final.logotipo = "";
 		final.email = "";
@@ -44480,7 +44481,7 @@ module.exports = {
 		if(palavra == null)
 			return false;
 
-		if(palavra.length > valor)
+		if(palavra.length >= valor)
 			return true;
 		else
 			return false;

@@ -24718,6 +24718,8 @@ function login(){
 				    if(JSON.parse(chunk).resultado[0].senha == senha){
 				    	console.log("Login com sucesso!");
 				    	localStorage.id = JSON.parse(chunk).resultado[0].id;
+				    	alert("Login efetuado com sucesso!");
+	    				setTimeout(function(){location.reload();} , 2000);   				    	
 				    }else{
 				    	console.log("Falha no login");
 				    }

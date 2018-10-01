@@ -56,10 +56,10 @@
             <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 15px;margin-left: 10px;"><small>Redefinir senha</small></button>
           <!-- </div> -->
         </div>
-    </form>
+   </form>
 
 
-      <!-- Navbar -->
+    <!-- Navbar -->
     <ul id="boxLogado" class="navbar-nav ml-auto ml-md-0 display-none">
                  
         <li class="nav-item dropdown no-arrow">
@@ -67,10 +67,10 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair do Sistema</a>
+            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair do Sistema</button>
           </div>
         </li>
-      </ul> 
+    </ul> 
 
     </nav>
 
@@ -78,19 +78,8 @@
 
       <!-- Sidebar -->
       <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
-      <ul class="sidebar navbar-nav toggled">
-        <li class="nav-item active">
-          <a class="nav-link" href="cadastroUsuario.html">
-            <i class="fas fa-fw fa-user-alt "></i>
-           <span>Cadastrar Usuário</span> 
-          </a>
-        </li>
-        <li class="nav-item active">
-         <a class="nav-link" href="cadastroPermissoes.html">
-            <i class="fas fa-fw fa-check"></i>
-           <span>Cadastrar Permissões</span> 
-          </a>
-        </li>
+      <ul id="sidebarWrapper" class="sidebar navbar-nav toggled">
+        
       </ul>
 
       <div id="content-wrapper">
@@ -199,7 +188,7 @@
             </div>
             <div class="modal-body">Você deseja realmente sair do sistema?</div>
             <div class="modal-footer">
-              <button class="btn btn-success">SIM</button>
+              <button class="btn btn-success" id="btnLogout">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
             </div>
           </div>
@@ -263,6 +252,7 @@
     <script type="text/javascript" src="js/listaGrupoIndexFront.js"></script>
     <script type="text/javascript" src="js/carregaTextoIndiceFront.js"></script>
     <script type="text/javascript" src="js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
 
   </body>
 

@@ -18,9 +18,18 @@
 [-] Revisar todo o layuot em versões de telas menores <FE>
 [-] Trocar as informações do menu, Quando for administrados mostrar apenas e a d adm, e o mesmo para lider. <FE><BE>
 [-] Função para preecher botão para alterar lider; <BE>
-[-] Corrigir nomes dos campos em TBGrupos (Adicionar campo email) <DOC>
+[V] Corrigir nomes dos campos em TBGrupos (Adicionar campo email) <DOC>
 [-] Colocar novas tabelas como Autoincrement <DOC>
 [-] Verificar se banco está desligado e redirecionar para 404 se sim <BE><FE>
 [-] Fazer modais de sucesso e falha <FE>
 [-] Organizar sidebars <FE>
 [-] Organizar modelo padrão Bootstrap <FE>
+[V] Corrigir cadastrar grupo <BE>
+[V] Corrigir modal de cadastro de grupo <FE>
+[-] display-none toda as páginas, e script sidebar, comentar sidebar colocar link logo. trocar id wrapper, mudar o id do bnt logout
+[-] colocar modal logout por append <BE>
+[-] Bloquear a pagina de cadastro adm após o mesmo cadastrado <BE>
+[-] Verificar preimeiro acesso do usuario <BE>
+[-] Fazer alterar e excluir de tudo <BE>
+[-] Comentar código <BE>
+[-] Criar erro para campo único duplicado <BE>

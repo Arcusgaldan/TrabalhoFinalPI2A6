@@ -36,58 +36,57 @@
 
   <body id="page-top" class="sidebar-toggled" >
 
-    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
       <a class="navbar-brand mr-1" href="index.html">Pronn</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
-
-      <!-- Navbar Search -->
-      <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 col-md-2">
-        <div class="input-group ">
-          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
+ 
+   <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
+        <div class="form-row align-items-center">
+          <div class="col-sm-4 my-1">
+            <label class="sr-only" for="usuarioLogin">Email</label>
+            <input type="text" class="form-control" id="emailLogin" placeholder="Email">
           </div>
-        </div>
-      </form> -->
+          <div class="col-sm-4 my-1">
+            <label class="sr-only" for="senhaLogin">Senha</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="senhaLogin" placeholder="Senha">
+            </div>
+          </div>
+         
+            <button type="button" id="btnLogin" class="btn btn-primary">ENTRAR</button>
+          <!-- <div class="col-sm-4 my-1"> -->
 
-      <!-- Navbar -->
-    <ul class="navbar-nav offset-10">
+            <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 15px;margin-left: 10px;"><small>Redefinir senha</small></button>
+          <!-- </div> -->
+        </div>
+   </form>
+
+
+    <!-- Navbar -->
+    <ul id="boxLogado" class="navbar-nav ml-auto ml-md-0 display-none">
                  
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair do Sistema</a>
+            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair do Sistema</button>
           </div>
         </li>
-      </ul> 
+    </ul> 
 
     </nav>
 
     <div id="wrapper">
 
-      <!-- Sidebar -->
+     <!-- Sidebar -->
       <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
-      <ul class="sidebar navbar-nav toggled">
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="cadastroUsuario.html">
-            <i class="fas fa-fw fa-user-alt "></i>
-            <span>Cadastrar Usuário</span>
-          </a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="cadastroPermissoes.html">
-            <i class="fas fa-fw fa-check"></i>
-            <span>Cadastrar Permissões</span>
-          </a>
-        </li> -->
+      <ul id="sidebarWrapper" class="sidebar navbar-nav toggled">
+        
       </ul>
 
       <div id="content-wrapper">
@@ -220,10 +219,7 @@
                 <div class="form-label-group">
                   <select class="form-control form-control">
                     <option value="" readonly>Selecione um Lider</option>
-                    <option>Lider 1</option>
-                    <option>Lider 2</option>
-                    <option>Lider 3</option>
-                    <option>Lider 4</option>
+                  
                   </select>
                   </div>
               </div>
@@ -310,6 +306,9 @@
     <script src="js/demo/chart-area-demo.js"></script>
 
     <script type="text/javascript" src="js/encaminharGrupoFront.js"></script>
+    <script type="text/javascript" src="js/loginFront.js"></script>
+    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
 
   </body>
 
