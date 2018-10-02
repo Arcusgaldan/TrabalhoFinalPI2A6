@@ -66,7 +66,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair do Sistema</button>
+            <button id="logout" class="dropdown-item" >Sair do Sistema</button>
           </div>
         </li>
     </ul> 
@@ -232,13 +232,13 @@
                       <div class="form-row">
                         <div class="col-md-6">
                           <div class="form-label-group">
-                            <input type="text" id="nomeAlterar" value="" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                            <input type="text" id="nomeUsuarioAlterar" value="" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                             <label for="nome">Nome Completo</label>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-label-group">
-                            <input type="text" id="prontuarioAlterar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
+                            <input type="text" id="prontuarioUsuarioAlterar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
                             <label for="prontuario">Prontuário</label>
                           </div>
                         </div>
@@ -247,7 +247,7 @@
 
                     <div class="form-group">
                       <div class="form-label-group">
-                        <input type="email" id="emailAlterar" class="form-control" name="email" placeholder="Email" required="required">
+                        <input type="email" id="emailUsuarioAlterar" class="form-control" name="email" placeholder="Email" required="required">
                         <label for="email">Email</label>
                       </div>
                     </div>
@@ -256,7 +256,7 @@
                     <div class="form-row">
                       <div class="col-md-12">
                         <div class="input-group">
-                          <input type="url" class="form-control" id="linkLattesAlterar" placeholder="Link do Lattes">
+                          <input type="url" class="form-control" id="linkLattesUsuarioAlterar" placeholder="Link do Lattes">
                           <div class="input-group-prepend">
                             <div class="input-group-text">http://lattes.cnpq.br/****</div>
                           </div>
@@ -270,18 +270,20 @@
                       <div class="form-row">
                         <div class="col-md-12 ">
                           <div class="form-label-group">
-                            <input type="file" id="fotoAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
+                            <input type="file" id="fotoUsuarioAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
                             <label for="foto">Foto de Perfil</label>
                           </div>
                         </div>
                       </div>
                     </div>
-
+                    <div style="display: none;" id="idUsuarioAlterar"></div>
+                    <div style="display: none;" id="codTipoUsuarioAlterar"></div>
+                    <div style="display: none;" id="senhaUsuarioAlterar"></div>
                   </form>
 
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button">Cadastar</button>
+            <button class="btn btn-alert" id="btnAlterarUsuario" type="button">Alterar</button>
             
           </div>
         </div>
@@ -307,26 +309,7 @@
         </div>
       </div>
 
-    <!-- Logout Modal-->
-      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">Você deseja realmente sair do sistema?</div>
-            <div class="modal-footer">
-              <button class="btn btn-success">SIM</button>
-              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-        <!-- Sticky Footer -->
+ <!-- Sticky Footer -->
         <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
@@ -370,6 +353,7 @@
     <script type="text/javascript" src="js/loginFront.js"></script>
     <script type="text/javascript" src="js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="js/logout.js"></script>
+    <script type="text/javascript" src="js/alterarUsuarioFront.js"></script>
     
 
   </body>

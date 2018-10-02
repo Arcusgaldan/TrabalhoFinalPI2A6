@@ -65,7 +65,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Sair do Sistema</button>
+            <button id="logout" class="dropdown-item" >Sair do Sistema</button>
           </div>
         </li>
     </ul> 
@@ -129,7 +129,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Cadastra Grupo</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="fechaCadastraModal">
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -147,9 +147,14 @@
                   <label for="siglaGrupoCadastrar">Sigla do Grupo</label>
                 </div>
               </div>
-              <select id="selectUsuario">
-                <option value="-1">Selecione o líder</option>
-              </select>
+
+              <div id="selectLider" class="form-group">
+                <div class="form-label-group">
+                  <select id="selectUsuario" class="form-control form-control">
+                    <option value="-1">Selecione o líder</option>
+                  </select>
+                </div>
+              </div>  
             </form>
           </div>
           <div class="modal-footer">
@@ -172,20 +177,23 @@
             <form action="" method="get">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="nomeGrupo" class="form-control" name="nomeGrupo"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
+                  <input type="text" id="nomeGrupoAlterar" class="form-control" name="nomeGrupo"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
                   <label for="nome">Nome do Grupo</label>
                 </div>
               </div>
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="sigla" class="form-control" name="sigla" placeholder="Sigla do Grupo" required="required">
+                  <input type="text" id="siglaGrupoAlterar" class="form-control" name="sigla" placeholder="Sigla do Grupo" required="required">
                   <label for="email">Sigla do Grupo</label>
                 </div>
               </div>
+              <div style="display: none;" id="idGrupoAlterar"></div>
+              <div style="display: none;" id="liderGrupoAlterar"></div>
+              <div style="display: none;" id="statusGrupoAlterar"></div>              
              </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button">Alterar</button>
+            <button class="btn btn-success" type="button" id="btnAlterarGrupo">Alterar</button>
           </div>
         </div>
       </div>
@@ -204,25 +212,6 @@
             <div class="modal-body"><p id="nomeExcluir" style="color: #000">Você reamente deseja excluir esse grupo?</p></div>
             <div class="modal-footer">
               <button class="btn btn-success">SIM</button>
-              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <!-- Logout Modal-->
-      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">Você deseja realmente sair do sistema?</div>
-            <div class="modal-footer">
-              <button class="btn btn-success" id="btnLogout">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
             </div>
           </div>
@@ -274,6 +263,7 @@
     <script type="text/javascript" src="js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="js/loginFront.js"></script>
     <script type="text/javascript" src="js/logout.js"></script>
+    <script type="text/javascript" src="js/alteraGrupoFront.js"></script>
 
 
   </body>

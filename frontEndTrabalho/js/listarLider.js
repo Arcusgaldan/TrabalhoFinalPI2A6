@@ -28,6 +28,27 @@ var req = http.request(opcoesHTTP, (res) => {
 		});
 	}else{
 		console.log("Não foi possível listar lideres");
+		$("#page-top").append('\
+			<!-- Erro Sem Lider Modal-->\
+		      <div class="modal fade" id="semLider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+		        <div class="modal-dialog" role="document">\
+		          <div class="modal-content">\
+		            <div class="modal-header">\
+		              <h5 class="modal-title" id="exampleModalLabel">Cadastre um Lider</h5>\
+		              <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+		                <span aria-hidden="true">×</span>\
+		              </button>\
+		            </div>\
+		            <div class="modal-body">Cadastre um Lider antes de cadastrar um grupo</div>\
+		            <div class="modal-footer">\
+		              <a href="cadastroUsuario.html" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
+		            </div>\
+		          </div>\
+		        </div>\
+		      </div>\
+		');
+		$('#semLider').modal('show');
+		setTimeout(function(){location.href="cadastroUsuario.html"} , 2000);  
 	}
 });
 req.write(texto);

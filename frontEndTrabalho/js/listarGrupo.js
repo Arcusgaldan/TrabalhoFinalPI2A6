@@ -6,8 +6,8 @@ function criaElementos(listaGrupo){
 		    <th id='nomeGrupoLista"+ i +"'></th>\
 		    <td>\
 				<button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseGrupoLista"+ i +"' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
-				<button id='alterarGrupoLista"+ i +"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Usuário</button>\
-				<button id='excluirGrupoLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Usuário</button>\
+				<button id='alterarGrupoLista"+ i +"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Grupo</button>\
+				<button id='excluirGrupoLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Grupo</button>\
 				<div id='collapseGrupoLista"+ i +"' class='collapse mostraLista' >\
 				  <div class='card card-body'>\
 				    <p><strong>Nome do Grupo: </strong><span id='nomeGrupoDados"+i+"'></span></p>\
@@ -52,10 +52,12 @@ function criaElementos(listaGrupo){
 function preencheModalAlterar(grupo){
 	//console.log("entrei no modal Alterar com grupo = " + JSON.stringify(grupo));
 	// document.getElementById("alteraModal").id = alteraModal;
-	document.getElementById("nomeAlterar").value = grupo.nome;
-	document.getElementById("prontuarioAlterar").value = grupo.prontuario;
-	document.getElementById("emailAlterar").value = grupo.email;
-	document.getElementById("linkLattesAlterar").value = grupo.curriculoLattes;
+	document.getElementById("nomeGrupoAlterar").value = grupo.nome;
+	document.getElementById("siglaGrupoAlterar").value = grupo.sigla;
+	document.getElementById("idGrupoAlterar").value = grupo.id;
+	document.getElementById("statusGrupoAlterar").value = grupo.status;
+	document.getElementById("liderGrupoAlterar").value = grupo.codUsuario;
+	
 	// document.getElementById("fotoAlterar").value = grupo.foto;
 }
 
