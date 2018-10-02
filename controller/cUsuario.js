@@ -14,7 +14,7 @@ module.exports = {
 	inserir: function(usuario, cb){
 		console.log('Entrei em cUsuario::inserir!');
 		if(!this.validar(usuario)){							
-				return false;
+				cb(400);
 		}else{
 			usuario['id'] = 0;
 			var sql = "INSERT INTO TBUsuario (";
@@ -57,7 +57,8 @@ module.exports = {
 
 	alterar: function(usuario, cb){
 		if(!this.validar(usuario)){
-			return false;
+			console.log("Não alterou pois não passou da validação em cUsuario::alterar");
+			cb(400);
 		}else{
 			var sql = "UPDATE TBUsuario SET ";
 			var campos = "";

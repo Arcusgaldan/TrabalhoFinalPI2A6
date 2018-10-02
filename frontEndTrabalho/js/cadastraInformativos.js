@@ -34,6 +34,9 @@ function alterar(){
 		console.log("Chegou a resposta!");
 		if(res.statusCode == 200){
 			console.log("Texto alterado com sucesso!");
+	    	setTimeout(function(){location.reload();} , 2000);
+			alert("Texto alterado com sucesso!");
+
 		}else{
 			console.log("Erro ao alterar texto. Contate o suporte.");
 		}

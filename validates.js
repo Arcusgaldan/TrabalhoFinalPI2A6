@@ -12,7 +12,7 @@ module.exports = {
 		if(palavra == null)
 			return false;
 
-		if(palavra.length > valor)
+		if(palavra.length >= valor)
 			return true;
 		else
 			return false;

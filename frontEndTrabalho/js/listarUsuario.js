@@ -53,10 +53,13 @@ function preencheModalAlterar(usuario){
 	console.log("Usuario em listarUsuario::preencheModalAlterar: " + JSON.stringify(usuario));
 	//console.log("entrei no modal Alterar com usuario = " + JSON.stringify(usuario));
 	// document.getElementById("alteraModal").id = alteraModal;
-	document.getElementById("nomeAlterar").value = usuario.nome;
-	document.getElementById("prontuarioAlterar").value = usuario.prontuario;
-	document.getElementById("emailAlterar").value = usuario.email;
-	document.getElementById("linkLattesAlterar").value = usuario.curriculoLattes;
+	document.getElementById("nomeUsuarioAlterar").value = usuario.nome;
+	document.getElementById("prontuarioUsuarioAlterar").value = usuario.prontuario;
+	document.getElementById("emailUsuarioAlterar").value = usuario.email;
+	document.getElementById("linkLattesUsuarioAlterar").value = usuario.curriculoLattes;
+	document.getElementById("idUsuarioAlterar").value = usuario.id;
+	document.getElementById("codTipoUsuarioAlterar").value = usuario.codTipoUsuario;	
+	document.getElementById("senhaUsuarioAlterar").value = usuario.senha;
 	// document.getElementById("fotoAlterar").value = usuario.foto;
 }
 
