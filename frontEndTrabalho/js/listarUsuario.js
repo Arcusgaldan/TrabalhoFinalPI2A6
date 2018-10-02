@@ -65,7 +65,8 @@ function preencheModalAlterar(usuario){
 
 function preencheModalExcluir(usuario){
 	console.log("entrei no modal Excluir com usuario = " + JSON.stringify(usuario.nome));
-	document.getElementById("nomeExcluir").innerHTML = usuario.nome;
+	document.getElementById("nomeUsuarioExcluir").innerHTML = usuario.nome;
+	document.getElementById("idUsuarioExcluir").value = usuario.id;
 }
 
 var utils = require('./../../utils.js');

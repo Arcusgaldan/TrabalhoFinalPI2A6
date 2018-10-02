@@ -29,10 +29,13 @@
 [-] display-none toda as páginas, e script sidebar, comentar sidebar colocar link logo. trocar id wrapper, mudar o id do bnt logout
 [-] colocar modal logout por append <BE>
 [-] Bloquear a pagina de cadastro adm após o mesmo cadastrado <BE>
+[-] Bloquear páginas que não são acessíveis ao tipo de usuário <BE>
 [-] Verificar preimeiro acesso do usuario <BE>
 [-] Fazer alterar e excluir de tudo <BE>
 [-] Comentar código <BE>
 [-] Criar erro para campo único duplicado <BE>
 [-] Chamar callback em controllers quando validar for false (seguir padrão do cUsuario). <BE>
+[-] Quando for excluir, excluir também todos os campos de dependência (chaves estrangeiras) <BE>
+[-] Perguntar se só pode excluir usuário se não houver nada relacionado a ele <TODOS>
 
 [-] Criar modal para confirmação de cadstro grupo

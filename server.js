@@ -60,11 +60,11 @@ http.createServer(function(req, res){
                     controller.excluir(jsonRqs['id'], function(codRes){
                         if(codRes == 200){
                             res.statusCode = 200;
-                            res.write(objeto + ' alterado com sucesso!');
+                            res.write(objeto + ' excluido com sucesso!');
                             res.end();
                         }else{
                             res.statusCode = codRes;
-                            res.write('Falha ao alterar ' + objeto);
+                            res.write('Falha ao excluir ' + objeto);
                             res.end();
                         }
                     });
