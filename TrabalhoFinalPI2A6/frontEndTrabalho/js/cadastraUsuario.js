@@ -66,13 +66,14 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	alert("Cadastro realizado com sucesso! \n Senha enviada para o e-mail cadastrado");
-	    	document.getElementById("fechaCadastraModal").click();
+	    	$('#sucessoModal').modal('show');	
 	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
 	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");
+			$('#erroModal').modal('show');
+
 	}); 	
     req.write(texto);
     req.end();

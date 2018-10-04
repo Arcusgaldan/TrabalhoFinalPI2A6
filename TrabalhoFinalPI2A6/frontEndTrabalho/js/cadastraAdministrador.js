@@ -52,6 +52,8 @@ function cadastra(){
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");
+			$('#erroModal').modal('show');
+
 	}); 	
     req.write(texto);
     req.end();
