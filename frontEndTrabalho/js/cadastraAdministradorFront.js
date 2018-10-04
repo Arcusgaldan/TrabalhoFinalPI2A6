@@ -32936,7 +32936,7 @@ module.exports = {
 	inserir: function(usuario, cb){
 		console.log('Entrei em cUsuario::inserir!');
 		if(!this.validar(usuario)){							
-				return false;
+				cb(400);
 		}else{
 			usuario['id'] = 0;
 			var sql = "INSERT INTO TBUsuario (";
@@ -32979,7 +32979,8 @@ module.exports = {
 
 	alterar: function(usuario, cb){
 		if(!this.validar(usuario)){
-			return false;
+			console.log("Não alterou pois não passou da validação em cUsuario::alterar");
+			cb(400);
 		}else{
 			var sql = "UPDATE TBUsuario SET ";
 			var campos = "";
@@ -33155,10 +33156,12 @@ function cadastra(){
 	    	localStorage.id = 1;
 	    	// alert("Cadastro realizado com sucesso!");
 	    	$('#sucessoModal').modal('show');
-	    	setTimeout(function(){location.href="index.html"} , 5000);   
+	    	setTimeout(function(){location.href="index.html"} , 2000);   
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");
+			$('#erroModal').modal('show');
+
 	}); 	
     req.write(texto);
     req.end();
@@ -44500,7 +44503,7 @@ module.exports = {
 		if(palavra == null)
 			return false;
 
-		if(palavra.length > valor)
+		if(palavra.length >= valor)
 			return true;
 		else
 			return false;

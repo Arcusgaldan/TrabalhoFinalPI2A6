@@ -30,6 +30,29 @@ function verificaEmail(){
 		    });
 		}else{
 			console.log("Este email não está cadastrado no sistema");
+  			var ModalSemEmail = document.getElementById('semEmailModal');
+
+			if(ModalSemEmail == null){
+			$("#page-top").append('\
+			    <!-- Logout Modal-->\
+			    <div class="modal fade" id="semEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+			    <div class="modal-dialog" role="document">\
+			      <div class="modal-content">\
+			        <div class="modal-header">\
+			          <h5 class="modal-title" id="exampleModalLabel">Email não cadastrado</h5>\
+			          <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+			            <span aria-hidden="true">×</span>\
+			          </button>\
+			        </div>\
+			        <div class="modal-body">O e-mail infomado nao consta no nosso sistema</div>\
+			        <div class="modal-footer">\
+			        </div>\
+			      </div>\
+			    </div>\
+			    </div>\
+			    ');
+  				$('#semEmailModal').modal('show');
+		}
 		}
 	});
 
@@ -62,10 +85,82 @@ function geraLink(codUsuario, email){
 		console.log("Resposta recebida!");
 		if(res.statusCode == 200){
 			console.log("Email enviado!");
+
+			var modalSucessoEmail = document.getElementById('sucessoEmailModal');
+
+			if(modalSucessoEmail == null){
+		
+			$("#page-top").append('\
+			    <!-- Logout Modal-->\
+			    <div class="modal fade" id="sucessoEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+			    <div class="modal-dialog" role="document">\
+			      <div class="modal-content">\
+			        <div class="modal-header">\
+			          <h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+			          <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+			            <span aria-hidden="true">×</span>\
+			          </button>\
+			        </div>\
+			        <div class="modal-body">Operação Relizada com sucesso</div>\
+			        <div class="modal-footer">\
+			        </div>\
+			      </div>\
+			    </div>\
+			    </div>\
+			    ');
+  				$('#sucessoEmailModal').modal('show');
+			}
+
 		}else if(res.statusCode == 400){
 			console.log("Erro fatal ao tentar recuperar senha");
+			var modalFalhaEmail = document.getElementById('falhaEmailModal');
+			if(modalFalhaEmail == null){
+		
+			$("#page-top").append('\
+			    <!-- Logout Modal-->\
+			    <div class="modal fade" id="falhaEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+			    <div class="modal-dialog" role="document">\
+			      <div class="modal-content">\
+			        <div class="modal-header">\
+			          <h5 class="modal-title" id="exampleModalLabel">Falha</h5>\
+			          <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+			            <span aria-hidden="true">×</span>\
+			          </button>\
+			        </div>\
+			        <div class="modal-body">Falha ao realizar a operação</div>\
+			        <div class="modal-footer">\
+			        </div>\
+			      </div>\
+			    </div>\
+			    </div>\
+			    ');
+  				$('#falhaEmailModal').modal('show');
+			}
 		}else{
 			console.log("Falha ao enviar email. Contate o suporte.");
+			var modalFalhaEmail = document.getElementById('falhaEmailModal');
+			if(modalFalhaEmail == null){
+		
+			$("#page-top").append('\
+			    <!-- Logout Modal-->\
+			    <div class="modal fade" id="falhaEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+			    <div class="modal-dialog" role="document">\
+			      <div class="modal-content">\
+			        <div class="modal-header">\
+			          <h5 class="modal-title" id="exampleModalLabel">Falha</h5>\
+			          <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+			            <span aria-hidden="true">×</span>\
+			          </button>\
+			        </div>\
+			        <div class="modal-body">Falha ao realizar a operação</div>\
+			        <div class="modal-footer">\
+			        </div>\
+			      </div>\
+			    </div>\
+			    </div>\
+			    ');
+  				$('#falhaEmailModal').modal('show');
+			}
 		}
 	});
 

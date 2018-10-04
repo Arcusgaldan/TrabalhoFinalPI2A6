@@ -33,7 +33,6 @@ function cadastra(){
 	    //console.log(res);        
 	    if(res.statusCode == 200){
 	    	alert("Cadastro realizado com sucesso!");
-	    	document.getElementById("fechaCadastraModal").click();
 	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else

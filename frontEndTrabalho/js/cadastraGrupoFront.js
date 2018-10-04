@@ -33137,7 +33137,6 @@ function cadastra(){
 	    //console.log(res);        
 	    if(res.statusCode == 200){
 	    	alert("Cadastro realizado com sucesso!");
-	    	document.getElementById("fechaCadastraModal").click();
 	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else
@@ -33169,7 +33168,7 @@ module.exports = {
 		final.nome = "";
 		final.sigla = "";
 		final.descricao = "";
-		final.dataFundacao = null;
+		final.dataFundacao = "1000-01-01 00:00:00";
 		final.codUsuario = 0;
 		final.logotipo = "";
 		final.email = "";

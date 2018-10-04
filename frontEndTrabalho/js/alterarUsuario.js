@@ -27,9 +27,13 @@ function alterar(){
 		console.log("Resposta recebida!");
 
 		if(res.statusCode == 200){
-			console.log("Alterado com sucesso!"); //Fazer o modal			
+			console.log("Alterado com sucesso!"); 
+			$('#sucessoModal').modal('show');	
+			setTimeout(function(){location.reload();} , 2000);	
 		}else{
-			console.log("Não foi possível alterar usuario"); //Fazer o modal
+			console.log("Não foi possível alterar usuario");
+			$('#erroModal').modal('show');
+
 		}
 	});
 	req.write(texto);
