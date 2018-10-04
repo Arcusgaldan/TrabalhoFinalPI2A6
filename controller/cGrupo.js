@@ -31,8 +31,7 @@ module.exports = {
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + grupo[key] + '"';
-					
+					aux = '"' + grupo[key] + '"';					
 				}
 				else
 					aux = grupo[key];
