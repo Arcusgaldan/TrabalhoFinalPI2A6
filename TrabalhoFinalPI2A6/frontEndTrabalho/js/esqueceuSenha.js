@@ -7,6 +7,33 @@ function verificaEmail(){
 	var http = require('http');
 	var utils = require('./../../utils.js');
 
+	if (emai == ""){
+		console.log("mail vazio");
+  			var ModalSemEmail = document.getElementById('semEmailModal');
+
+			if(ModalSemEmail == null){
+			$("#page-top").append('\
+			    <!-- Logout Modal-->\
+			    <div class="modal fade" id="semEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+			    <div class="modal-dialog" role="document">\
+			      <div class="modal-content">\
+			        <div class="modal-header">\
+			          <h5 class="modal-title" id="exampleModalLabel">Email não cadastrado</h5>\
+			          <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+			            <span aria-hidden="true">×</span>\
+			          </button>\
+			        </div>\
+			        <div class="modal-body">O e-mail infomado nao consta no nosso sistema</div>\
+			        <div class="modal-footer">\
+			        </div>\
+			      </div>\
+			    </div>\
+			    </div>\
+			    ');
+  				$('#semEmailModal').modal('show');
+		}
+	}
+
 	var campos = {
 		campo: "email",
 		valor: email
