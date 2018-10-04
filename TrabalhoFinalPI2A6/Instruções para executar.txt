@@ -1,0 +1,15 @@
+Prof. Tiago, boa tarde!
+
+Seguem as instruções passo-a-passo para iniciar a execução do Sistema PRONN.
+
+1 - Execute o WAMP
+2 - Execute o código SQL encontrado no arquivo codigomysql.sql utilizando o phpMyAdmin
+3 - Abra o CMD na pasta raíz do projeto
+4 - Execute "node server.js" (sem aspas)
+5 - Execute o arquivo chromeDisableSecurity.bat
+6 - Na janela do Chrome que irá abrir, abra o arquivo /frontEndTrabalho/index.html
+
+Divirta-se e corrija com carinho.
+
+Abraços,
+Equipe PRONN

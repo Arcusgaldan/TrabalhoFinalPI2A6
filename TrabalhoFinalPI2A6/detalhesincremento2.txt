@@ -1,0 +1,68 @@
+Cadastro do grupo:
+TBGrupo
+CODUsuario
+Id
+Status
+Nome
+Sigla
+Lider
+Descrição
+Data de fundação
+
+TBLogLider
+Id
+LiderAtual
+Data
+
+TBTextoIndex
+Id
+Titulo
+Texto
+
+
+// FRONT-END
+// cadastroGrupo.html
+// <title> Cadastro de Grupo - PRONN</title>
+// texto - Nome do grupo
+// texto - Sigla(não pode existir siglas iguais)
+// texto - Nome do grupo
+// texto - Lider
+// select - status( Ativo, inativo e aguardando líder).
+// btnCadastrar
+
+modalDescrição
+text - Descrição.
+date - Data da fundação.
+email - email (opcinal na validação)
+foto - logotipo (opcional na validação).
+btnSalvar
+
+modalNovoLider
+select - Novo Lider( listar membros do grupo).
+btnSalvar
+
+
+//grupos.html (Pública)
+//<title>SIGLA_DO_GRUPO - NOME_DO_GRUPO - PRONN.</title>
+//Nesta página deve haver logotipo,
+//nome, sigla,
+//descrição, nome do líder atual, data de início do grupo, link do lattes. 
+
+grupo-de-pesquisa.html 
+<title>Grupo de Pesquisa - PRONN</title>
+link para a páginas grupos.html
+logo do grupo
+
+index.html
+mostrar cadastramento de grupos e produção cientifica
+e tecnológica(textos e títulos), link para pagina grupos.html
+
+
+
+
+
+
+
+
+
+
