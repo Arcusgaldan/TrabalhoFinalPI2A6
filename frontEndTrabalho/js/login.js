@@ -7,6 +7,47 @@ function login(){
 
 	var email = document.getElementById('emailLogin').value;
 	var senha = document.getElementById('senhaLogin').value;
+	
+	if (email == "" || senha == ""){
+		console.log("email vazio");
+		var modalLoginVazio = document.getElementById('loginVazioModal');
+
+		if (email == "" && senha == ""){
+			var faltaPreencher = "E-mail e Senha";
+		}else if (senha == ""){
+			var faltaPreencher = "Senha";
+		}else if (email == ""){
+			var faltaPreencher = "E-mail";
+		}
+		
+
+		if(modalLoginVazio == null){
+			$("#page-top").append('\
+				<!-- Logout Modal-->\
+				<div class="modal fade" id="loginVazioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+					<div class="modal-dialog" role="document">\
+						<div class="modal-content">\
+							<div class="modal-header">\
+							<h5 class="modal-title" id="exampleModalLabel">Campos Vazios</h5>\
+							<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+							<span aria-hidden="true">×</span>\
+							</button>\
+							</div>\
+							<div id="msgFaltaPreencher" class="modal-body"></div>\
+							<div class="modal-footer">\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+				');
+		}
+		
+		document.getElementById("msgFaltaPreencher").innerHTML = "Por favor preencha os campos de " + faltaPreencher +".";
+
+		$('#loginVazioModal').modal('show');
+		return;
+	}
+
 	senha = utils.stringHash(senha);
 
 	var parametrosBusca = {
@@ -31,10 +72,57 @@ function login(){
 				    if(JSON.parse(chunk).resultado[0].senha == senha){
 				    	console.log("Login com sucesso!");
 				    	localStorage.id = JSON.parse(chunk).resultado[0].id;
-				    	alert("Login efetuado com sucesso!");
-	    				setTimeout(function(){location.reload();} , 2000);   				    	
+				    	var modalSucessoLogin = document.getElementById('sucessoLoginModal');
+
+						if(modalSucessoLogin == null){
+							$("#page-top").append('\
+								<!-- Logout Modal-->\
+								<div class="modal fade" id="sucessoLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+									<div class="modal-dialog" role="document">\
+										<div class="modal-content">\
+											<div class="modal-header">\
+											<h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+											<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+											<span aria-hidden="true">×</span>\
+											</button>\
+											</div>\
+											<div class="modal-body">Login efetuado com sucesso</div>\
+											<div class="modal-footer">\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+								');
+						}
+		 
+					$('#sucessoLoginModal').modal('show');
+	    			setTimeout(function(){location.reload();} , 2000);   				    	
 				    }else{
 				    	console.log("Falha no login");
+				    	var modalSucessoLogin = document.getElementById('sucessoLoginModal');
+
+						if(modalSucessoLogin == null){
+							$("#page-top").append('\
+								<!-- Logout Modal-->\
+								<div class="modal fade" id="sucessoLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+									<div class="modal-dialog" role="document">\
+										<div class="modal-content">\
+											<div class="modal-header">\
+											<h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+											<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+											<span aria-hidden="true">×</span>\
+											</button>\
+											</div>\
+											<div class="modal-body">Falha ao realizar o login <br><br> Tente Novamente.</div>\
+											<div class="modal-footer">\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+								');
+						}
+						$('#sucessoLoginModal').modal('show');
+
 				    }
 				}
 		    });

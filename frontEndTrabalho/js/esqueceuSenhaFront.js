@@ -24694,6 +24694,34 @@ function verificaEmail(){
 	var http = require('http');
 	var utils = require('./../../utils.js');
 
+	if (email == ""){
+		console.log("email vazio");
+		var modalEmailVazio = document.getElementById('emailVazioModal');
+
+		if(modalEmailVazio == null){
+			$("#page-top").append('\
+				<!-- Logout Modal-->\
+				<div class="modal fade" id="emailVazioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+				<div class="modal-dialog" role="document">\
+				<div class="modal-content">\
+				<div class="modal-header">\
+				<h5 class="modal-title" id="exampleModalLabel">Campos Vazios</h5>\
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+				<span aria-hidden="true">×</span>\
+				</button>\
+				</div>\
+				<div class="modal-body">Por favor preencha os campos de e-mail</div>\
+				<div class="modal-footer">\
+				</div>\
+				</div>\
+				</div>\
+				</div>\
+				');
+			$('#emailVazioModal').modal('show');
+			return;
+		}
+	}
+
 	var campos = {
 		campo: "email",
 		valor: email
