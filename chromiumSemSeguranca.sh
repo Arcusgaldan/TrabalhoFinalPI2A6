@@ -1,1 +1,1 @@
-chromium-browser --disable-web-security --user-data-dir="[/home/gabiru/ChromeDisabled]" &
+chromium-browser --disable-web-security --user-data-dir="/home/gabiru/ChromeDisabled" &

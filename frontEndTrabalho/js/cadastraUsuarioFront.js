@@ -253,6 +253,9 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
+	    	var form = document.getElementById('formCadastroUsuario');
+	    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + usuario.prontuario;
+	    	form.submit();
 	    	$('#sucessoModal').modal('show');	
 	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
 	    	setTimeout(function(){location.reload();} , 2000);
