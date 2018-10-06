@@ -37,5 +37,8 @@
 [-] Chamar callback em controllers quando validar for false (seguir padrão do cUsuario). <BE>
 [-] Quando for excluir, excluir também todos os campos de dependência (chaves estrangeiras) <BE>
 [-] Perguntar se só pode excluir usuário se não houver nada relacionado a ele <TODOS>
-
+[-] Info grupos (ver "CHIPS" no materialize <FE>
+[-] Buttom input<fe>
 [-] Criar modal para confirmação de cadstro grupo
+[-] Na página do grupo lista também o nome do tecnico?
+[-] Tirar os botões alterar grupo e lider da página de grupo pública.

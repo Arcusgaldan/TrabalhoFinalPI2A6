@@ -1,0 +1,69 @@
+tecnico 
+Líder
+
+<form>
+<input>Nome
+<input>link lattes
+<input>Atividade que realiza
+<input>Fomação academica maxima com  (popOver)
+<date> ano de conclusão
+<date> Data de entrada no grupo
+<input>Nome (nome se superior ou mais mais)
+<input> foto
+<button> Cadastrar
+
+
+
+excluir tecnico
+<button> excluir
+
+===========================================
+Líder.
+vinculo de linha de pesquisa
+
+página do grupo.
+Botão + icone abre modal adicionar linha 
+<modal>Linha de pesquisa 
+<select>1 grau
+<select>2 grau
+<select>3 grau
+<date> data inicio
+<input textarea> descrição
+button Adicionar
+button Finalizar
+
+excluir linha de pesquisa
+<button> excluir
+
+
+Administrador só pode exlcuir as linhas que não tem vinculo.
+<checkbox> listar as linhas(exemplo cadastro de permissões)
+<button> excluir
+
+button listar docentes
+na frente do nome do docente um button gerenciar linha de pesquisar(exemplo usuario)
+
+Líder.
+
+página cadastroDocente
+
+<input>Nome
+<input>link lattes
+link do perfil docente
+<input> foto
+<input>Fomação academica maxima com  (popOver)
+<date> Data de entrada no grupo
+<select> linhas de pesquisa
+<date> data de começo do vinculo com a linha
+
+excluir docente
+<button> excluir
+
+
+Página publica do grupo.
+listar links com o nome das linhas pesquisas.
+abrir um modal com as demais informações.
+no nome dos docentes link para abrir o perfil.
+
+
+
