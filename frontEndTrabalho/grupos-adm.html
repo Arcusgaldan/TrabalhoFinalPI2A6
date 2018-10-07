@@ -210,9 +210,10 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Você reamente deseja excluir esse grupo?</p></div>
+            <div class="modal-body"><p id="nomeGrupoExcluir" style="color: #000">Você reamente deseja excluir esse grupo?</p></div>
+            <div style="display: none;" id="idGrupoExcluir"></div>
             <div class="modal-footer">
-              <button class="btn btn-success">SIM</button>
+              <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
             </div>
           </div>
@@ -300,6 +301,7 @@
     <script type="text/javascript" src="js/loginFront.js"></script>
     <script type="text/javascript" src="js/logout.js"></script>
     <script type="text/javascript" src="js/alteraGrupoFront.js"></script>
+    <script type="text/javascript" src="js/excluiGrupoFront.js"></script>
 
 
   </body>

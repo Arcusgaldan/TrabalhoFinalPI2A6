@@ -29,6 +29,10 @@ function enviarEmail(mensagem, email, assunto){
 }
 
 function cadastra(){
+	if(document.getElementById('fotoCadastrar').files[0].type != 'image/jpg' && document.getElementById('fotoCadastrar').files[0].type != 'image/jpeg' && document.getElementById('fotoCadastrar').files[0].size > (5 * 1024 * 1024)){
+		console.log("Arquivo inválido!");
+		return;
+	}
 	var modelo = require('./../../modelo/mUsuario.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
@@ -66,6 +70,9 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
+	    	var form = document.getElementById('formCadastroUsuario');
+	    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + usuario.prontuario;
+	    	form.submit();
 	    	$('#sucessoModal').modal('show');	
 	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
 	    	setTimeout(function(){location.reload();} , 2000);

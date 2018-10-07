@@ -63,7 +63,8 @@ function preencheModalAlterar(grupo){
 
 function preencheModalExcluir(grupo){
 	console.log("entrei no modal Excluir com grupo = " + JSON.stringify(grupo.nome));
-	document.getElementById("nomeExcluir").innerHTML = grupo.nome;
+	document.getElementById("nomeGrupoExcluir").innerHTML = grupo.nome;
+	document.getElementById("idGrupoExcluir").value = grupo.id;
 }
 
 var utils = require('./../../utils.js');

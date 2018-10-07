@@ -2,7 +2,7 @@ module.exports = {
 	validar: function(grupo){
 		var validates = require('./../validates.js');
 		if(!validates.req(grupo.id) || !validates.req(grupo.status) || !validates.min(grupo.nome, 5) ||
-			!validates.min(grupo.sigla, 3) || !validates.req(grupo.codUsuario)){ //Retirar campos opcionais desta validação						
+			!validates.min(grupo.sigla, 2) || !validates.req(grupo.codUsuario)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
@@ -31,8 +31,7 @@ module.exports = {
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + grupo[key] + '"';
-					
+					aux = '"' + grupo[key] + '"';					
 				}
 				else
 					aux = grupo[key];
