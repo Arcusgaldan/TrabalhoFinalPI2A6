@@ -1,6 +1,10 @@
 var http = require('http');
 
 http.createServer(function(req, res){
+    console.log("Cabeçalhos da requisição: " + JSON.stringify(req.headers));
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'OPTION, GET, POST');
     var msgRqs = "";
     var jsonRqs;
     console.log("Pacote recebido!");
