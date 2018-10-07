@@ -32,11 +32,12 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	alert("Cadastro realizado com sucesso!");
+	    	$('#sucessoModal').modal('show');	
 	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else
 	    	console.log("FALHA NO CADASTRO");
+			$('#erroModal').modal('show');    
 	}); 	
     req.write(texto);
     req.end();

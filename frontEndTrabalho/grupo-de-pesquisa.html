@@ -100,40 +100,36 @@
 
           <div class="container">
           <div class="card mx-auto mt-5 mb-5">
-            <div class="card-header">Página Interna do Grupo 
-              <button id="" class="btn btn-warning float-right" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button> 
-
-              <button id="" class="btn float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>
+            <div id="cardHeaderGrupo" class="card-header">Página Interna do Grupo   
+             
             </div>
               <div class="card card-body">      
-                <img id="logotipoGrupo" src="images/favicon.png" class="rounded float-right fotoGrupo col-2 " alt="">
+                <img id="logotipoGrupo" src="images/favicon.png" class="rounded float-right fotoGrupo col-2">
                 <p>
-                 <strong>Sigla do Grupo: </strong>
+                 <strong>Sigla do Grupo:</strong>
                  <span id="siglaGrupo"></span>
                 </p>      
                 <p>
-                 <strong>Nome do Grupo: </strong>
+                 <strong>Nome do Grupo:</strong>
                  <span id="nomeGrupo"></span>
                 </p>      
                 <p>
-                  <strong>Descrição  : </strong> 
-                  <span id="descicaoGrupo">
-                   
-                  </span>
+                  <strong>Descrição:</strong> 
+                  <span id="descicaoGrupo"></span>
                 </p>
-
                 <p>
-                 <strong>Nome Lider Atual </strong>
+                 <strong>Nome Lider Atual:</strong>
                  <span id="liderGrupo"></span>
                 </p> 
                 <p>
-                 <strong>E-mail</strong> 
+                 <strong>E-mail:</strong> 
                  <span id="emailGrupo"></span>
                 </p>    
                 <p>
-                  <strong>Data Inicio do Grupo: </strong> 
+                  <strong>Data Inicio do Grupo:</strong> 
                   <span id="fundGrupo"></span>
-                </p> 
+                </p>
+                <div style="display: none;" id="idLiderGrupo"></div> 
               </div>     
             </div>
           </div>
@@ -286,9 +282,10 @@
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
 
+
+    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="js/encaminharGrupoFront.js"></script>
     <script type="text/javascript" src="js/loginFront.js"></script>
-    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="js/logout.js"></script>
 
   </body>

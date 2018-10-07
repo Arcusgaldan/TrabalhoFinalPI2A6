@@ -24724,6 +24724,17 @@ if(Number.isInteger(idGrupo)){
 				document.getElementById("emailGrupo").innerHTML = grupo.email;
 				document.getElementById("logotipoGrupo").src = grupo.logotipo;
 				document.getElementById("liderGrupo").innerHTML = grupo.codUsuario;
+
+				if(grupo.codUsuario == localStorage.id){
+					$("#cardHeaderGrupo").append('\
+					<button id="" class="btn btn-warning float-right" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button>\
+              		<a id="" href="cadastroTecnico.html" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Técnico</a>\
+              		<button id="" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Docentes</button>\
+              		<a id="" href="cadastroLinhasGrupo.html" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Linhas de Pesquisa</a>\
+              		<button id="" class="btn float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>\
+                ');
+				}
+
 	    	});
 	    	//Puxa os dados para o collapse de exibição deusuário
 	    }else{

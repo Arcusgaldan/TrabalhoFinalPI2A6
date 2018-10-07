@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pronn</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-png">
+
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+ 
+  </head>
+
+  <body id="page-top" class="sidebar-toggled" >
+
+     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+      <a class="navbar-brand mr-1" href="index.html">Pronn</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+ 
+   <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
+        <div class="form-row align-items-center">
+          <div class="col-sm-4 my-1">
+            <label class="sr-only" for="usuarioLogin">Email</label>
+            <input type="text" class="form-control" id="emailLogin" placeholder="Email">
+          </div>
+          <div class="col-sm-4 my-1">
+            <label class="sr-only" for="senhaLogin">Senha</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="senhaLogin" placeholder="Senha">
+            </div>
+          </div>
+         
+            <button type="button" id="btnLogin" class="btn btn-primary">ENTRAR</button>
+          <!-- <div class="col-sm-4 my-1"> -->
+
+            <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 15px;margin-left: 10px;"><small>Redefinir senha</small></button>
+          <!-- </div> -->
+        </div>
+   </form>
+
+
+    <!-- Navbar -->
+    <ul id="boxLogado" class="navbar-nav ml-auto ml-md-0 display-none">
+                 
+        <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle fa-fw"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <button id="logout" class="dropdown-item" >Sair do Sistema</button>
+          </div>
+        </li>
+    </ul> 
+
+    </nav>  
+
+    <div id="wrapper">
+
+       <!-- Sidebar -->
+      <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
+      <ul id="sidebarWrapper" class="sidebar navbar-nav toggled">
+        
+      </ul>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Gerenciamento de Linhas de pesquisa</li>
+          </ol>
+
+          <div class="container">
+              <div class="card mx-auto mt-5 mb-5">
+                <div class="card-header">Gerenciamento de Linhas de pesquisa 
+                  <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal" style="margin-right: 5px;">Cadastrar Linhas de pesquisa</button>
+                </div>
+                <div class="card-body">
+                  <p>
+                    
+                  </p>
+                  
+                  <table class="table table-bordered table-dark text-center">
+                    <tbody id="">
+                     <tr>
+                      <th id=''>Linhas de pesquisa 001</th>
+                      <td>
+                      <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapse' role='button' aria-expanded='false' aria-controls='collapse'> Mostra Dados <span class='fas fa-plus'></span></button>  
+                        <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>
+                        <button id='' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Linhas de pesquisa</button>
+                        <div id='collapse' class='collapse mostraLista' >
+                          <div class='card card-body'>
+                            <img src="images/favicon.png" style="width:200px;">
+                            <p><strong>Nome: </strong><span id=''></span></p>
+                            <p><strong>Atividade que realiza: </strong> <span id=''></span></p>
+                            <p><strong>Fomação academica:</strong> <span id=''></span></p>
+                            <p><strong>Ano de conclusão:</strong> <span id=''></span></p>
+                            <p><strong>Nome do curso:</strong> <span id=''></span></p>
+                            <p><strong>Link do Lattes: </strong> <span id=''></span></p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                 
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <!-- CADASTRA Modal -->
+    
+    <div class="modal fade" id="cadastraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Linhas de pesquisa</h5>
+            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p>
+              Neste formulário serão inseridas as informações para o cadastro de Linhas de pesquisa
+            </p>
+
+            <form action="" method="get" >
+              <div class="form-group">
+                <div class="form-row">
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="nomeTecnicoCadastrar" class="form-control" name="nomeTecnicoCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeTecnicoCadastrar">Nome Completo</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="atividadeTecnicoCadastrar" class="form-control" name="atividadeTecnicoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                      <label for="atividadeTecnicoCadastrar">Atividade dentro do grupo</label>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+        
+              <div class="form-group">
+                <div class="form-row">
+
+                  <div class="col-md-5">
+                    <div class="form-label-group">
+                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getval(this);">
+                          <option value="" readonly >Maior formação <br> Academica</option>
+                          <option value="Ensino Fundamental">Ensino Fundamental</option>
+                          <option value="Ensino Médio">Ensino Médio</option>
+                          <option value="Ensino Superior">Ensino Superior</option>
+                          <option value="Pós-Graduação">Pós-Graduação</option>
+                          <option value="Mestrado">Mestrado</option>
+                          <option value="Doutorado">Doutorado</option>
+                          <option value="p.hD">p.hD</option>
+                        </select>
+                      </div>
+                  </div>
+                  <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="date" id=" " class="form-control" name=" "  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                      <label for=" " >Ano de Conclusão</label>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+
+              <script type="text/javascript">
+                function getval(sel)
+                {
+                  if(sel.value != "Ensino Fundamental" && sel.value != "Ensino Médio" && sel.value != "" ){
+                    $("#divNomeCurso").css("display", "block");
+                  }else{
+                    $("#divNomeCurso").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divNomeCurso" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="nomeCursoTecnicoCadastra" class="form-control" name=""  placeholder="Nome do Curso" required="required" autofocus="autofocus">
+                      <label for="">Nome do Curso</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+ 
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="url" class="form-control" id="linkLattesTecnicoCadastrar" placeholder="Link do Lattes">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12 ">
+                    <div class="form-label-group">
+                      <input type="file" id="fotoCadastrar" class="form-control" placeholder="Foto de Perfil" required="required">
+                      <label for="fotoCadastrar">Foto de Perfil</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" id="btnCadastroTecnico">Cadastar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ALTERA Modal -->
+
+    <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Alterar usuário</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+             <p>
+              Neste formulário serão inseridas as informações para o cadastro de usuários
+            </p>
+            <form action="" method="get" >
+              <div class="form-group">
+                <div class="form-row">
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="nomeTecnicoCadastrar" class="form-control" name="nomeTecnicoCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeTecnicoCadastrar">Nome Completo</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="atividadeTecnicoCadastrar" class="form-control" name="atividadeTecnicoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                      <label for="atividadeTecnicoCadastrar">Atividade dentro do grupo</label>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+        
+              <div class="form-group">
+                <div class="form-row">
+
+                  <div class="col-md-5">
+                    <div class="form-label-group">
+                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getval(this);">
+                          <option value="" readonly >Maior formação <br> Academica</option>
+                          <option value="Ensino Fundamental">Ensino Fundamental</option>
+                          <option value="Ensino Médio">Ensino Médio</option>
+                          <option value="Ensino Superior">Ensino Superior</option>
+                          <option value="Pós-Graduação">Pós-Graduação</option>
+                          <option value="Mestrado">Mestrado</option>
+                          <option value="Doutorado">Doutorado</option>
+                          <option value="p.hD">p.hD</option>
+                        </select>
+                      </div>
+                  </div>
+                  <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="date" id=" " class="form-control" name=" "  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                      <label for=" " >Ano de Conclusão</label>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+
+              <script type="text/javascript">
+                function getval(sel)
+                {
+                  if(sel.value != "Ensino Fundamental" && sel.value != "Ensino Médio" && sel.value != "" ){
+                    $("#divNomeCurso").css("display", "block");
+                  }else{
+                    $("#divNomeCurso").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divNomeCurso" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="nomeCursoTecnicoCadastra" class="form-control" name=""  placeholder="Nome do Curso" required="required" autofocus="autofocus">
+                      <label for="">Nome do Curso</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+ 
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="url" class="form-control" id="linkLattesTecnicoCadastrar" placeholder="Link do Lattes">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12 ">
+                    <div class="form-label-group">
+                      <input type="file" id="fotoCadastrar" class="form-control" placeholder="Foto de Perfil" required="required">
+                      <label for="fotoCadastrar">Foto de Perfil</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-alert" id="btnAlterarUsuario" type="button">Alterar</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXCLUIR Modal-->
+      <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id=""></h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Linhas de pesquisa <span id="nomeTecnicoExcluir" style="color: #000"></span> ?</p></div>
+            <div style="display: none;" id="idTecnicoExcluir"></div>
+            <div class="modal-footer">
+              <button class="btn btn-success" id="btnExcluir">SIM</button>
+              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- SUCESSO Modal -->
+      <div class="modal fade" id="sucessoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="">Sucesso</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Sua operação foi realizada</p></div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Erro Modal -->
+      <div class="modal fade" id="erroModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="">Erro</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Erro ao realizar a operação!</p></div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Neumann Project</span>
+          </div>
+        </div>
+      </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="js/demo/datatables-demo.js"></script>
+    <script src="js/demo/chart-area-demo.js"></script>
+
+    <script type="text/javascript" src="js/loginFront.js"></script>
+    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
+    
+    <script type="text/javascript" src="js/cadastraUsuarioFront.js"></script>
+    <script type="text/javascript" src="js/alterarUsuarioFront.js"></script>
+    <script type="text/javascript" src="js/excluiUsuarioFront.js"></script>
+    <script type="text/javascript" src="js/listarUsuarioFront.js"></script>
+
+  </body>
+
+</html>
+  
