@@ -52,3 +52,5 @@
 
 [-] Criar modal para confirmação de cadstro grupo
 >>>>>>> master
+
+[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de técnicos ?

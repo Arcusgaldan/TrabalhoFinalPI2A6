@@ -24,6 +24,7 @@ vinculo de linha de pesquisa
 página do grupo.
 Botão + icone abre modal adicionar linha 
 <modal>Linha de pesquisa 
+<text>Nome
 <select>1 grau
 <select>2 grau
 <select>3 grau
