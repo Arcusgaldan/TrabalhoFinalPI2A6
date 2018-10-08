@@ -33,8 +33,31 @@ function puxaModal(){
 
 function logout(){
 	localStorage.removeItem("id");
-	alert("Logout realizado com sucesso!");
-	setTimeout(function(){location.href="index.html"} , 2000);  
+  var modalSucessoLogout = document.getElementById('logoutSucessoModal');
+
+  if(modalSucessoLogout == null){
+    console.log("Não há um modal de logout, dando append...");
+    $("#page-top").append('\
+    <!-- Logout Modal-->\
+    <div class="modal fade" id="logoutSucessoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+    <div class="modal-dialog" role="document">\
+      <div class="modal-content">\
+        <div class="modal-header">\
+          <h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+            <span aria-hidden="true">×</span>\
+          </button>\
+        </div>\
+        <div class="modal-body">Logout realizado com sucesso!</div>\
+        <div class="modal-footer">\
+        </div>\
+      </div>\
+    </div>\
+    </div>\
+    ');
+  }
+  $('#logoutSucessoModal').modal('show');
+  setTimeout(function(){location.href="index.html"} , 2000);  
 }
 
 document.getElementById("logout").addEventListener("click", puxaModal);

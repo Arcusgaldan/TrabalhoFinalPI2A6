@@ -1,10 +1,20 @@
 var http = require('http');
 
 http.createServer(function(req, res){
-    console.log("Cabeçalhos da requisição: " + JSON.stringify(req.headers));
+    //console.log("Cabeçalhos da requisição: " + JSON.stringify(req.headers));
+    console.log("Método da requisição: " + req.method);
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Methods', 'OPTION, GET, POST');
+    res.setHeader('Access-Control-Allow-Credentials', "true");
+    res.setHeader('Access-Control-Allow-Methods', 'OPTION, GET, POST');    
+    res.setHeader('Accept-Encoding', 'gzip, deflate, br');
+    res.setHeader('Accept-Language', 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7');
+    res.setHeader('Accept', "text/plain");
+    if(req.method == 'OPTIONS'){
+        console.log("Método é options, cabeçalhos da requisição são " + JSON.stringify(req.headers));
+        res.setHeader('Access-Control-Allow-Headers', req.headers["access-control-request-headers"]);
+        res.end();
+        return;
+    }
     var msgRqs = "";
     var jsonRqs;
     console.log("Pacote recebido!");
@@ -16,6 +26,12 @@ http.createServer(function(req, res){
             }
     });
     req.on('end', function(){
+        // if(!msgRqs){
+        //     console.log("Sem msgrqs, enviando os cabeçalhos de aceitação");
+        //     res.statusCode = 200;
+        //     res.end();
+        //     return;
+        // }
         //msgRqs = '\"'+msgRqs+'\"';
         if(msgRqs != "")
             jsonRqs = JSON.parse(msgRqs);

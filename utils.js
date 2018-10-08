@@ -31,12 +31,12 @@ module.exports = {
 		    headers: {
 		      'Content-Type': 'text/plain',    
 		      'Content-Length': Buffer.byteLength(texto),
-		      'Objeto': null,
-		      'Operacao': null
-		      // 'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept, Objeto, Operacao',
-		      // 'Access-Control-Allow-Origin': 'http://localhost',
-		      // 'Access-Control-Allow-Credentials': true,
-		      // 'Access-Control-Allow-Methods': 'OPTION, GET, POST'
+		      // 'Objeto': null,
+		      // 'Operacao': null,
+		      'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept, Objeto, Operacao',
+		      'Access-Control-Allow-Origin': 'localhost',
+		      'Access-Control-Allow-Credentials': true,
+		      'Access-Control-Allow-Methods': 'OPTION, GET, POST'
 	    	}
 	    };
 		return retorno;
