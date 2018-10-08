@@ -4,7 +4,7 @@ var fs = require('fs');
 http.createServer(function(req, res){
 	var url = req.url;
 	switch(url){
-		case "/teste":
+		case "/":
 			console.log("Foi teste");
 			fs.readFile('frontEndTrabalho/index.html', function(err, data) {
 				if(err){throw err;}
@@ -25,7 +25,9 @@ http.createServer(function(req, res){
 				tipo = "text/plain";
 			}
 			fs.readFile('frontEndTrabalho' + url, function(err, data) {
-				if(err){throw err;}
+				if(err){
+					console.log("Erro: " + err);
+				}
 			    res.writeHead(200, {'Content-Type': tipo});
 			    res.write(data);
 			    res.end();
