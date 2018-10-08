@@ -36,7 +36,6 @@
 [-] Comentar código <BE>
 [-] Criar erro para campo único duplicado <BE>
 [-] Chamar callback em controllers quando validar for false (seguir padrão do cUsuario). <BE>
-<<<<<<< HEAD
 [-] Quando for excluir, excluir também todos os campos de dependência (chaves estrangeiras) <BE>
 [-] Perguntar se só pode excluir usuário se não houver nada relacionado a ele <TODOS>
 [-] Info grupos (ver "CHIPS" no materialize <FE>
@@ -44,13 +43,11 @@
 [-] Criar modal para confirmação de cadstro grupo
 [-] Na página do grupo lista também o nome do tecnico?
 [-] Tirar os botões alterar grupo e lider da página de grupo pública.
-=======
 [V] Perguntar se só pode excluir usuário se não houver nada relacionado a ele <TODOS> //Somente pode excluir usuário se ele não tiver feito primeiro acesso
 [-] Criar página de acesso negado (acessoNegado.html) <FE>
 [-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto já com o caminho da imagem que vai estar no server) <BE>
 [X] Quando for excluir, excluir também todos os campos de dependência (chaves estrangeiras) <BE> //Desnecessário pois não há exclusão neste caso
-
+[-] Criar array em ServerRouter com lista de páginas válidas. Validar também arquivos a serem puxados. <BE>
 [-] Criar modal para confirmação de cadstro grupo
->>>>>>> master
 
-[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de técnicos ?
+[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de técnicos 
