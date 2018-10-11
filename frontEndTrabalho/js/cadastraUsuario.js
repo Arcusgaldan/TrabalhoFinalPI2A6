@@ -77,9 +77,10 @@ function cadastra(){
 	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
 	    	setTimeout(function(){location.reload();} , 2000);
 	    }
-	    else
+	    else{
 	    	console.log("FALHA NO CADASTRO");
 			$('#erroModal').modal('show');
+		}
 
 	}); 	
     req.write(texto);
