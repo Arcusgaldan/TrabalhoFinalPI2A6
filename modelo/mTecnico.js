@@ -8,7 +8,8 @@ module.exports = {
 		final.nomeCurso = objeto.nomeCurso;
 		final.linkLattes = objeto.linkLattes;
 		final.foto = objeto.foto;
-		final.dataEntrada = objeto.dataEntrada;		
+		final.dataEntrada = objeto.dataEntrada;	
+		final.codGrupo = objeto.codGrupo;		
 		return final;
 	},
 
@@ -22,6 +23,7 @@ module.exports = {
 		final.linkLattes = "";
 		final.foto = "";
 		final.dataEntrada = "";
+		final.codGrupo = 0;
 		return final;
 	},
 

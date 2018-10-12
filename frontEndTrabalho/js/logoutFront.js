@@ -57,7 +57,7 @@ function logout(){
     ');
   }
   $('#logoutSucessoModal').modal('show');
-  setTimeout(function(){location.href="index.html"} , 2000);  
+  setTimeout(function(){location.href="/index"} , 2000);  
 }
 
 document.getElementById("logout").addEventListener("click", puxaModal);
