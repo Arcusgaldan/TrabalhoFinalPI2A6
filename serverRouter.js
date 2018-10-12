@@ -3,8 +3,19 @@ var fs = require('fs');
 
 var paginas = {
 	"/": "frontEndTrabalho/index.html",
+	"/index": "frontEndTrabalho/index.html",
 	"/cadastroUsuario": "frontEndTrabalho/cadastroUsuario.html",
-	"/cadastroGrupo": "frontEndTrabalho/grupos-adm.html"
+	"/cadastroGrupo": "frontEndTrabalho/grupos-adm.html",
+	"/cadastroPermissoes": "frontEndTrabalho/cadastroPermissoes.html",
+	"/cadastroInformativos": "frontEndTrabalho/cadastroInformativos.html",
+	"/cadastroAdministrador": "frontEndTrabalho/cadastroAdministrador.html",
+	"/primeiroAcessoUsuario": "frontEndTrabalho/primeiroAcessoUsuario.html"
+};
+
+var agrupamentos = {
+	"grupos": "frontEndTrabalho/grupo-de-pesquisa.html",
+	"tecnicosGrupo": "frontEndTrabalho/cadastroTecnico.html",
+	"docentesGrupo": "frontEndTrabalho/cadastroDocente.html"
 };
 
 function mimeType(arquivo){
@@ -30,10 +41,10 @@ function mimeType(arquivo){
 
 http.createServer(function(req, res){
 	var url = req.url;
-	var pagina = paginas[url];
-	if(pagina){
-		console.log("Página requisitada está na lista");
-		fs.readFile(pagina, function(err, data) {
+	var agrupamento = url.split("/")[1];
+	if(agrupamentos[agrupamento] && mimeType(url) == null){
+		console.log("Agrupamento requisitado está na lista: " + url);
+		fs.readFile(agrupamentos[agrupamento], function(err, data) {
 			if(err){
 				console.log("Erro: " + err);
 				res.writeHead(500);	
@@ -45,64 +56,49 @@ http.createServer(function(req, res){
 			}
 	 	});
 	}else{
-		console.log("Página requisitada NÃO está na lista");
-		var tipoArquivo = mimeType(url);
-		fs.readFile("frontEndTrabalho" + url, function(err, data){
-			if(err){
-				if(err.code === 'ENOENT'){ //Se erro for página não existente, envia a página 404
-					console.log("Erro: " + err);
-					fs.readFile("frontEndTrabalho/404.html", function(err, data){
-						if(err){
-							console.log("Erro ao ler página de 404: " + err);
-							res.writeHead(500);
-							res.end();
-						}else{
-							res.writeHead(404, {'Content-Type': 'text/html'});
-							res.write(data);
-							res.end();
-						}
-					});
-				}else{ //Se erro não for página não encontrada, envia erro 500 padrão
+		var pagina = paginas[url];
+		if(pagina){
+			console.log("Página requisitada está na lista: " + url);
+			fs.readFile(pagina, function(err, data) {
+				if(err){
 					console.log("Erro: " + err);
 					res.writeHead(500);	
 					res.end();
+				}else{
+				    res.writeHead(200, {'Content-Type': 'text/html'});
+				    res.write(data);
+				    res.end();
 				}
-			}else{
-				res.writeHead(200, {'Content-Type': tipoArquivo});
-			    res.write(data);
-			    res.end();
-			}
-		});
+		 	});
+		}else{
+			console.log("Página requisitada NÃO está na lista: " + url);
+			var tipoArquivo = mimeType(url);
+			fs.readFile("frontEndTrabalho" + url, function(err, data){
+				if(err){
+					if(err.code === 'ENOENT' /*&& tipoArquivo == null*/){ //Se erro for página não existente, envia a página 404
+						console.log("Erro: " + err);
+						fs.readFile("frontEndTrabalho/404.html", function(err, data){
+							if(err){
+								console.log("Erro ao ler página de 404: " + err);
+								res.writeHead(500);
+								res.end();
+							}else{
+								res.writeHead(404, {'Content-Type': 'text/html'});
+								res.write(data);
+								res.end();
+							}
+						});
+					}else{ //Se erro não for página não encontrada, envia erro 500 padrão
+						console.log("Erro: " + err);
+						res.writeHead(500);	
+						res.end();
+					}
+				}else{
+					res.writeHead(200, {'Content-Type': tipoArquivo});
+				    res.write(data);
+				    res.end();
+				}
+			});
+		}
 	}
-	
-	// switch(url){
-	// 	case "/":
-	// 		fs.readFile('frontEndTrabalho/index.html', function(err, data) {
-	// 			if(err){throw err;}
-	// 		    res.writeHead(200, {'Content-Type': 'text/html'});
-	// 		    res.write(data);
-	// 		    res.end();
-	// 	 	});
-	// 		break;
-	// 	default:
-	// 		//Testar exceções para erro
-	// 		console.log("Foi outra coisa: " + req.url);
-	// 		var tipo;
-	// 		if(url.match("^.*\.js.*$")){
-	// 			tipo = "text/javascript";
-	// 		}else if(url.match("^.*\.css.*$")){
-	// 			tipo = "text/css";
-	// 		}else{
-	// 			tipo = "text/plain";
-	// 		}
-	// 		fs.readFile('frontEndTrabalho' + url, function(err, data) {
-	// 			if(err){
-	// 				console.log("Erro: " + err);
-	// 			}
-	// 		    res.writeHead(200, {'Content-Type': tipo});
-	// 		    res.write(data);
-	// 		    res.end();
-	// 	 	});
-	// 		break;
-	// }
 }).listen(80);

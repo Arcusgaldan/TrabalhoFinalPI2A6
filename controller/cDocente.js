@@ -2,7 +2,8 @@ module.exports = {
 	validar: function(docente){
 		var validates = require('./../validates.js');
 		if(!validates.req(docente.id) || !validates.req(docente.formacao) || !validates.minVal(docente.formacao, 1) || !validates.maxVal(docente.formacao, 7) ||
-			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(docente.formacao, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || !validates.req()){ //Retirar campos opcionais desta validação	
+			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(docente.formacao, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
+			!validates.req(docente.dataEntrada) || !validates.req(docente.codGrupo)){ //Retirar campos opcionais desta validação	
 			console.log("cDocente::validar retornou false.");
 			return false;
 		}else{

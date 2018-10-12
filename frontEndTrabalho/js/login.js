@@ -95,16 +95,19 @@ function login(){
 								');
 						}
 		 
-					$('#sucessoLoginModal').modal('show');
-	    			setTimeout(function(){location.reload();} , 2000);   				    	
+						$('#sucessoLoginModal').modal('show');
+						if(JSON.parse(chunk).resultado[0].primeiroAcesso == 0)
+		    				$('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("Não é o primeiro acesso, recarregando pagina..."); location.reload();});
+		    			else
+		    				$('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("É o primeiro acesso, redirecionando..."); window.location = "/primeiroAcessoUsuario";});
 				    }else{
 				    	console.log("Falha no login");
-				    	var modalSucessoLogin = document.getElementById('sucessoLoginModal');
+				    	var modalFalhaLogin = document.getElementById('falhaLoginModal');
 
 						if(modalSucessoLogin == null){
 							$("#page-top").append('\
 								<!-- Logout Modal-->\
-								<div class="modal fade" id="sucessoLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+								<div class="modal fade" id="falhaLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
 									<div class="modal-dialog" role="document">\
 										<div class="modal-content">\
 											<div class="modal-header">\

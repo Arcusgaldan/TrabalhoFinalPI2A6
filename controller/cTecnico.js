@@ -2,7 +2,8 @@ module.exports = {
 	validar: function(tecnico){
 		var validates = require('./../validates.js');
 		if(!validates.req(tecnico.id) || !validates.req(tecnico.atividade) || !validates.req(tecnico.formacao) || !validates.minVal(tecnico.formacao, 1) || !validates.maxVal(tecnico.formacao, 7) ||
-			!validates.exact(tecnico.anoConclusao, 4) || (validates.minVal(tecnico.formacao, 3) && !validates.req(tecnico.nomeCurso)) || !validates.req(tecnico.linkLattes) || !validates.req(tecnico.dataEntrada)){ //Retirar campos opcionais desta validação	
+			!validates.exact(tecnico.anoConclusao, 4) || (validates.minVal(tecnico.formacao, 3) && !validates.req(tecnico.nomeCurso)) || !validates.req(tecnico.linkLattes) || 
+			!validates.req(tecnico.dataEntrada) || !validates.req(tecnico.codGrupo)){ //Retirar campos opcionais desta validação	
 			console.log("cTecnico::validar retornou false.");
 			return false;
 		}else{

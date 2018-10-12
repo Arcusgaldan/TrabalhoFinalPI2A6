@@ -1,7 +1,7 @@
 function sidebarPublico(){
 	$("#sidebarWrapper").append("\
 		<li class='nav-item active'>\
-          <a class='nav-link' href='index.html'>\
+          <a class='nav-link' href='/index'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>Página Inicial</span> \
           </a>\
@@ -11,31 +11,31 @@ function sidebarPublico(){
 function sidebarAdm(){
 	$("#sidebarWrapper").append("\
 		<li class='nav-item active'>\
-          <a class='nav-link' href='index.html'>\
+          <a class='nav-link' href='/index'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>Página Inicial</span> \
           </a>\
         </li>\
         <li class='nav-item active'>\
-          <a class='nav-link' href='cadastroUsuario.html'>\
+          <a class='nav-link' href='/cadastroUsuario'>\
             <i class='fas fa-fw fa-user-alt'></i>\
            <span>Manutenção de Usuários</span> \
           </a>\
         </li>\
         <li class='nav-item active'>\
-          <a class='nav-link' href='cadastroPermissoes.html'>\
+          <a class='nav-link' href='/cadastroPermissoes'>\
             <i class='fas fa-fw fa-user-alt'></i>\
            <span>Manutenção de Permissões</span> \
           </a>\
         </li>\
         <li class='nav-item active'>\
-          <a class='nav-link' href='grupos-adm.html'>\
+          <a class='nav-link' href='/cadastroGrupo'>\
             <i class='fas fa-fw fa-user-alt'></i>\
            <span>Manutenção de Grupos</span> \
           </a>\
         </li>\
         <li class='nav-item active'>\
-          <a class='nav-link' href='cadastroInformativos.html'>\
+          <a class='nav-link' href='/cadastroInformativos'>\
             <i class='fas fa-fw fa-user-alt'></i>\
            <span>Manutenção de Informativos</span> \
           </a>\
@@ -76,13 +76,13 @@ function buscaGrupoLider(){
 function sidebarLider(grupo){
 	$("#sidebarWrapper").append("\
 		<li class='nav-item active'>\
-          <a class='nav-link' href='index.html'>\
+          <a class='nav-link' href='/index'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>Página Inicial</span> \
           </a>\
         </li>\
 		<li class='nav-item active'>\
-          <a class='nav-link' href='grupo-de-pesquisa.html#"+grupo.id+"'>\
+          <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>"+grupo.nome+"</span> \
           </a>\

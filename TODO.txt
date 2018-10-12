@@ -51,6 +51,7 @@
 [-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto já com o caminho da imagem que vai estar no server) <BE>
 [X] Quando for excluir, excluir também todos os campos de dependência (chaves estrangeiras) <BE> //Desnecessário pois não há exclusão neste caso
 [-] Criar array em ServerRouter com lista de páginas válidas. Validar também arquivos a serem puxados. <BE>
-[-] Criar modal para confirmação de cadstro grupo
-
-[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de técnicos 
+[-] Criar modal para confirmação de cadstro grupo <FE>
+[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de técnicos <TODOS>
+[-] Trocar link dos logos de todas as páginas de index.html para /index.html <FE>
+[-] Fazer script de cadastro opcional de primeiro acesso do usuário <BE>
