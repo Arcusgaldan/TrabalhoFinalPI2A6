@@ -54,3 +54,4 @@
 [-] Criar modal para confirmação de cadstro grupo
 
 [-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de técnicos 
+[-] Função de pegar data do servidor <BE>
