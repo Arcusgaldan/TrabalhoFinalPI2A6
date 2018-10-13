@@ -56985,6 +56985,24 @@ module.exports = {
 		if(palavra == null || palavra === "")
 			return false;
 		return true;
+	},
+
+	minVal: function(valor, limite){
+		if(isNan(val))
+			return false;
+		else if(val >= limite)
+			return true;
+		else
+			return false;
+	},
+
+	maxVal: function(valor, limite){
+		if(isNan(val))
+			return false;
+		else if(val <= limite)
+			return true;
+		else
+			return false;
 	}
 
 }

@@ -33158,10 +33158,10 @@ function cadastra(){
 	    	$('#sucessoModal').modal('show');
 	    	setTimeout(function(){location.href="index.html"} , 2000);   
 	    }
-	    else
+	    else{
 	    	console.log("FALHA NO CADASTRO");
 			$('#erroModal').modal('show');
-
+		}
 	}); 	
     req.write(texto);
     req.end();
@@ -56978,6 +56978,24 @@ module.exports = {
 		if(palavra == null || palavra === "")
 			return false;
 		return true;
+	},
+
+	minVal: function(valor, limite){
+		if(isNan(val))
+			return false;
+		else if(val >= limite)
+			return true;
+		else
+			return false;
+	},
+
+	maxVal: function(valor, limite){
+		if(isNan(val))
+			return false;
+		else if(val <= limite)
+			return true;
+		else
+			return false;
 	}
 
 }

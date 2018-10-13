@@ -24700,7 +24700,7 @@ var req = http.request(opcoesHTTP, (res) => {
     //console.log(res);
     if(res.statusCode == 747){
     	console.log("Nao ha cadastros");
-    	window.location = "../frontEndTrabalho/cadastroAdministrador.html";
+    	window.location = "/cadastroAdministrador";
     }else if(res.statusCode == 200){
     	console.log("Ha cadastros!");
     }else{
