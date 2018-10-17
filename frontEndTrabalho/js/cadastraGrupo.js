@@ -35,9 +35,10 @@ function cadastra(){
 	    	$('#sucessoModal').modal('show');	
 	    	setTimeout(function(){location.reload();} , 2000);
 	    }
-	    else
+	    else{
 	    	console.log("FALHA NO CADASTRO");
 			$('#erroModal').modal('show');    
+		}
 	}); 	
     req.write(texto);
     req.end();

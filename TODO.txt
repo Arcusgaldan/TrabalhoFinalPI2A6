@@ -23,37 +23,48 @@
 [V] Bloquear a pagina de cadastro adm ap�s o mesmo cadastrado <BE>
 [V] Fazer alterar e excluir de tudo <BE>
 [V] Cabe�alho que burla seguran�a do Chrome; <BE>
-[-] Tentar generalizar JS de FrontEnd; <FE>
-[-] Revisar todo o layuot em vers�es de telas menores <FE>
-[V] Fazer p�gina de primeiro acesso do usu�rio <FE>
-[-] Colocar novas tabelas como Autoincrement <DOC>
-[-] Verificar se banco est� desligado e redirecionar para 404 se sim <BE><FE>
-[V] Fazer modais de sucesso e falha <FE>
-[-] Organizar sidebars <FE>
 [V] Organizar modelo padr�o Bootstrap <FE>
 [V] display-none toda as p�ginas, e script sidebar, comentar sidebar colocar link logo. trocar id wrapper, mudar o id do bnt logout
+[V] Fazer p�gina de primeiro acesso do usu�rio <FE>
+[V] Fazer modais de sucesso e falha <FE>
+[V] Na p�gina do grupo lista tamb�m o nome do tecnico?
+[V] Tirar os bot�es alterar grupo e lider da p�gina de grupo p�blica.
+[V] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS> //Somente pode excluir usu�rio se ele n�o tiver feito primeiro acesso
+
+[-] Tentar generalizar JS de FrontEnd; <FE>
+[-] Revisar todo o layuot em vers�es de telas menores <FE>
+[-] Colocar novas tabelas como Autoincrement <DOC>
+[-] Verificar se banco est� desligado e redirecionar para 404 se sim <BE><FE>
+[-] Organizar sidebars <FE>
 [-] Bloquear p�ginas que n�o s�o acess�veis ao tipo de usu�rio <BE>
 [-] Comentar c�digo <BE>
 [-] Criar erro para campo �nico duplicado <BE>
 [-] Chamar callback em controllers quando validar for false (seguir padr�o do cUsuario). <BE>
 [-] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE>
-[X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [-] Info grupos (ver "CHIPS" no materialize <FE>
 [-] Buttom input<fe>
-[-] Criar modal para confirma��o de cadstro grupo
-[V] Na p�gina do grupo lista tamb�m o nome do tecnico?
-[V] Tirar os bot�es alterar grupo e lider da p�gina de grupo p�blica.
-[V] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS> //Somente pode excluir usu�rio se ele n�o tiver feito primeiro acesso
 [-] Criar p�gina de acesso negado (acessoNegado.html) <FE>
-[-] Trocar o capos date por text
+[-] Trocar o capos date por text 
+[-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto j� com o caminho da imagem que vai estar no server) <BE>
+[-] Criar array em ServerRouter com lista de p�ginas v�lidas. Validar tamb�m arquivos a serem puxados. <BE>
+[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos <TODOS>
+[-] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
+[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos 
+[-] O sistema não está redirecionando para a página do cadastro de administrador quando entra e nao tem nenhum usuário cadastrado
+
+[-] Criar modal para confirma��o de cadstro grupo
 [-] Retirar p.hD
 [-] p�s-grdua��o por especializa��o
-[-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto j� com o caminho da imagem que vai estar no server) <BE>
-[X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso
-[-] Criar array em ServerRouter com lista de p�ginas v�lidas. Validar tamb�m arquivos a serem puxados. <BE>
 [-] Criar modal para confirma��o de cadstro grupo <FE>
-[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos <TODOS>
 [-] Trocar link dos logos de todas as p�ginas de index.html para /index.html <FE>
-[-] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
+[-] Colocar na documentação tabela de textos da index
+[-] Adm nao tem curriculo lattes
+[-] Colocar if else para a senha do banco
+[-] Pré-cadastrar Usuários
+[-] Tratar os console logo do servidor
+[-] Conferir se o campo prontuário
+[-] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install
+[-] excluir e adicinar mais campos na index
 
-[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos 
+[X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
+[X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso
