@@ -286,14 +286,14 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar usuário</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Técnico</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
              <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuários
+              Neste formulário serão inseridas as informações para a alteração do técnico
             </p>
             <form action="" method="get" >
               <div class="form-group">
@@ -301,15 +301,15 @@
 
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="nomeTecnicoCadastrar" class="form-control" name="nomeTecnicoCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeTecnicoCadastrar">Nome Completo</label>
+                      <input type="text" id="nomeTecnicoAlterar" class="form-control" name="nomeTecnicoAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeTecnicoAlterar">Nome Completo</label>
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="atividadeTecnicoCadastrar" class="form-control" name="atividadeTecnicoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                      <label for="atividadeTecnicoCadastrar">Atividade dentro do grupo</label>
+                      <input type="text" id="atividadeTecnicoAlterar" class="form-control" name="atividadeTecnicoAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                      <label for="atividadeTecnicoAlterar">Atividade dentro do grupo</label>
                     </div>
 
                   </div>
@@ -322,14 +322,14 @@
 
                   <div class="col-md-5">
                     <div class="form-label-group">
-                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getval(this);">
-                          <option value="" readonly >Maior formação <br> Academica</option>
-                          <option value="Ensino Fundamental">Ensino Fundamental</option>
-                          <option value="Ensino Médio">Ensino Médio</option>
-                          <option value="Ensino Superior">Ensino Superior</option>
-                          <option value="Pós-Graduação">Especialização</option>
-                          <option value="Mestrado">Mestrado</option>
-                          <option value="Doutorado">Doutorado</option>
+                        <select id="formacaoTecnicoAlterar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getvalAlterar(this);">
+                          <option value="0" readonly >Maior formação <br> Academica</option>
+                          <option value="1">Ensino Fundamental</option>
+                          <option value="2">Ensino Médio</option>
+                          <option value="3">Ensino Superior</option>
+                          <option value="4">Especialização</option>
+                          <option value="5">Mestrado</option>
+                          <option value="6">Doutorado</option>
                         </select>
                       </div>
                   </div>
@@ -337,44 +337,42 @@
 
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="anoConclusaoTecnicoCadastrar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
-                      <label for="anoConclusaoTecnicoCadastrar" >Ano de Conclusão</label>
+                      <input type="text" id="anoConclusaoTecnicoAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="anoConclusaoTecnicoAlterar" >Ano de Conclusão</label>
                     </div>
                   </div>
                 </div>
               </div>  
 
               <script type="text/javascript">
-                function getval(sel)
+                function getvalAlterar(sel)
                 {
                   if(sel.value != "Ensino Fundamental" && sel.value != "Ensino Médio" && sel.value != "" ){
-                    $("#divNomeCurso").css("display", "block");
+                    $("#divNomeCursoAlterar").css("display", "block");
                   }else{
-                    $("#divNomeCurso").css("display", "none");
+                    $("#divNomeCursoAlterar").css("display", "none");
                   }
                 }
               </script>
 
-              <div id="divNomeCurso" class="form-group" style="display: none;">
+              <div id="divNomeCursoAlterar" class="form-group" style="display: none;">
                 <div class="form-row">
 
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeCursoTecnicoCadastrar" class="form-control" name="nomeCursoTecnicoCadastrar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
-                      <label for="nomeCursoTecnicoCadastrar">Nome do Curso</label>
+                      <input type="text" id="nomeCursoTecnicoAlterar" class="form-control" name="nomeCursoTecnicoAlterar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
+                      <label for="nomeCursoTecnicoAlterar">Nome do Curso</label>
                     </div>
                   </div>
 
                 </div>
               </div>
 
- 
-
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattesTecnicoCadastrar" placeholder="Link do Lattes">
+                      <input type="url" class="form-control" id="linkLattesTecnicoAlterar" placeholder="Link do Lattes">
                       <div class="input-group-prepend">
                         <div class="input-group-text">http://lattes.cnpq.br/****</div>
                       </div>
@@ -387,8 +385,8 @@
                 <div class="form-row">
                   <div class="col-md-12 ">
                     <div class="form-label-group">
-                      <input type="file" id="fotoTecnicoCadastrar" class="form-control" placeholder="Foto de Perfil" required="required">
-                      <label for="fotoTecnicoCadastrar">Foto de Perfil</label>
+                      <input type="file" id="fotoTecnicoAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
+                      <label for="fotoTecnicoAlterar">Foto de Perfil</label>
                     </div>
                   </div>
                 </div>

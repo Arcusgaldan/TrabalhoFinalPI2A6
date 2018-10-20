@@ -71,6 +71,8 @@
 [-] Tratar modal de exclusão de grupo
 [-] exclusao de grupo nao fubciona
 [-] Como cadastrar linhas ?
+[-] Botão da página interna do grupo referente a gerenciamento de linha de grupos
+[-] trocar o link da página de grupos na home
 
 [X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso
