@@ -42,7 +42,7 @@ function mimeType(arquivo){
 http.createServer(function(req, res){
 	var url = req.url;
 	var agrupamento = url.split("/")[1];
-	if(agrupamentos[agrupamento] && mimeType(url) == null){
+	if(agrupamentos[agrupamento]/* && mimeType(url) == null*/){
 		console.log("Agrupamento requisitado está na lista: " + url);
 		fs.readFile(agrupamentos[agrupamento], function(err, data) {
 			if(err){

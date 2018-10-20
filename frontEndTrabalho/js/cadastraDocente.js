@@ -37,32 +37,32 @@ function buscaGrupo(sigla, cb){
 }
 
 function cadastra(){
-	var modelo = require('./../../modelo/mTecnico.js');
+	var modelo = require('./../../modelo/mDocente.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
-	var controller = require('./../../controller/cTecnico.js');
-	var tecnico = modelo.novo();
+	var controller = require('./../../controller/cDocente.js');
+	var docente = modelo.novo();
 
-	tecnico.id = 0;
-	tecnico.nome = document.getElementById('nomeTecnicoCadastrar').value;
-	tecnico.atividade = document.getElementById('atividadeTecnicoCadastrar').value;
-	tecnico.formacao = formacaoToString(document.getElementById('formacaoTecnicoCadastrar').value);
-	tecnico.anoConclusao = document.getElementById('anoConclusaoTecnicoCadastrar').value;
-	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoCadastrar').value;
-	tecnico.linkLattes = document.getElementById('linkLattesTecnicoCadastrar').value;
-	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoCadastrar').value;
+	docente.id = 0;
+	docente.nome = document.getElementById('nomeDocenteCadastrar').value;
+	docente.formacao = formacaoToString(document.getElementById('formacaoDocenteCadastrar').value);
+	docente.anoConclusao = document.getElementById('anoConclusaoDocenteCadastrar').value;
+	docente.nomeCurso = document.getElementById('nomeCursoDocenteCadastrar').value;
+	docente.linkLattes = document.getElementById('linkLattesDocenteCadastrar').value;
+	docente.dataEntrada = document.getElementById('dataEntradaDocenteCadastrar').value;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
-			console.log("Não foi possível achar o grupo do técnico. Favor contatar suporte.");
-			tecnico.codGrupo = 0;
+			console.log("Não foi possível achar o grupo do docente. Favor contatar suporte.");
+			alert("Não foi possível achar o grupo do docente. Favor contatar suporte.");
+			docente.codGrupo = 0;
 			return;
 		}else{
-			console.log("Grupo do técnico é " + idGrupo);
-			tecnico.codGrupo = idGrupo;
-			var texto = JSON.stringify(tecnico);
+			console.log("Grupo do docente é " + idGrupo);
+			docente.codGrupo = idGrupo;
+			var texto = JSON.stringify(docente);
 
 			var opcoesHTTP = utils.opcoesHTTP(texto);
-			opcoesHTTP.headers.Objeto = "Tecnico";
+			opcoesHTTP.headers.Objeto = "Docente";
 			opcoesHTTP.headers.Operacao = "INSERIR";
 
 			var req = http.request(opcoesHTTP, (res) => {
@@ -70,8 +70,8 @@ function cadastra(){
 			    res.setEncoding('utf8');
 			    //console.log(res);        
 			    if(res.statusCode == 200){
-			    	var form = document.getElementById('formCadastroTecnico');
-			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome + "_" + idGrupo;
+			    	var form = document.getElementById('formCadastroDocente');
+			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
 			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});

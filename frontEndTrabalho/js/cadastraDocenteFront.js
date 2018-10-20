@@ -32921,28 +32921,28 @@ function extend() {
 
 },{}],190:[function(require,module,exports){
 module.exports = {
-	validar: function(tecnico){
+	validar: function(docente){
 		var validates = require('./../validates.js');
-		if(!validates.req(tecnico.id) || !validates.req(tecnico.atividade) || !validates.req(tecnico.formacao) || !validates.minVal(tecnico.formacao, 1) || !validates.maxVal(tecnico.formacao, 7) ||
-			!validates.exact(tecnico.anoConclusao, 4) || (validates.minVal(tecnico.formacao, 3) && !validates.req(tecnico.nomeCurso)) || !validates.req(tecnico.linkLattes) || 
-			!validates.req(tecnico.dataEntrada) || !validates.req(tecnico.codGrupo)){ //Retirar campos opcionais desta validação	
-			console.log("cTecnico::validar retornou false.");
+		if(!validates.req(docente.id) || !validates.req(docente.formacao) || !validates.minVal(docente.formacao, 1) || !validates.maxVal(docente.formacao, 7) ||
+			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(docente.formacao, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
+			!validates.req(docente.dataEntrada) || !validates.req(docente.codGrupo)){ //Retirar campos opcionais desta validação	
+			console.log("cDocente::validar retornou false.");
 			return false;
 		}else{
 			return true;
 		}
 	},
 
-	inserir: function(tecnico, cb){
-		if(!this.validar(tecnico)){							
+	inserir: function(docente, cb){
+		if(!this.validar(docente)){							
 				return false;
 		}else{
-			tecnico['id'] = 0;
-			var sql = "INSERT INTO TBTecnico (";
+			docente['id'] = 0;
+			var sql = "INSERT INTO TBDocente (";
 			var campos = "";
 			var valores = "";
-			for(var key in tecnico){
-				if(tecnico[key] == null)
+			for(var key in docente){
+				if(docente[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -32951,14 +32951,14 @@ module.exports = {
 					campos += ", " + key;
 				}
 
-				var modelo = require('./../modelo/mTecnico.js');
+				var modelo = require('./../modelo/mDocente.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + tecnico[key] + '"';					
+					aux = '"' + docente[key] + '"';					
 				}
 				else
-					aux = tecnico[key];
+					aux = docente[key];
 
 				if(valores == ""){
 					valores += aux;
@@ -32975,25 +32975,25 @@ module.exports = {
 		}
 	},
 
-	alterar: function(tecnico, cb){
-		if(!this.validar(tecnico)){
+	alterar: function(docente, cb){
+		if(!this.validar(docente)){
 			return false;
 		}else{
-			var sql = "UPDATE TBTecnico SET ";
+			var sql = "UPDATE TBDocente SET ";
 			var campos = "";
-			for(var key in tecnico){
+			for(var key in docente){
 				if(key == 'id')
 					continue;
 
-				var modelo = require('./../modelo/mTecnico.js');
+				var modelo = require('./../modelo/mDocente.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + tecnico[key] + '"';
+					aux = '"' + docente[key] + '"';
 					
 				}
 				else
-					aux = tecnico[key];
+					aux = docente[key];
 
 				if(campos == ""){
 					campos += key + " = " + aux;
@@ -33001,7 +33001,7 @@ module.exports = {
 					campos += ", " + key + " = " + aux;
 				}
 			}
-			sql += campos + " WHERE id = " + tecnico['id'] + ";";
+			sql += campos + " WHERE id = " + docente['id'] + ";";
 			var dao = require('./../dao.js');
 			dao.inserir(dao.criaConexao(), sql, function(codRes){
 				cb(codRes);
@@ -33010,7 +33010,7 @@ module.exports = {
 	},
 
 	excluir: function(id, cb){
-		var sql = "DELETE FROM TBTecnico WHERE id = " + id + ";";
+		var sql = "DELETE FROM TBDocente WHERE id = " + id + ";";
 		var dao = require('./../dao.js');
 		dao.inserir(dao.criaConexao(), sql, function(codRes){
 			cb(codRes);
@@ -33018,7 +33018,7 @@ module.exports = {
 	},
 
 	listar: function(cb){
-		var sql = "SELECT * FROM TBTecnico;";
+		var sql = "SELECT * FROM TBDocente;";
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
@@ -33026,7 +33026,7 @@ module.exports = {
 	},
 
 	buscar: function(campo, valor, cb){
-		var sql = 'SELECT * FROM TBTecnico WHERE ' + campo + ' = "' + valor + '";';
+		var sql = 'SELECT * FROM TBDocente WHERE ' + campo + ' = "' + valor + '";';
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
@@ -33034,7 +33034,7 @@ module.exports = {
 		});
 	}
 }
-},{"./../dao.js":191,"./../modelo/mTecnico.js":193,"./../validates.js":303}],191:[function(require,module,exports){
+},{"./../dao.js":191,"./../modelo/mDocente.js":193,"./../validates.js":303}],191:[function(require,module,exports){
 module.exports = {
 	criaConexao: function(){
 		var mysql = require('mysql');
@@ -33142,33 +33142,32 @@ function buscaGrupo(sigla, cb){
 }
 
 function cadastra(){
-	var modelo = require('./../../modelo/mTecnico.js');
+	var modelo = require('./../../modelo/mDocente.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
-	var controller = require('./../../controller/cTecnico.js');
-	var tecnico = modelo.novo();
+	var controller = require('./../../controller/cDocente.js');
+	var docente = modelo.novo();
 
-	tecnico.id = 0;
-	tecnico.nome = document.getElementById('nomeTecnicoCadastrar').value;
-	tecnico.atividade = document.getElementById('atividadeTecnicoCadastrar').value;
-	tecnico.formacao = formacaoToString(document.getElementById('formacaoTecnicoCadastrar').value);
-	tecnico.anoConclusao = document.getElementById('anoConclusaoTecnicoCadastrar').value;
-	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoCadastrar').value;
-	tecnico.linkLattes = document.getElementById('linkLattesTecnicoCadastrar').value;
-	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoCadastrar').value;
+	docente.id = 0;
+	docente.nome = document.getElementById('nomeDocenteCadastrar').value;
+	docente.formacao = formacaoToString(document.getElementById('formacaoDocenteCadastrar').value);
+	docente.anoConclusao = document.getElementById('anoConclusaoDocenteCadastrar').value;
+	docente.nomeCurso = document.getElementById('nomeCursoDocenteCadastrar').value;
+	docente.linkLattes = document.getElementById('linkLattesDocenteCadastrar').value;
+	docente.dataEntrada = document.getElementById('dataEntradaDocenteCadastrar').value;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
-			console.log("Não foi possível achar o grupo do técnico. Favor contatar suporte.");
-			alert("Não foi possível achar o grupo do técnico. Favor contatar suporte.");
-			tecnico.codGrupo = 0;
+			console.log("Não foi possível achar o grupo do docente. Favor contatar suporte.");
+			alert("Não foi possível achar o grupo do docente. Favor contatar suporte.");
+			docente.codGrupo = 0;
 			return;
 		}else{
-			console.log("Grupo do técnico é " + idGrupo);
-			tecnico.codGrupo = idGrupo;
-			var texto = JSON.stringify(tecnico);
+			console.log("Grupo do docente é " + idGrupo);
+			docente.codGrupo = idGrupo;
+			var texto = JSON.stringify(docente);
 
 			var opcoesHTTP = utils.opcoesHTTP(texto);
-			opcoesHTTP.headers.Objeto = "Tecnico";
+			opcoesHTTP.headers.Objeto = "Docente";
 			opcoesHTTP.headers.Operacao = "INSERIR";
 
 			var req = http.request(opcoesHTTP, (res) => {
@@ -33176,8 +33175,8 @@ function cadastra(){
 			    res.setEncoding('utf8');
 			    //console.log(res);        
 			    if(res.statusCode == 200){
-			    	var form = document.getElementById('formCadastroTecnico');
-			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome + "_" + idGrupo;
+			    	var form = document.getElementById('formCadastroDocente');
+			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
 			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
@@ -33193,26 +33192,24 @@ function cadastra(){
 		}
 	});			
 }
-},{"./../../controller/cTecnico.js":190,"./../../modelo/mTecnico.js":193,"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
+},{"./../../controller/cDocente.js":190,"./../../modelo/mDocente.js":193,"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
 		var final = {};
 		final.id = objeto.id;
-		final.atividade = objeto.atividade;
 		final.formacao = objeto.formacao;
 		final.anoConclusao = objeto.anoConclusao;
 		final.nomeCurso = objeto.nomeCurso;
 		final.linkLattes = objeto.linkLattes;
 		final.foto = objeto.foto;
-		final.dataEntrada = objeto.dataEntrada;	
-		final.codGrupo = objeto.codGrupo;		
+		final.dataEntrada = objeto.dataEntrada;
+		final.codGrupo = objeto.codGrupo;	
 		return final;
 	},
 
 	novo: function(){
 		var final = {};
 		final.id = 0;
-		final.atividade = "";
 		final.formacao = 0;
 		final.anoConclusao = "";
 		final.nomeCurso = "";
@@ -33224,7 +33221,7 @@ module.exports = {
 	},
 
 	isString: function(atributo){
-		var strings = ["atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
+		var strings = ["anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;
