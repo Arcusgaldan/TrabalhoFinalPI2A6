@@ -1,4 +1,4 @@
-"-" = Aberto
+﻿"-" = Aberto
 "V" = Sucesso
 "X" = Falha
 
@@ -30,6 +30,9 @@
 [V] Na p�gina do grupo lista tamb�m o nome do tecnico?
 [V] Tirar os bot�es alterar grupo e lider da p�gina de grupo p�blica.
 [V] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS> //Somente pode excluir usu�rio se ele n�o tiver feito primeiro acesso
+[V] Trocar link dos logos de todas as p�ginas de index.html para /index.html <FE>
+[V] Colocar na documentação tabela de textos da index
+[V] Criar modal para confirma��o de cadstro grupo
 
 [-] Tentar generalizar JS de FrontEnd; <FE>
 [-] Revisar todo o layuot em vers�es de telas menores <FE>
@@ -44,27 +47,30 @@
 [-] Info grupos (ver "CHIPS" no materialize <FE>
 [-] Buttom input<fe>
 [-] Criar p�gina de acesso negado (acessoNegado.html) <FE>
-[-] Trocar o capos date por text 
+[-] Trocar o campos date por text 
 [-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto j� com o caminho da imagem que vai estar no server) <BE>
 [-] Criar array em ServerRouter com lista de p�ginas v�lidas. Validar tamb�m arquivos a serem puxados. <BE>
 [-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos <TODOS>
 [-] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
 [-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos 
 [-] O sistema não está redirecionando para a página do cadastro de administrador quando entra e nao tem nenhum usuário cadastrado
+[-] Usuário pode alterar a data de cadastro da linha ou será automática
 
-[-] Criar modal para confirma��o de cadstro grupo
 [-] Retirar p.hD
 [-] p�s-grdua��o por especializa��o
-[-] Criar modal para confirma��o de cadstro grupo <FE>
-[-] Trocar link dos logos de todas as p�ginas de index.html para /index.html <FE>
-[-] Colocar na documentação tabela de textos da index
 [-] Adm nao tem curriculo lattes
 [-] Colocar if else para a senha do banco
 [-] Pré-cadastrar Usuários
-[-] Tratar os console logo do servidor
-[-] Conferir se o campo prontuário
+[-] Tratar os console log do servidor
+[-] Conferir se o campo prontuário sao apenas numeros
 [-] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install
-[-] excluir e adicinar mais campos na index
+[-] excluir e adicionar mais campos na index
+[-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
+[-] CORRIGIR erro do serveroute.js quando cadastra o form da página primeiroAcessoUsuario
+[-] primeiroAcessoUsuario NAO ESTA FUNCIONANDO
+[-] Tratar modal de exclusão de grupo
+[-] exclusao de grupo nao fubciona
+[-] Como cadastrar linhas ?
 
 [X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso

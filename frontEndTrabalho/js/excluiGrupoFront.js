@@ -24705,8 +24705,11 @@ function excluir(){
 		console.log("Resposta recebida!");
 		if(res.statusCode == 200){
 			console.log("Grupo excluído com sucesso!");
+	    	$('#sucessoModal').modal('show');	
+	    	setTimeout(function(){location.reload();} , 2000);
 		}else{
 			console.log("Falha ao excluir grupo");
+			$('#erroModal').modal('show');
 		}
 	});
 

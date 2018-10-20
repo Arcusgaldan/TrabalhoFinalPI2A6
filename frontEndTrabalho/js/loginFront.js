@@ -24784,14 +24784,16 @@ function login(){
 		 
 						$('#sucessoLoginModal').modal('show');
 						if(JSON.parse(chunk).resultado[0].primeiroAcesso == 0)
-		    				$('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("Não é o primeiro acesso, recarregando pagina..."); location.reload();});
+	    					setTimeout(function(){location.reload();} , 2000);
+		    				// $('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("Não é o primeiro acesso, recarregando pagina..."); location.reload();});
 		    			else
-		    				$('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("É o primeiro acesso, redirecionando..."); window.location = "/primeiroAcessoUsuario";});
+	    					setTimeout(function(){console.log("É o primeiro acesso, redirecionando..."); window.location = "/primeiroAcessoUsuario";} , 2000);
+		    				// $('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("É o primeiro acesso, redirecionando..."); window.location = "/primeiroAcessoUsuario";});
 				    }else{
 				    	console.log("Falha no login");
 				    	var modalFalhaLogin = document.getElementById('falhaLoginModal');
 
-						if(modalSucessoLogin == null){
+						if(modalFalhaLogin == null){
 							$("#page-top").append('\
 								<!-- Logout Modal-->\
 								<div class="modal fade" id="falhaLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
@@ -24811,8 +24813,7 @@ function login(){
 								</div>\
 								');
 						}
-						$('#sucessoLoginModal').modal('show');
-
+						$('#falhaLoginModal').modal('show');
 				    }
 				}
 		    });
@@ -24822,6 +24823,30 @@ function login(){
 	    	// }
 		}else if(res.statusCode == 747){
 			console.log("Não teve resultado!");
+	    	var modalFalhaResultado = document.getElementById('falhaResultadoModal');
+
+			if(modalFalhaResultado == null){
+				$("#page-top").append('\
+					<!-- Logout Modal-->\
+					<div class="modal fade" id="falhaResultadoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+						<div class="modal-dialog" role="document">\
+							<div class="modal-content">\
+								<div class="modal-header">\
+								<h5 class="modal-title" id="exampleModalLabel">Erro</h5>\
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+								<span aria-hidden="true">×</span>\
+								</button>\
+								</div>\
+								<div class="modal-body">Falha ao realizar o login <br><br> Usuário ou senha não encontrados</div>\
+								<div class="modal-footer">\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					');
+				}
+
+				$('#falhaResultadoModal').modal('show');
 		}else{
 			console.log("Erro fatal.");
 		}

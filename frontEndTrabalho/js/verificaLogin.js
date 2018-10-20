@@ -8,6 +8,22 @@ function sidebarPublico(){
         </li>\
     ");
 }
+function sidebarLider(grupo){
+	$("#sidebarWrapper").append("\
+		<li class='nav-item active'>\
+          <a class='nav-link' href='/index'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Página Inicial</span> \
+          </a>\
+        </li>\
+		<li class='nav-item active'>\
+          <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>"+grupo.nome+"</span> \
+          </a>\
+        </li>\
+    ");
+}
 function sidebarAdm(){
 	$("#sidebarWrapper").append("\
 		<li class='nav-item active'>\
@@ -73,22 +89,7 @@ function buscaGrupoLider(){
 	
 }
 
-function sidebarLider(grupo){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>"+grupo.nome+"</span> \
-          </a>\
-        </li>\
-    ");
-}
+
 
 if(localStorage.id != null){
 	console.log("Está logado!");
