@@ -33156,10 +33156,10 @@ function cadastra(){
 	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoCadastrar').value;
 	tecnico.linkLattes = document.getElementById('linkLattesTecnicoCadastrar').value;
 	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoCadastrar').value;
+	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
 			console.log("Não foi possível achar o grupo do técnico. Favor contatar suporte.");
-			alert("Não foi possível achar o grupo do técnico. Favor contatar suporte.");
 			tecnico.codGrupo = 0;
 			return;
 		}else{

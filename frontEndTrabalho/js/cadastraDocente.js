@@ -2,7 +2,8 @@ document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
-	return vetor[cod+1];
+	cod = parseInt(cod);
+	return vetor[cod-1];
 }
 
 function buscaGrupo(sigla, cb){
@@ -46,10 +47,12 @@ function cadastra(){
 	docente.id = 0;
 	docente.nome = document.getElementById('nomeDocenteCadastrar').value;
 	docente.formacao = formacaoToString(document.getElementById('formacaoDocenteCadastrar').value);
+	console.log("A formação do rapaz é " + docente.formacao);
 	docente.anoConclusao = document.getElementById('anoConclusaoDocenteCadastrar').value;
 	docente.nomeCurso = document.getElementById('nomeCursoDocenteCadastrar').value;
 	docente.linkLattes = document.getElementById('linkLattesDocenteCadastrar').value;
 	docente.dataEntrada = document.getElementById('dataEntradaDocenteCadastrar').value;
+	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
 			console.log("Não foi possível achar o grupo do docente. Favor contatar suporte.");

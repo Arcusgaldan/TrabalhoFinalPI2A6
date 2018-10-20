@@ -14577,7 +14577,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -24728,14 +24728,14 @@ var req = http.request(opcoesHTTP, (res) => {
 		            </div>\
 		            <div class="modal-body">Cadastre um Lider antes de cadastrar um grupo</div>\
 		            <div class="modal-footer">\
-		              <a href="cadastroUsuario.html" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
+		              <a href="/cadastroUsuario" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
 		            </div>\
 		          </div>\
 		        </div>\
 		      </div>\
 		');
 		$('#semLider').modal('show');
-		setTimeout(function(){location.href="cadastroUsuario.html"} , 2000);  
+		setTimeout(function(){location.href="/cadastroUsuario"} , 2000);  
 	}
 });
 req.write(texto);

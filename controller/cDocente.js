@@ -1,8 +1,20 @@
 module.exports = {
 	validar: function(docente){
 		var validates = require('./../validates.js');
-		if(!validates.req(docente.id) || !validates.req(docente.formacao) || !validates.minVal(docente.formacao, 1) || !validates.maxVal(docente.formacao, 7) ||
-			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(docente.formacao, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
+		
+		var formacaoToInt = {
+			"Ensino Fundamental": 1, 
+			"Ensino Médio" : 2, 
+			"Superior": 3, 
+			"Especialização": 4, 
+			"Mestrado": 5, 
+			"Doutorado": 6
+		};
+
+		var formInt = formacaoToInt[docente.formacao];
+
+		if(!validates.req(docente.id) || !validates.req(docente.nome) || !validates.req(docente.formacao) || !formInt || !validates.minVal(formInt, 1) || !validates.maxVal(formInt, 6) ||
+			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(formInt, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
 			!validates.req(docente.dataEntrada) || !validates.req(docente.codGrupo)){ //Retirar campos opcionais desta validação	
 			console.log("cDocente::validar retornou false.");
 			return false;
@@ -45,6 +57,7 @@ module.exports = {
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
+			console.log("O SQL em cDocente::inserir = " + sql);
 			var dao = require('./../dao.js');
 			dao.inserir(dao.criaConexao(), sql, function(codRes){
 				console.log("CODRES: " + codRes);

@@ -1,5 +1,8 @@
 var url = window.location.pathname;
 var siglaGrupo = url.split("/")[2];
+if(!siglaGrupo){
+    window.location = "/404.html";
+}
 console.log("URL = "+ url +"\nSigla grupo = " + siglaGrupo);
 
 
