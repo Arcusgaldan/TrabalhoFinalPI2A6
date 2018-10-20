@@ -6,6 +6,7 @@ var paginas = {
 	"/index": "frontEndTrabalho/index.html",
 	"/cadastroUsuario": "frontEndTrabalho/cadastroUsuario.html",
 	"/cadastroGrupo": "frontEndTrabalho/grupos-adm.html",
+	"/cadastroLinhas": "frontEndTrabalho/cadastroLinhas.html",
 	"/cadastroPermissoes": "frontEndTrabalho/cadastroPermissoes.html",
 	"/cadastroInformativos": "frontEndTrabalho/cadastroInformativos.html",
 	"/cadastroAdministrador": "frontEndTrabalho/cadastroAdministrador.html",
@@ -15,7 +16,8 @@ var paginas = {
 var agrupamentos = {
 	"grupos": "frontEndTrabalho/grupo-de-pesquisa.html",
 	"tecnicosGrupo": "frontEndTrabalho/cadastroTecnico.html",
-	"docentesGrupo": "frontEndTrabalho/cadastroDocente.html"
+	"docentesGrupo": "frontEndTrabalho/cadastroDocente.html",
+	"cadastroLinhasGrupo": "frontEndTrabalho/cadastroLinhasGrupo.html"
 };
 
 function mimeType(arquivo){
