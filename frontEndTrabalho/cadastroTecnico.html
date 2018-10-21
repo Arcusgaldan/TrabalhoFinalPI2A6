@@ -203,7 +203,7 @@
 
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="anoConclusaoTecnicoCadastrar" value="" class="form-control" name="anoConclusao"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                      <input type="text" id="anoConclusaoTecnicoCadastrar" value="" class="form-control" name="anoConclusaoTecnicoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
                       <label for="anoConclusaoTecnicoCadastrar" >Ano de Conclusão</label>
                     </div>
                   </div>
@@ -295,7 +295,7 @@
              <p>
               Neste formulário serão inseridas as informações para a alteração do técnico
             </p>
-            <form action="" method="get" >
+            <form action="" method="post" id="formAlteraTecnico">
               <div class="form-group">
                 <div class="form-row">
 
@@ -395,7 +395,7 @@
 
           </div>
           <div class="modal-footer">
-            <button class="btn btn-alert" id="btnAlterarUsuario" type="button">Alterar</button>
+            <button class="btn btn-alert" id="btnAlterarTecnico" type="button">Alterar</button>
             
           </div>
         </div>
@@ -483,7 +483,6 @@
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 
