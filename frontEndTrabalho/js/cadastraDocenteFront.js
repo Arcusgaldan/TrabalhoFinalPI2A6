@@ -32923,8 +32923,20 @@ function extend() {
 module.exports = {
 	validar: function(docente){
 		var validates = require('./../validates.js');
-		if(!validates.req(docente.id) || !validates.req(docente.formacao) || !validates.minVal(docente.formacao, 1) || !validates.maxVal(docente.formacao, 7) ||
-			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(docente.formacao, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
+		
+		var formacaoToInt = {
+			"Ensino Fundamental": 1, 
+			"Ensino Médio" : 2, 
+			"Superior": 3, 
+			"Especialização": 4, 
+			"Mestrado": 5, 
+			"Doutorado": 6
+		};
+
+		var formInt = formacaoToInt[docente.formacao];
+
+		if(!validates.req(docente.id) || !validates.req(docente.formacao) || !formInt || !validates.minVal(formInt, 1) || !validates.maxVal(formInt, 6) ||
+			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(formInt, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
 			!validates.req(docente.dataEntrada) || !validates.req(docente.codGrupo)){ //Retirar campos opcionais desta validação	
 			console.log("cDocente::validar retornou false.");
 			return false;
@@ -33107,7 +33119,8 @@ document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
-	return vetor[cod+1];
+	cod = parseInt(cod);
+	return vetor[cod-1];
 }
 
 function buscaGrupo(sigla, cb){
@@ -33151,10 +33164,12 @@ function cadastra(){
 	docente.id = 0;
 	docente.nome = document.getElementById('nomeDocenteCadastrar').value;
 	docente.formacao = formacaoToString(document.getElementById('formacaoDocenteCadastrar').value);
+	console.log("A formação do rapaz é " + docente.formacao);
 	docente.anoConclusao = document.getElementById('anoConclusaoDocenteCadastrar').value;
 	docente.nomeCurso = document.getElementById('nomeCursoDocenteCadastrar').value;
 	docente.linkLattes = document.getElementById('linkLattesDocenteCadastrar').value;
 	docente.dataEntrada = document.getElementById('dataEntradaDocenteCadastrar').value;
+	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
 			console.log("Não foi possível achar o grupo do docente. Favor contatar suporte.");
@@ -57003,18 +57018,18 @@ module.exports = {
 	},
 
 	minVal: function(valor, limite){
-		if(isNan(val))
+		if(isNaN(valor))
 			return false;
-		else if(val >= limite)
+		else if(valor >= limite)
 			return true;
 		else
 			return false;
 	},
 
 	maxVal: function(valor, limite){
-		if(isNan(val))
+		if(isNaN(valor))
 			return false;
-		else if(val <= limite)
+		else if(valor <= limite)
 			return true;
 		else
 			return false;

@@ -28,7 +28,7 @@ module.exports = {
 	},
 
 	isString: function(atributo){
-		var strings = ["atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
+		var strings = ["formacao", "nome", "atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

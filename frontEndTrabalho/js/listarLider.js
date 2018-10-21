@@ -41,14 +41,14 @@ var req = http.request(opcoesHTTP, (res) => {
 		            </div>\
 		            <div class="modal-body">Cadastre um Lider antes de cadastrar um grupo</div>\
 		            <div class="modal-footer">\
-		              <a href="cadastroUsuario.html" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
+		              <a href="/cadastroUsuario" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
 		            </div>\
 		          </div>\
 		        </div>\
 		      </div>\
 		');
 		$('#semLider').modal('show');
-		setTimeout(function(){location.href="cadastroUsuario.html"} , 2000);  
+		setTimeout(function(){location.href="/cadastroUsuario"} , 2000);  
 	}
 });
 req.write(texto);

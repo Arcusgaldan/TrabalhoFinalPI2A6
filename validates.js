@@ -34,18 +34,18 @@ module.exports = {
 	},
 
 	minVal: function(valor, limite){
-		if(isNan(val))
+		if(isNaN(valor))
 			return false;
-		else if(val >= limite)
+		else if(valor >= limite)
 			return true;
 		else
 			return false;
 	},
 
 	maxVal: function(valor, limite){
-		if(isNan(val))
+		if(isNaN(valor))
 			return false;
-		else if(val <= limite)
+		else if(valor <= limite)
 			return true;
 		else
 			return false;
