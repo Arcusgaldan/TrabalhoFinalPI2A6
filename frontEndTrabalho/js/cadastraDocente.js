@@ -74,7 +74,7 @@ function cadastra(){
 			    //console.log(res);        
 			    if(res.statusCode == 200){
 			    	var form = document.getElementById('formCadastroDocente');
-			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome + "_" + idGrupo;
+			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome.replace(" ", "-") + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
 			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});

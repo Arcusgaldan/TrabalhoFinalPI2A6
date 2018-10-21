@@ -2,7 +2,8 @@ document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
-	return vetor[cod+1];
+	cod = parseInt(cod);
+	return vetor[cod-1];
 }
 
 function buscaGrupo(sigla, cb){
@@ -72,7 +73,7 @@ function cadastra(){
 			    //console.log(res);        
 			    if(res.statusCode == 200){
 			    	var form = document.getElementById('formCadastroTecnico');
-			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome + "_" + idGrupo;
+			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome.replace(" ", "-") + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
 			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});

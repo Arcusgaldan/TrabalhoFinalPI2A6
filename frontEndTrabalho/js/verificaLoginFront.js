@@ -14577,7 +14577,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -24747,6 +24747,22 @@ function sidebarLiderSemGrupo(grupo){
           <a class='nav-link' href='/cadastroLinhas'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>Manutenção de Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
+    ");
+}
+function sidebarLider(grupo){
+	$("#sidebarWrapper").append("\
+		<li class='nav-item active'>\
+          <a class='nav-link' href='/index'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Página Inicial</span> \
+          </a>\
+        </li>\
+		<li class='nav-item active'>\
+          <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>"+grupo.nome+"</span> \
           </a>\
         </li>\
     ");

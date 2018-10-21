@@ -32935,7 +32935,7 @@ module.exports = {
 
 		var formInt = formacaoToInt[docente.formacao];
 
-		if(!validates.req(docente.id) || !validates.req(docente.formacao) || !formInt || !validates.minVal(formInt, 1) || !validates.maxVal(formInt, 6) ||
+		if(!validates.req(docente.id) || !validates.req(docente.nome) || !validates.req(docente.formacao) || !formInt || !validates.minVal(formInt, 1) || !validates.maxVal(formInt, 6) ||
 			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(formInt, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
 			!validates.req(docente.dataEntrada) || !validates.req(docente.codGrupo)){ //Retirar campos opcionais desta validação	
 			console.log("cDocente::validar retornou false.");
@@ -32979,6 +32979,7 @@ module.exports = {
 				}
 			}
 			sql += campos + ") values (" + valores + ");";
+			console.log("O SQL em cDocente::inserir = " + sql);
 			var dao = require('./../dao.js');
 			dao.inserir(dao.criaConexao(), sql, function(codRes){
 				console.log("CODRES: " + codRes);
@@ -33191,7 +33192,7 @@ function cadastra(){
 			    //console.log(res);        
 			    if(res.statusCode == 200){
 			    	var form = document.getElementById('formCadastroDocente');
-			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome + "_" + idGrupo;
+			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome.replace(" ", "-") + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
 			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
@@ -33236,7 +33237,7 @@ module.exports = {
 	},
 
 	isString: function(atributo){
-		var strings = ["anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
+		var strings = ["formacao", "nome", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

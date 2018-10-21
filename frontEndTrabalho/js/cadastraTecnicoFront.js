@@ -32923,8 +32923,20 @@ function extend() {
 module.exports = {
 	validar: function(tecnico){
 		var validates = require('./../validates.js');
-		if(!validates.req(tecnico.id) || !validates.req(tecnico.atividade) || !validates.req(tecnico.formacao) || !validates.minVal(tecnico.formacao, 1) || !validates.maxVal(tecnico.formacao, 7) ||
-			!validates.exact(tecnico.anoConclusao, 4) || (validates.minVal(tecnico.formacao, 3) && !validates.req(tecnico.nomeCurso)) || !validates.req(tecnico.linkLattes) || 
+		
+		var formacaoToInt = {
+			"Ensino Fundamental": 1, 
+			"Ensino Médio" : 2, 
+			"Superior": 3, 
+			"Especialização": 4, 
+			"Mestrado": 5, 
+			"Doutorado": 6
+		};
+
+		var formInt = formacaoToInt[tecnico.formacao];
+
+		if(!validates.req(tecnico.id) || !validates.req(tecnico.nome) || !validates.req(tecnico.atividade) || !validates.req(tecnico.formacao) || !formInt || !validates.minVal(formInt, 1) || !validates.maxVal(formInt, 6) ||
+			!validates.exact(tecnico.anoConclusao, 4) || (validates.minVal(formInt, 3) && !validates.req(tecnico.nomeCurso)) || !validates.req(tecnico.linkLattes) || 
 			!validates.req(tecnico.dataEntrada) || !validates.req(tecnico.codGrupo)){ //Retirar campos opcionais desta validação	
 			console.log("cTecnico::validar retornou false.");
 			return false;
@@ -33107,7 +33119,8 @@ document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
-	return vetor[cod+1];
+	cod = parseInt(cod);
+	return vetor[cod-1];
 }
 
 function buscaGrupo(sigla, cb){
@@ -33177,7 +33190,7 @@ function cadastra(){
 			    //console.log(res);        
 			    if(res.statusCode == 200){
 			    	var form = document.getElementById('formCadastroTecnico');
-			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome + "_" + idGrupo;
+			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome.replace(" ", "-") + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
 			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
@@ -33224,7 +33237,7 @@ module.exports = {
 	},
 
 	isString: function(atributo){
-		var strings = ["atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
+		var strings = ["formacao", "nome", "atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;
@@ -57006,18 +57019,18 @@ module.exports = {
 	},
 
 	minVal: function(valor, limite){
-		if(isNan(val))
+		if(isNaN(valor))
 			return false;
-		else if(val >= limite)
+		else if(valor >= limite)
 			return true;
 		else
 			return false;
 	},
 
 	maxVal: function(valor, limite){
-		if(isNan(val))
+		if(isNaN(valor))
 			return false;
-		else if(val <= limite)
+		else if(valor <= limite)
 			return true;
 		else
 			return false;
