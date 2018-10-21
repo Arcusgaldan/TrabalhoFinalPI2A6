@@ -33,6 +33,9 @@
 [V] Trocar link dos logos de todas as p�ginas de index.html para /index.html <FE>
 [V] Colocar na documentação tabela de textos da index
 [V] Criar modal para confirma��o de cadstro grupo
+[V] Tratar modal de exclusão de grupo
+[V] exclusao de grupo nao fubciona
+
 
 [-] Tentar generalizar JS de FrontEnd; <FE>
 [-] Revisar todo o layuot em vers�es de telas menores <FE>
@@ -66,10 +69,7 @@
 [-] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install
 [-] excluir e adicionar mais campos na index
 [-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
-[-] CORRIGIR erro do serveroute.js quando cadastra o form da página primeiroAcessoUsuario
 [-] primeiroAcessoUsuario NAO ESTA FUNCIONANDO
-[-] Tratar modal de exclusão de grupo
-[-] exclusao de grupo nao fubciona
 [-] Como cadastrar linhas ?
 [-] Botão da página interna do grupo referente a gerenciamento de linha de grupos
 [-] trocar o link da página de grupos na home

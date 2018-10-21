@@ -4,9 +4,10 @@ var fs = require('fs');
 var paginas = {
 	"/": "frontEndTrabalho/index.html",
 	"/index": "frontEndTrabalho/index.html",
-	"/cadastroUsuario": "frontEndTrabalho/cadastroUsuario.html",
 	"/cadastroGrupo": "frontEndTrabalho/grupos-adm.html",
+	"/linhasGerais": "frontEndTrabalho/linhasGerais.html",
 	"/cadastroLinhas": "frontEndTrabalho/cadastroLinhas.html",
+	"/cadastroUsuario": "frontEndTrabalho/cadastroUsuario.html",
 	"/cadastroPermissoes": "frontEndTrabalho/cadastroPermissoes.html",
 	"/cadastroInformativos": "frontEndTrabalho/cadastroInformativos.html",
 	"/cadastroAdministrador": "frontEndTrabalho/cadastroAdministrador.html",
