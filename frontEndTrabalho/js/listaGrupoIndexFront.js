@@ -24694,7 +24694,7 @@ function criaElementos(listaGrupo){
               <h3 id='siglaGrupoIndex"+ i +"'></h3>\
               <hr>\
               <p id='descricaoGrupoIndex"+ i +"'></p>\
-              Saiba mais: <a href='grupo-de-pesquisa.html' id='linkGrupoIndex"+ i +"' class='alert-link'>Clique Aqui</a>\
+              Saiba mais: <a href='' id='linkGrupoIndex"+ i +"' class='alert-link'>Clique Aqui</a>\
             </div>\
 		");
  
@@ -24703,7 +24703,7 @@ function criaElementos(listaGrupo){
 		document.getElementById("nomeGrupoIdex" + i).innerHTML = listaGrupo[i].nome;
 		document.getElementById("siglaGrupoIndex" + i).innerHTML = listaGrupo[i].sigla;
 		document.getElementById("descricaoGrupoIndex" + i).innerHTML = listaGrupo[i].descricao;
-		document.getElementById("linkGrupoIndex" + i).href = "grupo-de-pesquisa.html#" + listaGrupo[i].id;
+		document.getElementById("linkGrupoIndex" + i).href = "/grupos/"+listaGrupo[i].sigla ;
 	}
 }
 
