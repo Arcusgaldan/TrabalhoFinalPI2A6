@@ -6,6 +6,12 @@ function sidebarPublico(){
            <span>Página Inicial</span> \
           </a>\
         </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/linhasGerais'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
     ");
 }
 function sidebarLider(grupo){
@@ -16,10 +22,44 @@ function sidebarLider(grupo){
            <span>Página Inicial</span> \
           </a>\
         </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/linhasGerais'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/cadastroLinhas'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Manutenção de Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
 		<li class='nav-item active'>\
           <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>"+grupo.nome+"</span> \
+          </a>\
+        </li>\
+    ");
+}
+function sidebarLiderSemGrupo(grupo){
+	$("#sidebarWrapper").append("\
+		<li class='nav-item active'>\
+          <a class='nav-link' href='/index'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Página Inicial</span> \
+          </a>\
+        </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/linhasGerais'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/cadastroLinhas'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Manutenção de Linhas de Pesquisas</span> \
           </a>\
         </li>\
     ");
@@ -56,6 +96,12 @@ function sidebarAdm(){
            <span>Manutenção de Informativos</span> \
           </a>\
         </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/linhasGerais'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
     ");
 }
 function buscaGrupoLider(){
@@ -82,6 +128,7 @@ function buscaGrupoLider(){
 			});
 		}else{
 			console.log("Problema ao buscar o grupo do líder");
+			sidebarLiderSemGrupo();
 		}
 	});
 	req.write(texto);

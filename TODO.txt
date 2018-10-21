@@ -35,7 +35,13 @@
 [V] Criar modal para confirma��o de cadstro grupo
 [V] Tratar modal de exclusão de grupo
 [V] exclusao de grupo nao fubciona
-
+[V] Retirar p.hD
+[V] p�s-grdua��o por especializa��o
+[V] Criar p�gina de acesso negado (acessoNegado.html) <FE>
+[V] trocar o link da página de grupos na ho
+[V] Adm nao tem curriculo lattes
+[V] Criar array em ServerRouter com lista de p�ginas v�lidas. Validar tamb�m arquivos a serem puxados. <BE>
+[V] Usuário pode alterar a data de cadastro da linha ou será automática
 
 [-] Tentar generalizar JS de FrontEnd; <FE>
 [-] Revisar todo o layuot em vers�es de telas menores <FE>
@@ -49,30 +55,31 @@
 [-] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE>
 [-] Info grupos (ver "CHIPS" no materialize <FE>
 [-] Buttom input<fe>
-[-] Criar p�gina de acesso negado (acessoNegado.html) <FE>
+[-] Atualmente o técnico pode ser lider de dois grupos,  e na verdae não é permitido.
+
 [-] Trocar o campos date por text 
 [-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto j� com o caminho da imagem que vai estar no server) <BE>
-[-] Criar array em ServerRouter com lista de p�ginas v�lidas. Validar tamb�m arquivos a serem puxados. <BE>
+
 [-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos <TODOS>
 [-] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
 [-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos 
 [-] O sistema não está redirecionando para a página do cadastro de administrador quando entra e nao tem nenhum usuário cadastrado
-[-] Usuário pode alterar a data de cadastro da linha ou será automática
 
-[-] Retirar p.hD
-[-] p�s-grdua��o por especializa��o
-[-] Adm nao tem curriculo lattes
+
+
 [-] Colocar if else para a senha do banco
 [-] Pré-cadastrar Usuários
 [-] Tratar os console log do servidor
-[-] Conferir se o campo prontuário sao apenas numeros
 [-] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install
 [-] excluir e adicionar mais campos na index
-[-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
+
 [-] primeiroAcessoUsuario NAO ESTA FUNCIONANDO
 [-] Como cadastrar linhas ?
-[-] Botão da página interna do grupo referente a gerenciamento de linha de grupos
-[-] trocar o link da página de grupos na home
+[-] Uma pessoa pode ser lider de mais de um grupo 
+[-] trocar na doc. diagrama manutenção de linha
+
+[-] Conferir se o campo prontuário sao apenas numeros
+[-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
 
 [X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso

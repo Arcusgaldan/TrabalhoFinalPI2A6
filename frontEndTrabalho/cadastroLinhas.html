@@ -105,8 +105,9 @@
                     <tbody id="">
                      <tr>
                       <th id=''>Linhas de pesquisa 001</th>
+                      <td><strong>Cod: 1.5.79.0.90</strong></td>
                       <td>
-                      <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapse' role='button' aria-expanded='false' aria-controls='collapse'> Mostra Dados <span class='fas fa-plus'></span></button>  
+                        
                       <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>
                       <button id='' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Linhas de pesquisa</button>
                         <div id='collapse' class='collapse mostraLista' >
@@ -160,85 +161,6 @@
             </p>
 
             <form action="" method="get" >
-              
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="primeiroGrauCadastrar" class="form-control form-control-lg">
-                          <option value="" readonly >Primeiro Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value="">Richard McClintock,</option>
-                          <option value="">Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div> 
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="segundoGrauCadastrar" class="form-control form-control-lg" >
-                          <option value="" readonly >Segundo Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value=""> Richard McClintock,</option>
-                          <option value="">a Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div> 
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="terceiroGrauCadastrar" class="form-control form-control-lg" >
-                          <option value="" readonly >Terceiro Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value="">Richard McClintock,</option>
-                          <option value="">A Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div>  
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="quartoGrauCadastrar" class="form-control form-control-lg" >
-                          <option value="" readonly >Quarto Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value="">Richard McClintock,</option>
-                          <option value="">A Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div>  
-
-              <p>Ou pesquise:</p>
 
               <div class="form-group">
                 <div class="form-row">
@@ -246,6 +168,17 @@
                     <div class="form-label-group">
                       <input type="text" id="nomeLinhaCadastrar" class="form-control" name="nomeLinhaCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                       <label for="nomeLinhaCadastrar">Nome da Linha de Pesquisa</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="codLinhaCadastrar" class="form-control" name="codLinhaCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="codLinhaCadastrar">Código da Linha de Pesquisa</label>
                     </div>
                   </div>
                 </div>
@@ -278,91 +211,24 @@
             </p>
 
             <form action="" method="get" >
-              
+
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="primeiroGrauAlterar" class="form-control form-control-lg">
-                          <option value="" readonly >Primeiro Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value="">Richard McClintock,</option>
-                          <option value="">Latin professor</option>
-                        </select>
-                      </div>
+                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="nomeLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeLinhaAlterar">Nome da Linha de Pesquisa</label>
+                    </div>
                   </div>
                 </div>
-              </div> 
+              </div>
 
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="segundoGrauAlterar" class="form-control form-control-lg" >
-                          <option value="" readonly >Segundo Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value=""> Richard McClintock,</option>
-                          <option value="">a Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div> 
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="terceiroGrauAlterar" class="form-control form-control-lg" >
-                          <option value="" readonly >Terceiro Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value="">Richard McClintock,</option>
-                          <option value="">A Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div>  
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="quartoGrauAlterar" class="form-control form-control-lg" >
-                          <option value="" readonly >Quarto Grau</option>
-                          <option value="">Contrary to popular belief</option>
-                          <option value="">Lorem Ipsum is not simply random text</option>
-                          <option value="">It has roots in a piece </option>
-                          <option value="">of classical Latin literature</option>
-                          <option value="">Making it over 2000 years old.</option>
-                          <option value="">Richard McClintock,</option>
-                          <option value="">A Latin professor</option>
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div>  
-
-              <p>Ou pesquise:</p>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="nomeLinhaCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeLinhaCadastrar">Nome da Linha de Pesquisa</label>
+                      <input type="text" id="codLinhaAlterar" class="form-control" name="codLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="codLinhaAlterar">Código da Linha de Pesquisa</label>
                     </div>
                   </div>
                 </div>

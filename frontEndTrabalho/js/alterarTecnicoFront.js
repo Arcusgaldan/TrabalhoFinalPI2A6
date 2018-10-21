@@ -24685,187 +24685,87 @@ function extend() {
 }
 
 },{}],167:[function(require,module,exports){
-function sidebarPublico(){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-    ");
-}
-function sidebarLider(grupo){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroLinhas'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Manutenção de Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>"+grupo.nome+"</span> \
-          </a>\
-        </li>\
-    ");
-}
-function sidebarLiderSemGrupo(grupo){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroLinhas'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Manutenção de Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-    ");
-}
-function sidebarAdm(){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroUsuario'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Usuários</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroPermissoes'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Permissões</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroGrupo'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Grupos</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroInformativos'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Informativos</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-    ");
-}
-function buscaGrupoLider(){
+document.getElementById('btnAlterarTecnico').addEventListener("click", alterar, false);
+
+function alterar(){
+	console.log("Entrei no alterarTecnico::alterar");
 	var http = require('http');
 	var utils = require('./../../utils.js');
+	var modelo = require('./../../modelo/mTecnico.js');
 
-	var objeto = {
-		campo: "codUsuario",
-		valor: localStorage.id
-	};
+	var usuario = modelo.novo();
 
-	var texto = JSON.stringify(objeto);
+	usuario.id = document.getElementById('idTecnicoAlterar').value;
+	usuario.nome = document.getElementById('nomeTecnicoAlterar').value;
+	usuario.prontuario = document.getElementById('prontuarioTecnicoAlterar').value;
+	usuario.email = document.getElementById('emailTecnicoAlterar').value;
+	usuario.curriculoLattes = document.getElementById('linkLattesTecnicoAlterar').value;
+	usuario.codTipoTecnico = document.getElementById('codTipoTecnicoAlterar').value;
+	usuario.senha = document.getElementById('senhaTecnicoAlterar').value;
+
+	var texto = JSON.stringify(usuario);
+	console.log("Texto em alterarTecnico::alterar: " + texto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Grupo";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
+	opcoesHTTP.headers.Objeto = "Tecnico";
+	opcoesHTTP.headers.Operacao = "ALTERAR";
 
 	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida!");
+
 		if(res.statusCode == 200){
-			res.on('data', function(chunk){
-				// let idGrupo = JSON.parse(chunk).resultado[0].id;
-				// let nomeGrupo = JSON.parse(chunk).resultado[0].nome;
-				sidebarLider(JSON.parse(chunk).resultado[0]);						    	
-			});
+			console.log("Alterado com sucesso!"); 
+			$('#sucessoModal').modal('show');	
+			setTimeout(function(){location.reload();} , 2000);	
 		}else{
-			console.log("Problema ao buscar o grupo do líder");
-			sidebarLiderSemGrupo();
+			console.log("Não foi possível alterar Tecnico");
+			$('#erroModal').modal('show');
+
 		}
 	});
 	req.write(texto);
 	req.end();
-	
 }
+},{"./../../modelo/mTecnico.js":168,"./../../utils.js":169,"http":155}],168:[function(require,module,exports){
+module.exports = {
+	especifica: function(objeto){
+		var final = {};
+		final.id = objeto.id;
+		final.atividade = objeto.atividade;
+		final.formacao = objeto.formacao;
+		final.anoConclusao = objeto.anoConclusao;
+		final.nomeCurso = objeto.nomeCurso;
+		final.linkLattes = objeto.linkLattes;
+		final.foto = objeto.foto;
+		final.dataEntrada = objeto.dataEntrada;	
+		final.codGrupo = objeto.codGrupo;		
+		return final;
+	},
 
+	novo: function(){
+		var final = {};
+		final.id = 0;
+		final.atividade = "";
+		final.formacao = 0;
+		final.anoConclusao = "";
+		final.nomeCurso = "";
+		final.linkLattes = "";
+		final.foto = "";
+		final.dataEntrada = "";
+		final.codGrupo = 0;
+		return final;
+	},
 
-
-if(localStorage.id != null){
-	console.log("Está logado!");
-	document.getElementById('boxLogado').classList.remove('display-none');
-
-	var utils = require("./../../utils.js");
-	var http = require("http");
-
-	var objeto = { 
-		campo: "id",
-		valor: localStorage.id
-	};
-
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Usuario";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
-
-	var req = http.request(opcoesHTTP, (res) => { 
-		console.log("Chegou resposta");
-		if(res.statusCode == 200){
-			res.on('data', function(chunk){
-				if(JSON.parse(chunk).resultado[0].codTipoUsuario == 1){
-					console.log("É lider");
-					buscaGrupoLider();
-				}else{
-					console.log("É Administrador");
-					sidebarAdm();
-				}
-			});
+	isString: function(atributo){
+		var strings = ["formacao", "nome", "atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
+		for (var i = strings.length - 1; i >= 0; i--) {
+			if(strings[i] == atributo)
+				return true;
 		}
-	});
-	req.write(texto);
-	req.end();
-
-}else{
-	console.log("Não está logado!");
-	document.getElementById('formLogin').classList.remove('display-none');
-	sidebarPublico();
+		return false;
+	}
 }
-},{"./../../utils.js":168,"http":155}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 (function (Buffer){
 module.exports = {
 	geraSenhaAleatoria: function(){
