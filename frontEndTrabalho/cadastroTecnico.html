@@ -295,7 +295,8 @@
              <p>
               Neste formulário serão inseridas as informações para a alteração do técnico
             </p>
-            <form action="" method="post" id="formAlteraTecnico">
+            <form action="" method="post" id="formAlteraTecnico" encType="multipart/form-data">
+
               <div class="form-group">
                 <div class="form-row">
 
@@ -347,7 +348,7 @@
               <script type="text/javascript">
                 function getvalAlterar(sel)
                 {
-                  if(sel.value != "Ensino Fundamental" && sel.value != "Ensino Médio" && sel.value != "" ){
+                  if(sel.value != 0 && sel.value != 1 && sel.value != 2 ){
                     $("#divNomeCursoAlterar").css("display", "block");
                   }else{
                     $("#divNomeCursoAlterar").css("display", "none");
@@ -387,6 +388,16 @@
                     <div class="form-label-group">
                       <input type="file" id="fotoTecnicoAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
                       <label for="fotoTecnicoAlterar">Foto de Perfil</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="date" id="dataEntradaTecnicoAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="dataEntradaTecnicoAlterar" >Ano de Conclusão</label>
                     </div>
                   </div>
                 </div>
@@ -490,8 +501,8 @@
     <script src="/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="/js/demo/datatables-demo.js"></script>
-    <script src="/js/demo/chart-area-demo.js"></script>
+    <!-- <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script> -->
 
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
@@ -499,8 +510,8 @@
     
     <script type="text/javascript" src="/js/cadastraTecnicoFront.js"></script>
     <script type="text/javascript" src="/js/alterarTecnicoFront.js"></script>
-    <script type="text/javascript" src="/js/excluiTecnicoFront.js"></script>
-    <script type="text/javascript" src="/js/listarTecnicoFront.js"></script>
+   <!--  <script type="text/javascript" src="/js/excluiTecnicoFront.js"></script>
+    <script type="text/javascript" src="/js/listarTecnicoFront.js"></script> -->
 
   </body>
 

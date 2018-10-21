@@ -1,4 +1,5 @@
 document.getElementById('btnAlterarTecnico').addEventListener("click", alterar, false);
+	console.log("entrou na função alterar1");
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
@@ -37,6 +38,7 @@ function buscaGrupo(sigla, cb){
 }
 
 function alterar(){
+	console.log("entrou na função alterar");
 	var modelo = require('./../../modelo/mTecnico.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
@@ -44,13 +46,13 @@ function alterar(){
 	var tecnico = modelo.novo();
 
 	tecnico.id = 0;
-	tecnico.nome = document.getElementById('nomeTecnicoCadastrar').value;
-	tecnico.atividade = document.getElementById('atividadeTecnicoCadastrar').value;
-	tecnico.formacao = formacaoToString(document.getElementById('formacaoTecnicoCadastrar').value);
-	tecnico.anoConclusao = document.getElementById('anoConclusaoTecnicoCadastrar').value;
-	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoCadastrar').value;
-	tecnico.linkLattes = document.getElementById('linkLattesTecnicoCadastrar').value;
-	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoCadastrar').value;
+	tecnico.nome = document.getElementById('nomeTecnicoAlterar').value;
+	tecnico.atividade = document.getElementById('atividadeTecnicoAlterar').value;
+	tecnico.formacao = formacaoToString(document.getElementById('formacaoTecnicoAlterar').value);
+	tecnico.anoConclusao = document.getElementById('anoConclusaoTecnicoAlterar').value;
+	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoAlterar').value;
+	tecnico.linkLattes = document.getElementById('linkLattesTecnicoAlterar').value;
+	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoAlterar').value;
 	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
