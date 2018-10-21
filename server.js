@@ -38,7 +38,7 @@ http.createServer(function(req, res){
         //console.log(jsonRqs);
         if(req.headers['objeto'] != null){
             var objeto = req.headers['objeto'];
-            if(objeto != "Email"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+            if(objeto != "Reset"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
                 var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
                 if(controller == null){
@@ -48,6 +48,8 @@ http.createServer(function(req, res){
                     res.end();
                     return false;
                 }                
+            }else if(objeto == "Reset"){
+                require('./utils.js').sobeLinhas('txtCNPQ.txt');
             }
             switch(req.headers['operacao']){
                 case 'INSERIR':
