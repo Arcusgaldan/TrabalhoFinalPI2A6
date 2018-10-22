@@ -56,7 +56,7 @@ http.createServer(function(req, res){
                     }
                 });
                 return;                
-            }else if(objeto != "Reset"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+            }else if(objeto != "Reset" && objeto != "DataAtual"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
                 var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
                 if(controller == null){
@@ -68,6 +68,10 @@ http.createServer(function(req, res){
                 }           
             }else if(objeto == "Reset"){
                 require('./utils.js').sobeLinhas('txtCNPQ.txt');
+                res.statusCode = 200;
+                res.end();
+            }else if(objeto == "DataAtual"){
+                require('./utils.js').DataAtual();
             }
             switch(req.headers['operacao']){
                 case 'INSERIR':

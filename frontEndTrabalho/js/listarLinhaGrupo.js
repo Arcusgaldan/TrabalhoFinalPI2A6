@@ -26,10 +26,51 @@ function criaListaNomes(cb){
 		}else{
 			console.log("Erro ao listar Linhas");
 			return;
-		}
+		} 
 	});
 
 	req.end();
+}
+
+function criaListaNomesGrupo(cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+	var url = window.location.pathname;
+	buscaGrupo(url.split("/")[2], function(idGrupo){
+		var objeto = {
+			campo: "codGrupo",
+			valor: idGrupo
+		};
+
+		var texto = JSON.stringify(objeto);
+
+		var opcoesHTTP = utils.opcoesHTTP(texto);
+		opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
+		opcoesHTTP.headers.Operacao = "BUSCAR";
+
+		var req = http.request(opcoesHTTP, (res) => {
+			console.log("Resposta recebida!");	
+			var msg = "";		
+			if(res.statusCode == 200){
+				var nomes = [];
+				res.on('data', function(chunk){
+					msg += chunk;
+				});
+				res.on('end', function(){
+					var linhas = JSON.parse(msg);
+					for(var i = 0; i < linhas.length; i++){
+						nomes.push(linhas[i].nome);
+					}
+					cb(nomes);
+				});
+			}else{
+				console.log("Erro ao listar Linhas");
+				return;
+			}
+		});
+		req.write(texto);
+		req.end();
+	});
 }
 
 function autocomplete(inp, arr) {
@@ -251,6 +292,123 @@ function changeTerceiroGrau(){
 	req.end();
 }
 
+function changePrimeiroGrauAlterar(){
+	$("#segundoGrauCadastrar > option").remove();
+	$("#terceiroGrauCadastrar > option").remove();
+	$("#quartoGrauCadastrar > option").remove();
+	var select = document.getElementById("primeiroGrauAlterar");
+	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
+	console.log("changeEvent::primeiroGrauCadastrar::listarLinhaGrupo - Codigo Linha = " + codigoLinha);
+	var utils = require('./../../utils.js');
+	
+	var http = require('http');
+	var objeto = {
+		tipoBusca: 1,
+		linha: {codigo: codigoLinha}
+	};
+	var texto = JSON.stringify(objeto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida!");
+		var msg = "";
+		res.on('data', function(chunk){
+			msg += chunk;		
+		});
+		res.on('end', function(){
+			console.log("Msg primeiroGrau= " + msg);
+			var filhos = JSON.parse(msg);
+			for(var i = 0; i < filhos.length; i++){
+				if(filhos[i].grau == 2)
+					$("#segundoGrauAlterar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
+			}
+			changeSegundoGrauAlterar();
+		})
+	});
+
+	req.write(texto);
+	req.end();
+}
+
+function changeSegundoGrauAlterar(){
+	$("#terceiroGrauCadastrar > option").remove();
+	$("#quartoGrauCadastrar > option").remove();
+	var select = document.getElementById("segundoGrauAlterar");
+	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
+	var utils = require('./../../utils.js');
+	
+	var http = require('http');
+	var objeto = {
+		tipoBusca: 1,
+		linha: {codigo: codigoLinha}
+	};
+	var texto = JSON.stringify(objeto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida!");
+		var msg = "";
+		res.on('data', function(chunk){
+			msg += chunk;		
+		});
+		res.on('end', function(){
+			console.log("Msg segundoGrau= " + msg);
+			var filhos = JSON.parse(msg);
+			for(var i = 0; i < filhos.length; i++){
+				if(filhos[i].grau == 3)
+					$("#terceiroGrauAlterar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
+			}
+			changeTerceiroGrau();
+		})
+	});	
+
+	req.write(texto);
+	req.end();
+}
+
+function changeTerceiroGrauAlterar(){
+	$("#quartoGrauCadastrar > option").remove();
+	var select = document.getElementById("terceiroGrauAlterar");
+	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
+	var utils = require('./../../utils.js');
+	
+	var http = require('http');
+	var objeto = {
+		tipoBusca: 1,
+		linha: {codigo: codigoLinha}
+	};
+	var texto = JSON.stringify(objeto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida!");
+		var msg = "";
+		res.on('data', function(chunk){
+			msg += chunk;		
+		});
+		res.on('end', function(){
+			console.log("Msg terceiroGrau= " + msg);
+			var filhos = JSON.parse(msg);
+			for(var i = 0; i < filhos.length; i++){
+				if(filhos[i].grau == 4)
+					$("#quartoGrauAlterar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
+			}
+		})
+	});	
+
+	req.write(texto);
+	req.end();
+}
+
 document.getElementById("primeiroGrauCadastrar").addEventListener('change', changePrimeiroGrau, false);
 
 document.getElementById("segundoGrauCadastrar").addEventListener('change', changeSegundoGrau, false);
@@ -335,7 +493,7 @@ function buscarLinhasGrupo(){
 			console.log("Resposta recebida!");
 			res.on('data', function(chunk){
 				let vetor = JSON.parse(chunk).resultado;
-				preencheSelect("primeiroGrauCadastrar", vetor);
+				// preencheSelect("primeiroGrauCadastrar", vetor);
 			});
 		});
 		req.write(texto);
@@ -372,4 +530,9 @@ function preencheSelect(select, listaLinha){
 criaListaNomes(function(nomes){
 	autocomplete(document.getElementById("nomeLinhaCadastrar"), nomes);
 });
+
+criaListaNomesGrupo(function(nomes){
+	autocomplete(document.getElementById("nomeLinhaAlterar"), nomes);
+});
+
 buscarPrimeiroGrau();
