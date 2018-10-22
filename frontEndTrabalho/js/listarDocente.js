@@ -29,6 +29,12 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
+function stringToFormacao(formacao) {
+	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
+	return vetor.indexOf(formacao)+1;
+}
+
+
 function criaElementos(listaDocente){
 	console.log(" vetor s " + listaDocente);
 
@@ -74,10 +80,10 @@ function criaElementos(listaDocente){
 			var docente = listaDocente[i];		
 			console.log("Docente na closure: " + JSON.stringify(docente));	
 			document.getElementById("alterarDocenteLista"+ i).addEventListener("click", function(){
-				preencheModalAlterar(Docente);
+				preencheModalAlterar(docente);
 			}, false);
 			document.getElementById("excluirDocenteLista"+ i).addEventListener("click", function(){
-				preencheModalExcluir(Docente);
+				preencheModalExcluir(docente);
 			}, false);
 		}());
 	}
@@ -87,16 +93,22 @@ function criaElementos(listaDocente){
 
 function preencheModalAlterar(docente){
 	console.log("Docente em listarDocente::preencheModalAlterar: " + JSON.stringify(docente));
-	//console.log("entrei no modal Alterar com Docente = " + JSON.stringify(Docente));
-	// document.getElementById("alteraModal").id = alteraModal;
-	document.getElementById("nomeDocenteAlterar").value = docente.nome;
-	document.getElementById("linkLattesDocenteAlterar").value = docente.curriculoLattes;
-	document.getElementById("prontuarioDocenteAlterar").value = docente.prontuario;
-	document.getElementById("emailDocenteAlterar").value = docente.email;
+
 	document.getElementById("idDocenteAlterar").value = docente.id;
-	document.getElementById("codTipoDocenteAlterar").value = docente.codTipoDocente;	
-	document.getElementById("senhaDocenteAlterar").value = docente.senha;
-	// document.getElementById("fotoAlterar").value = Docente.foto;
+	document.getElementById("nomeDocenteAlterar").value = docente.nome;
+	document.getElementById("formacaoDocenteAlterar").value = stringToFormacao(docente.formacao);
+	if (stringToFormacao(docente.formacao) >= 3) {
+		$("#divNomeCursoAlterar").css("display", "block");
+		document.getElementById("nomeCursoDocenteAlterar").value = docente.nomeCurso;
+	}else{
+		document.getElementById("nomeCursoDocenteAlterar").value = "";
+	}
+	document.getElementById("lattesDocenteAlterar").value = docente.linkLattes;
+	document.getElementById("anoConclusaoDocenteAlterar").value = docente.anoConclusao;
+	document.getElementById("fotoDocenteAlterar").value = docente.foto;
+	console.log("data padrao correto " + docente.dataEntrada.substring(0,10));
+	document.getElementById("dataEntradaDocenteAlterar").value = docente.dataEntrada.substring(0,10);;
+
 }
 
 function preencheModalExcluir(docente){

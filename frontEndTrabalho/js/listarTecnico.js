@@ -29,6 +29,11 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
+function stringToFormacao(formacao) {
+	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
+	return vetor.indexOf(formacao)+1;
+}
+
 function criaElementos(listaTecnico){
 	console.log(" vetor s " + listaTecnico);
 
@@ -89,11 +94,18 @@ function preencheModalAlterar(tecnico){
 	
 	document.getElementById("nomeTecnicoAlterar").value = tecnico.nome;
 	document.getElementById("atividadeTecnicoAlterar").value = tecnico.atividade;
-	document.getElementById("formacaoTecnicoAlterar").value = tecnico.formacao;
+	document.getElementById("formacaoTecnicoAlterar").value = stringToFormacao(tecnico.formacao);
+	if (stringToFormacao(tecnico.formacao) >= 3) {
+		$("#divNomeCursoAlterar").css("display", "block");
+		document.getElementById("nomeCursoTecnicoAlterar").value = tecnico.nomeCurso;
+	}else{
+		document.getElementById("nomeCursoTecnicoAlterar").value = "";
+	}
 	document.getElementById("anoConclusaoTecnicoAlterar").value = tecnico.anoConclusao;
-	document.getElementById("nomeCursoTecnicoAlterar").value = tecnico.nomeCurso;
 	document.getElementById("lattesTecnicoAlterar").value = tecnico.linkLattes;
 	document.getElementById("fotoTecnicoAlterar").value = tecnico.foto;
+	console.log("data padrao correto " + tecnico.dataEntrada.substring(0,10));
+	document.getElementById("dataEntradaTecnicoAlterar").value = tecnico.dataEntrada.substring(0,10);
 
 	document.getElementById("idTecnicoAlterar").value = tecnico.id;
 	

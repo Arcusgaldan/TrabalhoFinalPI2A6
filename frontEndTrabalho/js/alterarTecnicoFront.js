@@ -33115,12 +33115,12 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
-document.getElementById('btnAlterarTecnico').addEventListener("click", alterar);
-	console.log("entrou na função alterar1");
+document.getElementById('btnAlterarTecnico').addEventListener("click", alterar, false);
+	console.log("entrou na função alterar 1");
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
-	return vetor[cod+1];
+	return vetor[cod-1];
 }
 
 function buscaGrupo(sigla, cb){
@@ -33162,14 +33162,16 @@ function alterar(){
 	var controller = require('./../../controller/cTecnico.js');
 	var tecnico = modelo.novo();
 
-	tecnico.id = 0;
+	tecnico.id = document.getElementById('idTecnicoAlterar').value;
 	tecnico.nome = document.getElementById('nomeTecnicoAlterar').value;
 	tecnico.atividade = document.getElementById('atividadeTecnicoAlterar').value;
 	tecnico.formacao = formacaoToString(document.getElementById('formacaoTecnicoAlterar').value);
 	tecnico.anoConclusao = document.getElementById('anoConclusaoTecnicoAlterar').value;
 	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoAlterar').value;
-	tecnico.linkLattes = document.getElementById('linkLattesTecnicoAlterar').value;
+	tecnico.linkLattes = document.getElementById('lattesTecnicoAlterar').value;
+	tecnico.foto = document.getElementById('fotoTecnicoAlterar').value;
 	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoAlterar').value;
+
 	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
@@ -33212,6 +33214,7 @@ module.exports = {
 	especifica: function(objeto){
 		var final = {};
 		final.id = objeto.id;
+		final.nome = objeto.nome;
 		final.atividade = objeto.atividade;
 		final.formacao = objeto.formacao;
 		final.anoConclusao = objeto.anoConclusao;
@@ -33226,6 +33229,7 @@ module.exports = {
 	novo: function(){
 		var final = {};
 		final.id = 0;
+		final.nome = "";
 		final.atividade = "";
 		final.formacao = 0;
 		final.anoConclusao = "";
@@ -56980,10 +56984,74 @@ module.exports = {
 		var d = new Date();
 		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 		return data;
-	}
+	},
+
+	sobeLinhas: function(caminho){
+		require('fs').readFile(caminho, 'latin1', (err, data) => {
+			data = data.replace(/(\r\n|\n|\r)/gm, " ");
+			var vetor = data.split(" ");
+			var linha = {nome: ""};
+			var dao = require('./dao.js');
+			var mysql = require('mysql');
+
+			var con = mysql.createConnection({
+				host: 'localhost',
+				user: 'root',
+				password: '',
+				database: 'DBPronn'
+			});	
+
+			con.connect(function(err){
+				if(err){console.log("Cai no erro de con.connect"); throw err;}		
+				for(var i = 0; i < vetor.length; i++){
+					if(!isNaN(parseInt(vetor[i][0]))){
+						console.log(vetor[i] + " é cod");
+						if(linha.nome != ""){
+							console.log("Linha pronta, enviando...");
+							console.log("Nome: " + linha.nome + "\nCodigo: " + linha.codigo + "\nGrau: " + linha.grau);
+							var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+							con.query(sql, function(err, res){
+								if(err){console.log("Cai no erro do con.query com sql = " + sql); throw err;}
+								console.log("Linha inserida com sucesso!");
+							});
+							linha.nome = "";
+							linha.codigo = "";
+							linha.grau = 0;
+						}
+						linha.codigo = vetor[i];
+						var pontosCod = vetor[i].split(".");
+						if(pontosCod[1] == "00"){
+							console.log("Primeiro Grau");
+							linha.grau = 1;
+						}else if(pontosCod[2] == "00"){
+							console.log("Segundo Grau");
+							linha.grau = 2;
+						}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+							console.log("Terceiro Grau");
+							linha.grau = 3;
+						}else{
+							console.log("Quarto Grau");
+							linha.grau = 4;
+						}
+					}else{
+						console.log(vetor[i] + " NÃO é número");
+						linha.nome += vetor[i] + " ";
+					}
+				}
+				var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+				console.log("Fora do for o sql = " + sql);
+				con.query(sql, function(err, res){
+					if(err){console.log("Cai no erro do con.query"); throw err;}
+					console.log("Linha " + linha.nome + " inserida com sucesso!");
+					con.destroy();
+				});
+				
+			});
+		});
+	}	
 };
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"crypto":63}],303:[function(require,module,exports){
+},{"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)

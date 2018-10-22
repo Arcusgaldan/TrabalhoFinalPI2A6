@@ -33019,6 +33019,12 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
+function stringToFormacao(formacao) {
+	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
+	return vetor.indexOf(formacao)+1;
+}
+
+
 function criaElementos(listaDocente){
 	console.log(" vetor s " + listaDocente);
 
@@ -33061,13 +33067,13 @@ function criaElementos(listaDocente){
 		
 		(function(){
 			console.log("Docente na closure: " + JSON.stringify(listaDocente[i]));
-			var Docente = listaDocente[i];		
-			console.log("Docente na closure: " + JSON.stringify(Docente));	
+			var docente = listaDocente[i];		
+			console.log("Docente na closure: " + JSON.stringify(docente));	
 			document.getElementById("alterarDocenteLista"+ i).addEventListener("click", function(){
-				preencheModalAlterar(Docente);
+				preencheModalAlterar(docente);
 			}, false);
 			document.getElementById("excluirDocenteLista"+ i).addEventListener("click", function(){
-				preencheModalExcluir(Docente);
+				preencheModalExcluir(docente);
 			}, false);
 		}());
 	}
@@ -33075,24 +33081,30 @@ function criaElementos(listaDocente){
 
 
 
-function preencheModalAlterar(Docente){
-	console.log("Docente em listarDocente::preencheModalAlterar: " + JSON.stringify(Docente));
-	//console.log("entrei no modal Alterar com Docente = " + JSON.stringify(Docente));
-	// document.getElementById("alteraModal").id = alteraModal;
-	document.getElementById("nomeDocenteAlterar").value = Docente.nome;
-	document.getElementById("prontuarioDocenteAlterar").value = Docente.prontuario;
-	document.getElementById("emailDocenteAlterar").value = Docente.email;
-	document.getElementById("linkLattesDocenteAlterar").value = Docente.curriculoLattes;
-	document.getElementById("idDocenteAlterar").value = Docente.id;
-	document.getElementById("codTipoDocenteAlterar").value = Docente.codTipoDocente;	
-	document.getElementById("senhaDocenteAlterar").value = Docente.senha;
-	// document.getElementById("fotoAlterar").value = Docente.foto;
+function preencheModalAlterar(docente){
+	console.log("Docente em listarDocente::preencheModalAlterar: " + JSON.stringify(docente));
+
+	document.getElementById("idDocenteAlterar").value = docente.id;
+	document.getElementById("nomeDocenteAlterar").value = docente.nome;
+	document.getElementById("formacaoDocenteAlterar").value = stringToFormacao(docente.formacao);
+	if (stringToFormacao(docente.formacao) >= 3) {
+		$("#divNomeCursoAlterar").css("display", "block");
+		document.getElementById("nomeCursoDocenteAlterar").value = docente.nomeCurso;
+	}else{
+		document.getElementById("nomeCursoDocenteAlterar").value = "";
+	}
+	document.getElementById("lattesDocenteAlterar").value = docente.linkLattes;
+	document.getElementById("anoConclusaoDocenteAlterar").value = docente.anoConclusao;
+	document.getElementById("fotoDocenteAlterar").value = docente.foto;
+	console.log("data padrao correto " + docente.dataEntrada.substring(0,10));
+	document.getElementById("dataEntradaDocenteAlterar").value = docente.dataEntrada.substring(0,10);;
+
 }
 
-function preencheModalExcluir(Docente){
-	console.log("entrei no modal Excluir com Docente = " + JSON.stringify(Docente.nome));
-	document.getElementById("nomeDocenteExcluir").innerHTML = Docente.nome;
-	document.getElementById("idDocenteExcluir").value = Docente.id;
+function preencheModalExcluir(docente){
+	console.log("entrei no modal Excluir com Docente = " + JSON.stringify(docente.nome));
+	document.getElementById("nomeDocenteExcluir").innerHTML = docente.nome;
+	document.getElementById("idDocenteExcluir").value = docente.id;
 }
 
 var url = window.location.pathname;

@@ -1,15 +1,16 @@
 document.getElementById('btnExcluir').addEventListener('click', excluir, false);
 
 function excluir(){
+	console.log("entrou em excluir");
 	var http = require('http');
 	var utils = require('./../../utils.js');
 
-	var objeto = {id: document.getElementById("idTecnicoExcluir").value};
+	var objeto = {id: document.getElementById("idDocenteExcluir").value};
 
 	var texto = JSON.stringify(objeto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Tecnico";
+	opcoesHTTP.headers.Objeto = "Docente";
 	opcoesHTTP.headers.Operacao = "EXCLUIR";
 
 	var req = http.request(opcoesHTTP, (res) => {

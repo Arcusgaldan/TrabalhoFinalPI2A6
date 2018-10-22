@@ -168,7 +168,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg">
+                        <select id="formacaoDocenteCadastrar1" class="form-control form-control-lg">
                           <option value="" readonly >Primeiro Grau</option>
                           <option value="">Contrary to popular belief</option>
                           <option value="">Lorem Ipsum is not simply random text</option>
@@ -187,7 +187,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" >
+                        <select id="formacaoDocenteCadastrar2" class="form-control form-control-lg" >
                           <option value="" readonly >Segundo Grau</option>
                           <option value="">Contrary to popular belief</option>
                           <option value="">Lorem Ipsum is not simply random text</option>
@@ -206,7 +206,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" >
+                        <select id="formacaoDocenteCadastrar3" class="form-control form-control-lg" >
                           <option value="" readonly >Terceiro Grau</option>
                           <option value="">Contrary to popular belief</option>
                           <option value="">Lorem Ipsum is not simply random text</option>
@@ -225,7 +225,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" >
+                        <select id="formacaoDocenteCadastrar4" class="form-control form-control-lg" >
                           <option value="" readonly >Quarto Grau</option>
                           <option value="">Contrary to popular belief</option>
                           <option value="">Lorem Ipsum is not simply random text</option>
@@ -255,7 +255,7 @@
               
             </form>
             <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastroTecnico">Cadastar</button>
+              <button class="btn btn-success" type="button" id="btnCadastroDocente">Cadastar</button>
             </div>
           </div>
         </div>
@@ -285,7 +285,7 @@
 
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeDocenteCadastrar" class="form-control" name="nomeTecnicoCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <input type="text" id="nomeDocenteCadastrar" class="form-control" name="nomeDocenteCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                       <label for="nomeDocenteCadastrar">Nome Completo</label>
                     </div>
                   </div>
@@ -389,33 +389,35 @@
     </div>
 
 
-    <!-- ALTERA Modal -->
+     <!-- ALTERA Modal -->
 
     <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar usuário</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Docente</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
              <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuários
+              Neste formulário serão inseridas as informações para a alteração do Docente
             </p>
-            <form action="" method="get" >
+            <form action="" method="post" id="formAlteraDocente" encType="multipart/form-data">
+
               <div class="form-group">
                 <div class="form-row">
 
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeDocenteAlterar" class="form-control" name="nomeTecnicoCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <input type="text" id="nomeDocenteAlterar" class="form-control" name="nomeDocenteAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                       <label for="nomeDocenteAlterar">Nome Completo</label>
                     </div>
-                  </div>                  
-              </div>
+                  </div>
 
+                </div>
+              </div>
         
               <div class="form-group">
                 <div class="form-row">
@@ -434,20 +436,10 @@
                       </div>
                   </div>
                   <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="anoConclusaoDocenteAlterar" class="form-control" name=" "  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                      <label for="anoConclusaoDocenteAlterar">Ano de Conclusão</label>
-                    </div>
-                  </div>
-                </div>
-              </div>  
-
               <script type="text/javascript">
                 function getvalAlterar(sel)
                 {
-                  if(sel.value != "0" && sel.value != "1" && sel.value != "2"){
+                  if(sel.value != 0 && sel.value != 1 && sel.value != 2 ){
                     $("#divNomeCursoAlterar").css("display", "block");
                   }else{
                     $("#divNomeCursoAlterar").css("display", "none");
@@ -455,12 +447,22 @@
                 }
               </script>
 
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="anoConclusaoDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="anoConclusaoDocenteAlterar" >Ano de Conclusão</label>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+
+
               <div id="divNomeCursoAlterar" class="form-group" style="display: none;">
                 <div class="form-row">
 
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeCursoDocenteAlterar" class="form-control" name=""  placeholder="Nome do Curso" required="required" autofocus="autofocus">
+                      <input type="text" id="nomeCursoDocenteAlterar" class="form-control" name="nomeCursoDocenteAlterar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
                       <label for="nomeCursoDocenteAlterar">Nome do Curso</label>
                     </div>
                   </div>
@@ -468,13 +470,11 @@
                 </div>
               </div>
 
- 
-
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattesDocenteAlterar" placeholder="Link do Lattes">
+                      <input type="url" class="form-control" id="lattesDocenteAlterar" placeholder="Link do Lattes">
                       <div class="input-group-prepend">
                         <div class="input-group-text">http://lattes.cnpq.br/****</div>
                       </div>
@@ -493,11 +493,24 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="date" id="dataEntradaDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="dataEntradaDocenteAlterar" >Data de entrada</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none;" id="idDocenteAlterar"></div>
+              <!-- <div style="display: none;" id="codTipoUsuarioAlterar"></div>
+              <div style="display: none;" id="senhaUsuarioAlterar"></div> -->
             </form>
 
           </div>
           <div class="modal-footer">
-            <button class="btn btn-alert" id="btnAlterar" type="button">Alterar</button>
+            <button class="btn btn-alert" id="btnAlterarDocente" type="button">Alterar</button>
             
           </div>
         </div>
@@ -514,8 +527,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Docentes <span id="nomeTecnicoExcluir" style="color: #000"></span> ?</p></div>
-            <div style="display: none;" id="idTecnicoExcluir"></div>
+            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Docentes <span id="nomeDocenteExcluir" style="color: #000"></span> ?</p></div>
+            <div style="display: none;" id="idDocenteExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -593,17 +606,17 @@
     <script src="/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="/js/demo/datatables-demo.js"></script>
-    <script src="/js/demo/chart-area-demo.js"></script>
+    <!-- <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script> -->
 
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
     
     <script type="text/javascript" src="/js/cadastraDocenteFront.js"></script>
+    <script type="text/javascript" src="/js/listarDocenteFront.js"></script>
     <script type="text/javascript" src="/js/alterarDocenteFront.js"></script>
     <script type="text/javascript" src="/js/excluiDocenteFront.js"></script>
-    <script type="text/javascript" src="/js/listarDocenteFront.js"></script>
 
   </body>
 
