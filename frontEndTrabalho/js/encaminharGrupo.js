@@ -35,12 +35,25 @@ var req = http.request(opcoesHTTP, (res) => {
     		console.log("Resposta foi: " + chunk);
     		console.log("Nome do grupo: " + grupo.nome);
 			document.getElementById("siglaGrupo").innerHTML = grupo.sigla;
-			document.getElementById("nomeGrupo").innerHTML = grupo.nome;
-			document.getElementById("descicaoGrupo").innerHTML = grupo.descricao;
-			document.getElementById("fundGrupo").innerHTML = grupo.dataFundacao;
-			document.getElementById("emailGrupo").innerHTML = grupo.email;
-			document.getElementById("logotipoGrupo").src = grupo.logotipo;
-			document.getElementById("liderGrupo").innerHTML = grupo.codUsuario;
+            document.getElementById("nomeGrupo").innerHTML = grupo.nome;
+            document.getElementById("descicaoGrupo").innerHTML = grupo.descricao;
+            document.getElementById("fundGrupo").innerHTML = grupo.dataFundacao;
+            document.getElementById("emailGrupo").innerHTML = grupo.email;
+            document.getElementById("logotipoGrupo").src = grupo.logotipo;
+            document.getElementById("liderGrupo").innerHTML = grupo.codUsuario;
+
+            document.getElementById("siglaGrupoAlterar").value = grupo.sigla;
+            document.getElementById("nomeGrupoAlterar").value = grupo.nome;
+            document.getElementById("descricaoGrupoAlterar").value = grupo.descricao;
+            document.getElementById("dataGrupoAlterar").value = grupo.dataFundacao.substring(0,10);
+            document.getElementById("emailGrupoAlterar").value = grupo.email;
+            document.getElementById("logotipoGrupoAlterar").value = grupo.logotipo;
+            document.getElementById("idLiderGrupoAlterar").value = grupo.codUsuario;
+            document.getElementById("statusGrupoAlterar").value = grupo.status;
+            document.getElementById("idGrupoAlterar").value = grupo.id;
+
+            document.getElementById("idLiderAlterar").value = grupo.codUsuario;
+
 
 			if(grupo.codUsuario == localStorage.id){
 				$("#cardHeaderGrupo").append('\

@@ -162,14 +162,14 @@
             <form action="" method="get">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="descricaoAlterar" class="form-control" name="descricaoAlterar"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
-                  <label for="descricaoAlterar">Nome do Grupo</label>
+                  <input type="text" id="nomeGrupoAlterar" class="form-control" name="nomeGrupoAlterar"  placeholder="Nome do Grupo" required="required" autofocus="autofocus">
+                  <label for="nomeGrupoAlterar">Nome do Grupo</label>
                 </div>
               </div>
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="email" id="emailAlterar" class="form-control" name="emailAlterar" placeholder="Sigla do Grupo" required="required">
-                  <label for="emailAlterar">Sigla do Grupo</label>
+                  <input type="email" id="siglaGrupoAlterar" class="form-control" name="siglaGrupoAlterar" placeholder="Sigla do Grupo" required="required">
+                  <label for="siglaGrupoAlterar">Sigla do Grupo</label>
                 </div>
               </div>
 
@@ -177,8 +177,8 @@
                 <div class="form-row">
                   <div class="col-md-12 ">
                     <div class="form-label-group">
-                      <input type="file" id="logotipoAlterar" class="form-control" placeholder="" required="required">
-                      <label for="foto">Logotipo do Grupo</label>
+                      <input type="file" id="logotipoGrupoAlterar" class="form-control" placeholder="" required="required">
+                      <label for="logotipoGrupoAlterar">Logotipo do Grupo</label>
                     </div>
                   </div>
                 </div>
@@ -187,8 +187,8 @@
              <div class="form-group row">
                
             <div class="col-12">
-                <label for="foto">Data de Criação do Grupo</label>
-                <input class="form-control" type="date" value="" id="dataAlterar">
+                <label for="dataGrupoAlterar">Data de Criação do Grupo</label>
+                <input class="form-control" type="date" value="" id="dataGrupoAlterar">
               </div>
             </div>  
             <div class="form-group">
@@ -204,10 +204,14 @@
                   <label for="descricaoGrupoAlterar">Descrição Grupo</label>
                 </div>
             </div>
+                <div style="display: none;" id="idGrupoAlterar"></div> 
+                <div style="display: none;" id="idLiderGrupoAlterar"></div> 
+                <div style="display: none;" id="statusGrupoAlterar"></div> 
+
           </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button">Alterar</button>
+            <button id="btnAlterarGrupoEspecifico" class="btn btn-success" type="button">Alterar</button>
           </div>
         </div>
       </div>
@@ -217,7 +221,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar Lider do Grupo</h5>
+            <h5 class="modal-title" id="idLiderAlterar">Alterar Lider do Grupo</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -284,7 +288,7 @@
     
 
     <!-- Page level plugin JavaScript-->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="/vendor/chart.js/Chart.min.js"></script> -->
     <script src="/vendor/datatables/jquery.dataTables.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 
@@ -292,14 +296,15 @@
     <script src="/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="/js/demo/datatables-demo.js"></script>
-    <script src="/js/demo/chart-area-demo.js"></script>
+    <!-- <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script> -->
 
 
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="/js/encaminharGrupoFront.js"></script>
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
+    <script type="text/javascript" src="/js/alteraGrupoEspecificoFront.js"></script>
 
   </body>
 
