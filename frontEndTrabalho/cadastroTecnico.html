@@ -102,8 +102,8 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="">
-                     <tr>
+                    <tbody id="tabelaTecnico">
+                     <!-- <tr>
                       <th id=''>Técnico 001</th>
                       <td>
                       <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapse' role='button' aria-expanded='false' aria-controls='collapse'> Mostra Dados <span class='fas fa-plus'></span></button>  
@@ -111,7 +111,7 @@
                         <button id='' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Técnico</button>
                         <div id='collapse' class='collapse mostraLista' >
                           <div class='card card-body'>
-                            <img simages/favicon.png" style="width:200px;">
+                            <img src='images/favicon.png' style='width:200px;'>
                             <p><strong>Nome: </strong><span id=''></span></p>
                             <p><strong>Atividade que realiza: </strong> <span id=''></span></p>
                             <p><strong>Fomação academica:</strong> <span id=''></span></p>
@@ -121,7 +121,7 @@
                           </div>
                         </div>
                       </td>
-                    </tr>
+                    </tr> -->
                     </tbody>
                   </table>
                  
@@ -316,7 +316,6 @@
                   </div>
                 </div>
               </div>
-
         
               <div class="form-group">
                 <div class="form-row">
@@ -335,16 +334,6 @@
                       </div>
                   </div>
                   <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="anoConclusaoTecnicoAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
-                      <label for="anoConclusaoTecnicoAlterar" >Ano de Conclusão</label>
-                    </div>
-                  </div>
-                </div>
-              </div>  
-
               <script type="text/javascript">
                 function getvalAlterar(sel)
                 {
@@ -355,6 +344,16 @@
                   }
                 }
               </script>
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="anoConclusaoTecnicoAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="anoConclusaoTecnicoAlterar" >Ano de Conclusão</label>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+
 
               <div id="divNomeCursoAlterar" class="form-group" style="display: none;">
                 <div class="form-row">
@@ -373,7 +372,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattesTecnicoAlterar" placeholder="Link do Lattes">
+                      <input type="url" class="form-control" id="lattesTecnicoAlterar" placeholder="Link do Lattes">
                       <div class="input-group-prepend">
                         <div class="input-group-text">http://lattes.cnpq.br/****</div>
                       </div>
@@ -402,6 +401,9 @@
                   </div>
                 </div>
               </div>
+              <div style="display: none;" id="idTecnicoAlterar"></div>
+              <!-- <div style="display: none;" id="codTipoUsuarioAlterar"></div>
+              <div style="display: none;" id="senhaUsuarioAlterar"></div> -->
             </form>
 
           </div>
@@ -510,8 +512,8 @@
     
     <script type="text/javascript" src="/js/cadastraTecnicoFront.js"></script>
     <script type="text/javascript" src="/js/alterarTecnicoFront.js"></script>
-   <!--  <script type="text/javascript" src="/js/excluiTecnicoFront.js"></script>
-    <script type="text/javascript" src="/js/listarTecnicoFront.js"></script> -->
+    <script type="text/javascript" src="/js/excluiTecnicoFront.js"></script>
+    <script type="text/javascript" src="/js/listarTecnicoFront.js"></script>
 
   </body>
 

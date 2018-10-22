@@ -75,14 +75,11 @@ function cadastra(){
 			    	var form = document.getElementById('formCadastroTecnico');
 			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome.replace(" ", "-") + "_" + idGrupo;
 			    	form.submit();
-			    	$('#sucessoModal').modal('show');
-			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
 			    }
 			    else{
 			    	console.log("FALHA NO CADASTRO");
 					$('#erroModal').modal('show');
 				}
-
 			});
 			req.write(texto);
 			req.end();

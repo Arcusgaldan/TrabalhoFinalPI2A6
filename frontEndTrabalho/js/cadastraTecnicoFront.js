@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33192,8 +33192,6 @@ function cadastra(){
 			    	var form = document.getElementById('formCadastroTecnico');
 			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome.replace(" ", "-") + "_" + idGrupo;
 			    	form.submit();
-			    	$('#sucessoModal').modal('show');
-			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
 			    }
 			    else{
 			    	console.log("FALHA NO CADASTRO");
@@ -33211,6 +33209,7 @@ module.exports = {
 	especifica: function(objeto){
 		var final = {};
 		final.id = objeto.id;
+		final.nome = objeto.nome;
 		final.atividade = objeto.atividade;
 		final.formacao = objeto.formacao;
 		final.anoConclusao = objeto.anoConclusao;
@@ -33225,6 +33224,7 @@ module.exports = {
 	novo: function(){
 		var final = {};
 		final.id = 0;
+		final.nome = "";
 		final.atividade = "";
 		final.formacao = 0;
 		final.anoConclusao = "";
@@ -56979,10 +56979,74 @@ module.exports = {
 		var d = new Date();
 		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 		return data;
-	}
+	},
+
+	sobeLinhas: function(caminho){
+		require('fs').readFile(caminho, 'latin1', (err, data) => {
+			data = data.replace(/(\r\n|\n|\r)/gm, " ");
+			var vetor = data.split(" ");
+			var linha = {nome: ""};
+			var dao = require('./dao.js');
+			var mysql = require('mysql');
+
+			var con = mysql.createConnection({
+				host: 'localhost',
+				user: 'root',
+				password: '',
+				database: 'DBPronn'
+			});	
+
+			con.connect(function(err){
+				if(err){console.log("Cai no erro de con.connect"); throw err;}		
+				for(var i = 0; i < vetor.length; i++){
+					if(!isNaN(parseInt(vetor[i][0]))){
+						console.log(vetor[i] + " é cod");
+						if(linha.nome != ""){
+							console.log("Linha pronta, enviando...");
+							console.log("Nome: " + linha.nome + "\nCodigo: " + linha.codigo + "\nGrau: " + linha.grau);
+							var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+							con.query(sql, function(err, res){
+								if(err){console.log("Cai no erro do con.query com sql = " + sql); throw err;}
+								console.log("Linha inserida com sucesso!");
+							});
+							linha.nome = "";
+							linha.codigo = "";
+							linha.grau = 0;
+						}
+						linha.codigo = vetor[i];
+						var pontosCod = vetor[i].split(".");
+						if(pontosCod[1] == "00"){
+							console.log("Primeiro Grau");
+							linha.grau = 1;
+						}else if(pontosCod[2] == "00"){
+							console.log("Segundo Grau");
+							linha.grau = 2;
+						}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+							console.log("Terceiro Grau");
+							linha.grau = 3;
+						}else{
+							console.log("Quarto Grau");
+							linha.grau = 4;
+						}
+					}else{
+						console.log(vetor[i] + " NÃO é número");
+						linha.nome += vetor[i] + " ";
+					}
+				}
+				var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+				console.log("Fora do for o sql = " + sql);
+				con.query(sql, function(err, res){
+					if(err){console.log("Cai no erro do con.query"); throw err;}
+					console.log("Linha " + linha.nome + " inserida com sucesso!");
+					con.destroy();
+				});
+				
+			});
+		});
+	}	
 };
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"crypto":63}],303:[function(require,module,exports){
+},{"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)

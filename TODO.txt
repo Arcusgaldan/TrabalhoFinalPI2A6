@@ -76,10 +76,12 @@
 [-] primeiroAcessoUsuario NAO ESTA FUNCIONANDO
 [-] Como cadastrar linhas ?
 [-] Uma pessoa pode ser lider de mais de um grupo 
-[-] trocar na doc. diagrama manutenção de linha
+[V] trocar na doc. diagrama manutenção de linha
 
 [-] Conferir se o campo prontuário sao apenas numeros
 [-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
+
+[-] QUANDO CADASTRA LIDER E DOCENTE ELE CARREGA http://localhost:3000  QUE É O ENDERECO DO INPUT TEM QUE REDIRECIONAR CERTO
 
 [X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso
