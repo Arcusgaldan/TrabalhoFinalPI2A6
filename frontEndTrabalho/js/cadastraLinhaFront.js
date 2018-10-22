@@ -32923,7 +32923,7 @@ function extend() {
 module.exports = {
 	validar: function(linhaPesquisa){
 		var validates = require('./../validates.js');
-		if(!validates.req(linhaPesquisa.id) || !validates.req(linhaPesquisa.codigo) || !validates.req(linhaPesquisa.nome)){ //Retirar campos opcionais desta validação	
+		if(!validates.req(linhaPesquisa.id) || !validates.exact(linhaPesquisa.codigo, 12) || !validates.req(linhaPesquisa.nome)){ //Retirar campos opcionais desta validação	
 			return false;
 		}else{
 			return true;
@@ -33100,7 +33100,7 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
-document.getElementById("btnCadastro").addEventListener("click", cadastra);
+document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
 function cadastra(){
 	console.log("Entrou na função");
@@ -33113,6 +33113,17 @@ function cadastra(){
 	linhaPesquisa.id = 0;
 	linhaPesquisa.codigo = document.getElementById("codigoLinhaCadastrar").value;
 	linhaPesquisa.nome = document.getElementById("nomeLinhaCadastrar").value;
+	var pontosCod = linhaPesquisa.codigo.split(".");
+	if(pontosCod[1] == "00"){
+		linhaPesquisa.grau = 1;
+	}else if(pontosCod[2] == "00"){
+		linhaPesquisa.grau = 2;
+	}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+		linhaPesquisa.grau = 3;
+	}else{
+		linhaPesquisa.grau = 4;
+	}
+	linhaPesquisa.personalizada = 1;
 
 	var texto = JSON.stringify(linhaPesquisa);
 
@@ -33126,7 +33137,7 @@ function cadastra(){
 	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
 	opcoesHTTP.headers.Operacao = "INSERIR";
 
-	var req = http.require(opcoesHTTP, (res) => {
+	var req = http.request(opcoesHTTP, (res) => {
 		if(res.statusCode = 200){
 			$('#sucessoModal').modal('show');
 			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
@@ -33145,6 +33156,8 @@ module.exports = {
 		final.id = objeto.id;
 		final.codigo = objeto.codigo;
 		final.nome = objeto.nome;
+		final.grau = objeto.grau;
+		final.personalizada = objeto.personalizada;
 		return final;
 	},
 
@@ -33153,6 +33166,8 @@ module.exports = {
 		final.id = 0;
 		final.codigo = "";
 		final.nome = "";
+		final.grau = 0;
+		final.personalizada = 1;
 		return final;
 	},
 

@@ -4,6 +4,8 @@ module.exports = {
 		final.id = objeto.id;
 		final.codigo = objeto.codigo;
 		final.nome = objeto.nome;
+		final.grau = objeto.grau;
+		final.personalizada = objeto.personalizada;
 		return final;
 	},
 
@@ -12,6 +14,8 @@ module.exports = {
 		final.id = 0;
 		final.codigo = "";
 		final.nome = "";
+		final.grau = 0;
+		final.personalizada = 1;
 		return final;
 	},
 

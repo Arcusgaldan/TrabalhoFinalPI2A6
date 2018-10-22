@@ -38,7 +38,25 @@ http.createServer(function(req, res){
         //console.log(jsonRqs);
         if(req.headers['objeto'] != null){
             var objeto = req.headers['objeto'];
-            if(objeto != "Reset"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+            var operacao = req.headers['operacao'];
+            if(objeto == "LinhaPesquisa" && operacao == "BUSCARPARENTE"){
+                var utils = require('./utils.js');
+                var resultado = utils.buscaParentesLinha(parseInt(jsonRqs['tipoBusca']), jsonRqs['linha'], function(resultado){
+                    console.log("RESULTADO DO BUSCARPARENTE NO RESULTADO: " + resultado);
+                    if(resultado){
+                        var texto = JSON.stringify(resultado);
+                        console.log("Achou parentes, respondendo...");
+                        res.statusCode = 200;
+                        res.write(texto);
+                        res.end();
+                    }else{
+                        console.log("Não achou parentes, respondendo...");
+                        res.statusCode = 400;
+                        res.end();
+                    }
+                });
+                return;                
+            }else if(objeto != "Reset"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
                 var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
                 if(controller == null){
@@ -47,7 +65,7 @@ http.createServer(function(req, res){
                     console.log('Objeto inexistente.');
                     res.end();
                     return false;
-                }                
+                }           
             }else if(objeto == "Reset"){
                 require('./utils.js').sobeLinhas('txtCNPQ.txt');
             }
