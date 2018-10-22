@@ -102,23 +102,8 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="">
-                     <tr>
-                      <th id=''>Linhas de pesquisa 001</th>
-                      <td><strong>Cod: 1.5.79.0.90</strong></td>
-                      <td>
-                        
-                      <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>
-                      <button id='' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Linhas de pesquisa</button>
-                        <div id='collapse' class='collapse mostraLista' >
-                          <div class='card card-body'>
-                            <p><strong>Nome: </strong><span id=''></span></p>
-                            <p><strong>Data cadastro: </strong> <span id=''></span></p>
-                            <p><strong>Descrição: </strong> <span id=''></span></p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                    <tbody id="tabelaLinhasPesquisa">
+                     
                     </tbody>
                   </table>
                  
@@ -216,8 +201,8 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="nomeLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeLinhaAlterar">Nome da Linha de Pesquisa</label>
+                      <input type="text" id="codigoLinhaAlterar" class="form-control" name="codLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="codigoLinhaAlterar">Código da Linha de Pesquisa</label>
                     </div>
                   </div>
                 </div>
@@ -227,16 +212,18 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="codLinhaAlterar" class="form-control" name="codLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="codLinhaAlterar">Código da Linha de Pesquisa</label>
+                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="nomeLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeLinhaAlterar">Nome da Linha de Pesquisa</label>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>              
+
+              <div style="display: none;" id="idLinhaAlterar"></div>
               
             </form>
             <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastroTecnico">Alterar</button>
+              <button class="btn btn-success" type="button" id="btnAlterar">Alterar</button>
             </div>
           </div>
         </div>
@@ -253,7 +240,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir essa Linha de pesquisa <span id="nomeTecnicoExcluir" style="color: #000"></span> ?</p></div>
+            <div style="display: none;" id="idLinhaExcluir"></div>
+            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir a linha de pesquisa <span id="nomeLinhaExcluir" style="color: #000"></span>?</p></div>
             <div style="display: none;" id="idTecnicoExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
@@ -318,29 +306,30 @@
     </a>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script src="/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="js/demo/datatables-demo.js"></script>
-    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script>
 
-    <script type="text/javascript" src="js/loginFront.js"></script>
-    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
-    <script type="text/javascript" src="js/logout.js"></script>
-    
-    <script type="text/javascript" src="js/cadastraLinhaFront.js"></script>
+    <script type="text/javascript" src="/js/loginFront.js"></script>
+    <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="/js/logout.js"></script>
+
+    <script type="text/javascript" src="/js/listarLinhasPersonalizadasFront.js"></script>    
+    <script type="text/javascript" src="/js/cadastraLinhaFront.js"></script>
     <!-- <script type="text/javascript" src="js/alterarUsuarioFront.js"></script>
     <script type="text/javascript" src="js/excluiUsuarioFront.js"></script>
     <script type="text/javascript" src="js/listarUsuarioFront.js"></script> -->

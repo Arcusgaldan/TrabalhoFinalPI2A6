@@ -81,7 +81,7 @@ module.exports = {
 						if(linha.nome != ""){
 							console.log("Linha pronta, enviando...");
 							console.log("Nome: " + linha.nome + "\nCodigo: " + linha.codigo + "\nGrau: " + linha.grau);
-							var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+							var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+', 1)';
 							con.query(sql, function(err, res){
 								if(err){console.log("Cai no erro do con.query com sql = " + sql); throw err;}
 								console.log("Linha inserida com sucesso!");
@@ -110,7 +110,7 @@ module.exports = {
 						linha.nome += vetor[i] + " ";
 					}
 				}
-				var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+				var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau, personalizada) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+', 1)';
 				console.log("Fora do for o sql = " + sql);
 				con.query(sql, function(err, res){
 					if(err){console.log("Cai no erro do con.query"); throw err;}
@@ -120,5 +120,81 @@ module.exports = {
 				
 			});
 		});
+	},
+
+	getGrauLinha: function(linha){
+		console.log("utils::getGrauLinha - codigo = " + linha.codigo);
+		var pontosCod = linha.codigo.split(".");
+		if(pontosCod[1] == "00"){
+			return 1;
+		}else if(pontosCod[2] == "00"){
+			return 2;
+		}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+			return 3;
+		}else{
+			return 4;
+		}
+		return 0;
+	},
+
+	buscaParentesLinha: function(tipoBusca, linha, cb){ //tipoBusca = 0 -> Busca Pai; tipoBusca = 1 -> Busca Filho;
+		console.log("utils::buscaParentesLinha - tipoBusca = " + tipoBusca + " e codigo da linha = " + linha.codigo);
+		var grauLinha = this.getGrauLinha(linha);
+		console.log("utils::buscaParentesLinha - grauLinha = " + grauLinha);
+		if(grauLinha == 0){
+			return false;
+		}
+		if(tipoBusca == 0 && grauLinha == 1){
+			return null;
+		}else if(tipoBusca == 1 && grauLinha == 4){
+			return null;
+		}
+		var controller = require('./controller/cLinhaPesquisa.js');
+
+		switch(grauLinha){
+			case 1:
+				var parte = linha.codigo.split(".")[0] + ".";
+				controller.buscarParente(parte, function(resultado){
+					console.log("utils::buscaParentesLinha - resultado = " + JSON.stringify(resultado));
+					cb(resultado);
+				});
+				break;
+			case 2:
+				var parte;
+				if(tipoBusca == 0){
+					parte = linha.codigo.split(".")[0] + ".00.00.00";
+					controller.buscarParente(parte, function(resultado){
+						cb(resultado);
+					});
+				}else{
+					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1];
+					controller.buscarParente(parte, function(resultado){
+						cb(resultado);
+					});
+				}
+				break;
+			case 3:
+				var parte;
+				if(tipoBusca == 0){
+					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + ".00.00";
+					controller.buscarParente(parte, function(resultado){
+						cb(resultado);
+					});
+				}else{
+					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2];
+					controller.buscarParente(parte, function(resultado){
+						cb(resultado);
+					});
+				}
+				break;
+			case 4:				
+				var parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2] + ".00";
+				controller.buscarParente(parte, function(resultado){
+					cb(resultado);
+				});				
+				break;
+			default:
+				return null;
+		}
 	}	
 };

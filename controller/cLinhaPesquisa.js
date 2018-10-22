@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(linhaPesquisa){
 		var validates = require('./../validates.js');
-		if(!validates.req(linhaPesquisa.id) || !validates.req(linhaPesquisa.codigo) || !validates.req(linhaPesquisa.nome)){ //Retirar campos opcionais desta validação	
+		if(!validates.req(linhaPesquisa.id) || !validates.exact(linhaPesquisa.codigo, 12) || !validates.req(linhaPesquisa.nome)){ //Retirar campos opcionais desta validação	
 			return false;
 		}else{
 			return true;
@@ -105,6 +105,15 @@ module.exports = {
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
+			cb(resultado);
+		});
+	},
+
+	buscarParente: function(valor, cb){
+		var sql = 'SELECT * FROM TBLinhaPesquisa WHERE codigo LIKE "' + valor + '%";';
+		console.log("cLinhaPesquisa::buscarParente - sql = " + sql);
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
 		});
 	}

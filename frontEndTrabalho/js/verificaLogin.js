@@ -6,12 +6,6 @@ function sidebarPublico(){
            <span>Página Inicial</span> \
           </a>\
         </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
     ");
 }
 function sidebarLider(grupo){
@@ -20,18 +14,6 @@ function sidebarLider(grupo){
           <a class='nav-link' href='/index'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroLinhas'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Manutenção de Linhas de Pesquisas</span> \
           </a>\
         </li>\
 		<li class='nav-item active'>\
@@ -48,18 +30,6 @@ function sidebarLiderSemGrupo(grupo){
           <a class='nav-link' href='/index'>\
             <i class='fas fa-fw fa-home'></i>\
            <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroLinhas'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Manutenção de Linhas de Pesquisas</span> \
           </a>\
         </li>\
     ");
@@ -99,7 +69,13 @@ function sidebarAdm(){
         <li class='nav-item active'>\
           <a class='nav-link' href='/linhasGerais'>\
             <i class='fas fa-fw fa-home'></i>\
-           <span>Linhas de Pesquisas</span> \
+           <span>Visualização de Linhas de Pesquisas</span> \
+          </a>\
+        </li>\
+        <li class='nav-item active'>\
+          <a class='nav-link' href='/cadastroLinhas'>\
+            <i class='fas fa-fw fa-home'></i>\
+           <span>Manutenção de Linhas de Pesquisas</span> \
           </a>\
         </li>\
     ");

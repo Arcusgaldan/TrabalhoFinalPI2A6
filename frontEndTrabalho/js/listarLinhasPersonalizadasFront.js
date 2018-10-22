@@ -32988,162 +32988,66 @@ module.exports = {
 	}
 }
 },{"mysql":196,"nodemailer":267}],191:[function(require,module,exports){
-function sidebarPublico(){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-    ");
-}
-function sidebarLider(grupo){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/grupos/" + grupo.sigla + "'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>"+grupo.nome+"</span> \
-          </a>\
-        </li>\
-    ");
-}
-function sidebarLiderSemGrupo(grupo){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-    ");
-}
-function sidebarAdm(){
-	$("#sidebarWrapper").append("\
-		<li class='nav-item active'>\
-          <a class='nav-link' href='/index'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página Inicial</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroUsuario'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Usuários</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroPermissoes'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Permissões</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroGrupo'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Grupos</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroInformativos'>\
-            <i class='fas fa-fw fa-user-alt'></i>\
-           <span>Manutenção de Informativos</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/linhasGerais'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Visualização de Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/cadastroLinhas'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Manutenção de Linhas de Pesquisas</span> \
-          </a>\
-        </li>\
-    ");
-}
-function buscaGrupoLider(){
-	var http = require('http');
-	var utils = require('./../../utils.js');
+function criaElementos(listaLinhaPesquisa){
+	console.log("Entrei em listarLinhasPersonalizadas::criaElementos");
+	for(var i=0;i<listaLinhaPesquisa.length;i++){
+		console.log("Entrei no loop do criaElementos com linha.nome = " + listaLinhaPesquisa[i].nome);
+		$("#tabelaLinhasPesquisa").append("<tr><th id='nomeLinha"+i+"'></th> <td><strong id='codigoLinha"+i+"'></strong></td> <td> <button id='alterarLinhaPesquisaLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button> <button id='excluirLinhaPesquisaLista"+i+"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Linhas de pesquisa</button></td></tr>");
 
-	var objeto = {
-		campo: "codUsuario",
-		valor: localStorage.id
-	};
+        document.getElementById('nomeLinha' + i).innerHTML = listaLinhaPesquisa[i].nome;
+        document.getElementById('codigoLinha' + i).innerHTML = listaLinhaPesquisa[i].codigo;
 
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Grupo";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		if(res.statusCode == 200){
-			res.on('data', function(chunk){
-				// let idGrupo = JSON.parse(chunk).resultado[0].id;
-				// let nomeGrupo = JSON.parse(chunk).resultado[0].nome;
-				sidebarLider(JSON.parse(chunk).resultado[0]);						    	
-			});
-		}else{
-			console.log("Problema ao buscar o grupo do líder");
-			sidebarLiderSemGrupo();
-		}
-	});
-	req.write(texto);
-	req.end();
-	
+        (function(){
+			var linhaPesquisa = listaLinhaPesquisa[i];		
+			document.getElementById("alterarLinhaPesquisaLista"+ i).addEventListener("click", function(){
+				preencheModalAlterar(linhaPesquisa);
+			}, false);
+			document.getElementById("excluirLinhaPesquisaLista"+ i).addEventListener("click", function(){
+				preencheModalExcluir(linhaPesquisa);
+			}, false);
+		}());
+	}
 }
 
-
-
-if(localStorage.id != null){
-	console.log("Está logado!");
-	document.getElementById('boxLogado').classList.remove('display-none');
-
-	var utils = require("./../../utils.js");
-	var http = require("http");
-
-	var objeto = { 
-		campo: "id",
-		valor: localStorage.id
-	};
-
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Usuario";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
-
-	var req = http.request(opcoesHTTP, (res) => { 
-		console.log("Chegou resposta");
-		if(res.statusCode == 200){
-			res.on('data', function(chunk){
-				if(JSON.parse(chunk).resultado[0].codTipoUsuario == 1){
-					console.log("É lider");
-					buscaGrupoLider();
-				}else{
-					console.log("É Administrador");
-					sidebarAdm();
-				}
-			});
-		}
-	});
-	req.write(texto);
-	req.end();
-
-}else{
-	console.log("Não está logado!");
-	document.getElementById('formLogin').classList.remove('display-none');
-	sidebarPublico();
+function preencheModalAlterar(linhaPesquisa){
+	console.log("Entrei em preenche modal alterar");
+	document.getElementById('nomeLinhaAlterar').value = linhaPesquisa.nome;
+	document.getElementById('codigoLinhaAlterar').value = linhaPesquisa.codigo;
+	document.getElementById('idLinhaAlterar').value = linhaPesquisa.id;
 }
+
+function preencheModalExcluir(linhaPesquisa){
+	document.getElementById('idLinhaExcluir').value = linhaPesquisa.id;
+	document.getElementById('nomeLinhaExcluir').innerHTML = linhaPesquisa.nome;
+}
+
+var http = require('http');
+var utils = require('./../../utils.js');
+var objeto = {
+	campo: "personalizada",
+	valor: 1
+};
+
+var texto = JSON.stringify(objeto);
+
+var opcoesHTTP = utils.opcoesHTTP(texto);
+opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+opcoesHTTP.headers.Operacao = "BUSCAR";
+
+var req = http.request(opcoesHTTP, (res) => {
+	if(res.statusCode == 200){
+		res.on('data', function(chunk){
+			let vetor = JSON.parse(chunk).resultado;
+			console.log("Primeiro elemento do vetor: " + vetor[0].nome);
+			criaElementos(vetor);
+		});
+	}else{
+		$('#erroModal').modal('show');
+	}
+});
+
+req.write(texto);
+req.end();
 },{"./../../utils.js":300,"http":176}],192:[function(require,module,exports){
 /*! bignumber.js v4.1.0 https://github.com/MikeMcl/bignumber.js/LICENCE */
 
@@ -56903,7 +56807,7 @@ module.exports = {
 						if(linha.nome != ""){
 							console.log("Linha pronta, enviando...");
 							console.log("Nome: " + linha.nome + "\nCodigo: " + linha.codigo + "\nGrau: " + linha.grau);
-							var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+							var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+', 1)';
 							con.query(sql, function(err, res){
 								if(err){console.log("Cai no erro do con.query com sql = " + sql); throw err;}
 								console.log("Linha inserida com sucesso!");
@@ -56932,7 +56836,7 @@ module.exports = {
 						linha.nome += vetor[i] + " ";
 					}
 				}
-				var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+')';
+				var sql = 'INSERT INTO TBLinhaPesquisa (id, codigo, nome, grau, personalizada) VALUES (0, "'+linha.codigo+'", "'+linha.nome+'", '+linha.grau+', 1)';
 				console.log("Fora do for o sql = " + sql);
 				con.query(sql, function(err, res){
 					if(err){console.log("Cai no erro do con.query"); throw err;}

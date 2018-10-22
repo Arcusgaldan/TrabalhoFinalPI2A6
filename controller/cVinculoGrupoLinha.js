@@ -1,7 +1,7 @@
 module.exports = {
 	validar: function(vinculoGrupoLinha){
 		var validates = require('./../validates.js');
-		if(!validates.req(vinculoGrupoLinha.id) || !validates.req(vinculoGrupoLinha.codGrupo) || !validates.req(vinculoGrupoLinha.codLinha){ //Retirar campos opcionais desta validação	
+		if(!validates.req(vinculoGrupoLinha.id) || !validates.req(vinculoGrupoLinha.codGrupo) || !validates.req(vinculoGrupoLinha.codLinha)){ //Retirar campos opcionais desta validação	
 			return false;
 		}else{
 			return true;

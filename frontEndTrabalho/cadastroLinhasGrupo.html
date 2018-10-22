@@ -9,6 +9,41 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <style type="text/css">
+      .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+      }
+
+      .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+      .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+      }
+      .autocomplete-items div:hover {
+        /*when hovering an item:*/
+        background-color: #e9e9e9; 
+      }
+      .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important; 
+        color: #ffffff; 
+      }
+    </style>
+
     <title>Pronn</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-png">
 
@@ -31,7 +66,7 @@
 
      <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="/index.html">Pronn</a>
+      <a class="navbar-brand mr-1" href="/index">Pronn</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="/#">
         <i class="fas fa-bars"></i>
@@ -102,22 +137,8 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="">
-                     <tr>
-                      <th id=''>Linhas de pesquisa 001</th>
-                      <td><strong>Cod: 1.5.79.0.90</strong></td>
-                      <td>  
-                      <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>
-                      <!-- <button id='' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Linhas de pesquisa</button> -->
-                        <div id='collapse' class='collapse mostraLista' >
-                          <div class='card card-body'>
-                            <p><strong>Nome: </strong><span id=''></span></p>
-                            <p><strong>Data cadastro: </strong> <span id=''></span></p>
-                            <p><strong>Descrição: </strong> <span id=''></span></p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                    <tbody id="tabelaLinhasGrupo">
+                     
                     </tbody>
                   </table>
                  
@@ -157,7 +178,7 @@
               Neste formulário serão inseridas as informações para o cadastro de Linha de pesquisa.
             </p>
 
-            <form action="" method="get" >
+            <form action="" method="get" autocomplete="off">
               
 
               <div class="form-group">
@@ -236,13 +257,16 @@
                 </div>
               </div>  
 
+              <div class="modal-footer">
+                <button class="btn btn-success" type="button" id="btnCadastroLinhaSelect">Cadastar</button>
+              </div>
               <p>Ou pesquise:</p>
 
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeLinhaCadastrar" class="form-control" name="nomeLinhaCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <input type="text" id="nomeLinhaCadastrar" class="form-control autocomplete" name="nomeLinhaCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                       <label for="nomeLinhaCadastrar">Nome da Linha de Pesquisa</label>
                     </div>
                   </div>
@@ -251,7 +275,7 @@
               
             </form>
             <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastroTecnico">Cadastar</button>
+              <button class="btn btn-success" type="button" id="btnCadastroLinhaNome">Cadastar</button>
             </div>
           </div>
         </div>
@@ -354,14 +378,16 @@
                   </div>
                 </div>
               </div>  
-
+              <div class="modal-footer">
+                <button class="btn btn-success" type="button" id="btnAlterarLinhaSelect">Alterar</button>
+              </div>
               <p>Ou pesquise:</p>
 
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="nomeLinhaCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="btnCadastroLinhaNome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
                       <label for="nomeLinhaCadastrar">Nome da Linha de Pesquisa</label>
                     </div>
                   </div>
@@ -473,10 +499,8 @@
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
     
-    <script type="text/javascript" src="/js/cadastraUsuarioFront.js"></script>
-    <script type="text/javascript" src="/js/alterarUsuarioFront.js"></script>
-    <script type="text/javascript" src="/js/excluiUsuarioFront.js"></script>
-    <script type="text/javascript" src="/js/listarUsuarioFront.js"></script>
+    <script type="text/javascript" src="/js/listarLinhaGrupoFront.js"></script>
+    <script type="text/javascript" src="/js/cadastraLinhaGrupoFront.js"></script>
 
   </body>
 
