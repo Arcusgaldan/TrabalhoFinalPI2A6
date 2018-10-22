@@ -2,6 +2,7 @@ module.exports = {
 	especifica: function(objeto){
 		var final = {};
 		final.id = objeto.id;
+		final.nome = objeto.nome;
 		final.formacao = objeto.formacao;
 		final.anoConclusao = objeto.anoConclusao;
 		final.nomeCurso = objeto.nomeCurso;
@@ -16,6 +17,7 @@ module.exports = {
 		var final = {};
 		final.id = 0;
 		final.formacao = 0;
+		final.nome = "";
 		final.anoConclusao = "";
 		final.nomeCurso = "";
 		final.linkLattes = "";

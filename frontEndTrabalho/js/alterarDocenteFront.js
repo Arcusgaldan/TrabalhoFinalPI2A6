@@ -33116,7 +33116,8 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
-document.getElementById("btnCadastrar").addEventListener("click", cadastra);
+document.getElementById('btnAlterarDocente').addEventListener("click", alterar, false);
+	console.log("entrou na função alterar 1");
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
@@ -33155,46 +33156,49 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
-function cadastra(){
+function alterar(){
+	console.log("entrou na função alterar");
 	var modelo = require('./../../modelo/mDocente.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
 	var controller = require('./../../controller/cDocente.js');
-	var docente = modelo.novo();
+	var tecnico = modelo.novo();
 
-	docente.id = 0;
-	docente.nome = document.getElementById('nomeDocenteCadastrar').value;
-	docente.formacao = formacaoToString(document.getElementById('formacaoDocenteCadastrar').value);
-	console.log("A formação do rapaz é " + docente.formacao);
-	docente.anoConclusao = document.getElementById('anoConclusaoDocenteCadastrar').value;
-	docente.nomeCurso = document.getElementById('nomeCursoDocenteCadastrar').value;
-	docente.linkLattes = document.getElementById('linkLattesDocenteCadastrar').value;
-	docente.dataEntrada = document.getElementById('dataEntradaDocenteCadastrar').value;
+	tecnico.id = document.getElementById('idDocenteAlterar').value;
+	tecnico.nome = document.getElementById('nomeDocenteAlterar').value;
+	tecnico.formacao = formacaoToString(document.getElementById('formacaoDocenteAlterar').value);
+	console.log("tecnico formacao é igual: " + document.getElementById('formacaoDocenteAlterar').value);
+	tecnico.anoConclusao = document.getElementById('anoConclusaoDocenteAlterar').value;
+	tecnico.nomeCurso = document.getElementById('nomeCursoDocenteAlterar').value;
+	tecnico.linkLattes = document.getElementById('lattesDocenteAlterar').value;
+	tecnico.foto = document.getElementById('fotoDocenteAlterar').value;
+	tecnico.dataEntrada = document.getElementById('dataEntradaDocenteAlterar').value;
+
 	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
-			console.log("Não foi possível achar o grupo do docente. Favor contatar suporte.");
-			alert("Não foi possível achar o grupo do docente. Favor contatar suporte.");
-			docente.codGrupo = 0;
+			console.log("Não foi possível achar o grupo do técnico. Favor contatar suporte.");
+			tecnico.codGrupo = 0;
 			return;
 		}else{
-			console.log("Grupo do docente é " + idGrupo);
-			docente.codGrupo = idGrupo;
-			var texto = JSON.stringify(docente);
+			console.log("Grupo do técnico é " + idGrupo);
+			tecnico.codGrupo = idGrupo;
+			var texto = JSON.stringify(tecnico);
 
 			var opcoesHTTP = utils.opcoesHTTP(texto);
 			opcoesHTTP.headers.Objeto = "Docente";
-			opcoesHTTP.headers.Operacao = "INSERIR";
+			opcoesHTTP.headers.Operacao = "ALTERAR";
 
 			var req = http.request(opcoesHTTP, (res) => {
 				console.log("Chegou a resposta!");
 			    res.setEncoding('utf8');
 			    //console.log(res);        
 			    if(res.statusCode == 200){
-			    	var form = document.getElementById('formCadastroDocente');
-			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome.replace(" ", "-") + "_" + idGrupo;
+			    	var form = document.getElementById('formAlteraDocente');
+			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + tecnico.nome + "_" + idGrupo;
 			    	form.submit();
 			    	$('#sucessoModal').modal('show');
+			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
 			    }
 			    else{
 			    	console.log("FALHA NO CADASTRO");
@@ -33205,7 +33209,7 @@ function cadastra(){
 			req.write(texto);
 			req.end();
 		}
-	});			
+	});
 }
 },{"./../../controller/cDocente.js":190,"./../../modelo/mDocente.js":193,"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
 module.exports = {

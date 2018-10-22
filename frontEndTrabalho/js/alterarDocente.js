@@ -1,4 +1,5 @@
-document.getElementById("btnCadastrar").addEventListener("click", cadastra);
+document.getElementById('btnAlterarDocente').addEventListener("click", alterar, false);
+	console.log("entrou na função alterar 1");
 
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
@@ -37,21 +38,24 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
-function cadastra(){
-	var modelo = require('./../../modelo/mTecnico.js');
+function alterar(){
+	console.log("entrou na função alterar");
+	var modelo = require('./../../modelo/mDocente.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
-	var controller = require('./../../controller/cTecnico.js');
+	var controller = require('./../../controller/cDocente.js');
 	var tecnico = modelo.novo();
 
-	tecnico.id = 0;
-	tecnico.nome = document.getElementById('nomeTecnicoCadastrar').value;
-	tecnico.atividade = document.getElementById('atividadeTecnicoCadastrar').value;
-	tecnico.formacao = formacaoToString(document.getElementById('formacaoTecnicoCadastrar').value);
-	tecnico.anoConclusao = document.getElementById('anoConclusaoTecnicoCadastrar').value;
-	tecnico.nomeCurso = document.getElementById('nomeCursoTecnicoCadastrar').value;
-	tecnico.linkLattes = document.getElementById('linkLattesTecnicoCadastrar').value;
-	tecnico.dataEntrada = document.getElementById('dataEntradaTecnicoCadastrar').value;
+	tecnico.id = document.getElementById('idDocenteAlterar').value;
+	tecnico.nome = document.getElementById('nomeDocenteAlterar').value;
+	tecnico.formacao = formacaoToString(document.getElementById('formacaoDocenteAlterar').value);
+	console.log("tecnico formacao é igual: " + document.getElementById('formacaoDocenteAlterar').value);
+	tecnico.anoConclusao = document.getElementById('anoConclusaoDocenteAlterar').value;
+	tecnico.nomeCurso = document.getElementById('nomeCursoDocenteAlterar').value;
+	tecnico.linkLattes = document.getElementById('lattesDocenteAlterar').value;
+	tecnico.foto = document.getElementById('fotoDocenteAlterar').value;
+	tecnico.dataEntrada = document.getElementById('dataEntradaDocenteAlterar').value;
+
 	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
 		if(idGrupo == 0){
@@ -64,25 +68,28 @@ function cadastra(){
 			var texto = JSON.stringify(tecnico);
 
 			var opcoesHTTP = utils.opcoesHTTP(texto);
-			opcoesHTTP.headers.Objeto = "Tecnico";
-			opcoesHTTP.headers.Operacao = "INSERIR";
+			opcoesHTTP.headers.Objeto = "Docente";
+			opcoesHTTP.headers.Operacao = "ALTERAR";
 
 			var req = http.request(opcoesHTTP, (res) => {
 				console.log("Chegou a resposta!");
 			    res.setEncoding('utf8');
 			    //console.log(res);        
 			    if(res.statusCode == 200){
-			    	var form = document.getElementById('formCadastroTecnico');
-			    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome.replace(" ", "-") + "_" + idGrupo;
+			    	var form = document.getElementById('formAlteraDocente');
+			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + tecnico.nome + "_" + idGrupo;
 			    	form.submit();
+			    	$('#sucessoModal').modal('show');
+			    	$('#sucessoModal').addEventListener('toggle', function(){location.reload();});
 			    }
 			    else{
 			    	console.log("FALHA NO CADASTRO");
 					$('#erroModal').modal('show');
 				}
+
 			});
 			req.write(texto);
 			req.end();
 		}
-	});			
+	});
 }
