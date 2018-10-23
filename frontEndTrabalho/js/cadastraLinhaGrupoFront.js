@@ -33110,7 +33110,27 @@ module.exports = {
 }
 },{"mysql":199,"nodemailer":270}],192:[function(require,module,exports){
 document.getElementById("btnCadastroLinhaSelect").addEventListener('click', cadastraSelect, false);
-document.getElementById("btnCadastroLinhaNome").addEventListener('click', cadastraNome, false);
+//document.getElementById("btnCadastroLinhaNome").addEventListener('click', cadastraNome, false);
+
+function buscaData(cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+	var opcoesHTTP = utils.opcoesHTTP("");
+	opcoesHTTP.headers.Objeto = "DataAtual";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida!");
+		var msg = "";
+		res.on('data', function(chunk){
+			msg += chunk;
+		});
+		res.on('end', function(){
+			cb(msg);
+		});
+	});
+
+	req.end();
+}
 
 function buscaGrupo(sigla, cb){
 	var utils = require('./../../utils.js');
@@ -33172,25 +33192,26 @@ function cadastraSelect(){
 
 		grupoLinha.codGrupo = idGrupo;
 		grupoLinha.codLinha = linha;
+		buscaData(function(data){
+			grupoLinha.dataInicio = data;
+			var texto = JSON.stringify(grupoLinha);
+			var opcoesHTTP = utils.opcoesHTTP(texto);
+			opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
+			opcoesHTTP.headers.Operacao = "INSERIR";
 
-		var texto = JSON.stringify(grupoLinha);
+			var req = http.request(opcoesHTTP, (res) => {
+				console.log("Resposta recebida!");
+				if(res.statusCode == 200){
+					$('#sucessoModal').modal('show');
+					$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+				}else{
+					$('#erroModal').modal('show');
+				}
+			});
 
-		var opcoesHTTP = utils.opcoesHTTP(texto);
-		opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
-		opcoesHTTP.headers.Operacao = "INSERIR";
-
-		var req = http.request(opcoesHTTP, (res) => {
-			console.log("Resposta recebida!");
-			if(res.statusCode == 200){
-				$('#sucessoModal').modal('show');
-				$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
-			}else{
-				$('#erroModal').modal('show');
-			}
-		});
-
-		req.write(texto);
-		req.end();
+			req.write(texto);
+			req.end();
+		});		
 	});
 }
 },{"./../../modelo/mVinculoGrupoLinha":194,"./../../utils.js":303,"http":176}],193:[function(require,module,exports){
@@ -33241,8 +33262,8 @@ module.exports = {
 		final.id = 0;
 		final.codGrupo = 0;
 		final.codLinha = 0;
-		final.dataInicio = "";
-		final.dataFim = "";	
+		final.dataInicio = "1000-01-01";
+		final.dataFim = "1000-01-01";	
 		return final;
 	},
 

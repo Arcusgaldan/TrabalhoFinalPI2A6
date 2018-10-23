@@ -70,8 +70,13 @@ http.createServer(function(req, res){
                 require('./utils.js').sobeLinhas('txtCNPQ.txt');
                 res.statusCode = 200;
                 res.end();
+                return;
             }else if(objeto == "DataAtual"){
-                require('./utils.js').DataAtual();
+                var data = require('./utils.js').dataAtual();
+                res.statusCode = 200;
+                res.write(data);
+                res.end();
+                return;
             }
             switch(req.headers['operacao']){
                 case 'INSERIR':
