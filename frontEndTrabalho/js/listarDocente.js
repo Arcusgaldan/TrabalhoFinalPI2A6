@@ -107,7 +107,7 @@ function preencheModalAlterar(docente){
 	document.getElementById("anoConclusaoDocenteAlterar").value = docente.anoConclusao;
 	document.getElementById("fotoDocenteAlterar").value = docente.foto;
 	console.log("data padrao correto " + docente.dataEntrada.substring(0,10));
-	document.getElementById("dataEntradaDocenteAlterar").value = docente.dataEntrada.substring(0,10);;
+	document.getElementById("dataEntradaDocenteAlterar").value = docente.dataEntrada.substring(0,10);
 
 }
 

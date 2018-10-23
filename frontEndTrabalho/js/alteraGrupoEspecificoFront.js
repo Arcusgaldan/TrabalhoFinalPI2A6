@@ -32988,7 +32988,7 @@ module.exports = {
 	}
 }
 },{"mysql":197,"nodemailer":268}],191:[function(require,module,exports){
-document.getElementById('btnAlterarGrupo').addEventListener("click", alterar, false);
+document.getElementById('btnAlterarGrupoEspecifico').addEventListener("click", alterar, false);
 
 function alterar(){
 	var http = require('http');
@@ -33000,8 +33000,14 @@ function alterar(){
 	grupo.id = document.getElementById('idGrupoAlterar').value;
 	grupo.nome = document.getElementById('nomeGrupoAlterar').value;
 	grupo.sigla = document.getElementById('siglaGrupoAlterar').value;
+	grupo.email = document.getElementById('emailGrupoAlterar').value;
+	grupo.logotipo = document.getElementById('logotipoGrupoAlterar').value;
+	grupo.dataFundacao = document.getElementById('dataGrupoAlterar').value;
+	grupo.descricao = document.getElementById('descricaoGrupoAlterar').value;
+
+	
 	grupo.status = document.getElementById('statusGrupoAlterar').value;
-	grupo.codUsuario = document.getElementById('liderGrupoAlterar').value;
+	grupo.codUsuario = document.getElementById('idLiderGrupoAlterar').value;
 
 	var texto = JSON.stringify(grupo);
 
