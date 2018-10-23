@@ -33224,7 +33224,7 @@ function nomeLinhaToCodLinha(nomeLinha, cb){
 		valor: nomeLinha
 	};
 
-	var texto = JSON.stringify(texto);
+	var texto = JSON.stringify(objeto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
 	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
@@ -33244,6 +33244,8 @@ function nomeLinhaToCodLinha(nomeLinha, cb){
 			cb(0);
 		}
 	});
+	req.write(texto);
+	req.end();
 }
 
 function cadastraNome(){
@@ -33251,7 +33253,8 @@ function cadastraNome(){
 	var utils = require('./../../utils.js');
 	var grupoLinha = require('./../../modelo/mVinculoGrupoLinha').novo();
 
-	nomeLinhaToCodLinha(document.getElementById("nomeLinhaCadastrar").value.trim(), function(idLinha){
+	nomeLinhaToCodLinha(document.getElementById("nomeLinhaCadastrar").value, function(idLinha){
+		console.log("entrou em CadastraNome");
 		if(idLinha == 0){
 			return;
 		}
