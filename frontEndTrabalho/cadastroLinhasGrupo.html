@@ -130,6 +130,8 @@
               <div class="card mx-auto mt-5 mb-5">
                 <div class="card-header">Gerenciamento de Linhas de pesquisa 
                   <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal" style="margin-right: 5px;">Cadastrar Linhas de pesquisa</button>
+
+                  <a class="btn btn-warning float-right" onclick="goBack()" style="margin-right: 5px;">Voltar</a>
                 </div>
                 <div class="card-body">
                   <p>
@@ -387,8 +389,8 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="btnCadastroLinhaNome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeLinhaCadastrar">Nome da Linha de Pesquisa</label>
+                      <input type="text" id="nomeLinhaAlterar" class="form-control" name="nomeLinhaAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeLinhaAlterar">Nome da Linha de Pesquisa</label>
                     </div>
                   </div>
                 </div>
@@ -505,4 +507,8 @@
   </body>
 
 </html>
-  
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>

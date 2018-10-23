@@ -33648,9 +33648,12 @@ function preencheTabela(listaLinha){
 
 					(function(){
 						var linhaGrupo = listaLinha[i];
-						var linhaGeral = vetorLinhasGerais[linhaGrupo.id];		
+						console.log("Msg linha grupo cod linha " + linhaGrupo.codLinha)
+						var linhaGeral = vetorLinhasGerais[linhaGrupo.codLinha];	
+						console.log("Imprimindo o vetor " + linhaGeral.id);
 						document.getElementById("btnAlterarLinhaGrupoLista"+ i).addEventListener("click", function(){
 							preencheModalAlterar(linhaGrupo, linhaGeral);
+							console.log("onclic " + linhaGeral.id);
 						}, false);
 					}());
 				}
@@ -33659,6 +33662,12 @@ function preencheTabela(listaLinha){
 	});
 	req.end();
 }
+
+function preencheModalAlterar(linhaGrupo, linhaGeral){
+	console.log("msg Linha grupo " + linhaGeral.id);
+	document.getElementById("nomeLinhaAlterar").value = linhaGeral.nome;
+}
+
 
 function preencheSelect(select, listaLinha){
 	$("#" + select + " > option").remove();
