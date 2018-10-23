@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33137,7 +33137,7 @@ function criaListaNomes(cb){
 		}else{
 			console.log("Erro ao listar Linhas");
 			return;
-		}
+		} 
 	});
 
 	req.end();
@@ -33604,7 +33604,8 @@ function buscarLinhasGrupo(){
 			console.log("Resposta recebida!");
 			res.on('data', function(chunk){
 				let vetor = JSON.parse(chunk).resultado;
-				preencheSelect("primeiroGrauCadastrar", vetor);
+				// preencheSelect("primeiroGrauCadastrar", vetor);
+				preencheTabela(vetor);
 			});
 		});
 		req.write(texto);
@@ -33615,20 +33616,26 @@ function buscarLinhasGrupo(){
 function preencheTabela(listaLinha){
 	for(var i = 0; i < listaLinha.length; i++){
 		$("#tabelaLinhasGrupo").append("<tr>\
-                      <th id='nomeLinhaLista"+i+"'></th>\
-                      <td><strong id='codigoLinhaLista"+i+"'></strong></td>\
-                      <td>\
-                      <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>\
-                        <div id='collapse' class='collapse mostraLista'>\
-                          <div class='card card-body'>\
-                            <p><strong>Nome: </strong><span id=''></span></p>\
-                            <p><strong>Data cadastro: </strong> <span id=''></span></p>\
-                            <p><strong>Descrição: </strong> <span id=''></span></p>\
-                          </div>\
-                        </div>\
-                      </td>\
-                    </tr>");
+          <th id='nomeLinhaLista"+i+"'></th>\
+          <td><strong id='codigoLinhaLista"+i+"'></strong></td>\
+          <td>\
+          <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>\
+            <div id='collapse' class='collapse mostraLista'>\
+              <div class='card card-body'>\
+                // <p><strong>Nome: </strong><span id='nomeLinhaDados"+i+"'></span></p>\
+                <p><strong>Código nome: </strong><span id='codLinhaDados"+i+"'></span></p>\
+                <p><strong>Data cadastro: </strong> <span id='dataCadLinhaDados'></span></p>\
+              </div>\
+            </div>\
+          </td>\
+        </tr>");
 	}
+
+	document.getElementById("dataCadLinhaDados"+i).innerHTML = listaLinha.dataInicio;
+    document.getElementById("codLinhaDados"+i).innerHTML = listaLinha.codLinha;
+	document.getElementById("codigoLinhaLista"+i).innerHTML = listaLinha.codLinha;
+	document.getElementById("nomeLinhaLista"+i).innerHTML = listaLinha.codLinha;
+	document.getElementById("nomeLinhaLista"+i).innerHTML = listaLinha.codLinha;
 }
 
 function preencheSelect(select, listaLinha){

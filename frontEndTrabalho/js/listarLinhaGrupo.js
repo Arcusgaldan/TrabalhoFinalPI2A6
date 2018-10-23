@@ -494,6 +494,7 @@ function buscarLinhasGrupo(){
 			res.on('data', function(chunk){
 				let vetor = JSON.parse(chunk).resultado;
 				// preencheSelect("primeiroGrauCadastrar", vetor);
+				preencheTabela(vetor);
 			});
 		});
 		req.write(texto);
@@ -504,20 +505,26 @@ function buscarLinhasGrupo(){
 function preencheTabela(listaLinha){
 	for(var i = 0; i < listaLinha.length; i++){
 		$("#tabelaLinhasGrupo").append("<tr>\
-                      <th id='nomeLinhaLista"+i+"'></th>\
-                      <td><strong id='codigoLinhaLista"+i+"'></strong></td>\
-                      <td>\
-                      <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>\
-                        <div id='collapse' class='collapse mostraLista'>\
-                          <div class='card card-body'>\
-                            <p><strong>Nome: </strong><span id=''></span></p>\
-                            <p><strong>Data cadastro: </strong> <span id=''></span></p>\
-                            <p><strong>Descrição: </strong> <span id=''></span></p>\
-                          </div>\
-                        </div>\
-                      </td>\
-                    </tr>");
+          <th id='nomeLinhaLista"+i+"'></th>\
+          <td><strong id='codigoLinhaLista"+i+"'></strong></td>\
+          <td>\
+          <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>\
+            <div id='collapse' class='collapse mostraLista'>\
+              <div class='card card-body'>\
+                // <p><strong>Nome: </strong><span id='nomeLinhaDados"+i+"'></span></p>\
+                <p><strong>Código nome: </strong><span id='codLinhaDados"+i+"'></span></p>\
+                <p><strong>Data cadastro: </strong> <span id='dataCadLinhaDados'></span></p>\
+              </div>\
+            </div>\
+          </td>\
+        </tr>");
 	}
+
+	document.getElementById("dataCadLinhaDados"+i).innerHTML = listaLinha.dataInicio;
+    document.getElementById("codLinhaDados"+i).innerHTML = listaLinha.codLinha;
+	document.getElementById("codigoLinhaLista"+i).innerHTML = listaLinha.codLinha;
+	document.getElementById("nomeLinhaLista"+i).innerHTML = listaLinha.codLinha;
+	document.getElementById("nomeLinhaLista"+i).innerHTML = listaLinha.codLinha;
 }
 
 function preencheSelect(select, listaLinha){
