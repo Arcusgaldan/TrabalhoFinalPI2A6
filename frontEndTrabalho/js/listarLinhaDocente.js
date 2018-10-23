@@ -415,6 +415,12 @@ document.getElementById("segundoGrauCadastrar").addEventListener('change', chang
 
 document.getElementById("terceiroGrauCadastrar").addEventListener('change', changeTerceiroGrau, false);
 
+document.getElementById("primeiroGrauAlterar").addEventListener('change', changePrimeiroGrauAlterar, false);
+
+document.getElementById("segundoGrauAlterar").addEventListener('change', changeSegundoGrauAlterar, false);
+
+document.getElementById("terceiroGrauAlterar").addEventListener('change', changeTerceiroGrauAlterar, false);
+
 function buscaGrupo(sigla, cb){
 	var utils = require('./../../utils.js');
 	var http = require('http');
