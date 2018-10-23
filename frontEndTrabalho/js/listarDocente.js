@@ -71,7 +71,7 @@ function criaElementos(listaDocente){
 		// PREEENCHE INFORMAÇÕES
 		document.getElementById("nomeDocenteDados" + i).innerHTML = listaDocente[i].nome;
 		document.getElementById("linkLattesDocenteDados" + i).innerHTML = listaDocente[i].linkLattes;
-		document.getElementById("fotoDocenteDados" + i).src = listaDocente[i].foto;
+		document.getElementById("fotoDocenteDados" + i).src = "/../../../upload/uploads/fotosDocente/" + listaDocente[i].nome.replace(" ","-") + "_" + listaDocente[i].codGrupo + ".jpg";
 		document.getElementById("formacaoDocenteDados" + i).innerHTML = listaDocente[i].formacao;
 		document.getElementById("dataEntradaDocenteDados" + i).innerHTML = listaDocente[i].dataEntrada;
 		
