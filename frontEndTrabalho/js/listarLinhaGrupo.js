@@ -490,10 +490,15 @@ function buscarLinhasGrupo(){
 		opcoesHTTP.headers.Operacao = "BUSCAR";
 
 		var req = http.request(opcoesHTTP, (res) => {
-			console.log("Resposta recebida!");
+			console.log("Resposta recebida em buscarLinhasGrupo!");
+			var msg = "";
 			res.on('data', function(chunk){
-				let vetor = JSON.parse(chunk).resultado;
+				msg += chunk;
+			});
+			res.on('end', function(){
+				let vetor = JSON.parse(msg).resultado;
 				// preencheSelect("primeiroGrauCadastrar", vetor);
+				console.log("executa preencheTabela");
 				preencheTabela(vetor);
 			});
 		});
@@ -503,28 +508,45 @@ function buscarLinhasGrupo(){
 }
 
 function preencheTabela(listaLinha){
-	for(var i = 0; i < listaLinha.length; i++){
-		$("#tabelaLinhasGrupo").append("<tr>\
-          <th id='nomeLinhaLista"+i+"'></th>\
-          <td><strong id='codigoLinhaLista"+i+"'></strong></td>\
-          <td>\
-          <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Linhas de pesquisa</button>\
-            <div id='collapse' class='collapse mostraLista'>\
-              <div class='card card-body'>\
-                // <p><strong>Nome: </strong><span id='nomeLinhaDados"+i+"'></span></p>\
-                <p><strong>Código nome: </strong><span id='codLinhaDados"+i+"'></span></p>\
-                <p><strong>Data cadastro: </strong> <span id='dataCadLinhaDados'></span></p>\
-              </div>\
-            </div>\
-          </td>\
-        </tr>");
-	}
+	console.log("entrou em preencheTabela!");
+	var http = require('http');
+	var utils = require('./../../utils.js');
+	var opcoesHTTP = utils.opcoesHTTP("");
+	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+	opcoesHTTP.headers.Operacao = "LISTAR";
 
-	document.getElementById("dataCadLinhaDados"+i).innerHTML = listaLinha.dataInicio;
-    document.getElementById("codLinhaDados"+i).innerHTML = listaLinha.codLinha;
-	document.getElementById("codigoLinhaLista"+i).innerHTML = listaLinha.codLinha;
-	document.getElementById("nomeLinhaLista"+i).innerHTML = listaLinha.codLinha;
-	document.getElementById("nomeLinhaLista"+i).innerHTML = listaLinha.codLinha;
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta recebida em preencheTabela!");
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){
+				var linhasGerais = JSON.parse(msg);
+				var vetorLinhasGerais = [];
+				for(let i = 0; i < linhasGerais.length; i++){
+					vetorLinhasGerais[linhasGerais[i].id] = linhasGerais[i];					
+				}
+				console.log("entrou no append" + JSON.stringify(listaLinha));
+				for(var i = 0; i < listaLinha.length; i++){
+					$("#tabelaLinhasGrupo").append("<tr><th id='nomeLinhaLista"+i+"'></th><td><strong id='codigoLinhaLista"+i+"'></strong></td><td><button id='btnAlterarLinhaGrupoLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal'>Alterar Linhas de pesquisa</button></td></tr>");
+				
+					document.getElementById("codigoLinhaLista"+i).innerHTML = vetorLinhasGerais[listaLinha[i].codLinha].codigo;
+					document.getElementById("nomeLinhaLista"+i).innerHTML = vetorLinhasGerais[listaLinha[i].codLinha].nome;
+
+					(function(){
+						var linhaGrupo = listaLinha[i];
+						var linhaGeral = vetorLinhasGerais[linhaGrupo.id];		
+						document.getElementById("btnAlterarLinhaGrupoLista"+ i).addEventListener("click", function(){
+							preencheModalAlterar(linhaGrupo, linhaGeral);
+						}, false);
+					}());
+				}
+			});
+		}
+	});
+	req.end();
 }
 
 function preencheSelect(select, listaLinha){
@@ -543,3 +565,4 @@ criaListaNomesGrupo(function(nomes){
 });
 
 buscarPrimeiroGrau();
+buscarLinhasGrupo();
