@@ -1,13 +1,26 @@
-Prof. Tiago, boa tarde!
+Prof. Tiago, boa noite!
 
 Seguem as instruções passo-a-passo para iniciar a execução do Sistema PRONN.
 
 1 - Execute o WAMP
-2 - Execute o código SQL encontrado no arquivo codigomysql.sql utilizando o phpMyAdmin
-3 - Abra o CMD na pasta raíz do projeto
-4 - Execute "node server.js" (sem aspas)
-5 - Execute o arquivo chromeDisableSecurity.bat
-6 - Na janela do Chrome que irá abrir, abra o arquivo /frontEndTrabalho/index.html
+2 - No arquivo dao.js, altere a senha do banco de dados para a senha de seu SGBD
+3 - Execute o código SQL encontrado no arquivo codigomysql.sql utilizando o phpMyAdmin
+4 - Pause o serviço de Apache do WAMP
+5 - Abra o CMD na pasta raíz do projeto
+6 - Execute "node server.js" (sem aspas)
+7 - Execute "node serverRouter.js" (sem aspas)
+8 - Execute "node frontEndTrabalho/upload/serverUpload.js" (sem aspas)
+9 - Acesse o localhost
+
+PS: Se acusar erro de nodemailer, execute npm install nodemailer. Qualquer dúvida entre em contato conosco!
+
+PS2: Usuários pré-cadastrados: 
+
+Email: admin@email.com 
+Senha: 123456
+
+Email:lider@email.com
+Senha: 1QZ14XPXSIZJ
 
 Divirta-se e corrija com carinho.
 
