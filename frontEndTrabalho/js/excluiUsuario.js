@@ -18,8 +18,11 @@ function excluir(){
 		console.log("Resposta recebida!");
 		if(res.statusCode == 200){
 			console.log("Excluido com sucesso!"); //Trocar por modal de sucesso
+	    	$('#sucessoModal').modal('show');	
+	    	setTimeout(function(){location.reload();} , 2000);
 		}else{
 			console.log("Falha ao excluir."); //Trocar por modal de falha
+			$('#erroModal').modal('show');
 		}
 	});
 
