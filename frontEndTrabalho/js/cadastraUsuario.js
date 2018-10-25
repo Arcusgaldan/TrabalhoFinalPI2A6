@@ -29,10 +29,10 @@ function enviarEmail(mensagem, email, assunto){
 }
 
 function cadastra(){
-	if(document.getElementById('fotoCadastrar').files[0].type != 'image/jpg' && document.getElementById('fotoCadastrar').files[0].type != 'image/jpeg' && document.getElementById('fotoCadastrar').files[0].size > (5 * 1024 * 1024)){
-		console.log("Arquivo inválido!");
-		return;
-	}
+	// if(document.getElementById('fotoCadastrar').files[0].type != 'image/jpg' && document.getElementById('fotoCadastrar').files[0].type != 'image/jpeg' && document.getElementById('fotoCadastrar').files[0].size > (5 * 1024 * 1024)){
+	// 	console.log("Arquivo inválido!");
+	// 	return;
+	// }
 	var modelo = require('./../../modelo/mUsuario.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
@@ -45,7 +45,6 @@ function cadastra(){
 	var senha = usuario.senha;
 	usuario.email = document.getElementById("emailCadastrar").value;
 	usuario.curriculoLattes = document.getElementById("linkLattesCadastrar").value;
-	usuario.foto = document.getElementById("fotoCadastrar").value;
 	usuario.primeiroAcesso = 1;
 	usuario.codTipoUsuario = 1;
 
