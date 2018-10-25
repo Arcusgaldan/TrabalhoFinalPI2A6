@@ -24,6 +24,7 @@ function checaPrimeiroAcesso(){
 				var vetor = JSON.parse(chunk).resultado;
 				if(vetor[0].primeiroAcesso == 1){
 					console.log("É seu primeiro acesso! Redirecionando à página de editar dados");
+					location.href = "/primeiroAcessoUsuario"
 				}else{
 					console.log("Nem é seu primeiro acesso, não preciso fazer nada");
 				}
