@@ -79,6 +79,9 @@
 [-] Uma pessoa pode ser lider de mais de um grupo 
 [V] trocar na doc. diagrama manutenção de linha
 
+[-] Excluir campo "foto" de tabelas do banco de dados <DOC>
+[-] Colocar id como nome de foto (buscar do banco após inserir) <BE>
+
 [-] Conferir se o campo prontuário sao apenas numeros
 [-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
 

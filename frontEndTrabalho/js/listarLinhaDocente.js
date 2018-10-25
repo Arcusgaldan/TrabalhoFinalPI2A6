@@ -49,7 +49,7 @@ function criaListaNomesGrupo(cb){
 		opcoesHTTP.headers.Operacao = "BUSCAR";
 
 		var req = http.request(opcoesHTTP, (res) => {
-			console.log("Resposta recebida!");	
+			console.log("Resposta recebida em criaListaNomesGrupo!");	
 			var msg = "";		
 			if(res.statusCode == 200){
 				var nomes = [];
@@ -57,15 +57,15 @@ function criaListaNomesGrupo(cb){
 					msg += chunk;
 				});
 				res.on('end', function(){
-					var linhas = JSON.parse(msg);
+					var linhas = JSON.parse(msg).resultado;
 					for(var i = 0; i < linhas.length; i++){
-						nomes.push(linhas[i].nome);
+						nomes.push(linhas[i]);
 					}
 					cb(nomes);
 				});
 			}else{
-				console.log("Erro ao listar Linhas");
-				return;
+				console.log("Erro ao listar Linhas em criaListaNomesGrupo");
+				cb(null);
 			}
 		});
 		req.write(texto);
@@ -174,6 +174,74 @@ document.addEventListener("click", function (e) {
 
 
 //FIM funçoes do autocomplete
+
+function populaVetorLinhasGerais(cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+
+	var opcoesHTTP = utils.opcoesHTTP("");
+	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+	opcoesHTTP.headers.Operacao = "LISTAR";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta para listar todas as linhas gerais recebida!");
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){
+				var vetorOrganizado = [];
+				var vetor = JSON.parse(msg);
+				for(var i = 0; i < vetor.length; i++){
+					vetorOrganizado[vetor[i].id] = vetor[i];
+				}
+				cb(vetorOrganizado);
+			});
+		}else{
+			cb(null);
+		}
+	});
+
+	req.end();
+}
+
+function populaVetorLinhasGrupo(cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+	var url = window.location.pathname;
+	buscaGrupo(url.split("/")[2], function(idGrupo){
+		var objeto = {
+			campo: "codGrupo",
+			valor: idGrupo
+		};
+
+		var texto = JSON.stringify(objeto);
+
+		var opcoesHTTP = utils.opcoesHTTP(texto);
+		opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
+		opcoesHTTP.headers.Operacao = "BUSCAR";
+
+		var req = http.request(opcoesHTTP, (res) => {
+			console.log("Resposta recebida em buscarLinhasGrupo!");
+			if(res.statusCode == 200){
+				var msg = "";
+				res.on('data', function(chunk){
+					msg += chunk;
+				});
+				res.on('end', function(){
+					let vetor = JSON.parse(msg).resultado;
+					cb(vetor)
+				});
+			}else{
+				console.log("Não foi possível buscar linhas grupo");
+				cb(null);
+			}				
+		});
+		req.write(texto);
+		req.end();
+	});
+}
 
 function changePrimeiroGrau(){
 	$("#segundoGrauCadastrar > option").remove();
@@ -415,11 +483,11 @@ document.getElementById("segundoGrauCadastrar").addEventListener('change', chang
 
 document.getElementById("terceiroGrauCadastrar").addEventListener('change', changeTerceiroGrau, false);
 
-document.getElementById("primeiroGrauAlterar").addEventListener('change', changePrimeiroGrauAlterar, false);
+// document.getElementById("primeiroGrauAlterar").addEventListener('change', changePrimeiroGrauAlterar, false);
 
-document.getElementById("segundoGrauAlterar").addEventListener('change', changeSegundoGrauAlterar, false);
+// document.getElementById("segundoGrauAlterar").addEventListener('change', changeSegundoGrauAlterar, false);
 
-document.getElementById("terceiroGrauAlterar").addEventListener('change', changeTerceiroGrauAlterar, false);
+// document.getElementById("terceiroGrauAlterar").addEventListener('change', changeTerceiroGrauAlterar, false);
 
 function buscaGrupo(sigla, cb){
 	var utils = require('./../../utils.js');
@@ -453,64 +521,17 @@ function buscaGrupo(sigla, cb){
 }
 
 function buscarPrimeiroGrau(){
-	var http = require('http');
+	console.log("Entrou em buscarPrimeiroGrau");
+	let vetorPrimeiroGrau = [];
 	var utils = require('./../../utils.js');
-	var objeto = {
-		campo: "grau",
-		valor: 1
-	};
-
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		res.on('data', function(chunk){
-			let vetor = JSON.parse(chunk).resultado;
-			preencheSelect("primeiroGrauCadastrar", vetor);		
-			changePrimeiroGrau();
-			//document.getElementById("primeiroGrauCadastrar").onchange();
-		});
-	});
-	req.write(texto);
-	req.end();
-}
-
-function buscarLinhasGrupo(){
-	var http = require('http');
-	var utils = require('./../../utils.js');
-	var url = window.location.pathname;
-	buscaGrupo(url.split("/")[2], function(idGrupo){
-		var objeto = {
-			campo: "codGrupo",
-			valor: idGrupo
-		};
-
-		var texto = JSON.stringify(objeto);
-
-		var opcoesHTTP = utils.opcoesHTTP(texto);
-		opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
-		opcoesHTTP.headers.Operacao = "BUSCAR";
-
-		var req = http.request(opcoesHTTP, (res) => {
-			console.log("Resposta recebida em buscarLinhasGrupo!");
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-			res.on('end', function(){
-				let vetor = JSON.parse(msg).resultado;
-				// preencheSelect("primeiroGrauCadastrar", vetor);
-				console.log("executa preencheTabela");
-				preencheTabela(vetor);
-			});
-		});
-		req.write(texto);
-		req.end();
-	});
+	for(let i = 0; i < vetorLinhasGrupo.length; i++){
+		if(utils.getGrauLinha(vetorLinhasGerais[vetorLinhasGrupo[i].id]) == 1){
+			console.log("Linha no for do buscarPrimeiroGrau = " + JSON.stringify(vetorLinhasGerais[vetorLinhasGrupo[i].id]));
+			vetorPrimeiroGrau.push(vetorLinhasGerais[vetorLinhasGrupo[i].id]);
+		}
+	}
+	preencheSelect("primeiroGrauCadastrar", vetorPrimeiroGrau);		
+	changePrimeiroGrau();
 }
 
 function preencheTabela(listaLinha){
@@ -556,19 +577,44 @@ function preencheTabela(listaLinha){
 }
 
 function preencheSelect(select, listaLinha){
+	console.log("entrou em preencheSelect com listaLinha[0].nome = " + listaLinha[0].nome);
 	$("#" + select + " > option").remove();
 	for(var i = 0; i < listaLinha.length; i++){
 		$("#" + select).append("<option value='" + listaLinha[i].id + "'> " + listaLinha[i].codigo + " - " + listaLinha[i].nome + "</option>");
 	}
 }
 
-criaListaNomes(function(nomes){
-	autocomplete(document.getElementById("nomeLinhaCadastrar"), nomes);
-});
+// criaListaNomes(function(nomes){
+// 	autocomplete(document.getElementById("nomeLinhaCadastrar"), nomes);
+// });
 
 criaListaNomesGrupo(function(nomes){
-	autocomplete(document.getElementById("nomeLinhaAlterar"), nomes);
+	console.log("Entrou no callback de criaListaNomesGrupo com nomes.length = " + nomes.length);
+	var vetor = [];
+	for(let i = 0; i < nomes.length; i++){
+		console.log("Colocando " + vetorLinhasGerais[nomes[i].id].nome + " no vetor de nomes em criaListaNomesGrupo");
+		vetor.push(vetorLinhasGerais[nomes[i].id].nome);
+	}
+	autocomplete(document.getElementById("nomeLinhaCadastrar"), vetor);
 });
 
-buscarPrimeiroGrau();
-buscarLinhasGrupo();
+var vetorLinhasGerais;
+var vetorLinhasGrupo;
+
+populaVetorLinhasGerais(function(vetor){
+	if(vetor){
+		vetorLinhasGerais = vetor;
+	}else{
+		console.log("Erro ao listar linhas gerais");
+	}
+});
+
+populaVetorLinhasGrupo(function(vetor){
+	if(vetor){
+		vetorLinhasGrupo = vetor;
+		buscarPrimeiroGrau();
+	}else{
+		console.log("Erro ao listar linhas grupo");
+	}
+});
+

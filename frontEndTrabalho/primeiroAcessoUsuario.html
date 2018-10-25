@@ -59,13 +59,13 @@
                 <div class="card-body">
                   <p>Esse é o seu primeiro acesso ao sistema Pronn, como padrão o você deve finalizar seu cadastro antes de seguir com o uso do sistema.<br><br>Por favor insira os seus dados no formulário abaixo. </p>
                   
-                  <form action="" method="get">
+                  <form action="" method="post" id="formCadastroUsuario" encType="multipart/form-data">
 
                     <div class="form-group">
                       <div class="form-row">
                         <div class="col-md-12 ">
                           <div class="form-label-group">
-                            <input type="file" id="cadastraFotoUsuario" class="form-control" placeholder="foote" required="required">
+                            <input type="file" id="fotoCadastrar" name="fotoUsuarioCadastrar" class="form-control" placeholder="foote" required="required">
                             <label for="foto">Foto de Perfil</label>
                           </div>
                         </div>
@@ -167,7 +167,7 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Erro ao realizar a operação!</p></div>
+            <div class="modal-body"><p id="msgErroModal" style="color: #000">Erro ao realizar a operação!</p></div>
             <div class="modal-footer">
             </div>
           </div>
@@ -194,7 +194,7 @@
     <script src="/js/demo/chart-area-demo.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
 
-    <script type="text/javascript" src="/js/cadastroOpcionalUsuarioFront.js"></script>
+    <script type="text/javascript" src="/js/cadastraPrimeiroAcessoUsuarioFront.js"></script>
     
   </body>
 

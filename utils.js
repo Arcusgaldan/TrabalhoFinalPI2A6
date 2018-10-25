@@ -125,16 +125,21 @@ module.exports = {
 	getGrauLinha: function(linha){
 		console.log("utils::getGrauLinha - codigo = " + linha.codigo);
 		var pontosCod = linha.codigo.split(".");
-		if(pontosCod[1] == "00"){
-			return 1;
-		}else if(pontosCod[2] == "00"){
-			return 2;
-		}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
-			return 3;
-		}else{
-			return 4;
+		try{
+			if(pontosCod[1] == "00"){
+				return 1;
+			}else if(pontosCod[2] == "00"){
+				return 2;
+			}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+				return 3;
+			}else{
+				return 4;
+			}
+			return 0;	
+		}catch(err){
+			return 0;
 		}
-		return 0;
+		
 	},
 
 	buscaParentesLinha: function(tipoBusca, linha, cb){ //tipoBusca = 0 -> Busca Pai; tipoBusca = 1 -> Busca Filho;
@@ -142,6 +147,7 @@ module.exports = {
 		var grauLinha = this.getGrauLinha(linha);
 		console.log("utils::buscaParentesLinha - grauLinha = " + grauLinha);
 		if(grauLinha == 0){
+			console.log("Não foi possível descobrir grau da linha requisitada.");
 			return false;
 		}
 		if(tipoBusca == 0 && grauLinha == 1){
