@@ -54,6 +54,10 @@ function cadastra(){
 	var http = require('http');
 	if(usuarioGlobal){	
 		usuario = usuarioGlobal;
+		if(usuario.primeiroAcesso == 0){
+			console.log("Não é seu primeiro acesso, redirecionando...");
+			location.href = "/index";
+		}
 		usuario.data = usuario.data.substring(0, 10);
 		console.log("Em cadastra, usuario = " + JSON.stringify(usuario));
 		if(document.getElementById('senhaUsuario').value.length >= 8 && document.getElementById('senhaUsuario').value == document.getElementById('confSenhaUsuario').value){
@@ -101,10 +105,16 @@ function cadastra(){
 		}
 	}else{
 		console.log("Não recebeu usuario em cadastra");
+		location.href = "/index";
 	}
 
 }
 
+
+if(!localStorage.id){
+	console.log("Não está logado, redirecionando...");
+	location.href = "/index";
+}
 buscaUsuario(function(usuario){	
 	if(usuario.primeiroAcesso == 0){
 		console.log("Não é seu primeiro acesso");

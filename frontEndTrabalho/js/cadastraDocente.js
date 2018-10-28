@@ -1,5 +1,41 @@
 document.getElementById("btnCadastrar").addEventListener("click", cadastra);
 
+function buscaId(docente, cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+	
+	var objeto = {
+		campo: "linkLattes",
+		valor: docente.linkLattes
+	};
+	var texto = JSON.stringify(objeto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "Docente";
+	opcoesHTTP.headers.Operacao = "BUSCAR";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta de buscaId recebida!");
+		if(res.statusCode == 200){
+			console.log("Achei id de docente!");
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){
+				var docente = JSON.parse(msg).resultado[0];
+				cb(docente.id);
+			});
+		}else{
+			console.log("Não achei id de docente...");
+			cb(null);
+		}
+	});
+
+	req.write(texto);
+	req.end();
+}
+
 function formacaoToString(cod){
 	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
 	cod = parseInt(cod);
@@ -73,10 +109,18 @@ function cadastra(){
 			    res.setEncoding('utf8');
 			    //console.log(res);        
 			    if(res.statusCode == 200){
-			    	var form = document.getElementById('formCadastroDocente');
-			    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + docente.nome.replace(" ", "-") + "_" + idGrupo;
-			    	form.submit();
-			    	$('#sucessoModal').modal('show');
+			    	buscaId(docente, function(idDocente){
+			    		if(!idDocente){
+			    			console.log("Não achou id de docente");
+			    			document.getElementById("msgErroModal").innerHTML = "Não foi possível cadastrar foto...";
+			    			$("erroModal").modal("show");
+			    			return;
+			    		}
+				    	var form = document.getElementById('formCadastroDocente');
+				    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + idDocente;
+				    	form.submit();
+				    	$('#sucessoModal').modal('show');			    		
+			    	});
 			    }
 			    else{
 			    	console.log("FALHA NO CADASTRO");

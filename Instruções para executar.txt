@@ -7,10 +7,11 @@ Seguem as instruções passo-a-passo para iniciar a execução do Sistema PRONN.
 3 - Execute o código SQL encontrado no arquivo codigomysql.sql utilizando o phpMyAdmin
 4 - Pause o serviço de Apache do WAMP
 5 - Abra o CMD na pasta raíz do projeto
-6 - Execute "node server.js" (sem aspas)
-7 - Execute "node serverRouter.js" (sem aspas)
-8 - Execute "node frontEndTrabalho/upload/serverUpload.js" (sem aspas)
-9 - Acesse o localhost
+6 - Execute "node inserirTodasLinhas.js"
+7 - Execute "node server.js" (sem aspas)
+8 - Execute "node serverRouter.js" (sem aspas)
+9 - Execute "node frontEndTrabalho/upload/serverUpload.js" (sem aspas)
+10 - Acesse o localhost
 
 PS: Se acusar erro de nodemailer, execute npm install nodemailer. Qualquer dúvida entre em contato conosco!
 
