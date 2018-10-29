@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33182,9 +33182,9 @@ function criaElementos(listaDocente){
 		// PREEENCHE INFORMAÇÕES
 		document.getElementById("nomeDocenteDados" + i).innerHTML = listaDocente[i].nome;
 		document.getElementById("linkLattesDocenteDados" + i).innerHTML = listaDocente[i].linkLattes;
-		document.getElementById("fotoDocenteDados" + i).src = "/../../../upload/uploads/fotosDocente/" + listaDocente[i].nome.replace(" ","-") + "_" + listaDocente[i].codGrupo + ".jpg";
 		document.getElementById("formacaoDocenteDados" + i).innerHTML = listaDocente[i].formacao;
 		document.getElementById("dataEntradaDocenteDados" + i).innerHTML = listaDocente[i].dataEntrada;
+		document.getElementById("fotoDocenteDados" + i).src = "/../upload/uploads/fotosDocente/" + listaDocente[i].id + ".jpg";
 		
 		(function(){
 			console.log("Docente na closure: " + JSON.stringify(listaDocente[i]));
@@ -57097,16 +57097,21 @@ module.exports = {
 	getGrauLinha: function(linha){
 		console.log("utils::getGrauLinha - codigo = " + linha.codigo);
 		var pontosCod = linha.codigo.split(".");
-		if(pontosCod[1] == "00"){
-			return 1;
-		}else if(pontosCod[2] == "00"){
-			return 2;
-		}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
-			return 3;
-		}else{
-			return 4;
+		try{
+			if(pontosCod[1] == "00"){
+				return 1;
+			}else if(pontosCod[2] == "00"){
+				return 2;
+			}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+				return 3;
+			}else{
+				return 4;
+			}
+			return 0;	
+		}catch(err){
+			return 0;
 		}
-		return 0;
+		
 	},
 
 	buscaParentesLinha: function(tipoBusca, linha, cb){ //tipoBusca = 0 -> Busca Pai; tipoBusca = 1 -> Busca Filho;
@@ -57114,6 +57119,7 @@ module.exports = {
 		var grauLinha = this.getGrauLinha(linha);
 		console.log("utils::buscaParentesLinha - grauLinha = " + grauLinha);
 		if(grauLinha == 0){
+			console.log("Não foi possível descobrir grau da linha requisitada.");
 			return false;
 		}
 		if(tipoBusca == 0 && grauLinha == 1){

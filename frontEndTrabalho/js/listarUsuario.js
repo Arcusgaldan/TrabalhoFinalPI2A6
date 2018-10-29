@@ -10,6 +10,7 @@ function criaElementos(listaUsuario){
 				<button id='excluirUsuarioLista"+ i +"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Usuário</button>\
 				<div id='collapseUsuarioLista"+ i +"' class='collapse mostraLista' >\
 				  <div class='card card-body'>\
+				  	<img id='fotoUsuarioDados"+i+"' src='' style='width:200px;'>\
 				    <p><strong>Nome: </strong><span id='nomeUsuarioDados"+i+"'></span></p>\
 				    <p><strong>Prontuário: </strong> <span id='prontuarioUsuarioDados"+i+"'></span></p>\
 				    <p><strong>E-Mail: </strong> <span id='emailUsuarioDados"+i+"'></span></p>\
@@ -28,6 +29,7 @@ function criaElementos(listaUsuario){
 		document.getElementById("prontuarioUsuarioDados" + i).innerHTML = listaUsuario[i].prontuario;
 		document.getElementById("emailUsuarioDados" + i).innerHTML = listaUsuario[i].email;
 		document.getElementById("lattesUsuarioDados" + i).innerHTML = listaUsuario[i].curriculoLattes;
+		document.getElementById("fotoUsuarioDados" + i).src = "/../upload/uploads/fotosUsuario/" + listaUsuario[i].id + ".jpg";
 		if(listaUsuario[i].codTipoUsuario  == 1){	
 			document.getElementById("tipoUsuarioDados" + i).innerHTML = "Lider";
 

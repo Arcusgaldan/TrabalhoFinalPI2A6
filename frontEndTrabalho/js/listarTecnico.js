@@ -71,7 +71,7 @@ function criaElementos(listaTecnico){
 		document.getElementById("anoConclusaoTecnicoDados" + i).innerHTML = listaTecnico[i].anoConclusao;
 		document.getElementById("nomeCursoTecnicoDados" + i).innerHTML = listaTecnico[i].nomeCurso;
 		document.getElementById("lattesTecnicoDados" + i).innerHTML = listaTecnico[i].linkLattes;
-		document.getElementById("fotoTecnicoDados" + i).src = listaTecnico[i].foto;
+		document.getElementById("fotoTecnicoDados" + i).src = "/../upload/uploads/fotosTecnico/" + listaTecnico[i].id + ".jpg";
 		
 		(function(){
 			console.log("Tecnico na closure: " + JSON.stringify(listaTecnico[i]));

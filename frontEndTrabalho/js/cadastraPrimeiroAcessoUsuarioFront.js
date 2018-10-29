@@ -33312,7 +33312,7 @@ function cadastra(){
 						// setTimeout(function(){location.reload();} , 2000);
 
 						var form = document.getElementById('formCadastroUsuario');
-				    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + usuario.prontuario;
+				    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + usuario.id;
 				    	form.submit();
 					}else{
 						$("erroModal").modal("show");

@@ -109,14 +109,14 @@ function cadastra(){
 			    //console.log(res);        
 			    if(res.statusCode == 200){
 			    	buscaId(tecnico, function(idTecnico){
-			    		if(!idDocente){
+			    		if(!idTecnico){
 			    			console.log("Não achou id de tecnico");
 			    			document.getElementById("msgErroModal").innerHTML = "Não foi possível cadastrar foto...";
 			    			$("erroModal").modal("show");
 			    			return;
 			    		}
 				    	var form = document.getElementById('formCadastroTecnico');
-				    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + tecnico.nome.replace(" ", "-") + "_" + idGrupo;
+				    	form.action = "http://localhost:3000/arquivo/fotoTecnico?fileName=" + idTecnico;
 				    	form.submit();
 				    });
 			    }

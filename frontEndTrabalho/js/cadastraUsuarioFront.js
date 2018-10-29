@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33229,6 +33229,42 @@ module.exports = {
 },{"mysql":200,"nodemailer":271}],193:[function(require,module,exports){
 document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
+function buscaId(docente, cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+	
+	var objeto = {
+		campo: "linkLattes",
+		valor: docente.linkLattes
+	};
+	var texto = JSON.stringify(objeto);
+
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "Docente";
+	opcoesHTTP.headers.Operacao = "BUSCAR";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta de buscaId recebida!");
+		if(res.statusCode == 200){
+			console.log("Achei id de docente!");
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){
+				var docente = JSON.parse(msg).resultado[0];
+				cb(docente.id);
+			});
+		}else{
+			console.log("Não achei id de docente...");
+			cb(null);
+		}
+	});
+
+	req.write(texto);
+	req.end();
+}
+
 function enviarEmail(mensagem, email, assunto){
 	console.log("Entrei na funçao cadastraUsuario::enviarEmail");
 	var utils = require('./../../utils.js');
@@ -33298,12 +33334,20 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	var form = document.getElementById('formCadastroUsuario');
-	    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + usuario.prontuario;
-	    	form.submit();
-	    	$('#sucessoModal').modal('show');	
 	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
-	    	setTimeout(function(){location.reload();} , 2000);
+	    	buscaId(usuario, function(idUsuario){
+	    		if(!idUsuario){
+	    			console.log("Não achou id de usuario para foto");
+	    			document.getElementById("msgErroModal").innerHTML = "Não foi possível cadastrar foto...";
+	    			$("erroModal").modal("show");
+	    			return;
+	    		}
+		    	var form = document.getElementById('formCadastroUsuario');
+		    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + idUsuario;
+		    	form.submit();
+		    	$('#sucessoModal').modal('show');	
+		    	setTimeout(function(){location.reload();} , 2000);
+		    });
 	    }
 	    else{
 	    	console.log("FALHA NO CADASTRO");
@@ -57189,16 +57233,21 @@ module.exports = {
 	getGrauLinha: function(linha){
 		console.log("utils::getGrauLinha - codigo = " + linha.codigo);
 		var pontosCod = linha.codigo.split(".");
-		if(pontosCod[1] == "00"){
-			return 1;
-		}else if(pontosCod[2] == "00"){
-			return 2;
-		}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
-			return 3;
-		}else{
-			return 4;
+		try{
+			if(pontosCod[1] == "00"){
+				return 1;
+			}else if(pontosCod[2] == "00"){
+				return 2;
+			}else if(pontosCod[3][0] == "0" && pontosCod[3][1] == "0"){
+				return 3;
+			}else{
+				return 4;
+			}
+			return 0;	
+		}catch(err){
+			return 0;
 		}
-		return 0;
+		
 	},
 
 	buscaParentesLinha: function(tipoBusca, linha, cb){ //tipoBusca = 0 -> Busca Pai; tipoBusca = 1 -> Busca Filho;
@@ -57206,6 +57255,7 @@ module.exports = {
 		var grauLinha = this.getGrauLinha(linha);
 		console.log("utils::buscaParentesLinha - grauLinha = " + grauLinha);
 		if(grauLinha == 0){
+			console.log("Não foi possível descobrir grau da linha requisitada.");
 			return false;
 		}
 		if(tipoBusca == 0 && grauLinha == 1){
