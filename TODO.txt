@@ -74,6 +74,10 @@
 [-] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install
 [-] excluir e adicionar mais campos na index
 
+[-] Adicionar evento de fecha modal para recarregar/redirecionar <FE>
+[-] Adicionar opção de redefinir senha DEPOIS de logado (no BoxLogado) <FE><BE>
+[-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (adicionar data a todos os cadastros/alterações de vinculo com linha) <BE>
+
 [-] primeiroAcessoUsuario NAO ESTA FUNCIONANDO
 [-] Como cadastrar linhas ?
 [-] Uma pessoa pode ser lider de mais de um grupo 
@@ -87,6 +91,8 @@
 
 [-] QUANDO CADASTRA LIDER E DOCENTE ELE CARREGA http://localhost:3000  QUE É O ENDERECO DO INPUT TEM QUE REDIRECIONAR CERTO
 [-] Tornar linkLattes como unique <TODOS>
+
+[-] ORGANIZAR TODO POR PAGINA OU POR 'EQUIPE' <TODOS>
 
 [X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso
