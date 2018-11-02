@@ -33334,20 +33334,10 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");
-	    	buscaId(usuario, function(idUsuario){
-	    		if(!idUsuario){
-	    			console.log("Não achou id de usuario para foto");
-	    			document.getElementById("msgErroModal").innerHTML = "Não foi possível cadastrar foto...";
-	    			$("erroModal").modal("show");
-	    			return;
-	    		}
-		    	var form = document.getElementById('formCadastroUsuario');
-		    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + idUsuario;
-		    	form.submit();
-		    	$('#sucessoModal').modal('show');	
-		    	setTimeout(function(){location.reload();} , 2000);
-		    });
+	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");    		
+	    	$('#sucessoModal').modal('show');		    	
+			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else{
 	    	console.log("FALHA NO CADASTRO");
@@ -57310,10 +57300,36 @@ module.exports = {
 			default:
 				return null;
 		}
-	}	
+	},
+
+	enviaRequisicao: function(objeto, operacao, dados, cb){
+		var http = require('http');
+		var opcoesHTTP;
+		var texto;
+		
+		if(dados == ""){			
+			opcoesHTTP = this.opcoesHTTP("");
+			texto = "";
+		}else{
+			texto = JSON.stringify(dados);
+			opcoesHTTP = texto;
+		}
+
+		opcoesHTTP.headers.Objeto = objeto;
+		opcoesHTTP.headers.Operacao = operacao;
+
+		var req = http.request(opcoesHTTP, (res) => {
+			cb(res);
+		});
+
+		if(texto != ""){
+			req.write(texto);
+		}
+		req.end();
+	}
 };
 }).call(this,require("buffer").Buffer)
-},{"./controller/cLinhaPesquisa.js":190,"./dao.js":192,"buffer":54,"crypto":63,"fs":1,"mysql":200}],305:[function(require,module,exports){
+},{"./controller/cLinhaPesquisa.js":190,"./dao.js":192,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":200}],305:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)

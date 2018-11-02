@@ -8,7 +8,7 @@ require('fs').readFile('txtCNPQ.txt', 'latin1', (err, data) => {
 	var con = mysql.createConnection({
 		host: 'localhost',
 		user: 'root',
-		password: 'toor',
+		password: '',
 		database: 'DBPronn'
 	});	
 

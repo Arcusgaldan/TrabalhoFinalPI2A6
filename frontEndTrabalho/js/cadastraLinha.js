@@ -39,6 +39,7 @@ function cadastra(){
 		if(res.statusCode = 200){
 			$('#sucessoModal').modal('show');
 			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+	    	setTimeout(function(){location.reload();} , 2000);
 		}else{
 			$('#erroModal').modal('show');
 		}
