@@ -202,5 +202,31 @@ module.exports = {
 			default:
 				return null;
 		}
-	}	
+	},
+
+	enviaRequisicao: function(objeto, operacao, dados, cb){
+		var http = require('http');
+		var opcoesHTTP;
+		var texto;
+		
+		if(dados == ""){			
+			opcoesHTTP = this.opcoesHTTP("");
+			texto = "";
+		}else{
+			texto = JSON.stringify(dados);
+			opcoesHTTP = texto;
+		}
+
+		opcoesHTTP.headers.Objeto = objeto;
+		opcoesHTTP.headers.Operacao = operacao;
+
+		var req = http.request(opcoesHTTP, (res) => {
+			cb(res);
+		});
+
+		if(texto != ""){
+			req.write(texto);
+		}
+		req.end();
+	}
 };

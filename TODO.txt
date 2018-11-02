@@ -54,6 +54,7 @@
 [V] Trocar na doc. diagrama manutenção de linha <DOC>
 [V] Colocar id como nome de foto (buscar do banco após inserir) <BE>
 [V] ORGANIZAR TODO POR PAGINA OU POR 'EQUIPE' <TODOS>
+[V] Não permitir um líder ter mais de um grupo <BE>
 [V] Organizar sidebars <FE>
 [V] Trocar o campos date por text em ano de conclusão de curso de Docente e Técnico <FE>
 [-] Corrigir campo de texto de alterar grupo (descrição)
@@ -82,6 +83,10 @@
 [-] Bloquear p�ginas que n�o s�o acess�veis ao tipo de usu�rio
 [-] Comentar c�digo 
 [-] Criar erro para campo �nico duplicado 
+[-] Chamar callback em controllers quando validar for false (seguir padr�o do cUsuario).
+[-] Tratar os console log do servidor e throws
+[-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
+[-] Utilizar token para impedir burlar acesso por meio de troca do localStorage
 [-] Chamar callback em controllers quando validar for false (seguir padr�o do cUsuario). <BE>
 [-] Não permitir um líder ter mais de um grupo
 [-] Tratar os console log do servidor

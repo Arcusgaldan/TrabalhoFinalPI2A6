@@ -69,10 +69,10 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");	    	
-	    	$('#sucessoModal').modal('show');	
-	    	setTimeout(function(){location.reload();} , 2000);
+	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");    		
+	    	$('#sucessoModal').modal('show');		    	
 			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+	    	setTimeout(function(){location.reload();} , 2000);
 	    }
 	    else{
 	    	console.log("FALHA NO CADASTRO");
