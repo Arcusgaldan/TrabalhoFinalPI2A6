@@ -2,6 +2,8 @@
 "V" = Sucesso
 "X" = Falha
 
+-- CONCLUÍDOS
+
 [V] Adicionar campo ID a TODAS as tabelas (para poder generalizar os deletes do banco); <DOC>
 [V] Inserir tipo usu�rio AO SUBIR O BANCO; <BE>
 [V] Trocar p�gina de cadastro de grupos para modal; <FE>
@@ -42,52 +44,61 @@
 [V] Adm nao tem curriculo lattes
 [V] Criar array em ServerRouter com lista de p�ginas v�lidas. Validar tamb�m arquivos a serem puxados. <BE>
 [V] Usuário pode alterar a data de cadastro da linha ou será automática
+[V] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto j� com o caminho da imagem que vai estar no server) <BE>
+[V] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
+[V] O sistema não está redirecionando para a página do cadastro de administrador quando entra e nao tem nenhum usuário cadastrado //Resolvido
+[V] Alterar grupo não funciona completamente <BE><FE>
+[V] Pré-cadastrar Usuários <TODOS>
+[V] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install <BE>
+[V] primeiroAcessoUsuario NAO ESTA FUNCIONANDO <BE> //Resolvido
+[V] Trocar na doc. diagrama manutenção de linha <DOC>
+[V] Colocar id como nome de foto (buscar do banco após inserir) <BE>
+[V] ORGANIZAR TODO POR PAGINA OU POR 'EQUIPE' <TODOS>
 
-[-] Tentar generalizar JS de FrontEnd; <FE>
-[-] Revisar todo o layuot em vers�es de telas menores <FE>
-[-] Colocar novas tabelas como Autoincrement <DOC>
-[-] Verificar se banco est� desligado e redirecionar para 404 se sim <BE><FE>
-[-] Organizar sidebars <FE>
-[-] Bloquear p�ginas que n�o s�o acess�veis ao tipo de usu�rio <BE>
-[-] Comentar c�digo <BE>
-[-] Criar erro para campo �nico duplicado <BE>
-[-] Chamar callback em controllers quando validar for false (seguir padr�o do cUsuario). <BE>
-[-] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE>
-[-] Info grupos (ver "CHIPS" no materialize <FE>
-[-] Buttom input<fe>
-[-] Atualmente o técnico pode ser lider de dois grupos,  e na verdae não é permitido.
-
-[-] Trocar o campos date por text 
-[-] Criar servidor Express e usar o form.submit pra dar submit no form com a imagem a ser upload (e dar upload no objeto j� com o caminho da imagem que vai estar no server) <BE>
-
-[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos <TODOS>
-[-] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
-
-[-] O sistema não está redirecionando para a página do cadastro de administrador quando entra e nao tem nenhum usuário cadastrado
-[-] alterar grupo não funciona
-[-] Não consigo excluir um lider quando tem um grupo vinculado<BE>
-
-
-
-[-] Colocar if else para a senha do banco
-[-] Pré-cadastrar Usuários
-[-] Tratar os console log do servidor
-[-] Quando o thiago testou faltou enviar email pq faltava executar o nodemailer npm install
-[-] excluir e adicionar mais campos na index
-
-[-] primeiroAcessoUsuario NAO ESTA FUNCIONANDO
-[-] Como cadastrar linhas ?
-[-] Uma pessoa pode ser lider de mais de um grupo 
-[V] trocar na doc. diagrama manutenção de linha
-
-[-] Excluir campo "foto" de tabelas do banco de dados <DOC>
-[-] Colocar id como nome de foto (buscar do banco após inserir) <BE>
-
-[-] Conferir se o campo prontuário sao apenas numeros
-[-] Qaundo digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
-
-[-] QUANDO CADASTRA LIDER E DOCENTE ELE CARREGA http://localhost:3000  QUE É O ENDERECO DO INPUT TEM QUE REDIRECIONAR CERTO
-[-] Tornar linkLattes como unique <TODOS>
+-- CANCELADOS
 
 [X] Perguntar se s� pode excluir usu�rio se n�o houver nada relacionado a ele <TODOS>
 [X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) <BE> //Desnecess�rio pois n�o h� exclus�o neste caso
+[X] Tentar generalizar JS de FrontEnd; <FE> //Dificil de compreender o objetivo
+[X] Quando for excluir, excluir tamb�m todos os campos de depend�ncia (chaves estrangeiras) //Não vai ser feito pois há regras de exclusão
+[X] Buttom input //Q?
+[X] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos //Incompreensível
+[X] Colocar if else para a senha do banco //Complicado demais
+[X] Como cadastrar linhas? //Limitar apenas a tarefas a serem executadas
+[X] QUANDO CADASTRA LIDER E DOCENTE ELE CARREGA http://localhost:3000  QUE É O ENDERECO DO INPUT TEM QUE REDIRECIONAR CERTO //Comportamento adequado, faltou abrir o servidor de upload
+
+
+-- FRONT-END
+
+[-] Revisar todo o layuot em vers�es de telas menores
+[-] Organizar sidebars 
+[-] Info grupos (ver "CHIPS" no materialize) 
+[-] Trocar o campos date por text em ano de conclusão de curso de Docente e Técnico
+[-] Corrigir campo de texto de alterar grupo (descrição)
+[-] Adicionar evento de fecha modal para recarregar/redirecionar <FE>
+
+-- BACK-END
+
+[-] Bloquear p�ginas que n�o s�o acess�veis ao tipo de usu�rio
+[-] Comentar c�digo 
+[-] Criar erro para campo �nico duplicado 
+[-] Chamar callback em controllers quando validar for false (seguir padr�o do cUsuario). <BE>
+[-] Não permitir um líder ter mais de um grupo
+[-] Tratar os console log do servidor
+[V] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
+
+-- FRONT + BACK
+
+[-] Verificar se banco est� desligado e redirecionar para 404 se sim
+[-] CRUD de textosIndex
+[-] Adicionar opção de redefinir senha DEPOIS de logado (no BoxLogado) 
+[-] Conferir se o campo prontuário sao apenas numeros
+[-] Quando digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
+
+-- DOCUMENTAÇÃO
+
+[-] Colocar novas tabelas como Autoincrement
+[-] Excluir campo "foto" de tabelas do banco de dados 
+[-] Tornar linkLattes como unique 
+
+-- TODOS
