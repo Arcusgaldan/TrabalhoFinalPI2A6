@@ -1,41 +1,5 @@
 document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
-function buscaId(docente, cb){
-	var http = require('http');
-	var utils = require('./../../utils.js');
-	
-	var objeto = {
-		campo: "linkLattes",
-		valor: docente.linkLattes
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Docente";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta de buscaId recebida!");
-		if(res.statusCode == 200){
-			console.log("Achei id de docente!");
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-			res.on('end', function(){
-				var docente = JSON.parse(msg).resultado[0];
-				cb(docente.id);
-			});
-		}else{
-			console.log("Não achei id de docente...");
-			cb(null);
-		}
-	});
-
-	req.write(texto);
-	req.end();
-}
-
 function enviarEmail(mensagem, email, assunto){
 	console.log("Entrei na funçao cadastraUsuario::enviarEmail");
 	var utils = require('./../../utils.js');

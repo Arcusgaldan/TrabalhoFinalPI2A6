@@ -59,7 +59,7 @@
                 <div class="card-body">
                   <p>Esse é o seu primeiro acesso ao sistema Pronn, como padrão o administrador deve se registrar antes de seguir com o uso do sistema.<br><br>Por favor insira os seus dados no formulário abaixo. </p>
                   
-                  <form action="" method="get">
+                  <form action="" method="post" id="formCadastroUsuario" encType="multipart/form-data">
 
                     <div class="form-group">
                       <div class="form-row">
@@ -119,8 +119,8 @@
                       <div class="form-row">
                         <div class="col-md-12 ">
                           <div class="form-label-group">
-                            <input type="file" id="foto" class="form-control" placeholder="foote" required="required">
-                            <label for="foto">Foto de Perfil</label>
+                            <input type="file" id="fotoUsuarioCadastrar" name="fotoUsuarioCadastrar" class="form-control" placeholder="foote" required="required">
+                            <label for="fotoUsuarioCadastrar">Foto de Perfil</label>
                           </div>
                         </div>
                       </div>
