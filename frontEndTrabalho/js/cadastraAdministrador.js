@@ -1,5 +1,25 @@
 document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
+function verificaPrimeiroAcesso(cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+
+	var opcoesHTTP = utils.opcoesHTTP("");
+	opcoesHTTP.headers.Objeto = "Usuario";
+	opcoesHTTP.headers.Operacao = "LISTAR";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta em verificaPrimeiroAcesso recebida!");
+		if(res.statusCode == 400){
+			$("#erroModal").modal("show");
+		}else if(res.statusCode != 747){
+			console.log("Não é o primeiro acesso ao sistema");
+			location.href = "/index";
+		}
+	});
+	req.end();
+}
+
 function cadastra(){
 	console.log("Entrou na função");
 	var modelo = require('./../../modelo/mUsuario.js');
@@ -14,7 +34,6 @@ function cadastra(){
 	usuario.senha = document.getElementById("senha").value;
 	usuario.email = document.getElementById("email").value;
 	usuario.curriculoLattes = document.getElementById("linkLattes").value;
-	usuario.foto = document.getElementById("foto").value;
 	usuario.primeiroAcesso = 0;
 	usuario.codTipoUsuario = 2;
 
@@ -47,8 +66,9 @@ function cadastra(){
 	    if(res.statusCode == 200){
 	    	localStorage.id = 1;
 	    	// alert("Cadastro realizado com sucesso!");
-	    	$('#sucessoModal').modal('show');
-	    	setTimeout(function(){location.href="index.html"} , 2000);   
+	    	var form = document.getElementById("formCadastroUsuario");
+	    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + 1;
+	    	form.submit();	
 	    }
 	    else{
 	    	console.log("FALHA NO CADASTRO");
@@ -58,3 +78,4 @@ function cadastra(){
     req.write(texto);
     req.end();
 }
+verificaPrimeiroAcesso();

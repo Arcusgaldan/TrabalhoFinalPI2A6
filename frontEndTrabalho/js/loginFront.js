@@ -32921,134 +32921,6 @@ function extend() {
 
 },{}],190:[function(require,module,exports){
 module.exports = {
-	validar: function(docente){
-		var validates = require('./../validates.js');
-		
-		var formacaoToInt = {
-			"Ensino Fundamental": 1, 
-			"Ensino Médio" : 2, 
-			"Superior": 3, 
-			"Especialização": 4, 
-			"Mestrado": 5, 
-			"Doutorado": 6
-		};
-
-		var formInt = formacaoToInt[docente.formacao];
-
-		if(!validates.req(docente.id) || !validates.req(docente.nome) || !validates.req(docente.formacao) || !formInt || !validates.minVal(formInt, 1) || !validates.maxVal(formInt, 6) ||
-			!validates.exact(docente.anoConclusao, 4) || (validates.minVal(formInt, 3) && !validates.req(docente.nomeCurso)) || !validates.req(docente.linkLattes) || 
-			!validates.req(docente.dataEntrada) || !validates.req(docente.codGrupo)){ //Retirar campos opcionais desta validação	
-			console.log("cDocente::validar retornou false.");
-			return false;
-		}else{
-			return true;
-		}
-	},
-
-	inserir: function(docente, cb){
-		if(!this.validar(docente)){							
-				return false;
-		}else{
-			docente['id'] = 0;
-			var sql = "INSERT INTO TBDocente (";
-			var campos = "";
-			var valores = "";
-			for(var key in docente){
-				if(docente[key] == null)
-					continue;
-
-				if(campos == ""){
-					campos += key;
-				}else{
-					campos += ", " + key;
-				}
-
-				var modelo = require('./../modelo/mDocente.js');
-				var aux = "";
-
-				if(modelo.isString(key)){
-					aux = '"' + docente[key] + '"';					
-				}
-				else
-					aux = docente[key];
-
-				if(valores == ""){
-					valores += aux;
-				}else{
-					valores += ", " + aux;
-				}
-			}
-			sql += campos + ") values (" + valores + ");";
-			console.log("O SQL em cDocente::inserir = " + sql);
-			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				console.log("CODRES: " + codRes);
-				cb(codRes);
-			});
-		}
-	},
-
-	alterar: function(docente, cb){
-		if(!this.validar(docente)){
-			return false;
-		}else{
-			var sql = "UPDATE TBDocente SET ";
-			var campos = "";
-			for(var key in docente){
-				if(key == 'id')
-					continue;
-
-				var modelo = require('./../modelo/mDocente.js');
-				var aux = "";
-
-				if(modelo.isString(key)){
-					aux = '"' + docente[key] + '"';
-					
-				}
-				else
-					aux = docente[key];
-
-				if(campos == ""){
-					campos += key + " = " + aux;
-				}else{
-					campos += ", " + key + " = " + aux;
-				}
-			}
-			sql += campos + " WHERE id = " + docente['id'] + ";";
-			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				cb(codRes);
-			});
-		}
-	},
-
-	excluir: function(id, cb){
-		var sql = "DELETE FROM TBDocente WHERE id = " + id + ";";
-		var dao = require('./../dao.js');
-		dao.inserir(dao.criaConexao(), sql, function(codRes){
-			cb(codRes);
-		});
-	},
-
-	listar: function(cb){
-		var sql = "SELECT * FROM TBDocente;";
-		var dao = require('./../dao.js');
-		dao.buscar(dao.criaConexao(), sql, function(resultado){
-			cb(resultado);
-		});
-	},
-
-	buscar: function(campo, valor, cb){
-		var sql = 'SELECT * FROM TBDocente WHERE ' + campo + ' = "' + valor + '";';
-		console.log("SQL: " + sql);
-		var dao = require('./../dao.js');
-		dao.buscar(dao.criaConexao(), sql, function(resultado){			
-			cb(resultado);
-		});
-	}
-}
-},{"./../dao.js":192,"./../modelo/mDocente.js":194,"./../validates.js":305}],191:[function(require,module,exports){
-module.exports = {
 	validar: function(linhaPesquisa){
 		var validates = require('./../validates.js');
 		if(!validates.req(linhaPesquisa.id) || !validates.exact(linhaPesquisa.codigo, 12) || !validates.req(linhaPesquisa.nome)){ //Retirar campos opcionais desta validação	
@@ -33168,7 +33040,7 @@ module.exports = {
 		});
 	}
 }
-},{"./../dao.js":192,"./../modelo/mLinhaPesquisa.js":195,"./../validates.js":305}],192:[function(require,module,exports){
+},{"./../dao.js":191,"./../modelo/mLinhaPesquisa.js":193,"./../validates.js":303}],191:[function(require,module,exports){
 module.exports = {
 	criaConexao: function(){
 		var mysql = require('mysql');
@@ -33236,182 +33108,178 @@ module.exports = {
 		});
 	}
 }
-},{"mysql":200,"nodemailer":271}],193:[function(require,module,exports){
-document.getElementById("btnCadastrar").addEventListener("click", cadastra);
+},{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
+document.getElementById("btnLogin").addEventListener("click", login);
 
-function buscaId(docente, cb){
-	var http = require('http');
+function login(){
+	console.log("Etrando em login");
 	var utils = require('./../../utils.js');
+	var http = require('http');
+
+	var email = document.getElementById('emailLogin').value;
+	var senha = document.getElementById('senhaLogin').value;
 	
-	var objeto = {
-		campo: "linkLattes",
-		valor: docente.linkLattes
-	};
-	var texto = JSON.stringify(objeto);
+	if (email == "" || senha == ""){
+		console.log("email vazio");
+		var modalLoginVazio = document.getElementById('loginVazioModal');
 
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Docente";
-	opcoesHTTP.headers.Operacao = "BUSCAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta de buscaId recebida!");
-		if(res.statusCode == 200){
-			console.log("Achei id de docente!");
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-			res.on('end', function(){
-				var docente = JSON.parse(msg).resultado[0];
-				cb(docente.id);
-			});
-		}else{
-			console.log("Não achei id de docente...");
-			cb(null);
+		if (email == "" && senha == ""){
+			var faltaPreencher = "E-mail e Senha";
+		}else if (senha == ""){
+			var faltaPreencher = "Senha";
+		}else if (email == ""){
+			var faltaPreencher = "E-mail";
 		}
-	});
+		
 
-	req.write(texto);
-	req.end();
-}
+		if(modalLoginVazio == null){
+			$("#page-top").append('\
+				<!-- Logout Modal-->\
+				<div class="modal fade" id="loginVazioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+					<div class="modal-dialog" role="document">\
+						<div class="modal-content">\
+							<div class="modal-header">\
+							<h5 class="modal-title" id="exampleModalLabel">Campos Vazios</h5>\
+							<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+							<span aria-hidden="true">×</span>\
+							</button>\
+							</div>\
+							<div id="msgFaltaPreencher" class="modal-body"></div>\
+							<div class="modal-footer">\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+				');
+		}
+		
+		document.getElementById("msgFaltaPreencher").innerHTML = "Por favor preencha os campos de " + faltaPreencher +".";
 
-function formacaoToString(cod){
-	var vetor = ["Ensino Fundamental", "Ensino Médio", "Superior", "Especialização", "Mestrado", "Doutorado"];
-	cod = parseInt(cod);
-	return vetor[cod-1];
-}
+		$('#loginVazioModal').modal('show');
+		return;
+	}
 
-function buscaGrupo(sigla, cb){
-	var utils = require('./../../utils.js');
-	var http = require('http');
-	var objeto = {
-		campo: "sigla",
-		valor: sigla
+	senha = utils.stringHash(senha);
+
+	var parametrosBusca = {
+		campo: 'email',
+		valor: email
 	};
-	var texto = JSON.stringify(objeto);
+
+	var texto = JSON.stringify(parametrosBusca);
+	console.log(texto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Grupo";
+	opcoesHTTP.headers.Objeto = "Usuario";
 	opcoesHTTP.headers.Operacao = "BUSCAR";
 
 	var req = http.request(opcoesHTTP, (res) => {
 		console.log("Chegou a resposta!");
-		res.setEncoding('utf8');
-
 		if(res.statusCode == 200){
-			res.on('data', function(chunk){
-				var grupo = JSON.parse(chunk).resultado[0];
-				cb(grupo.id);
-			});
+			console.log("Teve resultado!");
+			res.setEncoding('utf8');
+		    res.on('data', function (chunk) {
+		    	if(chunk != null){
+				    if(JSON.parse(chunk).resultado[0].senha == senha){
+				    	console.log("Login com sucesso!");
+				    	localStorage.id = JSON.parse(chunk).resultado[0].id;
+				    	var modalSucessoLogin = document.getElementById('sucessoLoginModal');
+
+						if(modalSucessoLogin == null){
+							$("#page-top").append('\
+								<!-- Logout Modal-->\
+								<div class="modal fade" id="sucessoLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+									<div class="modal-dialog" role="document">\
+										<div class="modal-content">\
+											<div class="modal-header">\
+											<h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+											<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+											<span aria-hidden="true">×</span>\
+											</button>\
+											</div>\
+											<div class="modal-body">Login efetuado com sucesso</div>\
+											<div class="modal-footer">\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+								');
+						}
+		 
+						$('#sucessoLoginModal').modal('show');
+						if(JSON.parse(chunk).resultado[0].primeiroAcesso == 0)
+	    					setTimeout(function(){location.reload();} , 2000);
+		    				// $('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("Não é o primeiro acesso, recarregando pagina..."); location.reload();});
+		    			else
+	    					setTimeout(function(){console.log("É o primeiro acesso, redirecionando..."); window.location = "/primeiroAcessoUsuario";} , 2000);
+		    				// $('#sucessoLoginModal').on('hide.bs.modal', function(e){console.log("É o primeiro acesso, redirecionando..."); window.location = "/primeiroAcessoUsuario";});
+				    }else{
+				    	console.log("Falha no login");
+				    	var modalFalhaLogin = document.getElementById('falhaLoginModal');
+
+						if(modalFalhaLogin == null){
+							$("#page-top").append('\
+								<!-- Logout Modal-->\
+								<div class="modal fade" id="falhaLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+									<div class="modal-dialog" role="document">\
+										<div class="modal-content">\
+											<div class="modal-header">\
+											<h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+											<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+											<span aria-hidden="true">×</span>\
+											</button>\
+											</div>\
+											<div class="modal-body">Falha ao realizar o login <br><br> Tente Novamente.</div>\
+											<div class="modal-footer">\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+								');
+						}
+						$('#falhaLoginModal').modal('show');
+				    }
+				}
+		    });
+	    	//let jsonRes = JSON.parse(res);
+	    	// for(var k in jsonRes){
+	    	// 	console.log("Key: " + k + "\nValor: " + jsonRes[k]);
+	    	// }
+		}else if(res.statusCode == 747){
+			console.log("Não teve resultado!");
+	    	var modalFalhaResultado = document.getElementById('falhaResultadoModal');
+
+			if(modalFalhaResultado == null){
+				$("#page-top").append('\
+					<!-- Logout Modal-->\
+					<div class="modal fade" id="falhaResultadoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+						<div class="modal-dialog" role="document">\
+							<div class="modal-content">\
+								<div class="modal-header">\
+								<h5 class="modal-title" id="exampleModalLabel">Erro</h5>\
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
+								<span aria-hidden="true">×</span>\
+								</button>\
+								</div>\
+								<div class="modal-body">Falha ao realizar o login <br><br> Usuário ou senha não encontrados</div>\
+								<div class="modal-footer">\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+					');
+				}
+
+				$('#falhaResultadoModal').modal('show');
 		}else{
-			cb(0);
+			console.log("Erro fatal.");
 		}
-	});
+	}); 
 
 	req.write(texto);
 	req.end();
 }
-
-function cadastra(){
-	var modelo = require('./../../modelo/mDocente.js');
-	var utils = require('./../../utils.js');
-	var http = require('http');
-	var controller = require('./../../controller/cDocente.js');
-	var docente = modelo.novo();
-
-	docente.id = 0;
-	docente.nome = document.getElementById('nomeDocenteCadastrar').value;
-	docente.formacao = formacaoToString(document.getElementById('formacaoDocenteCadastrar').value);
-	console.log("A formação do rapaz é " + docente.formacao);
-	docente.anoConclusao = document.getElementById('anoConclusaoDocenteCadastrar').value;
-	docente.nomeCurso = document.getElementById('nomeCursoDocenteCadastrar').value;
-	docente.linkLattes = document.getElementById('linkLattesDocenteCadastrar').value;
-	docente.dataEntrada = document.getElementById('dataEntradaDocenteCadastrar').value;
-	var url = window.location.pathname;
-	buscaGrupo(url.split("/")[2], function(idGrupo){
-		if(idGrupo == 0){
-			console.log("Não foi possível achar o grupo do docente. Favor contatar suporte.");
-			alert("Não foi possível achar o grupo do docente. Favor contatar suporte.");
-			docente.codGrupo = 0;
-			return;
-		}else{
-			console.log("Grupo do docente é " + idGrupo);
-			docente.codGrupo = idGrupo;
-			var texto = JSON.stringify(docente);
-
-			var opcoesHTTP = utils.opcoesHTTP(texto);
-			opcoesHTTP.headers.Objeto = "Docente";
-			opcoesHTTP.headers.Operacao = "INSERIR";
-
-			var req = http.request(opcoesHTTP, (res) => {
-				console.log("Chegou a resposta!");
-			    res.setEncoding('utf8');
-			    //console.log(res);        
-			    if(res.statusCode == 200){
-			    	buscaId(docente, function(idDocente){
-			    		if(!idDocente){
-			    			console.log("Não achou id de docente");
-			    			document.getElementById("msgErroModal").innerHTML = "Não foi possível cadastrar foto...";
-			    			$("erroModal").modal("show");
-			    			return;
-			    		}
-				    	var form = document.getElementById('formCadastroDocente');
-				    	form.action = "http://localhost:3000/arquivo/fotoDocente?fileName=" + idDocente;
-				    	form.submit();
-				    	$('#sucessoModal').modal('show');			    		
-			    	});
-			    }
-			    else{
-			    	console.log("FALHA NO CADASTRO");
-					$('#erroModal').modal('show');
-				}
-
-			});
-			req.write(texto);
-			req.end();
-		}
-	});			
-}
-},{"./../../controller/cDocente.js":190,"./../../modelo/mDocente.js":194,"./../../utils.js":304,"http":176}],194:[function(require,module,exports){
-module.exports = {
-	especifica: function(objeto){
-		var final = {};
-		final.id = objeto.id;
-		final.nome = objeto.nome;
-		final.formacao = objeto.formacao;
-		final.anoConclusao = objeto.anoConclusao;
-		final.nomeCurso = objeto.nomeCurso;
-		final.linkLattes = objeto.linkLattes;
-		final.foto = objeto.foto;
-		final.dataEntrada = objeto.dataEntrada;
-		final.codGrupo = objeto.codGrupo;	
-		return final;
-	},
-
-	novo: function(){
-		var final = {};
-		final.id = 0;
-		final.formacao = 0;
-		final.nome = "";
-		final.anoConclusao = "";
-		final.nomeCurso = "";
-		final.linkLattes = "";
-		final.foto = "";
-		final.dataEntrada = "";
-		final.codGrupo = 0;
-		return final;
-	},
-
-	isString: function(atributo){
-		var strings = ["formacao", "nome", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
-		for (var i = strings.length - 1; i >= 0; i--) {
-			if(strings[i] == atributo)
-				return true;
-		}
-		return false;
-	}
-}
-},{}],195:[function(require,module,exports){
+},{"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
 		var final = {};
@@ -33442,7 +33310,7 @@ module.exports = {
 		return false;
 	}
 }
-},{}],196:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 /*! bignumber.js v4.1.0 https://github.com/MikeMcl/bignumber.js/LICENCE */
 
 ;(function (globalObj) {
@@ -36178,7 +36046,7 @@ module.exports = {
     }
 })(this);
 
-},{}],197:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -36289,11 +36157,11 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],198:[function(require,module,exports){
+},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],196:[function(require,module,exports){
 arguments[4][17][0].apply(exports,arguments)
-},{"dup":17}],199:[function(require,module,exports){
+},{"dup":17}],197:[function(require,module,exports){
 arguments[4][110][0].apply(exports,arguments)
-},{"dup":110}],200:[function(require,module,exports){
+},{"dup":110}],198:[function(require,module,exports){
 var Classes = Object.create(null);
 
 /**
@@ -36456,7 +36324,7 @@ function loadClass(className) {
   return Class;
 }
 
-},{"./lib/Connection":201,"./lib/ConnectionConfig":202,"./lib/Pool":203,"./lib/PoolCluster":204,"./lib/PoolConfig":205,"./lib/protocol/SqlString":216,"./lib/protocol/constants/types":223}],201:[function(require,module,exports){
+},{"./lib/Connection":199,"./lib/ConnectionConfig":200,"./lib/Pool":201,"./lib/PoolCluster":202,"./lib/PoolConfig":203,"./lib/protocol/SqlString":214,"./lib/protocol/constants/types":221}],199:[function(require,module,exports){
 (function (process){
 var Crypto           = require('crypto');
 var Events           = require('events');
@@ -36965,7 +36833,7 @@ function wrapToDomain(ee, fn) {
 }
 
 }).call(this,require('_process'))
-},{"./ConnectionConfig":202,"./protocol/Protocol":214,"./protocol/SqlString":216,"./protocol/sequences/Query":250,"_process":139,"crypto":63,"events":90,"net":1,"tls":1,"util":187}],202:[function(require,module,exports){
+},{"./ConnectionConfig":200,"./protocol/Protocol":212,"./protocol/SqlString":214,"./protocol/sequences/Query":248,"_process":139,"crypto":63,"events":90,"net":1,"tls":1,"util":187}],200:[function(require,module,exports){
 var urlParse        = require('url').parse;
 var ClientConstants = require('./protocol/constants/client');
 var Charsets        = require('./protocol/constants/charsets');
@@ -37168,7 +37036,7 @@ ConnectionConfig.parseUrl = function(url) {
   return options;
 };
 
-},{"./protocol/constants/charsets":218,"./protocol/constants/client":219,"./protocol/constants/ssl_profiles":222,"url":183}],203:[function(require,module,exports){
+},{"./protocol/constants/charsets":216,"./protocol/constants/client":217,"./protocol/constants/ssl_profiles":220,"url":183}],201:[function(require,module,exports){
 (function (process){
 var mysql          = require('../');
 var Connection     = require('./Connection');
@@ -37466,7 +37334,7 @@ function spliceConnection(array, connection) {
 }
 
 }).call(this,require('_process'))
-},{"../":200,"./Connection":201,"./PoolConnection":206,"_process":139,"events":90,"util":187}],204:[function(require,module,exports){
+},{"../":198,"./Connection":199,"./PoolConnection":204,"_process":139,"events":90,"util":187}],202:[function(require,module,exports){
 (function (process){
 var Pool          = require('./Pool');
 var PoolConfig    = require('./PoolConfig');
@@ -37758,7 +37626,7 @@ function _cb(err) {
 function _noop() {}
 
 }).call(this,require('_process'))
-},{"./Pool":203,"./PoolConfig":205,"./PoolNamespace":207,"./PoolSelector":208,"_process":139,"events":90,"util":187}],205:[function(require,module,exports){
+},{"./Pool":201,"./PoolConfig":203,"./PoolNamespace":205,"./PoolSelector":206,"_process":139,"events":90,"util":187}],203:[function(require,module,exports){
 
 var ConnectionConfig = require('./ConnectionConfig');
 
@@ -37792,7 +37660,7 @@ PoolConfig.prototype.newConnectionConfig = function newConnectionConfig() {
   return connectionConfig;
 };
 
-},{"./ConnectionConfig":202}],206:[function(require,module,exports){
+},{"./ConnectionConfig":200}],204:[function(require,module,exports){
 var inherits   = require('util').inherits;
 var Connection = require('./Connection');
 var Events     = require('events');
@@ -37859,7 +37727,7 @@ PoolConnection.prototype._removeFromPool = function _removeFromPool() {
   pool._purgeConnection(this);
 };
 
-},{"./Connection":201,"events":90,"util":187}],207:[function(require,module,exports){
+},{"./Connection":199,"events":90,"util":187}],205:[function(require,module,exports){
 (function (process){
 var Connection   = require('./Connection');
 var PoolSelector = require('./PoolSelector');
@@ -37999,7 +37867,7 @@ PoolNamespace.prototype._getClusterNode = function _getClusterNode() {
 };
 
 }).call(this,require('_process'))
-},{"./Connection":201,"./PoolSelector":208,"_process":139}],208:[function(require,module,exports){
+},{"./Connection":199,"./PoolSelector":206,"_process":139}],206:[function(require,module,exports){
 
 /**
  * PoolSelector
@@ -38032,7 +37900,7 @@ PoolSelector.ORDER = function PoolSelectorOrder() {
   };
 };
 
-},{}],209:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer;
 var Crypto = require('crypto');
 var Auth   = exports;
@@ -38186,7 +38054,7 @@ Auth.int32Read = function(buffer, offset){
        + (buffer[offset + 3]);
 };
 
-},{"crypto":63,"safe-buffer":299}],210:[function(require,module,exports){
+},{"crypto":63,"safe-buffer":297}],208:[function(require,module,exports){
 
 module.exports = BufferList;
 function BufferList() {
@@ -38213,14 +38081,14 @@ BufferList.prototype.push = function push(buf) {
   this.size += buf.length;
 };
 
-},{}],211:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 module.exports = PacketHeader;
 function PacketHeader(length, number) {
   this.length = length;
   this.number = number;
 }
 
-},{}],212:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 var BIT_16            = Math.pow(2, 16);
 var BIT_24            = Math.pow(2, 24);
 var BUFFER_ALLOC_SIZE = Math.pow(2, 8);
@@ -38433,7 +38301,7 @@ PacketWriter.prototype._allocate = function _allocate(bytes) {
   oldBuffer.copy(this._buffer);
 };
 
-},{"safe-buffer":299}],213:[function(require,module,exports){
+},{"safe-buffer":297}],211:[function(require,module,exports){
 (function (process){
 var MAX_PACKET_LENGTH = Math.pow(2, 24) - 1;
 var MUL_32BIT         = Math.pow(2, 32);
@@ -38913,7 +38781,7 @@ Parser.prototype._advanceToNextPacket = function() {
 };
 
 }).call(this,require('_process'))
-},{"./BufferList":210,"./PacketHeader":211,"_process":139,"bignumber.js":196,"safe-buffer":299}],214:[function(require,module,exports){
+},{"./BufferList":208,"./PacketHeader":209,"_process":139,"bignumber.js":194,"safe-buffer":297}],212:[function(require,module,exports){
 (function (process){
 var Parser       = require('./Parser');
 var Sequences    = require('./sequences');
@@ -39374,7 +39242,7 @@ Protocol.prototype._debugPacket = function(incoming, packet) {
 };
 
 }).call(this,require('_process'))
-},{"./PacketWriter":212,"./Parser":213,"./packets":246,"./sequences":254,"_process":139,"stream":175,"util":187}],215:[function(require,module,exports){
+},{"./PacketWriter":210,"./Parser":211,"./packets":244,"./sequences":252,"_process":139,"stream":175,"util":187}],213:[function(require,module,exports){
 module.exports = ResultSet;
 function ResultSet(resultSetHeaderPacket) {
   this.resultSetHeaderPacket = resultSetHeaderPacket;
@@ -39383,10 +39251,10 @@ function ResultSet(resultSetHeaderPacket) {
   this.rows                  = [];
 }
 
-},{}],216:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 module.exports = require('sqlstring');
 
-},{"sqlstring":300}],217:[function(require,module,exports){
+},{"sqlstring":298}],215:[function(require,module,exports){
 var Timers = require('timers');
 
 module.exports = Timer;
@@ -39421,7 +39289,7 @@ Timer.prototype._onTimeout = function _onTimeout() {
   return this._object._onTimeout();
 };
 
-},{"timers":181}],218:[function(require,module,exports){
+},{"timers":181}],216:[function(require,module,exports){
 exports.BIG5_CHINESE_CI              = 1;
 exports.LATIN2_CZECH_CS              = 2;
 exports.DEC8_SWEDISH_CI              = 3;
@@ -39685,7 +39553,7 @@ exports.UTF8     = exports.UTF8_GENERAL_CI;
 exports.UTF8MB4  = exports.UTF8MB4_GENERAL_CI;
 exports.UTF32    = exports.UTF32_GENERAL_CI;
 
-},{}],219:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 // Manually extracted from mysql-5.5.23/include/mysql_com.h
 exports.CLIENT_LONG_PASSWORD     = 1; /* new more secure passwords */
 exports.CLIENT_FOUND_ROWS        = 2; /* Found instead of affected rows */
@@ -39713,7 +39581,7 @@ exports.CLIENT_PLUGIN_AUTH = 524288; /* Client supports plugin authentication */
 exports.CLIENT_SSL_VERIFY_SERVER_CERT = 1073741824;
 exports.CLIENT_REMEMBER_OPTIONS       = 2147483648;
 
-},{}],220:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 /**
  * MySQL error constants
  *
@@ -42131,7 +41999,7 @@ exports[3201] = 'ER_KEYRING_MIGRATION_FAILURE';
 exports[3202] = 'ER_KEYRING_ACCESS_DENIED_ERROR';
 exports[3203] = 'ER_KEYRING_MIGRATION_STATUS';
 
-},{}],221:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 // Manually extracted from mysql-5.5.23/include/mysql_com.h
 
 /**
@@ -42172,7 +42040,7 @@ exports.SERVER_QUERY_WAS_SLOW          = 2048;
 */
 exports.SERVER_PS_OUT_PARAMS = 4096;
 
-},{}],222:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 // Certificates for Amazon RDS
 exports['Amazon RDS'] = {
   ca: [
@@ -42914,7 +42782,7 @@ exports['Amazon RDS'] = {
   ]
 };
 
-},{}],223:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 // Manually extracted from mysql-5.7.9/include/mysql.h.pp
 // some more info here: http://dev.mysql.com/doc/refman/5.5/en/c-api-prepared-statement-type-codes.html
 exports.DECIMAL     = 0x00; // aka DECIMAL (http://dev.mysql.com/doc/refman/5.0/en/precision-math-decimal-changes.html)
@@ -42949,7 +42817,7 @@ exports.VAR_STRING  = 0xfd; // aka VARCHAR, VARBINARY
 exports.STRING      = 0xfe; // aka CHAR, BINARY
 exports.GEOMETRY    = 0xff; // aka GEOMETRY
 
-},{}],224:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 module.exports = AuthSwitchRequestPacket;
 function AuthSwitchRequestPacket(options) {
   options = options || {};
@@ -42971,7 +42839,7 @@ AuthSwitchRequestPacket.prototype.write = function write(writer) {
   writer.writeBuffer(this.authMethodData);
 };
 
-},{}],225:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 module.exports = AuthSwitchResponsePacket;
 function AuthSwitchResponsePacket(options) {
   options = options || {};
@@ -42987,7 +42855,7 @@ AuthSwitchResponsePacket.prototype.write = function write(writer) {
   writer.writeBuffer(this.data);
 };
 
-},{}],226:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer;
 
 module.exports = ClientAuthenticationPacket;
@@ -43043,7 +42911,7 @@ ClientAuthenticationPacket.prototype.write = function(writer) {
   }
 };
 
-},{"safe-buffer":299}],227:[function(require,module,exports){
+},{"safe-buffer":297}],225:[function(require,module,exports){
 module.exports = ComChangeUserPacket;
 function ComChangeUserPacket(options) {
   options = options || {};
@@ -43071,7 +42939,7 @@ ComChangeUserPacket.prototype.write = function(writer) {
   writer.writeUnsignedNumber(2, this.charsetNumber);
 };
 
-},{}],228:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 module.exports = ComPingPacket;
 function ComPingPacket() {
   this.command = 0x0e;
@@ -43085,7 +42953,7 @@ ComPingPacket.prototype.parse = function(parser) {
   this.command = parser.parseUnsignedNumber(1);
 };
 
-},{}],229:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 module.exports = ComQueryPacket;
 function ComQueryPacket(sql) {
   this.command = 0x03;
@@ -43102,7 +42970,7 @@ ComQueryPacket.prototype.parse = function(parser) {
   this.sql     = parser.parsePacketTerminatedString();
 };
 
-},{}],230:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 module.exports = ComQuitPacket;
 function ComQuitPacket() {
   this.command = 0x01;
@@ -43116,7 +42984,7 @@ ComQuitPacket.prototype.write = function write(writer) {
   writer.writeUnsignedNumber(1, this.command);
 };
 
-},{}],231:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 module.exports = ComStatisticsPacket;
 function ComStatisticsPacket() {
   this.command = 0x09;
@@ -43130,7 +42998,7 @@ ComStatisticsPacket.prototype.parse = function(parser) {
   this.command = parser.parseUnsignedNumber(1);
 };
 
-},{}],232:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 module.exports = EmptyPacket;
 function EmptyPacket() {
 }
@@ -43138,7 +43006,7 @@ function EmptyPacket() {
 EmptyPacket.prototype.write = function write() {
 };
 
-},{}],233:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 module.exports = EofPacket;
 function EofPacket(options) {
   options = options || {};
@@ -43165,7 +43033,7 @@ EofPacket.prototype.write = function(writer) {
   }
 };
 
-},{}],234:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 module.exports = ErrorPacket;
 function ErrorPacket(options) {
   options = options || {};
@@ -43202,7 +43070,7 @@ ErrorPacket.prototype.write = function(writer) {
   writer.writeString(this.message);
 };
 
-},{}],235:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 var Types = require('../constants/types');
 
 module.exports = Field;
@@ -43238,7 +43106,7 @@ function typeToString(t) {
   return undefined;
 }
 
-},{"../constants/types":223}],236:[function(require,module,exports){
+},{"../constants/types":221}],234:[function(require,module,exports){
 module.exports = FieldPacket;
 function FieldPacket(options) {
   options = options || {};
@@ -43333,7 +43201,7 @@ FieldPacket.prototype.write = function(writer) {
   }
 };
 
-},{}],237:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer;
 var Client = require('../constants/client');
 
@@ -43438,7 +43306,7 @@ HandshakeInitializationPacket.prototype.scrambleBuff = function() {
   return buffer;
 };
 
-},{"../constants/client":219,"safe-buffer":299}],238:[function(require,module,exports){
+},{"../constants/client":217,"safe-buffer":297}],236:[function(require,module,exports){
 module.exports = LocalDataFilePacket;
 
 /**
@@ -43455,7 +43323,7 @@ LocalDataFilePacket.prototype.write = function(writer) {
   writer.writeBuffer(this.data);
 };
 
-},{}],239:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 
 // Language-neutral expression to match ER_UPDATE_INFO
 var ER_UPDATE_INFO_REGEXP = /^[^:0-9]+: [0-9]+[^:0-9]+: ([0-9]+)[^:0-9]+: [0-9]+[^:0-9]*$/;
@@ -43501,7 +43369,7 @@ OkPacket.prototype.write = function(writer) {
   writer.writeString(this.message);
 };
 
-},{}],240:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 module.exports = OldPasswordPacket;
 function OldPasswordPacket(options) {
   options = options || {};
@@ -43518,7 +43386,7 @@ OldPasswordPacket.prototype.write = function(writer) {
   writer.writeFiller(1);
 };
 
-},{}],241:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 module.exports = ResultSetHeaderPacket;
 function ResultSetHeaderPacket(options) {
   options = options || {};
@@ -43545,7 +43413,7 @@ ResultSetHeaderPacket.prototype.write = function(writer) {
   }
 };
 
-},{}],242:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 var Types                        = require('../constants/types');
 var Charsets                     = require('../constants/charsets');
 var Field                        = require('./Field');
@@ -43680,7 +43548,7 @@ function typeMatch(type, list) {
   }
 }
 
-},{"../constants/charsets":218,"../constants/types":223,"./Field":235}],243:[function(require,module,exports){
+},{"../constants/charsets":216,"../constants/types":221,"./Field":233}],241:[function(require,module,exports){
 // http://dev.mysql.com/doc/internals/en/ssl.html
 // http://dev.mysql.com/doc/internals/en/connection-phase-packets.html#packet-Protocol::SSLRequest
 
@@ -43709,7 +43577,7 @@ SSLRequestPacket.prototype.write = function(writer) {
   writer.writeFiller(23);
 };
 
-},{"../constants/client":219}],244:[function(require,module,exports){
+},{"../constants/client":217}],242:[function(require,module,exports){
 module.exports = StatisticsPacket;
 function StatisticsPacket() {
   this.message      = undefined;
@@ -43731,7 +43599,7 @@ StatisticsPacket.prototype.write = function(writer) {
   writer.writeString(this.message);
 };
 
-},{}],245:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 module.exports = UseOldPasswordPacket;
 function UseOldPasswordPacket(options) {
   options = options || {};
@@ -43747,7 +43615,7 @@ UseOldPasswordPacket.prototype.write = function(writer) {
   writer.writeUnsignedNumber(1, this.firstByte);
 };
 
-},{}],246:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 exports.AuthSwitchRequestPacket = require('./AuthSwitchRequestPacket');
 exports.AuthSwitchResponsePacket = require('./AuthSwitchResponsePacket');
 exports.ClientAuthenticationPacket = require('./ClientAuthenticationPacket');
@@ -43771,7 +43639,7 @@ exports.SSLRequestPacket = require('./SSLRequestPacket');
 exports.StatisticsPacket = require('./StatisticsPacket');
 exports.UseOldPasswordPacket = require('./UseOldPasswordPacket');
 
-},{"./AuthSwitchRequestPacket":224,"./AuthSwitchResponsePacket":225,"./ClientAuthenticationPacket":226,"./ComChangeUserPacket":227,"./ComPingPacket":228,"./ComQueryPacket":229,"./ComQuitPacket":230,"./ComStatisticsPacket":231,"./EmptyPacket":232,"./EofPacket":233,"./ErrorPacket":234,"./Field":235,"./FieldPacket":236,"./HandshakeInitializationPacket":237,"./LocalDataFilePacket":238,"./OkPacket":239,"./OldPasswordPacket":240,"./ResultSetHeaderPacket":241,"./RowDataPacket":242,"./SSLRequestPacket":243,"./StatisticsPacket":244,"./UseOldPasswordPacket":245}],247:[function(require,module,exports){
+},{"./AuthSwitchRequestPacket":222,"./AuthSwitchResponsePacket":223,"./ClientAuthenticationPacket":224,"./ComChangeUserPacket":225,"./ComPingPacket":226,"./ComQueryPacket":227,"./ComQuitPacket":228,"./ComStatisticsPacket":229,"./EmptyPacket":230,"./EofPacket":231,"./ErrorPacket":232,"./Field":233,"./FieldPacket":234,"./HandshakeInitializationPacket":235,"./LocalDataFilePacket":236,"./OkPacket":237,"./OldPasswordPacket":238,"./ResultSetHeaderPacket":239,"./RowDataPacket":240,"./SSLRequestPacket":241,"./StatisticsPacket":242,"./UseOldPasswordPacket":243}],245:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -43814,7 +43682,7 @@ ChangeUser.prototype['ErrorPacket'] = function(packet) {
   this.end(err);
 };
 
-},{"../Auth":209,"../packets":246,"./Sequence":252,"util":187}],248:[function(require,module,exports){
+},{"../Auth":207,"../packets":244,"./Sequence":250,"util":187}],246:[function(require,module,exports){
 var Sequence        = require('./Sequence');
 var Util            = require('util');
 var Packets         = require('../packets');
@@ -43943,7 +43811,7 @@ Handshake.prototype['ErrorPacket'] = function(packet) {
   this.end(err);
 };
 
-},{"../Auth":209,"../constants/client":219,"../packets":246,"./Sequence":252,"util":187}],249:[function(require,module,exports){
+},{"../Auth":207,"../constants/client":217,"../packets":244,"./Sequence":250,"util":187}],247:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -43964,7 +43832,7 @@ Ping.prototype.start = function() {
   this.emit('packet', new Packets.ComPingPacket());
 };
 
-},{"../packets":246,"./Sequence":252,"util":187}],250:[function(require,module,exports){
+},{"../packets":244,"./Sequence":250,"util":187}],248:[function(require,module,exports){
 (function (process){
 var Sequence     = require('./Sequence');
 var Util         = require('util');
@@ -44186,7 +44054,7 @@ Query.prototype.stream = function(options) {
 };
 
 }).call(this,require('_process'))
-},{"../ResultSet":215,"../constants/server_status":221,"../packets":246,"./Sequence":252,"_process":139,"fs":1,"readable-stream":298,"util":187}],251:[function(require,module,exports){
+},{"../ResultSet":213,"../constants/server_status":219,"../packets":244,"./Sequence":250,"_process":139,"fs":1,"readable-stream":296,"util":187}],249:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -44228,7 +44096,7 @@ Quit.prototype.start = function() {
   this.emit('packet', new Packets.ComQuitPacket());
 };
 
-},{"../packets":246,"./Sequence":252,"util":187}],252:[function(require,module,exports){
+},{"../packets":244,"./Sequence":250,"util":187}],250:[function(require,module,exports){
 var Util           = require('util');
 var EventEmitter   = require('events').EventEmitter;
 var Packets        = require('../packets');
@@ -44355,7 +44223,7 @@ Sequence.prototype._onTimeout = function _onTimeout() {
   this.emit('timeout');
 };
 
-},{"../Timer":217,"../constants/errors":220,"../packets":246,"events":90,"util":187}],253:[function(require,module,exports){
+},{"../Timer":215,"../constants/errors":218,"../packets":244,"events":90,"util":187}],251:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -44387,7 +44255,7 @@ Statistics.prototype.determinePacket = function determinePacket(firstByte) {
   return undefined;
 };
 
-},{"../packets":246,"./Sequence":252,"util":187}],254:[function(require,module,exports){
+},{"../packets":244,"./Sequence":250,"util":187}],252:[function(require,module,exports){
 exports.ChangeUser = require('./ChangeUser');
 exports.Handshake = require('./Handshake');
 exports.Ping = require('./Ping');
@@ -44396,7 +44264,7 @@ exports.Quit = require('./Quit');
 exports.Sequence = require('./Sequence');
 exports.Statistics = require('./Statistics');
 
-},{"./ChangeUser":247,"./Handshake":248,"./Ping":249,"./Query":250,"./Quit":251,"./Sequence":252,"./Statistics":253}],255:[function(require,module,exports){
+},{"./ChangeUser":245,"./Handshake":246,"./Ping":247,"./Query":248,"./Quit":249,"./Sequence":250,"./Statistics":251}],253:[function(require,module,exports){
 'use strict';
 
 /**
@@ -44690,7 +44558,7 @@ function addressparser(str) {
 // expose to the world
 module.exports = addressparser;
 
-},{}],256:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -44836,7 +44704,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"buffer":54,"stream":175,"timers":181}],257:[function(require,module,exports){
+},{"buffer":54,"stream":175,"timers":181}],255:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -45091,7 +44959,7 @@ class DKIM {
 module.exports = DKIM;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"./message-parser":258,"./relaxed-body":259,"./sign":260,"buffer":54,"crypto":63,"fs":1,"path":132,"stream":175,"timers":181}],258:[function(require,module,exports){
+},{"./message-parser":256,"./relaxed-body":257,"./sign":258,"buffer":54,"crypto":63,"fs":1,"path":132,"stream":175,"timers":181}],256:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -45251,7 +45119,7 @@ class MessageParser extends Transform {
 module.exports = MessageParser;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"buffer":54,"stream":175,"timers":181}],259:[function(require,module,exports){
+},{"buffer":54,"stream":175,"timers":181}],257:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -45409,7 +45277,7 @@ class RelaxedBody extends Transform {
 module.exports = RelaxedBody;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"crypto":63,"stream":175}],260:[function(require,module,exports){
+},{"buffer":54,"crypto":63,"stream":175}],258:[function(require,module,exports){
 'use strict';
 
 const punycode = require('punycode');
@@ -45528,7 +45396,7 @@ function relaxedHeaderLine(line) {
         .trim();
 }
 
-},{"../mime-funcs":267,"crypto":63,"punycode":146}],261:[function(require,module,exports){
+},{"../mime-funcs":265,"crypto":63,"punycode":146}],259:[function(require,module,exports){
 'use strict';
 
 // module to handle cookies
@@ -45814,7 +45682,7 @@ class Cookies {
 
 module.exports = Cookies;
 
-},{"url":183}],262:[function(require,module,exports){
+},{"url":183}],260:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -46095,7 +45963,7 @@ function fetch(url, options) {
 }
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":288,"./cookies":261,"buffer":54,"http":176,"https":106,"stream":175,"timers":181,"url":183,"zlib":52}],263:[function(require,module,exports){
+},{"../../package.json":286,"./cookies":259,"buffer":54,"http":176,"https":106,"stream":175,"timers":181,"url":183,"zlib":52}],261:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -46181,7 +46049,7 @@ class JSONTransport {
 module.exports = JSONTransport;
 
 }).call(this,require("timers").setImmediate)
-},{"../../package.json":288,"../shared":277,"timers":181}],264:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"timers":181}],262:[function(require,module,exports){
 (function (Buffer){
 /* eslint no-undefined: 0 */
 
@@ -46730,7 +46598,7 @@ class MailComposer {
 module.exports = MailComposer;
 
 }).call(this,require("buffer").Buffer)
-},{"../mime-funcs":267,"../mime-node":269,"buffer":54}],265:[function(require,module,exports){
+},{"../mime-funcs":265,"../mime-node":267,"buffer":54}],263:[function(require,module,exports){
 'use strict';
 
 const EventEmitter = require('events');
@@ -47155,7 +47023,7 @@ class Mail extends EventEmitter {
 
 module.exports = Mail;
 
-},{"../../package.json":288,"../dkim":257,"../mail-composer":264,"../mime-funcs/mime-types":268,"../shared":277,"../smtp-connection/http-proxy-client":279,"./mail-message":266,"crypto":63,"dns":1,"events":90,"net":1,"url":183,"util":187}],266:[function(require,module,exports){
+},{"../../package.json":286,"../dkim":255,"../mail-composer":262,"../mime-funcs/mime-types":266,"../shared":275,"../smtp-connection/http-proxy-client":277,"./mail-message":264,"crypto":63,"dns":1,"events":90,"net":1,"url":183,"util":187}],264:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -47454,7 +47322,7 @@ class MailMessage {
 module.exports = MailMessage;
 
 }).call(this,{"isBuffer":require("../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")},require("timers").setImmediate)
-},{"../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109,"../mime-funcs":267,"../mime-node":269,"../shared":277,"timers":181}],267:[function(require,module,exports){
+},{"../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109,"../mime-funcs":265,"../mime-node":267,"../shared":275,"timers":181}],265:[function(require,module,exports){
 (function (Buffer){
 /* eslint no-control-regex:0 */
 
@@ -48086,7 +47954,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"../base64":256,"../qp":272,"./mime-types":268,"buffer":54}],268:[function(require,module,exports){
+},{"../base64":254,"../qp":270,"./mime-types":266,"buffer":54}],266:[function(require,module,exports){
 /* eslint quote-props: 0 */
 
 'use strict';
@@ -50197,7 +50065,7 @@ module.exports = {
     }
 };
 
-},{"path":132}],269:[function(require,module,exports){
+},{"path":132}],267:[function(require,module,exports){
 (function (Buffer,setImmediate){
 /* eslint no-undefined: 0, prefer-spread: 0 */
 
@@ -51443,7 +51311,7 @@ class MimeNode {
 module.exports = MimeNode;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../addressparser":255,"../base64":256,"../fetch":262,"../mime-funcs":267,"../qp":272,"./last-newline":270,"buffer":54,"crypto":63,"fs":1,"os":115,"punycode":146,"stream":175,"timers":181}],270:[function(require,module,exports){
+},{"../addressparser":253,"../base64":254,"../fetch":260,"../mime-funcs":265,"../qp":270,"./last-newline":268,"buffer":54,"crypto":63,"fs":1,"os":115,"punycode":146,"stream":175,"timers":181}],268:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -51480,7 +51348,7 @@ class LastNewline extends Transform {
 module.exports = LastNewline;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],271:[function(require,module,exports){
+},{"buffer":54,"stream":175}],269:[function(require,module,exports){
 (function (process,Buffer,setImmediate){
 'use strict';
 
@@ -51632,7 +51500,7 @@ module.exports.getTestMessageUrl = function(info) {
 };
 
 }).call(this,require('_process'),require("buffer").Buffer,require("timers").setImmediate)
-},{"../package.json":288,"./fetch":262,"./json-transport":263,"./mailer":265,"./sendmail-transport":273,"./ses-transport":276,"./shared":277,"./smtp-pool":281,"./smtp-transport":283,"./stream-transport":284,"_process":139,"buffer":54,"timers":181}],272:[function(require,module,exports){
+},{"../package.json":286,"./fetch":260,"./json-transport":261,"./mailer":263,"./sendmail-transport":271,"./ses-transport":274,"./shared":275,"./smtp-pool":279,"./smtp-transport":281,"./stream-transport":282,"_process":139,"buffer":54,"timers":181}],270:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -51855,7 +51723,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],273:[function(require,module,exports){
+},{"buffer":54,"stream":175}],271:[function(require,module,exports){
 'use strict';
 
 const spawn = require('child_process').spawn;
@@ -52065,7 +51933,7 @@ class SendmailTransport {
 
 module.exports = SendmailTransport;
 
-},{"../../package.json":288,"../shared":277,"./le-unix":274,"./le-windows":275,"child_process":1}],274:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"./le-unix":272,"./le-windows":273,"child_process":1}],272:[function(require,module,exports){
 'use strict';
 
 const stream = require('stream');
@@ -52110,7 +51978,7 @@ class LeWindows extends Transform {
 
 module.exports = LeWindows;
 
-},{"stream":175}],275:[function(require,module,exports){
+},{"stream":175}],273:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -52166,7 +52034,7 @@ class LeWindows extends Transform {
 module.exports = LeWindows;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],276:[function(require,module,exports){
+},{"buffer":54,"stream":175}],274:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -52482,7 +52350,7 @@ class SESTransport extends EventEmitter {
 module.exports = SESTransport;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":288,"../sendmail-transport/le-windows":275,"../shared":277,"buffer":54,"events":90,"timers":181}],277:[function(require,module,exports){
+},{"../../package.json":286,"../sendmail-transport/le-windows":273,"../shared":275,"buffer":54,"events":90,"timers":181}],275:[function(require,module,exports){
 (function (Buffer,setImmediate){
 /* eslint no-console: 0 */
 
@@ -52873,7 +52741,7 @@ function createDefaultLogger(levels) {
 }
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../fetch":262,"buffer":54,"fs":1,"timers":181,"url":183,"util":187}],278:[function(require,module,exports){
+},{"../fetch":260,"buffer":54,"fs":1,"timers":181,"url":183,"util":187}],276:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -52985,7 +52853,7 @@ class DataStream extends Transform {
 module.exports = DataStream;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],279:[function(require,module,exports){
+},{"buffer":54,"stream":175}],277:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -53120,7 +52988,7 @@ function httpProxyClient(proxyUrl, destinationPort, destinationHost, callback) {
 module.exports = httpProxyClient;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"net":1,"tls":1,"url":183}],280:[function(require,module,exports){
+},{"buffer":54,"net":1,"tls":1,"url":183}],278:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -54693,7 +54561,7 @@ class SMTPConnection extends EventEmitter {
 module.exports = SMTPConnection;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":288,"../shared":277,"./data-stream":278,"buffer":54,"crypto":63,"events":90,"net":1,"os":115,"stream":175,"timers":181,"tls":1}],281:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"./data-stream":276,"buffer":54,"crypto":63,"events":90,"net":1,"os":115,"stream":175,"timers":181,"tls":1}],279:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -55297,7 +55165,7 @@ class SMTPPool extends EventEmitter {
 module.exports = SMTPPool;
 
 }).call(this,require("timers").setImmediate)
-},{"../../package.json":288,"../shared":277,"../smtp-connection":280,"../well-known":285,"./pool-resource":282,"events":90,"timers":181}],282:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"../smtp-connection":278,"../well-known":283,"./pool-resource":280,"events":90,"timers":181}],280:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -55553,7 +55421,7 @@ class PoolResource extends EventEmitter {
 module.exports = PoolResource;
 
 }).call(this,require("timers").setImmediate)
-},{"../shared":277,"../smtp-connection":280,"../xoauth2":287,"events":90,"timers":181}],283:[function(require,module,exports){
+},{"../shared":275,"../smtp-connection":278,"../xoauth2":285,"events":90,"timers":181}],281:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -55964,7 +55832,7 @@ class SMTPTransport extends EventEmitter {
 module.exports = SMTPTransport;
 
 }).call(this,require("timers").setImmediate)
-},{"../../package.json":288,"../shared":277,"../smtp-connection":280,"../well-known":285,"../xoauth2":287,"events":90,"timers":181}],284:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"../smtp-connection":278,"../well-known":283,"../xoauth2":285,"events":90,"timers":181}],282:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -56110,7 +55978,7 @@ class StreamTransport {
 module.exports = StreamTransport;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":288,"../sendmail-transport/le-unix":274,"../sendmail-transport/le-windows":275,"../shared":277,"buffer":54,"timers":181}],285:[function(require,module,exports){
+},{"../../package.json":286,"../sendmail-transport/le-unix":272,"../sendmail-transport/le-windows":273,"../shared":275,"buffer":54,"timers":181}],283:[function(require,module,exports){
 'use strict';
 
 const services = require('./services.json');
@@ -56159,7 +56027,7 @@ module.exports = function(key) {
     return normalized[key] || false;
 };
 
-},{"./services.json":286}],286:[function(require,module,exports){
+},{"./services.json":284}],284:[function(require,module,exports){
 module.exports={
     "1und1": {
         "host": "smtp.1und1.de",
@@ -56426,7 +56294,7 @@ module.exports={
     }
 }
 
-},{}],287:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -56742,7 +56610,7 @@ class XOAuth2 extends Stream {
 module.exports = XOAuth2;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../fetch":262,"../shared":277,"buffer":54,"crypto":63,"stream":175,"timers":181}],288:[function(require,module,exports){
+},{"../fetch":260,"../shared":275,"buffer":54,"crypto":63,"stream":175,"timers":181}],286:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -56846,32 +56714,32 @@ module.exports={
   "version": "4.6.8"
 }
 
-},{}],289:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 arguments[4][138][0].apply(exports,arguments)
-},{"_process":139,"dup":138}],290:[function(require,module,exports){
+},{"_process":139,"dup":138}],288:[function(require,module,exports){
 arguments[4][153][0].apply(exports,arguments)
-},{"./_stream_readable":292,"./_stream_writable":294,"core-util-is":197,"dup":153,"inherits":198,"process-nextick-args":289}],291:[function(require,module,exports){
+},{"./_stream_readable":290,"./_stream_writable":292,"core-util-is":195,"dup":153,"inherits":196,"process-nextick-args":287}],289:[function(require,module,exports){
 arguments[4][154][0].apply(exports,arguments)
-},{"./_stream_transform":293,"core-util-is":197,"dup":154,"inherits":198}],292:[function(require,module,exports){
+},{"./_stream_transform":291,"core-util-is":195,"dup":154,"inherits":196}],290:[function(require,module,exports){
 arguments[4][155][0].apply(exports,arguments)
-},{"./_stream_duplex":290,"./internal/streams/BufferList":295,"./internal/streams/destroy":296,"./internal/streams/stream":297,"_process":139,"core-util-is":197,"dup":155,"events":90,"inherits":198,"isarray":199,"process-nextick-args":289,"safe-buffer":299,"string_decoder/":302,"util":23}],293:[function(require,module,exports){
+},{"./_stream_duplex":288,"./internal/streams/BufferList":293,"./internal/streams/destroy":294,"./internal/streams/stream":295,"_process":139,"core-util-is":195,"dup":155,"events":90,"inherits":196,"isarray":197,"process-nextick-args":287,"safe-buffer":297,"string_decoder/":300,"util":23}],291:[function(require,module,exports){
 arguments[4][156][0].apply(exports,arguments)
-},{"./_stream_duplex":290,"core-util-is":197,"dup":156,"inherits":198}],294:[function(require,module,exports){
+},{"./_stream_duplex":288,"core-util-is":195,"dup":156,"inherits":196}],292:[function(require,module,exports){
 arguments[4][157][0].apply(exports,arguments)
-},{"./_stream_duplex":290,"./internal/streams/destroy":296,"./internal/streams/stream":297,"_process":139,"core-util-is":197,"dup":157,"inherits":198,"process-nextick-args":289,"safe-buffer":299,"timers":181,"util-deprecate":303}],295:[function(require,module,exports){
+},{"./_stream_duplex":288,"./internal/streams/destroy":294,"./internal/streams/stream":295,"_process":139,"core-util-is":195,"dup":157,"inherits":196,"process-nextick-args":287,"safe-buffer":297,"timers":181,"util-deprecate":301}],293:[function(require,module,exports){
 arguments[4][158][0].apply(exports,arguments)
-},{"dup":158,"safe-buffer":299,"util":23}],296:[function(require,module,exports){
+},{"dup":158,"safe-buffer":297,"util":23}],294:[function(require,module,exports){
 arguments[4][159][0].apply(exports,arguments)
-},{"dup":159,"process-nextick-args":289}],297:[function(require,module,exports){
+},{"dup":159,"process-nextick-args":287}],295:[function(require,module,exports){
 arguments[4][160][0].apply(exports,arguments)
-},{"dup":160,"events":90}],298:[function(require,module,exports){
+},{"dup":160,"events":90}],296:[function(require,module,exports){
 arguments[4][162][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":290,"./lib/_stream_passthrough.js":291,"./lib/_stream_readable.js":292,"./lib/_stream_transform.js":293,"./lib/_stream_writable.js":294,"dup":162}],299:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":288,"./lib/_stream_passthrough.js":289,"./lib/_stream_readable.js":290,"./lib/_stream_transform.js":291,"./lib/_stream_writable.js":292,"dup":162}],297:[function(require,module,exports){
 arguments[4][166][0].apply(exports,arguments)
-},{"buffer":54,"dup":166}],300:[function(require,module,exports){
+},{"buffer":54,"dup":166}],298:[function(require,module,exports){
 module.exports = require('./lib/SqlString');
 
-},{"./lib/SqlString":301}],301:[function(require,module,exports){
+},{"./lib/SqlString":299}],299:[function(require,module,exports){
 (function (Buffer){
 var SqlString  = exports;
 
@@ -57112,11 +56980,11 @@ function convertTimezone(tz) {
 }
 
 }).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],302:[function(require,module,exports){
+},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],300:[function(require,module,exports){
 arguments[4][180][0].apply(exports,arguments)
-},{"dup":180,"safe-buffer":299}],303:[function(require,module,exports){
+},{"dup":180,"safe-buffer":297}],301:[function(require,module,exports){
 arguments[4][185][0].apply(exports,arguments)
-},{"dup":185}],304:[function(require,module,exports){
+},{"dup":185}],302:[function(require,module,exports){
 (function (Buffer){
 module.exports = {
 	geraSenhaAleatoria: function(){
@@ -57325,7 +57193,7 @@ module.exports = {
 	}	
 };
 }).call(this,require("buffer").Buffer)
-},{"./controller/cLinhaPesquisa.js":191,"./dao.js":192,"buffer":54,"crypto":63,"fs":1,"mysql":200}],305:[function(require,module,exports){
+},{"./controller/cLinhaPesquisa.js":190,"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)
@@ -57380,4 +57248,4 @@ module.exports = {
 	}
 
 }
-},{}]},{},[193]);
+},{}]},{},[192]);

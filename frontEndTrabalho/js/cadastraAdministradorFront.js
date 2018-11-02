@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33229,6 +33229,26 @@ module.exports = {
 },{"mysql":200,"nodemailer":271}],193:[function(require,module,exports){
 document.getElementById("btnCadastro").addEventListener("click", cadastra);
 
+function verificaPrimeiroAcesso(cb){
+	var http = require('http');
+	var utils = require('./../../utils.js');
+
+	var opcoesHTTP = utils.opcoesHTTP("");
+	opcoesHTTP.headers.Objeto = "Usuario";
+	opcoesHTTP.headers.Operacao = "LISTAR";
+
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Resposta em verificaPrimeiroAcesso recebida!");
+		if(res.statusCode == 400){
+			$("#erroModal").modal("show");
+		}else if(res.statusCode != 747){
+			console.log("Não é o primeiro acesso ao sistema");
+			location.href = "/index";
+		}
+	});
+	req.end();
+}
+
 function cadastra(){
 	console.log("Entrou na função");
 	var modelo = require('./../../modelo/mUsuario.js');
@@ -33243,7 +33263,6 @@ function cadastra(){
 	usuario.senha = document.getElementById("senha").value;
 	usuario.email = document.getElementById("email").value;
 	usuario.curriculoLattes = document.getElementById("linkLattes").value;
-	usuario.foto = document.getElementById("foto").value;
 	usuario.primeiroAcesso = 0;
 	usuario.codTipoUsuario = 2;
 
@@ -33276,8 +33295,9 @@ function cadastra(){
 	    if(res.statusCode == 200){
 	    	localStorage.id = 1;
 	    	// alert("Cadastro realizado com sucesso!");
-	    	$('#sucessoModal').modal('show');
-	    	setTimeout(function(){location.href="index.html"} , 2000);   
+	    	var form = document.getElementById("formCadastroUsuario");
+	    	form.action = "http://localhost:3000/arquivo/fotoUsuario?fileName=" + 1;
+	    	form.submit();	
 	    }
 	    else{
 	    	console.log("FALHA NO CADASTRO");
@@ -33287,6 +33307,7 @@ function cadastra(){
     req.write(texto);
     req.end();
 }
+verificaPrimeiroAcesso();
 },{"./../../controller/cUsuario.js":191,"./../../modelo/mUsuario.js":195,"./../../utils.js":304,"http":176}],194:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){

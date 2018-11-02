@@ -62,9 +62,10 @@
 
 [-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos <TODOS>
 [-] Fazer script de cadastro opcional de primeiro acesso do usu�rio <BE>
-[-] Verificar se no perfil de docente sera usado a mesma forma de cadastro de t�cnicos 
+
 [-] O sistema não está redirecionando para a página do cadastro de administrador quando entra e nao tem nenhum usuário cadastrado
-[-] alterar grupo n~so funciona
+[-] alterar grupo não funciona
+[-] Não consigo excluir um lider quando tem um grupo vinculado<BE>
 
 
 
