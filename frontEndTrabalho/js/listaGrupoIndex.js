@@ -3,8 +3,8 @@ function criaElementos(listaGrupo){
 	for(var i=0;i<listaGrupo.length;i++){
 		$("#containerGrupoIndex").append("\
 		<div class='alert alert-primary' role='alert'>\
-              <h1 id='nomeGrupoIdex"+ i +"' > </h1>\
-              <h3 id='siglaGrupoIndex"+ i +"'></h3>\
+              <h1 id='nomeGrupoIdex"+ i +"' class='nomeGrupo' > </h1>\
+              <h3 id='siglaGrupoIndex"+ i +"' class='siglaGrupo'></h3>\
               <hr>\
               <p id='descricaoGrupoIndex"+ i +"'></p>\
               Saiba mais: <a href='' id='linkGrupoIndex"+ i +"' class='alert-link'>Clique Aqui</a>\
