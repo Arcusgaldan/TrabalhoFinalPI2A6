@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -57051,10 +57051,36 @@ module.exports = {
 			default:
 				return null;
 		}
-	}	
+	},
+
+	enviaRequisicao: function(objeto, operacao, dados, cb){
+		var http = require('http');
+		var opcoesHTTP;
+		var texto;
+		
+		if(dados == ""){			
+			opcoesHTTP = this.opcoesHTTP("");
+			texto = "";
+		}else{
+			texto = JSON.stringify(dados);
+			opcoesHTTP = this.opcoesHTTP(texto);
+		}
+
+		opcoesHTTP.headers.Objeto = objeto;
+		opcoesHTTP.headers.Operacao = operacao;
+
+		var req = http.request(opcoesHTTP, (res) => {
+			cb(res);
+		});
+
+		if(texto != ""){
+			req.write(texto);
+		}
+		req.end();
+	}
 };
 }).call(this,require("buffer").Buffer)
-},{"./controller/cLinhaPesquisa.js":190,"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"mysql":198}],303:[function(require,module,exports){
+},{"./controller/cLinhaPesquisa.js":190,"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)
