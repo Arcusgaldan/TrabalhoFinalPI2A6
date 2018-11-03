@@ -108,3 +108,5 @@
 [-] Tornar linkLattes como unique 
 
 -- TODOS
+
+[-] Perguntar se uma publicação precisa ter um aluno vinculado ou se puxa o último aluno da pesquisa (ou aluno vigente no período da publicação)
