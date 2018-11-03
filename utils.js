@@ -214,7 +214,7 @@ module.exports = {
 			texto = "";
 		}else{
 			texto = JSON.stringify(dados);
-			opcoesHTTP = texto;
+			opcoesHTTP = this.opcoesHTTP(texto);
 		}
 
 		opcoesHTTP.headers.Objeto = objeto;
