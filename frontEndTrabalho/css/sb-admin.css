@@ -393,3 +393,8 @@ body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
 }
+
+.form-label-group textarea{
+  padding: 2.375rem .75rem 0;
+}
+

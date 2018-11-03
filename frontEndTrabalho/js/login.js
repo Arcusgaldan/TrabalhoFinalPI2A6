@@ -28,7 +28,7 @@ function login(){
 					<div class="modal-dialog" role="document">\
 						<div class="modal-content">\
 							<div class="modal-header">\
-							<h5 class="modal-title" id="exampleModalLabel">Campos Vazios</h5>\
+							<h5 class="modal-title" id="exampleModalLabel">Campo Vazio</h5>\
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
 							<span aria-hidden="true">×</span>\
 							</button>\
@@ -42,7 +42,7 @@ function login(){
 				');
 		}
 		
-		document.getElementById("msgFaltaPreencher").innerHTML = "Por favor preencha os campos de " + faltaPreencher +".";
+		document.getElementById("msgFaltaPreencher").innerHTML = "Por favor preencha o campos de " + faltaPreencher +".";
 
 		$('#loginVazioModal').modal('show');
 		return;
@@ -113,7 +113,7 @@ function login(){
 									<div class="modal-dialog" role="document">\
 										<div class="modal-content">\
 											<div class="modal-header">\
-											<h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>\
+											<h5 class="modal-title" id="exampleModalLabel">Falha</h5>\
 											<button class="close" type="button" data-dismiss="modal" aria-label="Close">\
 											<span aria-hidden="true">×</span>\
 											</button>\

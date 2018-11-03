@@ -11,6 +11,8 @@ var paginas = {
 	"/cadastroPermissoes": "frontEndTrabalho/cadastroPermissoes.html",
 	"/cadastroInformativos": "frontEndTrabalho/cadastroInformativos.html",
 	"/cadastroAdministrador": "frontEndTrabalho/cadastroAdministrador.html",
+	"/cadastroEquipamentos": "frontEndTrabalho/cadastroEquipamentos.html",
+	"/cadastroPublicacao": "frontEndTrabalho/cadastroPublicacao.html",
 	"/primeiroAcessoUsuario": "frontEndTrabalho/primeiroAcessoUsuario.html"
 };
 

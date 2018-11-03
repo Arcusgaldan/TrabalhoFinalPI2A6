@@ -28,16 +28,15 @@
 
   <body id="page-top" class="sidebar-toggled" >
 
-     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
       <a class="navbar-brand mr-1" href="/index">Pronn</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="/#">
         <i class="fas fa-bars"></i>
       </button>
- 
-   
-   <form id="formLogin" class="d-md-inline-block  my-2 my-md-0 offset-4 col-sm-6 display-none">
+
+    <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
         <div class="form-row align-items-center">
           <div class="col-sm-4 my-1">
             <label class="sr-only" for="usuarioLogin">Email</label>
@@ -57,30 +56,29 @@
           <!-- </div> -->
         </div>
    </form>
-
-
+ 
     <!-- Navbar -->
     <ul id="boxLogado" class="navbar-nav ml-auto display-none">
-                 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="/#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <button id="logout" class="dropdown-item" >Sair do Sistema</button>
+            <button id="logout" class="dropdown-item">Sair do Sistema</button>
           </div>
         </li>
     </ul> 
 
-    </nav>  
+    </nav>
 
     <div id="wrapper">
 
-       <!-- Sidebar -->
+      <!-- Sidebar -->
       <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
       <ul id="sidebarWrapper" class="sidebar navbar-nav toggled">
         
       </ul>
+      <!-- Fim Sidebar -->
 
       <div id="content-wrapper">
 
@@ -88,13 +86,13 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Gerenciamento de Usuário</li>
+            <li class="breadcrumb-item active">Página Geral de Publicações</li>
           </ol>
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Gerenciamento de Usuário 
-                  <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal">Cadastrar Usuário</button>
+                <div class="card-header">Página Geral de Publicações
+                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPublicações" class="btn btn-success float-right">Cadastrar Publicações</button>
                 </div>
                 <div class="card-body">
                   <p>
@@ -102,22 +100,26 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-
-                      <!-- <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col" class="">Lider</th>
-                        </tr>
-                      </thead> -->
-                    <tbody id="tabelaUsuario">
-
-                      
-
-
+                    <tbody id="tabelaPublicações">
+                      <tr>
+                      <th id='nomePublicaçõesLista'>Publicação 001</th>
+                      <td>
+                        <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapsePublicaçõesLista' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
+                        <button id='alterarPublicaçõesLista' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Publicação</button>
+                        <button id='excluirPublicaçõesLista' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Publicação</button>
+                        <div id='collapsePublicaçõesLista' class='collapse mostraLista' >
+                          <div class='card card-body'>
+                            <p><strong>Nome do Publicação: </strong><span id='nomePublicaçõesDados'>Publicação 001</span></p>
+                            <p><strong>Descrição do Publicação: </strong> <span id='descricaoPublicaçõesDados'>Uma bela descrição</span></p>
+                            <p><strong>Data de Entrada: </strong> <span id='fundPublicaçõesDados'>01-08-2018</span></p>
+                            <p><strong>Data de Descarte: </strong> <span id='fundPublicaçõesDados'>01-08-2018</span></p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
                     </tbody>
                   </table>
-                 
-                </div>
+                 </div>
               </div>
             </div>
 
@@ -135,138 +137,78 @@
       <i class="fas fa-angle-up"></i>
     </a>
 
-
-    <!-- CADASTRA Modal -->
-    
     <div class="modal fade" id="cadastraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Usuário</h5>
-            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastra Publicações</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="fechaCadastraModal">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-
           <div class="modal-body">
-            <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuário.
-            </p>
-
-            <form id="formCadastroUsuario" action='' method="post" encType="multipart/form-data">
-              <div class="form-group">
-                <div class="form-row">
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="nomeCadastrar" class="form-control" name="nomeCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeCadastrar">Nome Completo</label>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="prontuarioCadastrar" class="form-control" name="prontuarioCadastrar" placeholder="Prontuário" required="required">
-                      <label for="prontuarioCadastrar">Prontuário</label>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
+            <form action="" method="get">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="email" id="emailCadastrar" class="form-control" name="emailCadastrar" placeholder="Email" required="required">
-                  <label for="emailCadastrar">Email</label>
+                  <input type="text" id="nomePublicaçõesCadastrar" class="form-control" name="nomePublicaçõesCadastrar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
+                  <label for="nomePublicaçõesCadastrar">Nome do Publicações</label>
                 </div>
               </div>
-
               <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattesCadastrar" placeholder="Link do Lattes">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="form-label-group">
+                  <input type="text" id="siglaPublicaçõesCadastrar" class="form-control" name="siglaPublicaçõesCadastrar" placeholder="Sigla do Publicações" required="required">
+                  <label for="siglaPublicaçõesCadastrar">Sigla do Publicações</label>
                 </div>
               </div>
 
+              <div id="selectLider" class="form-group">
+                <div class="form-label-group">
+                  <select id="selectUsuario" class="form-control form-control">
+                    <option value="-1">Selecione o líder</option>
+                  </select>
+                </div>
+              </div>  
             </form>
-            <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastro">Cadastar</button>
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
           </div>
         </div>
       </div>
     </div>
-
-
-    <!-- ALTERA Modal -->
-
+    
+    <!-- ALTERAR Modal-->
     <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar usuário</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Publicações</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
-             <p>
-              Neste formulário serão inseridas as informações para o cadastro de usuários
-            </p>
-            <form action="" method="get" >
-
-                    <div class="form-group">
-                      <div class="form-row">
-                        <div class="col-md-6">
-                          <div class="form-label-group">
-                            <input type="text" id="nomeUsuarioAlterar" value="" class="form-control" name="nome"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                            <label for="nome">Nome Completo</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-label-group">
-                            <input type="text" id="prontuarioUsuarioAlterar" class="form-control" name="prontuario" placeholder="Prontuário" required="required">
-                            <label for="prontuario">Prontuário</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="form-label-group">
-                        <input type="email" id="emailUsuarioAlterar" class="form-control" name="email" placeholder="Email" required="required">
-                        <label for="email">Email</label>
-                      </div>
-                    </div>
- 
-                  <div class="form-group">
-                    <div class="form-row">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <input type="url" class="form-control" id="linkLattesUsuarioAlterar" placeholder="Link do Lattes">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                          </div>
-                        </div>
-                      </div>
-                     </div>
-                  </div>
-                 
-                    <div style="display: none;" id="idUsuarioAlterar"></div>
-                    <div style="display: none;" id="codTipoUsuarioAlterar"></div>
-                    <div style="display: none;" id="senhaUsuarioAlterar"></div>
-                  </form>
-
+            <form action="" method="get">
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="nomePublicaçõesAlterar" class="form-control" name="nomePublicaçõesAlterar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
+                  <label for="nomePublicaçõesAlterar">Nome do Publicações</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="siglaPublicaçõesAlterar" class="form-control" name="siglaPublicaçõesAlterar" placeholder="Sigla do Publicações" required="required">
+                  <label for="siglaPublicaçõesAlterar">Sigla do Publicações</label>
+                </div>
+              </div>
+              
+              <div style="display: none;" id="idPublicaçõesAlterar"></div>
+              <div style="display: none;" id="liderPublicaçõesAlterar"></div>
+              <div style="display: none;" id="statusPublicaçõesAlterar"></div>              
+             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-alert" id="btnAlterarUsuario" type="button">Alterar</button>
-            
+            <button class="btn btn-success" type="button" id="btnAlterarPublicações">Alterar</button>
           </div>
         </div>
       </div>
@@ -277,13 +219,13 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id=""></h5>
+              <h5 class="modal-title" id="">Realmente deseja excluir ?</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir o usuário <span id="nomeUsuarioExcluir" style="color: #000"></span> ?</p></div>
-            <div style="display: none;" id="idUsuarioExcluir"></div>
+            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="nomePublicaçõesExcluir"></span> ?</p></div>
+            <div style="display: none;" id="idPublicaçõesExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -292,7 +234,7 @@
         </div>
       </div>
 
-    <!-- SUCESSO Modal -->
+    <!-- SUCESSO Modal-->
       <div class="modal fade" id="sucessoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -327,7 +269,7 @@
       </div>
 
 
-      <!-- Sticky Footer -->
+        <!-- Sticky Footer -->
         <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
@@ -348,32 +290,33 @@
     </a>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <!-- <script src="/vendor/chart.js/Chart.min.js"></script>
-    <script src="/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script> -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin.min.js"></script>
+    <script src="js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <!-- <script src="/js/demo/datatables-demo.js"></script>
-    <script src="/js/demo/chart-area-demo.js"></script> -->
+    <script src="js/demo/datatables-demo.js"></script>
+    <script src="js/demo/chart-area-demo.js"></script>
 
-    <script type="text/javascript" src="/js/listarUsuarioFront.js"></script>
-    <script type="text/javascript" src="/js/cadastraUsuarioFront.js"></script>
-    <script type="text/javascript" src="/js/loginFront.js"></script>
-    <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
-    <script type="text/javascript" src="/js/logout.js"></script>
-    <script type="text/javascript" src="/js/alterarUsuarioFront.js"></script>
-    <script type="text/javascript" src="/js/excluiUsuarioFront.js"></script>
-    
+    <!-- <script type="text/javascript" src="js/cadastraPublicaçõesFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/listarPublicaçõesFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/listarLiderFront.js"></script> -->
+    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="js/loginFront.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
+    <!-- <script type="text/javascript" src="js/alteraPublicaçõesFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/excluiPublicaçõesFront.js"></script> -->
+
 
   </body>
 
