@@ -105,3 +105,4 @@
 -- TODOS
 
 [-] Perguntar se uma publicação precisa ter um aluno vinculado ou se puxa o último aluno da pesquisa (ou aluno vigente no período da publicação)
+[-] Perguntar se o tipo da pesquisa (se tem bolsa ou não e se sim, qual bolsa) fica vinculada ao aluno ou à pesquisa
