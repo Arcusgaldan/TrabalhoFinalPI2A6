@@ -33114,8 +33114,8 @@ function criaElementos(listaGrupo){
 	for(var i=0;i<listaGrupo.length;i++){
 		$("#containerGrupoIndex").append("\
 		<div class='alert alert-primary' role='alert'>\
-              <h1 id='nomeGrupoIdex"+ i +"' > </h1>\
-              <h3 id='siglaGrupoIndex"+ i +"'></h3>\
+              <h1 id='nomeGrupoIdex"+ i +"' class='nomeGrupo' > </h1>\
+              <h3 id='siglaGrupoIndex"+ i +"' class='siglaGrupo'></h3>\
               <hr>\
               <p id='descricaoGrupoIndex"+ i +"'></p>\
               Saiba mais: <a href='' id='linkGrupoIndex"+ i +"' class='alert-link'>Clique Aqui</a>\
@@ -57062,10 +57062,36 @@ module.exports = {
 			default:
 				return null;
 		}
-	}	
+	},
+
+	enviaRequisicao: function(objeto, operacao, dados, cb){
+		var http = require('http');
+		var opcoesHTTP;
+		var texto;
+		
+		if(dados == ""){			
+			opcoesHTTP = this.opcoesHTTP("");
+			texto = "";
+		}else{
+			texto = JSON.stringify(dados);
+			opcoesHTTP = texto;
+		}
+
+		opcoesHTTP.headers.Objeto = objeto;
+		opcoesHTTP.headers.Operacao = operacao;
+
+		var req = http.request(opcoesHTTP, (res) => {
+			cb(res);
+		});
+
+		if(texto != ""){
+			req.write(texto);
+		}
+		req.end();
+	}
 };
 }).call(this,require("buffer").Buffer)
-},{"./controller/cLinhaPesquisa.js":190,"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"mysql":198}],303:[function(require,module,exports){
+},{"./controller/cLinhaPesquisa.js":190,"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)
