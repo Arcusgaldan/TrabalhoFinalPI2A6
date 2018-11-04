@@ -37,9 +37,9 @@ var req = http.request(opcoesHTTP, (res) => {
 			document.getElementById("siglaGrupo").innerHTML = grupo.sigla;
             document.getElementById("nomeGrupo").innerHTML = grupo.nome;
             document.getElementById("descicaoGrupo").innerHTML = grupo.descricao;
-            document.getElementById("fundGrupo").innerHTML = grupo.dataFundacao;
+            document.getElementById("fundGrupo").innerHTML = grupo.dataFundacao.substring(0, 10);
             document.getElementById("emailGrupo").innerHTML = grupo.email;
-            document.getElementById("logotipoGrupo").src = grupo.logotipo;
+            document.getElementById("logotipoGrupo").src = '/../upload/uploads/logosGrupo/' + grupo.id + '.jpg';
             document.getElementById("liderGrupo").innerHTML = grupo.codUsuario;
 
             document.getElementById("siglaGrupoAlterar").value = grupo.sigla;
@@ -58,10 +58,13 @@ var req = http.request(opcoesHTTP, (res) => {
 			if(grupo.codUsuario == localStorage.id){
 				$("#cardHeaderGrupo").append('\
 				<button id="" class="btn btn-warning float-right" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button>\
-          		<a id="" href="/tecnicosGrupo/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Técnico</a>\
-          		<a id="" href="/docentesGrupo/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Docentes</a>\
-          		<a id="" href="/cadastroLinhasGrupo/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Linhas de Pesquisa</a>\
-          		<button id="" class="btn float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>\
+          		<a id="" href="/tecnicos/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Técnico</a>\
+          		<a id="" href="/docentes/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Docentes</a>\
+          		<a id="" href="/linhas/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Linhas de Pesquisa</a>\
+                <a id="" href="/equipamentos/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Equipamentos</a>\
+                <a id="" href="/pesquisas/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Equipamentos</a>\
+                <a id="" href="/publicacoes/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Publicações</a>\
+          		<button id="btnModalAlterarLider" class="btn float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>\
             ');
 			}
 

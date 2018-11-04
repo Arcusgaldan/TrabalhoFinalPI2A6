@@ -58,6 +58,12 @@ module.exports = {
 		return data;
 	},
 
+	dataHoraAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		return data;
+	},
+
 	sobeLinhas: function(caminho){
 		require('fs').readFile(caminho, 'latin1', (err, data) => {
 			data = data.replace(/(\r\n|\n|\r)/gm, " ");

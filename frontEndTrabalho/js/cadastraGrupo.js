@@ -32,11 +32,42 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-	    	$('#sucessoModal').modal('show');	
-	    	setTimeout(function(){location.reload();} , 2000);
+	    	utils.enviaRequisicao("Grupo", "BUSCAR", {campo: "sigla", valor: grupo.sigla}, function(resGrupo){
+	    		if(resGrupo.statusCode == 200){
+	    			var msgGrupo = "";
+	    			resGrupo.on('data', function(chunk){
+	    				msgGrupo += chunk;
+	    			});
+	    			resGrupo.on('end', function(){
+	    				var idGrupo = JSON.parse(msgGrupo).resultado[0].id;
+	    				utils.enviaRequisicao("DataHoraAtual", "", "", function(resData){
+	    					var msgData = "";
+	    					resData.on('data', function(chunk){
+	    						msgData += chunk;
+	    					});
+	    					resData.on('end', function(){
+	    						var dataAtual = msgData;
+	    						utils.enviaRequisicao("LogLider", "INSERIR", {id: 0, data: dataAtual, codGrupo: idGrupo, novoLider: grupo.codUsuario}, function(res){
+	    							if(res.statusCode == 200){	    								
+								    	$('#sucessoModal').modal('show');
+										$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+								    	setTimeout(function(){location.reload();} , 2000);
+	    							}else{
+	    								document.getElementById('msgErroModal').innerHTML = "Falha ao adicionar ao log de líder";
+	    								$("#erroModal").modal("show");
+	    							}
+	    						});
+	    					});
+	    				});
+	    			});
+	    		}else{
+	    			document.getElementById('msgErroModal').innerHTML = "Falha ao buscar ID do Grupo recém cadastrado";
+	    			$("#erroModal").modal("show");
+	    		}
+	    	});
 	    }
 	    else{
-	    	console.log("FALHA NO CADASTRO");
+	    	document.getElementById('msgErroModal').innerHTML = "Falha no cadastro";
 			$('#erroModal').modal('show');    
 		}
 	}); 	
