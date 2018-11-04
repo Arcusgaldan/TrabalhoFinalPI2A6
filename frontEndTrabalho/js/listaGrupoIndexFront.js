@@ -57074,11 +57074,7 @@ module.exports = {
 			texto = "";
 		}else{
 			texto = JSON.stringify(dados);
-<<<<<<< HEAD
 			opcoesHTTP = this.opcoesHTTP(texto);
-=======
-			opcoesHTTP = texto;
->>>>>>> master
 		}
 
 		opcoesHTTP.headers.Objeto = objeto;

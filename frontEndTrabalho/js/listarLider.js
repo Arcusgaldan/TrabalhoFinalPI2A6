@@ -113,8 +113,7 @@ var req = http.request(opcoesHTTP, (res) => {
 						}
 					});
 				}else{
-					console.log("Não foi possível listar grupos!");
-					$("#erroModal").modal("show");
+					criaElementos(vetor);
 				}
 			});
 		});

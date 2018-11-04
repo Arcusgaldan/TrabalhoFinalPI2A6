@@ -33109,133 +33109,119 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
-function criaElementos(listaLider){
-	for(var i = 0; i < listaLider.length; i++){
-		console.log("ListarLider: append do nome = " + listaLider[i].nome);
-		$("#selectUsuario").append("<option value='"+listaLider[i].id+"'>"+listaLider[i].nome+"</option>");
+function criaElementos(listaEquipamentos){
+	for(let i = 0; i < listaEquipamentos.length; i++){
+		$("#tabelaEquipamentos").append("<tr>\
+	                      <th id='nomeEquipamentoLista"+i+"'></th>\
+	                      <td>\
+	                        <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseEquipamentosLista"+i+"' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
+	                        <button id='alterarEquipamentoLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Equipamentos</button>\
+	                        <button id='excluirEquipamentoLista"+i+"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Equipamentos</button>\
+	                        <div id='collapseEquipamentosLista"+i+"' class='collapse mostraLista' >\
+	                          <div class='card card-body'>\
+	                            <p><strong>Nome do Equipamento: </strong><span id='nomeEquipamentoDados"+i+"'></span></p>\
+	                            <p><strong>Descrição do Equipamento: </strong> <span id='descricaoEquipamentoDados"+i+"'></span></p>\
+	                            <p><strong>Data de Entrada: </strong> <span id='dataEntradaEquipamentoDados"+i+"'></span></p>\
+	                            <p><strong>Data de Descarte: </strong> <span id='dataDescarteEquipamentoDados"+i+"'></span></p>\
+	                          </div>\
+	                        </div>\
+	                      </td>\
+	                    </tr>");
+
+		document.getElementById('nomeEquipamentoLista' + i).innerHTML = listaEquipamentos[i].nome;
+		document.getElementById('nomeEquipamentoDados' + i).innerHTML = listaEquipamentos[i].nome;
+		document.getElementById('descricaoEquipamentoDados' + i).innerHTML = listaEquipamentos[i].descricao;
+		document.getElementById('dataEntradaEquipamentoDados' + i).innerHTML = listaEquipamentos[i].dataEntrada.substring(0, 10);
+		document.getElementById('dataDescarteEquipamentoDados' + i).innerHTML = listaEquipamentos[i].dataDescarte.substring(0, 10);
+
+		(function(){
+			var equipamento = listaEquipamentos[i];		
+			document.getElementById("alterarEquipamentoLista"+ i).addEventListener("click", function(){
+				preencheModalAlterar(equipamento);
+			}, false);
+			document.getElementById("excluirEquipamentoLista"+ i).addEventListener("click", function(){
+				preencheModalExcluir(equipamento);
+			}, false);
+		}());
 	}
 }
 
-function modalSemLider(){
-	if(!document.getElementById('semLider')){
-		$("#page-top").append('\
-				<!-- Erro Sem Lider Modal-->\
-			      <div class="modal fade" id="semLider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-			        <div class="modal-dialog" role="document">\
-			          <div class="modal-content">\
-			            <div class="modal-header">\
-			              <h5 class="modal-title" id="exampleModalLabel">Cadastre um Lider</h5>\
-			              <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
-			                <span aria-hidden="true">×</span>\
-			              </button>\
-			            </div>\
-			            <div class="modal-body">Cadastre um Lider antes de cadastrar um grupo</div>\
-			            <div class="modal-footer">\
-			              <a href="/cadastroUsuario" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
-			            </div>\
-			          </div>\
-			        </div>\
-			      </div>\
-			');
-	}
-	$('#semLider').modal('show');
-	$('#semLider').on('hide.bs.modal', function(){location.href="/cadastroUsuario"});
-	setTimeout(function(){location.href="/cadastroUsuario"} , 2000); 
+function preencheModalAlterar(equipamento){
+	console.log("Equipamento em listarEquipamento::preencheModalAlterar: " + JSON.stringify(equipamento));
+
+	document.getElementById("nomeEquipamentoAlterar").value = equipamento.nome;
+	document.getElementById("descricaoEquipamentoAlterar").value = equipamento.descricao;
+	document.getElementById("dataEntradaEquipamentoAlterar").value = equipamento.dataEntrada.substring(0, 10);
+	document.getElementById("dataDescarteEquipamentoAlterar").value = equipamento.dataDescarte.substring(0, 10);
+	document.getElementById("idEquipamentoAlterar").value = equipamento.id;
+	document.getElementById("grupoEquipamentoAlterar").value = equipamento.codGrupo;
 }
 
-function modalCadastroSemLider(){
-	if(!document.getElementById('cadastroSemLider')){
-		$("#page-top").append('\
-				<!-- Erro Sem Lider Modal-->\
-			      <div class="modal fade" id="cadastroSemLider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-			        <div class="modal-dialog" role="document">\
-			          <div class="modal-content">\
-			            <div class="modal-header">\
-			              <h5 class="modal-title" id="exampleModalLabel">Cadastre um Lider</h5>\
-			              <button class="close" type="button" data-dismiss="modal" aria-label="Close">\
-			                <span aria-hidden="true">×</span>\
-			              </button>\
-			            </div>\
-			            <div class="modal-body">Não há líderes disponíveis para cadastrar um novo grupo</div>\
-			            <div class="modal-footer">\
-			              <a href="/cadastroUsuario" id="teste001" class="btn btn-success">Cadastrar Lider</a>\
-			            </div>\
-			          </div>\
-			        </div>\
-			      </div>\
-			');
-	}
-	$('#cadastroSemLider').modal('show'); 
-	$('#cadastroSemLider').on('hide.bs.modal', function(){location.reload();});
-	setTimeout(function(){location.reload();} , 2000); 
+function preencheModalExcluir(equipamento){
+	document.getElementById("nomeEquipamentoExcluir").innerHTML = equipamento.nome;
+	document.getElementById("idEquipamentoExcluir").value = equipamento.id;
+}
+
+function buscaGrupo(sigla, cb){
+	var utils = require('./../../utils.js');
+	
+	var objeto = {
+		campo: "sigla",
+		valor: sigla
+	};
+
+	utils.enviaRequisicao("Grupo", "BUSCAR", objeto, function(res){
+		console.log("Chegou a resposta!");
+		res.setEncoding('utf8');
+
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){				
+				var grupo = JSON.parse(msg).resultado[0];
+				cb(grupo.id);
+			});
+		}else{
+			cb(0);
+		}
+
+	});
 }
 
 var utils = require('./../../utils.js');
-var http = require('http');
 
-var objeto = {
-	campo: "codTipoUsuario",
-	valor: 1
-};
-
-var texto = JSON.stringify(objeto);
-
-var opcoesHTTP = utils.opcoesHTTP(texto);
-opcoesHTTP.headers.Objeto = "Usuario";
-opcoesHTTP.headers.Operacao = "BUSCAR";
-var req = http.request(opcoesHTTP, (res) => {
-	console.log("Resposta recebida!");
-	if(res.statusCode == 200){
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;
-		});
-		res.on('end', function(){
-			var vetor = JSON.parse(msg).resultado;
-			utils.enviaRequisicao("Grupo", "LISTAR", "", function(res){
-				console.log("Resposta de Listar Grupos recebida!");
-				if(res.statusCode == 200){
-					var msg = "";
-					res.on('data', function(chunk){
-						msg += chunk;
-					});
-					res.on('end', function(){
-						var vetorGrupos = JSON.parse(msg);
-						for(let i = 0; i < vetor.length; i++){
-							console.log("Em for, usuario = " + JSON.stringify(vetor[i]));
-							for(let j = 0; j < vetorGrupos.length; j++){
-								//console.log("No meu for de verificar lideres já com grupo: Grupo = " + JSON.stringify(vetorGrupos[j]) + "\nLider: " + JSON.stringify(vetor[i]));
-								console.log("Em for, grupo = " + JSON.stringify(vetorGrupos[j]));
-								if(vetorGrupos[j].codUsuario == vetor[i].id){
-									console.log("Lider " + vetor[i].nome + " já tem grupo! Excluindo-o da lista!");
-									vetor.splice(i, 1);
-									vetorGrupos.splice(j, 1);
-									i--;
-									break;
-								}
-							}
-						}
-						if(vetor.length == 0){
-							document.getElementById('btnCadastrarGrupo').addEventListener("click", function(){
-								modalCadastroSemLider();
-							}, false);
-						}else{
-							criaElementos(vetor);
-						}
-					});
-				}else{
-					criaElementos(vetor);
-				}
-			});
-		});
+var url = window.location.pathname;
+buscaGrupo(url.split("/")[2], function(idGrupo){
+	if(idGrupo == 0){
+		console.log("Não foi possível buscar grupo");
+		document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar grupo";
+		$("#erroModal").modal("show");
 	}else{
-		console.log("Não foi possível listar lideres");	
-		modalSemLider();
+		var objeto = {
+			campo: "codGrupo",
+			valor: idGrupo
+		};
+
+		utils.enviaRequisicao("Equipamento", "BUSCAR", objeto, function(res){
+			console.log("Resposta de listar equipamentos recebida!");
+			if(res.statusCode == 200){
+				var msg = "";
+				res.on('data', function(chunk){
+					msg += chunk;
+				});
+				res.on('end', function(){
+					var vetor = JSON.parse(msg).resultado;
+					criaElementos(vetor);
+				});
+			}
+		});
 	}
 });
-req.write(texto);
-req.end();
-},{"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
+
+		
+},{"./../../utils.js":302}],193:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
 		var final = {};

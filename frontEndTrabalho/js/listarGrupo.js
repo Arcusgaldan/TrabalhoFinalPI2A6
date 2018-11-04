@@ -31,9 +31,6 @@ function criaElementos(listaGrupo){
 		document.getElementById("emailGrupoDados" + i).innerHTML = listaGrupo[i].email;
 		
 
-		var funcaoPreencheAlterar = preencheModalAlterar(listaGrupo[i]);
-		var funcaoPreencheModalExcluir = preencheModalExcluir(listaGrupo[i]);
-
 		(function(){
 			console.log("Grupo na closure: " + JSON.stringify(listaGrupo[i]));
 			var grupo = listaGrupo[i];		
