@@ -13,6 +13,7 @@ var paginas = {
 	"/cadastroAdministrador": "frontEndTrabalho/cadastroAdministrador.html",
 	"/cadastroEquipamentos": "frontEndTrabalho/cadastroEquipamentos.html",
 	"/cadastroPublicacao": "frontEndTrabalho/cadastroPublicacao.html",
+	"/cadastroProjeto": "frontEndTrabalho/cadastroProjeto.html",
 	"/primeiroAcessoUsuario": "frontEndTrabalho/primeiroAcessoUsuario.html"
 };
 

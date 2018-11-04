@@ -419,3 +419,10 @@ select{
   font-size: 16px!important;
   padding: 0 0 0 5px!important;
 }
+
+
+.mostraAluno{
+  background: #d2d2d2;
+  padding: 15px;
+  border-radius: 10px;
+}
