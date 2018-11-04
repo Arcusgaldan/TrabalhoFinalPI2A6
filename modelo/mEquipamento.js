@@ -6,6 +6,7 @@ module.exports = {
 		final.descricao = objeto.descricao; //text
 		final.dataEntrada = objeto.dataEntrada;//date
 		final.dataDescarte = objeto.dataDescarte;//date
+		final.codGrupo = objeto.codGrupo; //int chave estrangeira apontando para Grupo
 		return final;
 	},
 
@@ -16,6 +17,7 @@ module.exports = {
 		final.descricao = "";
 		final.dataEntrada = "";
 		final.dataDescarte = "";
+		final.codGrupo = 0;
 		return final;
 	},
 
