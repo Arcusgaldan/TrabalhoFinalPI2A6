@@ -86,13 +86,13 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Página Geral de Publicações</li>
+            <li class="breadcrumb-item active">Página Geral de Projetos</li>
           </ol>
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Página Geral de Publicações
-                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPublicacoes" class="btn btn-success float-right">Cadastrar Publicações</button>
+                <div class="card-header">Página Geral de Projetos
+                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPublicacoes" class="btn btn-success float-right">Cadastrar Projetos</button>
                 </div>
                 <div class="card-body">
                   <p>
@@ -100,39 +100,49 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="tabelaPublicações">
+                    <tbody id="tabelaProjetos">
                       <tr>
-                      <th id='nomePublicacoesLista'>Publicação 001</th>
-                      <td>
-                        <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapsePublicacoesLista' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
-                        <button id='alterarPublicacoesLista' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Publicação</button>
-                        <button id='excluirPublicacoesLista' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Publicação</button>
-                        <div id='collapsePublicacoesLista' class='collapse mostraLista' >
-                          <div class='card card-body'>
-                            <p><strong>Nome da Publicação: </strong><span id='nomePublicacoesDados'>Publicação 001</span></p>
+                        <th id='nomePublicacoesLista'>Projeto 001</th>
+                        <td>
+                          <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapsePublicacoesLista' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
+                          <button id='alterarPublicacoesLista' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Projeto</button>
+                          <button id='excluirPublicacoesLista' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Projeto</button>
+                          <div id='collapsePublicacoesLista' class='collapse mostraLista'>
+                            <div class='card card-body'>
+                              <p><strong>Nome da Projeto: </strong><span id='nomePublicacoesDados'>Projeto 001</span></p>
 
-                            <p><strong>Projeto (opcional): </strong> <span id='descricaoPublicacoesDados'>Projeto 001</span></p>
+                              <p><strong>Docente responsável: </strong> <span id='docentePublicacoesDados'>Docente 001</span></p>
 
-                            <p><strong>Título: </strong> <span id='tituloPublicacoesDados'>Título 001</span></p>
-                            
-                            <p><strong>Tipo da Publicação: </strong> <span id='tipoPublicacoesDados'>Anais</span></p>
+                              <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaPublicacoesDados'>Linha 001</span></p>
 
+                              <p><strong>Tipo da Projeto: </strong> <span id='tipoPublicacoesDados'>PIBIFSP</span></p>
 
-                            <p><strong>Descrição da Publicação: </strong> <span id='descricaoPublicacoesDados'>Uma bela descrição</span></p>
+                              <p>
+                                <strong>Aluno: </strong> <span id=''>Aluno 001 
+                                  <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseTeste' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
+                                </span>
+                              </p>
 
-                            <p><strong>Docente responsável pela publicação: </strong> <span id='docentePublicacoesDados'>Docente 001</span></p>
+                              <div id='collapseTeste' class='collapse mostraAluno'>
+                               <p><strong>Docente responsável: </strong> <span id='docentePublicacoesDados'>Docente 001</span></p>
 
-                            <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaPublicacoesDados'>Linha 001</span></p>
+                               <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaPublicacoesDados'>Linha 001</span></p>
 
-                            <p><strong>Referência ABNT: </strong> <span id='referenciaPublicacoesDados'>SOBRENOME DO AUTOR, Prenome. Título: subtítulo. Edição. Local de publicação: Editora, ano de publicação.</span></p>
+                               <p><strong>Tipo da Projeto: </strong> <span id='tipoPublicacoesDados'>PIBIFSP</span></p>
 
-                            <p><strong>Data de publicação: </strong> <span id='fundPublicacoesDados'>01-08-2018</span></p>
-                          </div>
-                        
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
+                               <p><strong>Aluno: </strong> <span id='descricaoPublicacoesDados'>Aluno 001</span></p>
+                             </div>
+
+                             <p><strong>Docente Colaborador: </strong> <span id='docentePublicacoesDados'>Docente Colaborador 001</span></p>
+
+                             <p><strong>Data de Inicio: </strong> <span id='inicioPublicacoesDados'>01-08-2018</span></p>
+
+                             <p><strong>Data de Término: </strong> <span id='terminoPublicacoesDados'>01-012-2018</span></p>
+                           </div>
+                         </td>
+                       </tr>
+                     </tbody>
+                   </table>
                  </div>
               </div>
             </div>
@@ -155,31 +165,14 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastra Publicações</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Cadastra Projetos</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="fechaCadastraModal">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
-            <form action="" method="get">
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="nomePublicacoesCadastrar" class="form-control" name="nomePublicacoesCadastrar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
-                  <label for="nomePublicacoesCadastrar">Nome da Publicação</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="projetoPublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Selecione um projeto</option>
-                    <option value="">Publicação sem projeto</option>
-                    <option value="">Projeto 001</option>
-                    <option value="">Projeto 002</option>
-                  </select>
-                </div>
-              </div>
-
+           <form action="" method="get">
+             
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="text" id="tituloPublicacoesCadastrar" class="form-control" name="tituloPublicacoesCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
@@ -189,26 +182,14 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPublicacoesCadastrar" class="form-control">
-                    <option value="0" readonly>Tipo da publicação</option>
-                    <option value="0">Livro</option>
-                    <option value="0">Capitulo de Livro</option>
-                    <option value="0">Anais</option>
-                    <option value="0">Periódico</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
                   <select id="docentePublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
+                    <option value="0" readonly>Docente responsável</option>
                     <option value="">Docente 001</option>
                     <option value="">Docente 002</option>
                   </select>
                 </div>
               </div>
-
+              
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="linhaPublicacoesCadastrar" class="form-control form-control-lg">
@@ -218,25 +199,55 @@
                   </select>
                 </div>
               </div>
+              
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <textarea id="descricaoPublicacoesCadastrar" rows="4" class="form-control" name="descricaoPublicacoesCadastrar" placeholder="Descrição da Publicação" required="required"> </textarea>
-                  <label for="descricaoPublicacoesCadastrar">Descrição da Publicação</label>
+                  <select id="tipoPublicacoesCadastrar" class="form-control" onchange="getval(this);">
+                    <option value="0" readonly>Tipo do Projeto</option>
+                    <option value="1">voluntário</option>
+                    <option value="2">PIBIFSP</option>
+                    <option value="3">CNPQ</option>
+                    <option value="4">Outras</option>
+                  </select>
                 </div>
               </div>
 
-              <div class="form-group">
-                <div class="form-label-group">
-                  <textarea id="referenciaPublicacoesCadastrar" rows="4" class="form-control" name="referenciaPublicacoesCadastrar" placeholder="Referência ABNT" required="required"> </textarea>
-                  <label for="referenciaPublicacoesCadastrar">Referência ABNT</label>
+              <script type="text/javascript">
+                function getval(sel)
+                {
+                  console.log("Entrando em getval...");
+                  if(sel.value == "4"){
+                    $("#divOutrosTipo").css("display", "block");
+                  }else{
+                    $("#divOutrosTipo").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divOutrosTipo" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="outrosTipoPublicacoesCadastrar" class="form-control" name="outrosTipoPublicacoesCadastrar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPublicacoesCadastrar">Outro tipo de projeto</label>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="dataPublicacoesCadastrar" class="form-control" name="dataPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                <label for="dataPublicacoesCadastrar">Data da Publicação</label>
+                <input type="date" id="inicioPublicacoesCadastrar" class="form-control" name="inicioPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="inicioPublicacoesCadastrar">Data da Inicio</label>
               </div>
+
+              <div class="form-label-group">
+                <input type="date" id="terminoPublicacoesCadastrar" class="form-control" name="terminoPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="terminoPublicacoesCadastrar">Data da Término</label>
+              </div>
+
             </form>
           </div>
           <div class="modal-footer">
@@ -251,32 +262,14 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar Publicações</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Projetos</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
             <form action="" method="get">
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="nomePublicacoesAlterar" class="form-control" name="nomePublicacoesAlterar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
-                  <label for="nomePublicacoesAlterar">Nome da Publicação</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="projetoPublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Selecione um projeto</option>
-                    <option value="">Publicação sem projeto</option>
-                    <option value="">Projeto 001</option>
-                    <option value="">Projeto 002</option>
-                  </select>
-                </div>
-              </div>
-
+             
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="text" id="tituloPublicacoesAlterar" class="form-control" name="tituloPublicacoesAlterar"  placeholder="Título" required="required" autofocus="autofocus">
@@ -286,26 +279,14 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPublicacoesAlterar" class="form-control">
-                    <option value="0" readonly>Tipo da publicação</option>
-                    <option value="0">Livro</option>
-                    <option value="0">Capitulo de Livro</option>
-                    <option value="0">Anais</option>
-                    <option value="0">Periódico</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
                   <select id="docentePublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
+                    <option value="0" readonly>Docente responsável</option>
                     <option value="">Docente 001</option>
                     <option value="">Docente 002</option>
                   </select>
                 </div>
               </div>
-
+              
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="linhaPublicacoesAlterar" class="form-control form-control-lg">
@@ -315,24 +296,53 @@
                   </select>
                 </div>
               </div>
+              
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <textarea id="descricaoPublicacoesAlterar" rows="4" class="form-control" name="descricaoPublicacoesAlterar" placeholder="Descrição da Publicação" required="required"> </textarea>
-                  <label for="descricaoPublicacoesAlterar">Descrição da Publicação</label>
+                  <select id="tipoPublicacoesAlterar" class="form-control" onchange="getval(this);">
+                    <option value="0" readonly>Tipo do Projeto</option>
+                    <option value="1">voluntário</option>
+                    <option value="2">PIBIFSP</option>
+                    <option value="3">CNPQ</option>
+                    <option value="4">Outras</option>
+                  </select>
                 </div>
               </div>
 
-              <div class="form-group">
-                <div class="form-label-group">
-                  <textarea id="referenciaPublicacoesAlterar" rows="4" class="form-control" name="referenciaPublicacoesAlterar" placeholder="Referência ABNT" required="required"> </textarea>
-                  <label for="referenciaPublicacoesAlterar">Referência ABNT</label>
+              <script type="text/javascript">
+                function getval(sel)
+                {
+                  console.log("Entrando em getval...");
+                  if(sel.value == "4"){
+                    $("#divOutrosTipo").css("display", "block");
+                  }else{
+                    $("#divOutrosTipo").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divOutrosTipo" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="outrosTipoPublicacoesAlterar" class="form-control" name="outrosTipoPublicacoesAlterar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPublicacoesAlterar">Outro tipo de projeto</label>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="dataPublicacoesAlterar" class="form-control" name="dataPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                <label for="dataPublicacoesAlterar">Data da Publicação</label>
+                <input type="date" id="inicioPublicacoesAlterar" class="form-control" name="inicioPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="inicioPublicacoesAlterar">Data da Inicio</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="date" id="terminoPublicacoesAlterar" class="form-control" name="terminoPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="terminoPublicacoesAlterar">Data da Término</label>
               </div>
 
             </form>
@@ -354,8 +364,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="nomePublicaçõesExcluir"></span> ?</p></div>
-            <div style="display: none;" id="idPublicaçõesExcluir"></div>
+            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="nomeProjetosExcluir"></span> ?</p></div>
+            <div style="display: none;" id="idProjetosExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -438,14 +448,14 @@
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
 
-    <!-- <script type="text/javascript" src="js/cadastraPublicaçõesFront.js"></script> -->
-    <!-- <script type="text/javascript" src="js/listarPublicaçõesFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/cadastraProjetosFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/listarProjetosFront.js"></script> -->
     <!-- <script type="text/javascript" src="js/listarLiderFront.js"></script> -->
     <script type="text/javascript" src="js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="js/loginFront.js"></script>
     <script type="text/javascript" src="js/logout.js"></script>
-    <!-- <script type="text/javascript" src="js/alteraPublicaçõesFront.js"></script> -->
-    <!-- <script type="text/javascript" src="js/excluiPublicaçõesFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/alteraProjetosFront.js"></script> -->
+    <!-- <script type="text/javascript" src="js/excluiProjetosFront.js"></script> -->
 
 
   </body>

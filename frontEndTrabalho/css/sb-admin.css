@@ -406,3 +406,23 @@ body.sidebar-toggled footer.sticky-footer {
     font-size: 1em;
   }
 }
+
+table{
+  border-radius: 10px;
+}
+
+.table-dark td, .table-dark th, .table-dark thead th{
+  border-color:unset!important;
+}
+
+select{
+  font-size: 16px!important;
+  padding: 0 0 0 5px!important;
+}
+
+
+.mostraAluno{
+  background: #d2d2d2;
+  padding: 15px;
+  border-radius: 10px;
+}
