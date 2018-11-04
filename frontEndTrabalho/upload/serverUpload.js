@@ -43,6 +43,20 @@ const storage = multer.diskStorage({
                 
                 cb(null, 'uploads/fotosDocente/');
                 break;
+
+            case '/arquivo/logoGrupo':
+                console.log("É logotipo de grupo!");
+                var fs = require('fs');
+                if(!fs.existsSync('uploads/logosGrupo')){
+                    console.log("Não existe a pasta logosGrupo, criando...");
+                    fs.mkdirSync('uploads/logosGrupo');
+                }else{
+                    console.log("Já existe a pasta logosGrupo, não precisa criar...");
+                }
+
+                cb(null, 'uploads/logosGrupo');
+                break;
+
         	default:        		
         		console.log("Foi default");
         		if(!require('fs').existsSync('/uploads')){
@@ -86,6 +100,13 @@ app.post('/arquivo/fotoTecnico', upload.single('fotoTecnicoCadastrar'),
         var get = require('url').parse(req.url).query;
         console.log("O get em fotoTecnico é " + get);
         res.send('<script type="text/javascript">window.history.back();</script>')      
+    });
+
+app.post('/arquivo/logoGrupo', upload.single('logotipoGrupoAlterar'),
+    (req, res) => {
+        var get = require('url').parse(req.url).query;
+        console.log("O get em logotipoGrupo é " + get);
+        res.send('<script type="text/javascript">window.history.back();</script>')
     });
 
 app.listen(3000, () => console.log('App na porta 3000'));

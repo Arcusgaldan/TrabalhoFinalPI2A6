@@ -56,7 +56,7 @@ http.createServer(function(req, res){
                     }
                 });
                 return;                
-            }else if(objeto != "Reset" && objeto != "DataAtual"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+            }else if(objeto != "Reset" && objeto != "DataAtual" && objeto != "DataHoraAtual"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
                 var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
                 if(controller == null){
@@ -73,6 +73,12 @@ http.createServer(function(req, res){
                 return;
             }else if(objeto == "DataAtual"){
                 var data = require('./utils.js').dataAtual();
+                res.statusCode = 200;
+                res.write(data);
+                res.end();
+                return;
+            }else if(objeto == "DataHoraAtual"){
+                var data = require('./utils.js').dataHoraAtual();
                 res.statusCode = 200;
                 res.write(data);
                 res.end();

@@ -33122,7 +33122,6 @@ function alterar(){
 	grupo.nome = document.getElementById('nomeGrupoAlterar').value;
 	grupo.sigla = document.getElementById('siglaGrupoAlterar').value;
 	grupo.email = document.getElementById('emailGrupoAlterar').value;
-	grupo.logotipo = document.getElementById('logotipoGrupoAlterar').value;
 	grupo.dataFundacao = document.getElementById('dataGrupoAlterar').value;
 	grupo.descricao = document.getElementById('descricaoGrupoAlterar').value;
 
@@ -33141,8 +33140,9 @@ function alterar(){
 
 		if(res.statusCode == 200){
 			console.log("Alterado com sucesso!"); 
-			$('#sucessoModal').modal('show');
-			setTimeout(function(){location.reload();} , 2000);		
+			var form = document.getElementById('formAlteraGrupo');
+	    	form.action = "http://localhost:3000/arquivo/logoGrupo?fileName=" + grupo.id;
+	    	form.submit();	
 		}else{
 			console.log("Não foi possível alterar grupo");
 			  $('#erroModal').modal('show');
