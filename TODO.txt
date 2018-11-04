@@ -76,9 +76,9 @@
 
 [-] Revisar todo o layuot em vers�es de telas menores
 [-] Info grupos (ver "CHIPS" no materialize) 
-[-] Adicionar evento de fecha modal para recarregar/redirecionar (onde?) <FE>
 [-] Na página do grupo colocar o botão?
-[-] Tirar todos os "styles" dentro dos arquivo html 
+[-] Trocar id do texto no modal erroModal para "msgErroModal" em todas as páginas
+
 
 -- BACK-END
 

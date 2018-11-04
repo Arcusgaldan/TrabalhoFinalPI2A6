@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33298,17 +33298,10 @@ function cadastra(){
 	    res.setEncoding('utf8');
 	    //console.log(res);        
 	    if(res.statusCode == 200){
-<<<<<<< HEAD
 	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");    		
 	    	$('#sucessoModal').modal('show');		    	
 			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
 	    	setTimeout(function(){location.reload();} , 2000);
-=======
-	    	enviarEmail("Está é sua senha de acesso ao sistema Pronn: " + senha, usuario.email, "Senha de Acesso - Sistema Pronn");	    	
-	    	$('#sucessoModal').modal('show');	
-	    	setTimeout(function(){location.reload();} , 2000);
-			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
->>>>>>> master
 	    }
 	    else{
 	    	console.log("FALHA NO CADASTRO");
@@ -57283,7 +57276,7 @@ module.exports = {
 			texto = "";
 		}else{
 			texto = JSON.stringify(dados);
-			opcoesHTTP = texto;
+			opcoesHTTP = this.opcoesHTTP(texto);
 		}
 
 		opcoesHTTP.headers.Objeto = objeto;

@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Juliene\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -57074,7 +57074,11 @@ module.exports = {
 			texto = "";
 		}else{
 			texto = JSON.stringify(dados);
+<<<<<<< HEAD
+			opcoesHTTP = this.opcoesHTTP(texto);
+=======
 			opcoesHTTP = texto;
+>>>>>>> master
 		}
 
 		opcoesHTTP.headers.Objeto = objeto;
