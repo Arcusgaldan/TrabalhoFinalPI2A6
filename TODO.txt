@@ -77,6 +77,8 @@
 [-] Revisar todo o layuot em vers�es de telas menores
 [-] Info grupos (ver "CHIPS" no materialize) 
 [-] Adicionar evento de fecha modal para recarregar/redirecionar (onde?) <FE>
+[-] Na página do grupo colocar o botão?
+[-] Tirar todos os "styles" dentro dos arquivo html 
 
 -- BACK-END
 
@@ -92,6 +94,7 @@
 [-] Tratar os console log do servidor
 [-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
 [-] Cadastrar linhas gerais
+[-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
 
 -- FRONT + BACK
 
@@ -106,8 +109,8 @@
 [-] Colocar novas tabelas como Autoincrement
 [-] Excluir campo "foto" de tabelas do banco de dados 
 [-] Tornar linkLattes como unique 
+[-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
 
 -- TODOS
 
 [-] Perguntar se uma publicação precisa ter um aluno vinculado ou se puxa o último aluno da pesquisa (ou aluno vigente no período da publicação)
-[-] Perguntar se o tipo da pesquisa (se tem bolsa ou não e se sim, qual bolsa) fica vinculada ao aluno ou à pesquisa
