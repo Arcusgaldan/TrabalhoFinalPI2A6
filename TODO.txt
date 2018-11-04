@@ -78,7 +78,7 @@
 [-] Info grupos (ver "CHIPS" no materialize) 
 [-] Na página do grupo colocar o botão?
 [-] Trocar id do texto no modal erroModal para "msgErroModal" em todas as páginas
-
+[-] Separar campos data termino e data inicio no cadastro projetos
 
 -- BACK-END
 

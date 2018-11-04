@@ -171,25 +171,8 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="" method="get">
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="nomePublicacoesCadastrar" class="form-control" name="nomePublicacoesCadastrar"  placeholder="Nome do Projetos" required="required" autofocus="autofocus">
-                  <label for="nomePublicacoesCadastrar">Nome da Projeto</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="projetoPublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Selecione um projeto</option>
-                    <option value="">Projeto sem projeto</option>
-                    <option value="">Projeto 001</option>
-                    <option value="">Projeto 002</option>
-                  </select>
-                </div>
-              </div>
-
+           <form action="" method="get">
+             
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="text" id="tituloPublicacoesCadastrar" class="form-control" name="tituloPublicacoesCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
@@ -199,26 +182,14 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPublicacoesCadastrar" class="form-control">
-                    <option value="0" readonly>Tipo da publicação</option>
-                    <option value="0">Livro</option>
-                    <option value="0">Capitulo de Livro</option>
-                    <option value="0">Anais</option>
-                    <option value="0">Periódico</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
                   <select id="docentePublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
+                    <option value="0" readonly>Docente responsável</option>
                     <option value="">Docente 001</option>
                     <option value="">Docente 002</option>
                   </select>
                 </div>
               </div>
-
+              
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="linhaPublicacoesCadastrar" class="form-control form-control-lg">
@@ -228,25 +199,55 @@
                   </select>
                 </div>
               </div>
+              
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <textarea id="descricaoPublicacoesCadastrar" rows="4" class="form-control" name="descricaoPublicacoesCadastrar" placeholder="Descrição da Projeto" required="required"> </textarea>
-                  <label for="descricaoPublicacoesCadastrar">Descrição da Projeto</label>
+                  <select id="tipoPublicacoesCadastrar" class="form-control" onchange="getval(this);">
+                    <option value="0" readonly>Tipo do Projeto</option>
+                    <option value="1">voluntário</option>
+                    <option value="2">PIBIFSP</option>
+                    <option value="3">CNPQ</option>
+                    <option value="4">Outras</option>
+                  </select>
                 </div>
               </div>
 
-              <div class="form-group">
-                <div class="form-label-group">
-                  <textarea id="referenciaPublicacoesCadastrar" rows="4" class="form-control" name="referenciaPublicacoesCadastrar" placeholder="Referência ABNT" required="required"> </textarea>
-                  <label for="referenciaPublicacoesCadastrar">Referência ABNT</label>
+              <script type="text/javascript">
+                function getval(sel)
+                {
+                  console.log("Entrando em getval...");
+                  if(sel.value == "4"){
+                    $("#divOutrosTipo").css("display", "block");
+                  }else{
+                    $("#divOutrosTipo").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divOutrosTipo" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="outrosTipoPublicacoesCadastrar" class="form-control" name="outrosTipoPublicacoesCadastrar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPublicacoesCadastrar">Outro tipo de projeto</label>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="dataPublicacoesCadastrar" class="form-control" name="dataPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                <label for="dataPublicacoesCadastrar">Data da Projeto</label>
+                <input type="date" id="inicioPublicacoesCadastrar" class="form-control" name="inicioPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="inicioPublicacoesCadastrar">Data da Inicio</label>
               </div>
+
+              <div class="form-label-group">
+                <input type="date" id="terminoPublicacoesCadastrar" class="form-control" name="terminoPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="terminoPublicacoesCadastrar">Data da Término</label>
+              </div>
+
             </form>
           </div>
           <div class="modal-footer">
@@ -268,25 +269,7 @@
           </div>
           <div class="modal-body">
             <form action="" method="get">
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="nomePublicacoesAlterar" class="form-control" name="nomePublicacoesAlterar"  placeholder="Nome do Projetos" required="required" autofocus="autofocus">
-                  <label for="nomePublicacoesAlterar">Nome da Projeto</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="projetoPublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Selecione um projeto</option>
-                    <option value="">Projeto sem projeto</option>
-                    <option value="">Projeto 001</option>
-                    <option value="">Projeto 002</option>
-                  </select>
-                </div>
-              </div>
-
+             
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="text" id="tituloPublicacoesAlterar" class="form-control" name="tituloPublicacoesAlterar"  placeholder="Título" required="required" autofocus="autofocus">
@@ -296,26 +279,14 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPublicacoesAlterar" class="form-control">
-                    <option value="0" readonly>Tipo da publicação</option>
-                    <option value="0">Livro</option>
-                    <option value="0">Capitulo de Livro</option>
-                    <option value="0">Anais</option>
-                    <option value="0">Periódico</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
                   <select id="docentePublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
+                    <option value="0" readonly>Docente responsável</option>
                     <option value="">Docente 001</option>
                     <option value="">Docente 002</option>
                   </select>
                 </div>
               </div>
-
+              
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="linhaPublicacoesAlterar" class="form-control form-control-lg">
@@ -325,24 +296,53 @@
                   </select>
                 </div>
               </div>
+              
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <textarea id="descricaoPublicacoesAlterar" rows="4" class="form-control" name="descricaoPublicacoesAlterar" placeholder="Descrição da Projeto" required="required"> </textarea>
-                  <label for="descricaoPublicacoesAlterar">Descrição da Projeto</label>
+                  <select id="tipoPublicacoesAlterar" class="form-control" onchange="getval(this);">
+                    <option value="0" readonly>Tipo do Projeto</option>
+                    <option value="1">voluntário</option>
+                    <option value="2">PIBIFSP</option>
+                    <option value="3">CNPQ</option>
+                    <option value="4">Outras</option>
+                  </select>
                 </div>
               </div>
 
-              <div class="form-group">
-                <div class="form-label-group">
-                  <textarea id="referenciaPublicacoesAlterar" rows="4" class="form-control" name="referenciaPublicacoesAlterar" placeholder="Referência ABNT" required="required"> </textarea>
-                  <label for="referenciaPublicacoesAlterar">Referência ABNT</label>
+              <script type="text/javascript">
+                function getval(sel)
+                {
+                  console.log("Entrando em getval...");
+                  if(sel.value == "4"){
+                    $("#divOutrosTipo").css("display", "block");
+                  }else{
+                    $("#divOutrosTipo").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divOutrosTipo" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="outrosTipoPublicacoesAlterar" class="form-control" name="outrosTipoPublicacoesAlterar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPublicacoesAlterar">Outro tipo de projeto</label>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="dataPublicacoesAlterar" class="form-control" name="dataPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                <label for="dataPublicacoesAlterar">Data da Projeto</label>
+                <input type="date" id="inicioPublicacoesAlterar" class="form-control" name="inicioPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="inicioPublicacoesAlterar">Data da Inicio</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="date" id="terminoPublicacoesAlterar" class="form-control" name="terminoPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="terminoPublicacoesAlterar">Data da Término</label>
               </div>
 
             </form>
