@@ -165,7 +165,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastra Projetos</h5>
+            <h5 class="modal-title" id="">Cadastra Projetos</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="fechaCadastraModal">
               <span aria-hidden="true">×</span>
             </button>
@@ -238,19 +238,34 @@
                 </div>
               </div>
 
-              <div class="form-label-group">
-                <input type="date" id="inicioPublicacoesCadastrar" class="form-control" name="inicioPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+              <div class="form-group">
                 <label for="inicioPublicacoesCadastrar">Data da Inicio</label>
+                <input type="date" id="inicioPublicacoesCadastrar" class="form-control" name="inicioPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
-              <div class="form-label-group">
-                <input type="date" id="terminoPublicacoesCadastrar" class="form-control" name="terminoPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+              <div class="form-group">
                 <label for="terminoPublicacoesCadastrar">Data da Término</label>
+                <input type="date" id="terminoPublicacoesCadastrar" class="form-control" name="terminoPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="alunoPublicacoesCadastrar" class="form-control" name="alunoPublicacoesCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="alunoPublicacoesCadastrar">Aluno</label>
+                </div>
+              </div>
+
+              <div style="display: none;" id="nomeAlunoCadastrar"></div>
+              <div style="display: none;" id="cursoAlunoCadastrar"></div>
+              <div style="display: none;" id="linkLattesAlunoCadastrar"></div>
+              <div style="display: none;" id="inicioOrientacaoAlunoCadastrar"></div>
+              <div style="display: none;" id="terminoOrientacaoAlunoCadastrar"></div>
 
             </form>
           </div>
           <div class="modal-footer">
+            
+              <button id="btnCadastraAlunoModal" class="btn btn-warning" data-toggle="modal" data-target="#cadastraAlunoModal">Cadastrar Aluno</button>
             <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
           </div>
         </div>
@@ -262,7 +277,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar Projetos</h5>
+            <h5 class="modal-title" id="">Alterar Projetos</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -335,20 +350,150 @@
                 </div>
               </div>
 
-              <div class="form-label-group">
-                <input type="date" id="inicioPublicacoesAlterar" class="form-control" name="inicioPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+              <div class="form-group">
                 <label for="inicioPublicacoesAlterar">Data da Inicio</label>
+                <input type="date" id="inicioPublicacoesAlterar" class="form-control" name="inicioPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
-              <div class="form-label-group">
-                <input type="date" id="terminoPublicacoesAlterar" class="form-control" name="terminoPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+              <div class="form-group">
                 <label for="terminoPublicacoesAlterar">Data da Término</label>
+                <input type="date" id="terminoPublicacoesAlterar" class="form-control" name="terminoPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="alunoPublicacoesAlterar" class="form-control" name="alunoPublicacoesAlterar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="alunoPublicacoesAlterar">Aluno</label>
+                </div>
+              </div>
+
+              <div style="display: none;" id="nomeAlunoAlterar"></div>
+              <div style="display: none;" id="cursoAlunoAlterar"></div>
+              <div style="display: none;" id="linkLattesAlunoAlterarr"></div>
+              <div style="display: none;" id="inicioOrientacaoAlunoAlterar"></div>
+              <div style="display: none;" id="terminoOrientacaoAlunoAlterar"></div>
 
             </form>
           </div>
           <div class="modal-footer">
+            <button id="btnAlteraAlunoModal" class="btn btn-warning" data-toggle="modal" data-target="#alteraAlunoModal">Cadastrar Aluno</button>
             <button class="btn btn-success" type="button" id="btnAlterarPublicacoes">Alterar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CADASTRA ALUNO-->
+    <div class="modal fade" id="cadastraAlunoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="">Cadastra Aluno</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="get">
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="nomeAlunoCadastra" class="form-control" name="nomeAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="nomeAlunoCadastra">Nome do aluno</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="cursoAlunoCadastra" class="form-control" name="cursoAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="cursoAlunoCadastra">Nome do Curso</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="url" class="form-control" id="linkLattesAlunoCadastrar" placeholder="Link do Lattes">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="">Data de Inicio da orientação</label>
+                <input type="date" id="inicioOrientacaoAlunoCadastra" class="form-control" name="inicioOrientacaoAlunoCadastra"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
+              </div>
+
+              <div class="form-group">
+                <label for="">Data de fim da orientação</label>
+                <input type="date" id="terminoOrientacaoAlunoCadastra" class="form-control" name="terminoOrientacaoAlunoCadastra"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALTERA ALUNO-->
+    <div class="modal fade" id="alteraAlunoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="">Altera Aluno</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="get">
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="nomeAlunoAlterar" class="form-control" name="nomeAlunoAlterar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="nomeAlunoAlterar">Nome do aluno</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="cursoAlunoAlterar" class="form-control" name="cursoAlunoAlterar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="cursoAlunoAlterar">Nome do Curso</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="url" class="form-control" id="linkLattesAlunoAlterarr" placeholder="Link do Lattes">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="">Data de Inicio da orientação</label>
+                <input type="date" id="inicioOrientacaoAlunoAlterar" class="form-control" name="inicioOrientacaoAlunoAlterar"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
+              </div>
+
+              <div class="form-group">
+                <label for="">Data de fim da orientação</label>
+                <input type="date" id="terminoOrientacaoAlunoAlterar" class="form-control" name="terminoOrientacaoAlunoAlterar"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
           </div>
         </div>
       </div>
