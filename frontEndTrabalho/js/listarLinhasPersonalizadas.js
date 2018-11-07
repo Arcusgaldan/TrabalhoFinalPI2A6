@@ -51,7 +51,7 @@ var req = http.request(opcoesHTTP, (res) => {
 			console.log("Primeiro elemento do vetor: " + vetor[0].nome);
 			criaElementos(vetor);
 		});
-	}else{
+	}else if(res.statusCode == 400){
 		$('#erroModal').modal('show');
 	}
 });

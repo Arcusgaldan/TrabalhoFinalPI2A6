@@ -33282,6 +33282,8 @@ function cadastra(){
 
 	if(!controller.validar(usuario)){
 		console.log("Deu ruim"); //Adicionar mensagem de falta de campos em modal/alert
+		document.getElementById('msgErroModal').innerHTML = "Favor preencher todos os campos obrigatórios";
+		$("#erroModal").modal("show");
 		return;
 	}
 
@@ -57117,6 +57119,12 @@ module.exports = {
 	dataAtual: function(){
 		var d = new Date();
 		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+		return data;
+	},
+
+	dataHoraAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 		return data;
 	},
 

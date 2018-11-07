@@ -31,20 +31,32 @@ function cadastra(){
 		return;
 	}
 
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "INSERIR";
+	utils.enviaRequisicao("LinhaPesquisa", "BUSCAR", {campo: "codigo", valor: linhaPesquisa.codigo}, function(res){
+		if(res.statusCode == 747){
+			var opcoesHTTP = utils.opcoesHTTP(texto);
+			opcoesHTTP.headers.Objeto = "LinhaPesquisa";
+			opcoesHTTP.headers.Operacao = "INSERIR";
 
-	var req = http.request(opcoesHTTP, (res) => {
-		if(res.statusCode = 200){
-			$('#sucessoModal').modal('show');
-			$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
-	    	setTimeout(function(){location.reload();} , 2000);
+			var req = http.request(opcoesHTTP, (res) => {
+				if(res.statusCode = 200){
+					$('#sucessoModal').modal('show');
+					$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+			    	setTimeout(function(){location.reload();} , 2000);
+				}else{
+					$('#erroModal').modal('show');
+				}
+			});
+
+			req.write(texto);
+			req.end();		
+		}else if(res.statusCode == 200){
+			document.getElementById('msgErroModal').innerHTML = "Código de pesquisa já existente!";
+			$("#erroModal").modal('show');
 		}else{
-			$('#erroModal').modal('show');
+			document.getElementById('msgErroModal').innerHTML = "Não foi possível verificar se há duplicidade de código de pesquisa";
+			$("#erroModal").modal('show');			
 		}
 	});
 
-	req.write(texto);
-	req.end();
+		
 }
