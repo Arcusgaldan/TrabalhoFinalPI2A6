@@ -57,10 +57,13 @@
 [V] Não permitir um líder ter mais de um grupo <BE>
 [V] Organizar sidebars <FE>
 [V] Trocar o campos date por text em ano de conclusão de curso de Docente e Técnico <FE>
+[v] Corrigir campo de texto de alterar grupo (descrição)
+[v] Na página do grupo colocar o botão 
 [V] Cadastrar linhas gerais <BE>
 [V] Corrigir campo de texto de alterar grupo (descrição) <FE>
 [V] Separar campos data termino e data inicio no cadastro projetos <FE>
 [V] Na página do grupo colocar o botão <FE>
+
 
 -- CANCELADOS
 
@@ -81,6 +84,8 @@
 [-] Info grupos (ver "CHIPS" no materialize) 
 [-] Trocar id do texto no modal erroModal para "msgErroModal" em todas as páginas
 
+[-] Separar campos data termino e data inicio no cadastro projetos
+[-] Trocar o type do modal alterar grupo que está email
 -- BACK-END
 
 [-] Bloquear p�ginas que n�o s�o acess�veis ao tipo de usu�rio
@@ -95,6 +100,7 @@
 [-] Tratar os console log do servidor
 [-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
 [-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
+[-] fazer script para instalar "express" e "nodemsiler"
 
 -- FRONT + BACK
 
@@ -103,6 +109,8 @@
 [-] Adicionar opção de redefinir senha DEPOIS de logado (no BoxLogado) 
 [-] Conferir se o campo prontuário sao apenas numeros
 [-] Quando digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
+[-] colocar modal de confirmação e erro no "cadastroInformativos"
+[-] A data de criação do grupo está por padrão "01-01-1000" antes de alterar.
 
 -- DOCUMENTAÇÃO
 

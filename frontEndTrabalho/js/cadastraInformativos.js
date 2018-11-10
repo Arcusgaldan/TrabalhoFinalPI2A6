@@ -35,10 +35,12 @@ function alterar(){
 		if(res.statusCode == 200){
 			console.log("Texto alterado com sucesso!");
 	    	setTimeout(function(){location.reload();} , 2000);
-			alert("Texto alterado com sucesso!");
-
+			$("#sucessoModal").modal("show");			
+				$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
+		    	setTimeout(function(){location.reload();} , 2000);
 		}else{
-			console.log("Erro ao alterar texto. Contate o suporte.");
+			document.getElementById("msgErroModal").innerHTML = "Falha ao cadastrar equipamento";
+			$("#erroModal").modal("show");
 		}
 	});
 
