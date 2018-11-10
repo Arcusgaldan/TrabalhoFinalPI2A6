@@ -53,6 +53,8 @@ function cadastra(){
 
 	if(!controller.validar(usuario)){
 		console.log("Deu ruim"); //Adicionar mensagem de falta de campos em modal/alert
+		document.getElementById('msgErroModal').innerHTML = "Favor preencher corretamente os campos obrigatórios";
+		$("#erroModal").modal("show");
 		return;
 	}
 

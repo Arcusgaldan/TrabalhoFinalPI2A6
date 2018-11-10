@@ -59,6 +59,10 @@
 [V] Trocar o campos date por text em ano de conclusão de curso de Docente e Técnico <FE>
 [v] Corrigir campo de texto de alterar grupo (descrição)
 [v] Na página do grupo colocar o botão 
+[V] Cadastrar linhas gerais <BE>
+[V] Corrigir campo de texto de alterar grupo (descrição) <FE>
+[V] Separar campos data termino e data inicio no cadastro projetos <FE>
+[V] Na página do grupo colocar o botão <FE>
 
 
 -- CANCELADOS
@@ -79,6 +83,7 @@
 [-] Revisar todo o layuot em vers�es de telas menores
 [-] Info grupos (ver "CHIPS" no materialize) 
 [-] Trocar id do texto no modal erroModal para "msgErroModal" em todas as páginas
+
 [-] Separar campos data termino e data inicio no cadastro projetos
 [-] Trocar o type do modal alterar grupo que está email
 -- BACK-END
@@ -94,7 +99,6 @@
 [-] Não permitir um líder ter mais de um grupo
 [-] Tratar os console log do servidor
 [-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
-[-] Cadastrar linhas gerais
 [-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
 [-] fazer script para instalar "express" e "nodemsiler"
 

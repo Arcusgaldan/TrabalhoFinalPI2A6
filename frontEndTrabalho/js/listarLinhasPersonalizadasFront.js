@@ -33162,7 +33162,7 @@ var req = http.request(opcoesHTTP, (res) => {
 			console.log("Primeiro elemento do vetor: " + vetor[0].nome);
 			criaElementos(vetor);
 		});
-	}else{
+	}else if(res.statusCode == 400){
 		$('#erroModal').modal('show');
 	}
 });
@@ -56933,6 +56933,12 @@ module.exports = {
 	dataAtual: function(){
 		var d = new Date();
 		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+		return data;
+	},
+
+	dataHoraAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 		return data;
 	},
 
