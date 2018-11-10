@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>Pronn</title>
-    <link rel="shortcut icon" hhref="/images/favicon.png" type="image/x-png">
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-png">
 
     <!-- Bootstrap core CSS-->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -174,17 +174,34 @@
         </div>
       </div>
 
-    <!-- Modal que exibe erro ao não digitar algum campo -->
+     <!-- SUCESSO Modal -->
       <div class="modal fade" id="sucessoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">SUCESSO</h5>
+              <h5 class="modal-title" id="">Sucesso</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body">Cadastro realizado com sucesso!</div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Sua operação foi realizada</p></div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Erro Modal -->
+      <div class="modal fade" id="erroModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="">Erro</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p id="msgErroModal" style="color: #000">Erro ao realizar a operação!</p></div>
             <div class="modal-footer">
             </div>
           </div>
@@ -198,18 +215,10 @@
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugin JavaScript-->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-    <script src="/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <script src="/js/demo/datatables-demo.js"></script>
-    <script src="/js/demo/chart-area-demo.js"></script>
-
+    <!-- scripts for this page-->
     <script type="text/javascript" src="/js/cadastraInformativosFront.js"></script>
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
