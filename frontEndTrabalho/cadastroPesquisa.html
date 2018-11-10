@@ -92,7 +92,7 @@
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
                 <div class="card-header">Página Geral de Projetos
-                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPublicacoes" class="btn btn-success float-right">Cadastrar Projetos</button>
+                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPesquisa" class="btn btn-success float-right">Cadastrar Projetos</button>
                 </div>
                 <div class="card-body">
                   <p>
@@ -100,47 +100,8 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="tabelaProjetos">
-                      <tr>
-                        <th id='nomePublicacoesLista'>Projeto 001</th>
-                        <td>
-                          <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapsePublicacoesLista' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
-                          <button id='alterarPublicacoesLista' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Projeto</button>
-                          <button id='excluirPublicacoesLista' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Projeto</button>
-                          <div id='collapsePublicacoesLista' class='collapse mostraLista'>
-                            <div class='card card-body'>
-                              <p><strong>Nome da Projeto: </strong><span id='nomePublicacoesDados'>Projeto 001</span></p>
-
-                              <p><strong>Docente responsável: </strong> <span id='docentePublicacoesDados'>Docente 001</span></p>
-
-                              <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaPublicacoesDados'>Linha 001</span></p>
-
-                              <p><strong>Tipo da Projeto: </strong> <span id='tipoPublicacoesDados'>PIBIFSP</span></p>
-
-                              <p>
-                                <strong>Aluno: </strong> <span id=''>Aluno 001 
-                                  <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseTeste' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
-                                </span>
-                              </p>
-
-                              <div id='collapseTeste' class='collapse mostraAluno'>
-                               <p><strong>Docente responsável: </strong> <span id='docentePublicacoesDados'>Docente 001</span></p>
-
-                               <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaPublicacoesDados'>Linha 001</span></p>
-
-                               <p><strong>Tipo da Projeto: </strong> <span id='tipoPublicacoesDados'>PIBIFSP</span></p>
-
-                               <p><strong>Aluno: </strong> <span id='descricaoPublicacoesDados'>Aluno 001</span></p>
-                             </div>
-
-                             <p><strong>Docente Colaborador: </strong> <span id='docentePublicacoesDados'>Docente Colaborador 001</span></p>
-
-                             <p><strong>Data de Inicio: </strong> <span id='inicioPublicacoesDados'>01-08-2018</span></p>
-
-                             <p><strong>Data de Término: </strong> <span id='terminoPublicacoesDados'>01-012-2018</span></p>
-                           </div>
-                         </td>
-                       </tr>
+                    <tbody id="tabelaPesquisa">
+                      
                      </tbody>
                    </table>
                  </div>
@@ -175,27 +136,23 @@
              
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="tituloPublicacoesCadastrar" class="form-control" name="tituloPublicacoesCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="tituloPublicacoesCadastrar">Título</label>
+                  <input type="text" id="tituloPesquisaCadastrar" class="form-control" name="tituloPesquisaCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="tituloPesquisaCadastrar">Título</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="docentePublicacoesCadastrar" class="form-control form-control-lg">
+                  <select id="docentePesquisaCadastrar" class="form-control form-control-lg">
                     <option value="0" readonly>Docente responsável</option>
-                    <option value="">Docente 001</option>
-                    <option value="">Docente 002</option>
                   </select>
                 </div>
               </div>
               
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="linhaPublicacoesCadastrar" class="form-control form-control-lg">
+                  <select id="linhaPesquisaCadastrar" class="form-control form-control-lg">
                     <option value="0" readonly>Linha de pesquisa</option>
-                    <option value="">Linha 001</option>
-                    <option value="">Linha 002</option>
                   </select>
                 </div>
               </div>
@@ -203,9 +160,9 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPublicacoesCadastrar" class="form-control" onchange="getval(this);">
+                  <select id="tipoPesquisaCadastrar" class="form-control" onchange="getval(this);">
                     <option value="0" readonly>Tipo do Projeto</option>
-                    <option value="1">voluntário</option>
+                    <option value="1">Voluntário</option>
                     <option value="2">PIBIFSP</option>
                     <option value="3">CNPQ</option>
                     <option value="4">Outras</option>
@@ -230,8 +187,8 @@
 
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="outrosTipoPublicacoesCadastrar" class="form-control" name="outrosTipoPublicacoesCadastrar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
-                      <label for="outrosTipoPublicacoesCadastrar">Outro tipo de projeto</label>
+                      <input type="text" id="outroTipoPesquisaCadastrar" class="form-control" name="outrosTipoPesquisaCadastrar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outroTipoPesquisaCadastrar">Outro tipo de projeto</label>
                     </div>
                   </div>
 
@@ -239,23 +196,22 @@
               </div>
 
               <div class="form-group">
-                <label for="inicioPublicacoesCadastrar">Data da Inicio</label>
-                <input type="date" id="inicioPublicacoesCadastrar" class="form-control" name="inicioPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataInicioPesquisaCadastrar">Data de Inicio</label>
+                <input type="date" id="dataInicioPesquisaCadastrar" class="form-control" name="inicioPesquisaCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
-                <label for="terminoPublicacoesCadastrar">Data da Término</label>
-                <input type="date" id="terminoPublicacoesCadastrar" class="form-control" name="terminoPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataTerminoPesquisaCadastrar">Data de Término</label>
+                <input type="date" id="dataTerminoPesquisaCadastrar" class="form-control" name="terminoPesquisaCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="alunoPublicacoesCadastrar" class="form-control" name="alunoPublicacoesCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="alunoPublicacoesCadastrar">Aluno</label>
+                  <input type="text" id="alunoPesquisaCadastrar" class="form-control" name="alunoPesquisaCadastrar"  placeholder="Título" required="required" autofocus="autofocus" disabled>
+                  <label for="alunoPesquisaCadastrar">Aluno</label>
                 </div>
               </div>
 
-              <div style="display: none;" id="nomeAlunoCadastrar"></div>
               <div style="display: none;" id="cursoAlunoCadastrar"></div>
               <div style="display: none;" id="linkLattesAlunoCadastrar"></div>
               <div style="display: none;" id="inicioOrientacaoAlunoCadastrar"></div>
@@ -266,7 +222,7 @@
           <div class="modal-footer">
             
               <button id="btnCadastraAlunoModal" class="btn btn-warning" data-toggle="modal" data-target="#cadastraAlunoModal">Cadastrar Aluno</button>
-            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
+            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastrar</button>
           </div>
         </div>
       </div>
@@ -287,27 +243,23 @@
              
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="tituloPublicacoesAlterar" class="form-control" name="tituloPublicacoesAlterar"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="tituloPublicacoesAlterar">Título</label>
+                  <input type="text" id="tituloPesquisaAlterar" class="form-control" name="tituloPesquisaAlterar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="tituloPesquisaAlterar">Título</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="docentePublicacoesAlterar" class="form-control form-control-lg">
+                  <select id="docentePesquisaAlterar" class="form-control form-control-lg">
                     <option value="0" readonly>Docente responsável</option>
-                    <option value="">Docente 001</option>
-                    <option value="">Docente 002</option>
                   </select>
                 </div>
               </div>
               
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="linhaPublicacoesAlterar" class="form-control form-control-lg">
+                  <select id="linhaPesquisaAlterar" class="form-control form-control-lg">
                     <option value="0" readonly>Linha de pesquisa</option>
-                    <option value="">Linha 001</option>
-                    <option value="">Linha 002</option>
                   </select>
                 </div>
               </div>
@@ -315,9 +267,9 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPublicacoesAlterar" class="form-control" onchange="getval(this);">
+                  <select id="tipoPesquisaAlterar" class="form-control" onchange="getvalAlterar(this);">
                     <option value="0" readonly>Tipo do Projeto</option>
-                    <option value="1">voluntário</option>
+                    <option value="1">Voluntário</option>
                     <option value="2">PIBIFSP</option>
                     <option value="3">CNPQ</option>
                     <option value="4">Outras</option>
@@ -326,7 +278,7 @@
               </div>
 
               <script type="text/javascript">
-                function getval(sel)
+                function getvalAlterar(sel)
                 {
                   console.log("Entrando em getval...");
                   if(sel.value == "4"){
@@ -342,8 +294,8 @@
 
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="outrosTipoPublicacoesAlterar" class="form-control" name="outrosTipoPublicacoesAlterar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
-                      <label for="outrosTipoPublicacoesAlterar">Outro tipo de projeto</label>
+                      <input type="text" id="outrosTipoPesquisaAlterar" class="form-control" name="outrosTipoPesquisaAlterar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPesquisaAlterar">Outro tipo de projeto</label>
                     </div>
                   </div>
 
@@ -351,33 +303,34 @@
               </div>
 
               <div class="form-group">
-                <label for="inicioPublicacoesAlterar">Data da Inicio</label>
-                <input type="date" id="inicioPublicacoesAlterar" class="form-control" name="inicioPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="inicioPesquisaAlterar">Data da Inicio</label>
+                <input type="date" id="inicioPesquisaAlterar" class="form-control" name="inicioPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
-                <label for="terminoPublicacoesAlterar">Data da Término</label>
-                <input type="date" id="terminoPublicacoesAlterar" class="form-control" name="terminoPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="terminoPesquisaAlterar">Data da Término</label>
+                <input type="date" id="terminoPesquisaAlterar" class="form-control" name="terminoPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="alunoPublicacoesAlterar" class="form-control" name="alunoPublicacoesAlterar"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="alunoPublicacoesAlterar">Aluno</label>
+                  <input type="text" id="alunoPesquisaAlterar" class="form-control" name="alunoPesquisaAlterar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="alunoPesquisaAlterar">Aluno</label>
                 </div>
               </div>
 
-              <div style="display: none;" id="nomeAlunoAlterar"></div>
+              <div style="display: none;" id="idPesquisaAlterar"></div>
+
               <div style="display: none;" id="cursoAlunoAlterar"></div>
               <div style="display: none;" id="linkLattesAlunoAlterarr"></div>
-              <div style="display: none;" id="inicioOrientacaoAlunoAlterar"></div>
-              <div style="display: none;" id="terminoOrientacaoAlunoAlterar"></div>
+              <div style="display: none;" id="dataInicioAlunoAlterar"></div>
+              <div style="display: none;" id="dataFimAlunoAlterar"></div>
 
             </form>
           </div>
           <div class="modal-footer">
             <button id="btnAlteraAlunoModal" class="btn btn-warning" data-toggle="modal" data-target="#alteraAlunoModal">Cadastrar Aluno</button>
-            <button class="btn btn-success" type="button" id="btnAlterarPublicacoes">Alterar</button>
+            <button class="btn btn-success" type="button" id="btnAlterar">Alterar</button>
           </div>
         </div>
       </div>
@@ -398,14 +351,14 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="nomeAlunoCadastra" class="form-control" name="nomeAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
+                  <input type="text" id="nomeAlunoCadastrar" class="form-control" name="nomeAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
                   <label for="nomeAlunoCadastra">Nome do aluno</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="cursoAlunoCadastra" class="form-control" name="cursoAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
+                  <input type="text" id="cursoAlunoCadastrar" class="form-control" name="cursoAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
                   <label for="cursoAlunoCadastra">Nome do Curso</label>
                 </div>
               </div>
@@ -424,18 +377,18 @@
               </div>
 
               <div class="form-group">
-                <label for="">Data de Inicio da orientação</label>
-                <input type="date" id="inicioOrientacaoAlunoCadastra" class="form-control" name="inicioOrientacaoAlunoCadastra"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
+                <label for="">Data de inicio da orientação</label>
+                <input type="date" id="inicioOrientacaoAlunoCadastrar" class="form-control" name="inicioOrientacaoAlunoCadastra"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
                 <label for="">Data de fim da orientação</label>
-                <input type="date" id="terminoOrientacaoAlunoCadastra" class="form-control" name="terminoOrientacaoAlunoCadastra"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
+                <input type="date" id="terminoOrientacaoAlunoCadastrar" class="form-control" name="terminoOrientacaoAlunoCadastra"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
+            <button class="btn btn-success" type="button" id="btnAlunoCadastrar">Cadastrar</button>
           </div>
         </div>
       </div>
@@ -493,7 +446,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
+            <button class="btn btn-success" type="button" id="btnAlunoAlterar">Cadastar</button>
           </div>
         </div>
       </div>
@@ -546,7 +499,7 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Erro ao realizar a operação!</p></div>
+            <div class="modal-body"><p id="msgErroModal" style="color: #000">Erro ao realizar a operação!</p></div>
             <div class="modal-footer">
             </div>
           </div>
@@ -599,6 +552,7 @@
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
+    <script type="text/javascript" src="/js/listarPesquisaFront.js"></script>
     <!-- <script type="text/javascript" src="js/alteraProjetosFront.js"></script> -->
     <!-- <script type="text/javascript" src="js/excluiProjetosFront.js"></script> -->
 
