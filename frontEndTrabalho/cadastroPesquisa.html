@@ -157,7 +157,7 @@
                 </div>
               </div>
 
-              <script type="text/javascript">
+              <!-- <script type="text/javascript">
                 function getval(sel)
                 {
                   console.log("Entrando em getval...");
@@ -180,7 +180,7 @@
                   </div>
 
                 </div>
-              </div>
+              </div> -->
 
               <div class="form-group">
                 <label for="dataInicioPesquisaCadastrar">Data de Inicio</label>
@@ -251,7 +251,7 @@
                   </select>
                 </div>
               </div>
-
+            
               <div class="form-group">
                 <label for="dataInicioPesquisaAlterar">Data da Inicio</label>
                 <input type="date" id="dataInicioPesquisaAlterar" class="form-control" name="inicioPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
@@ -338,6 +338,31 @@
                 </div>
               </div>
 
+              <script type="text/javascript">
+                function getvalAlterar(sel)
+                {
+                  console.log("Entrando em getval...");
+                  if(sel.value == "4"){
+                    $("#divOutrosTipoAlteraAluno1").css("display", "block");
+                  }else{
+                    $("#divOutrosTipoAlteraAluno1").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divOutrosTipoAlteraAluno1" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="outrosTipoPesquisaCadastrar" class="form-control" name="outrosTipoPesquisaCadastrar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPesquisaCadastrar">Outro tipo de Pesquisa</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
               <div class="form-group">
                 <input type="date" id="dataInicioAlunoCadastrar" class="form-control" name="inicioOrientacaoAlunoCadastra"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
                 <label for="dataInicioAlunoCadastrar">Data de inicio da orientação</label>
@@ -397,6 +422,43 @@
               </div>
 
               <div class="form-group">
+                <div class="form-label-group">
+                  <select id="tipoPesquisaAlterar" class="form-control" onchange="getvalAlterar(this);">
+                    <option value="0" readonly>Tipo do Projeto</option>
+                    <option value="1">Voluntário</option>
+                    <option value="2">PIBIFSP</option>
+                    <option value="3">CNPQ</option>
+                    <option value="4">Outras</option>
+                  </select>
+                </div>
+              </div>
+
+              <script type="text/javascript">
+                function getvalAlterar(sel)
+                {
+                  console.log("Entrando em getval...");
+                  if(sel.value == "4"){
+                    $("#divOutrosTipoAlteraAluno2").css("display", "block");
+                  }else{
+                    $("#divOutrosTipoAlteraAluno2").css("display", "none");
+                  }
+                }
+              </script>
+
+              <div id="divOutrosTipoAlteraAluno2" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="outrosTipoPesquisaAlterar" class="form-control" name="outrosTipoPesquisaAlterar"  placeholder="Outro tipo de projeto" required="required" autofocus="autofocus">
+                      <label for="outrosTipoPesquisaAlterar">Outro tipo de Pesquisa</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label for="">Data de Inicio da orientação</label>
                 <input type="date" id="inicioOrientacaoAlunoAlterar" class="form-control" name="inicioOrientacaoAlunoAlterar"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
               </div>
@@ -425,7 +487,7 @@
               </button>
             </div>
             <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="nomeProjetosExcluir"></span> ?</p></div>
-            <div style="display: none;" id="idPesquisaExcluir"></div>
+            <div style="display: none;" id="idProjetosExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
