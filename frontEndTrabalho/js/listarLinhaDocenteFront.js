@@ -33109,183 +33109,6 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
-//INICIO funçoes do autocomplete
-var nomesLinhas;
-
-function criaListaNomes(cb){
-	var http = require('http');
-	var utils = require('./../../utils.js');
-	var opcoesHTTP = utils.opcoesHTTP("");
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "LISTAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		if(res.statusCode == 200){
-			var nomes = [];
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-			res.on('end', function(){
-				var linhas = JSON.parse(msg);
-				for(var i = 0; i < linhas.length; i++){
-					nomes.push(linhas[i].nome);
-				}
-				cb(nomes);
-			});
-		}else{
-			console.log("Erro ao listar Linhas");
-			return;
-		} 
-	});
-
-	req.end();
-}
-
-function criaListaNomesGrupo(cb){
-	var http = require('http');
-	var utils = require('./../../utils.js');
-	var url = window.location.pathname;
-	buscaGrupo(url.split("/")[2], function(idGrupo){
-		var objeto = {
-			campo: "codGrupo",
-			valor: idGrupo
-		};
-
-		var texto = JSON.stringify(objeto);
-
-		var opcoesHTTP = utils.opcoesHTTP(texto);
-		opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
-		opcoesHTTP.headers.Operacao = "BUSCAR";
-
-		var req = http.request(opcoesHTTP, (res) => {
-			console.log("Resposta recebida em criaListaNomesGrupo!");	
-			var msg = "";		
-			if(res.statusCode == 200){
-				var nomes = [];
-				res.on('data', function(chunk){
-					msg += chunk;
-				});
-				res.on('end', function(){
-					var linhas = JSON.parse(msg).resultado;
-					for(var i = 0; i < linhas.length; i++){
-						nomes.push(linhas[i]);
-					}
-					cb(nomes);
-				});
-			}else{
-				console.log("Erro ao listar Linhas em criaListaNomesGrupo");
-				cb(null);
-			}
-		});
-		req.write(texto);
-		req.end();
-	});
-}
-
-function autocomplete(inp, arr) {
-	console.log("Autocomplete com arr = " + arr);
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
-  var currentFocus;
-  /*execute a function when someone writes in the text field:*/
-  inp.addEventListener("input", function(e) {
-      var a, b, i, val = this.value;
-      /*close any already open lists of autocompleted values*/
-      closeAllLists();
-      if (!val) { return false;}
-      currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
-      a = document.createElement("DIV");
-      a.setAttribute("id", this.id + "autocomplete-list");
-      a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
-      this.parentNode.appendChild(a);
-      /*for each item in the array...*/
-      for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-              b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
-  });
-  /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-        currentFocus++;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-        currentFocus--;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-        e.preventDefault();
-        if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
-        }
-      }
-  });
-  function addActive(x) {
-    /*a function to classify an item as "active":*/
-    if (!x) return false;
-    /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-  function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-  function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-      x[i].parentNode.removeChild(x[i]);
-    }
-  }
-}
-/*execute a function when someone clicks in the document:*/
-document.addEventListener("click", function (e) {
-    closeAllLists(e.target);
-});
-}
-
-
-
-//FIM funçoes do autocomplete
-
 function populaVetorLinhasGerais(cb){
 	var http = require('http');
 	var utils = require('./../../utils.js');
@@ -33354,251 +33177,6 @@ function populaVetorLinhasGrupo(cb){
 	});
 }
 
-function changePrimeiroGrau(){
-	$("#segundoGrauCadastrar > option").remove();
-	$("#terceiroGrauCadastrar > option").remove();
-	$("#quartoGrauCadastrar > option").remove();
-	var select = document.getElementById("primeiroGrauCadastrar");
-	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
-	console.log("changeEvent::primeiroGrauCadastrar::listarLinhaGrupo - Codigo Linha = " + codigoLinha);
-	var utils = require('./../../utils.js');
-	
-	var http = require('http');
-	var objeto = {
-		tipoBusca: 1,
-		linha: {codigo: codigoLinha}
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;		
-		});
-		res.on('end', function(){
-			console.log("Msg primeiroGrau= " + msg);
-			var filhos = JSON.parse(msg);
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i].grau == 2)
-					$("#segundoGrauCadastrar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
-			}
-			changeSegundoGrau();
-		})
-	});
-
-	req.write(texto);
-	req.end();
-}
-
-function changeSegundoGrau(){
-	$("#terceiroGrauCadastrar > option").remove();
-	$("#quartoGrauCadastrar > option").remove();
-	var select = document.getElementById("segundoGrauCadastrar");
-	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
-	var utils = require('./../../utils.js');
-	
-	var http = require('http');
-	var objeto = {
-		tipoBusca: 1,
-		linha: {codigo: codigoLinha}
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;		
-		});
-		res.on('end', function(){
-			console.log("Msg segundoGrau= " + msg);
-			var filhos = JSON.parse(msg);
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i].grau == 3)
-					$("#terceiroGrauCadastrar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
-			}
-			changeTerceiroGrau();
-		})
-	});	
-
-	req.write(texto);
-	req.end();
-}
-
-function changeTerceiroGrau(){
-	$("#quartoGrauCadastrar > option").remove();
-	var select = document.getElementById("terceiroGrauCadastrar");
-	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
-	var utils = require('./../../utils.js');
-	
-	var http = require('http');
-	var objeto = {
-		tipoBusca: 1,
-		linha: {codigo: codigoLinha}
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;		
-		});
-		res.on('end', function(){
-			console.log("Msg terceiroGrau= " + msg);
-			var filhos = JSON.parse(msg);
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i].grau == 4)
-					$("#quartoGrauCadastrar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
-			}
-		})
-	});	
-
-	req.write(texto);
-	req.end();
-}
-
-function changePrimeiroGrauAlterar(){
-	$("#segundoGrauCadastrar > option").remove();
-	$("#terceiroGrauCadastrar > option").remove();
-	$("#quartoGrauCadastrar > option").remove();
-	var select = document.getElementById("primeiroGrauAlterar");
-	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
-	console.log("changeEvent::primeiroGrauCadastrar::listarLinhaGrupo - Codigo Linha = " + codigoLinha);
-	var utils = require('./../../utils.js');
-	
-	var http = require('http');
-	var objeto = {
-		tipoBusca: 1,
-		linha: {codigo: codigoLinha}
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;		
-		});
-		res.on('end', function(){
-			console.log("Msg primeiroGrau= " + msg);
-			var filhos = JSON.parse(msg);
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i].grau == 2)
-					$("#segundoGrauAlterar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
-			}
-			changeSegundoGrauAlterar();
-		})
-	});
-
-	req.write(texto);
-	req.end();
-}
-
-function changeSegundoGrauAlterar(){
-	$("#terceiroGrauCadastrar > option").remove();
-	$("#quartoGrauCadastrar > option").remove();
-	var select = document.getElementById("segundoGrauAlterar");
-	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
-	var utils = require('./../../utils.js');
-	
-	var http = require('http');
-	var objeto = {
-		tipoBusca: 1,
-		linha: {codigo: codigoLinha}
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;		
-		});
-		res.on('end', function(){
-			console.log("Msg segundoGrau= " + msg);
-			var filhos = JSON.parse(msg);
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i].grau == 3)
-					$("#terceiroGrauAlterar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
-			}
-			changeTerceiroGrau();
-		})
-	});	
-
-	req.write(texto);
-	req.end();
-}
-
-function changeTerceiroGrauAlterar(){
-	$("#quartoGrauCadastrar > option").remove();
-	var select = document.getElementById("terceiroGrauAlterar");
-	var codigoLinha = select.options[select.selectedIndex].text.split(" ")[0].trim();
-	var utils = require('./../../utils.js');
-	
-	var http = require('http');
-	var objeto = {
-		tipoBusca: 1,
-		linha: {codigo: codigoLinha}
-	};
-	var texto = JSON.stringify(objeto);
-
-	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "BUSCARPARENTE";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida!");
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;		
-		});
-		res.on('end', function(){
-			console.log("Msg terceiroGrau= " + msg);
-			var filhos = JSON.parse(msg);
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i].grau == 4)
-					$("#quartoGrauAlterar").append("<option value='" + filhos[i].id + "'> " + filhos[i].codigo + " - " + filhos[i].nome + "</option>");		
-			}
-		})
-	});	
-
-	req.write(texto);
-	req.end();
-}
-
-document.getElementById("primeiroGrauCadastrar").addEventListener('change', changePrimeiroGrau, false);
-
-document.getElementById("segundoGrauCadastrar").addEventListener('change', changeSegundoGrau, false);
-
-document.getElementById("terceiroGrauCadastrar").addEventListener('change', changeTerceiroGrau, false);
-
-// document.getElementById("primeiroGrauAlterar").addEventListener('change', changePrimeiroGrauAlterar, false);
-
-// document.getElementById("segundoGrauAlterar").addEventListener('change', changeSegundoGrauAlterar, false);
-
-// document.getElementById("terceiroGrauAlterar").addEventListener('change', changeTerceiroGrauAlterar, false);
 
 function buscaGrupo(sigla, cb){
 	var utils = require('./../../utils.js');
@@ -33631,83 +33209,12 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
-function buscarPrimeiroGrau(){
-	console.log("Entrou em buscarPrimeiroGrau");
-	let vetorPrimeiroGrau = [];
-	var utils = require('./../../utils.js');
-	for(let i = 0; i < vetorLinhasGrupo.length; i++){
-		if(utils.getGrauLinha(vetorLinhasGerais[vetorLinhasGrupo[i].id]) == 1){
-			console.log("Linha no for do buscarPrimeiroGrau = " + JSON.stringify(vetorLinhasGerais[vetorLinhasGrupo[i].id]));
-			vetorPrimeiroGrau.push(vetorLinhasGerais[vetorLinhasGrupo[i].id]);
-		}
-	}
-	preencheSelect("primeiroGrauCadastrar", vetorPrimeiroGrau);		
-	changePrimeiroGrau();
-}
-
-function preencheTabela(listaLinha){
-	console.log("entrou em preencheTabela!");
-	var http = require('http');
-	var utils = require('./../../utils.js');
-	var opcoesHTTP = utils.opcoesHTTP("");
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "LISTAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta recebida em preencheTabela!");
-		if(res.statusCode == 200){
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-			res.on('end', function(){
-				var linhasGerais = JSON.parse(msg);
-				var vetorLinhasGerais = [];
-				for(let i = 0; i < linhasGerais.length; i++){
-					vetorLinhasGerais[linhasGerais[i].id] = linhasGerais[i];					
-				}
-				console.log("entrou no append" + JSON.stringify(listaLinha));
-				for(var i = 0; i < listaLinha.length; i++){
-					$("#tabelaLinhasGrupo").append("<tr><th id='nomeLinhaLista"+i+"'></th><td><strong id='codigoLinhaLista"+i+"'></strong></td><td><button id='btnAlterarLinhaGrupoLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal'>Alterar Linhas de pesquisa</button></td></tr>");
-				
-					document.getElementById("codigoLinhaLista"+i).innerHTML = vetorLinhasGerais[listaLinha[i].codLinha].codigo;
-					document.getElementById("nomeLinhaLista"+i).innerHTML = vetorLinhasGerais[listaLinha[i].codLinha].nome;
-
-					(function(){
-						var linhaGrupo = listaLinha[i];
-						var linhaGeral = vetorLinhasGerais[linhaGrupo.id];		
-						document.getElementById("btnAlterarLinhaGrupoLista"+ i).addEventListener("click", function(){
-							preencheModalAlterar(linhaGrupo, linhaGeral);
-						}, false);
-					}());
-				}
-			});
-		}
-	});
-	req.end();
-}
-
 function preencheSelect(select, listaLinha){
-	console.log("entrou em preencheSelect com listaLinha[0].nome = " + listaLinha[0].nome);
 	$("#" + select + " > option").remove();
 	for(var i = 0; i < listaLinha.length; i++){
 		$("#" + select).append("<option value='" + listaLinha[i].id + "'> " + listaLinha[i].codigo + " - " + listaLinha[i].nome + "</option>");
 	}
 }
-
-// criaListaNomes(function(nomes){
-// 	autocomplete(document.getElementById("nomeLinhaCadastrar"), nomes);
-// });
-
-criaListaNomesGrupo(function(nomes){
-	console.log("Entrou no callback de criaListaNomesGrupo com nomes.length = " + nomes.length);
-	var vetor = [];
-	for(let i = 0; i < nomes.length; i++){
-		console.log("Colocando " + vetorLinhasGerais[nomes[i].id].nome + " no vetor de nomes em criaListaNomesGrupo");
-		vetor.push(vetorLinhasGerais[nomes[i].id].nome);
-	}
-	autocomplete(document.getElementById("nomeLinhaCadastrar"), vetor);
-});
 
 var vetorLinhasGerais;
 var vetorLinhasGrupo;
@@ -33715,21 +33222,22 @@ var vetorLinhasGrupo;
 populaVetorLinhasGerais(function(vetor){
 	if(vetor){
 		vetorLinhasGerais = vetor;
+		populaVetorLinhasGrupo(function(vetor){
+			if(vetor){
+				vetorLinhasGrupo = vetor;
+				var vetorFinal = [];
+				for(let i = 0; i < vetorLinhasGrupo.length; i++){
+					vetorFinal.push(vetorLinhasGerais[vetorLinhasGrupo[i].codLinha]);
+				}
+				preencheSelect("linhaDocenteCadastrar", vetorFinal);
+			}else{
+				console.log("Erro ao listar linhas grupo");
+			}
+		});
 	}else{
 		console.log("Erro ao listar linhas gerais");
 	}
 });
-
-populaVetorLinhasGrupo(function(vetor){
-	if(vetor){
-		vetorLinhasGrupo = vetor;
-		buscarPrimeiroGrau();
-	}else{
-		console.log("Erro ao listar linhas grupo");
-	}
-});
-
-
 },{"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
@@ -57063,52 +56571,39 @@ module.exports = XOAuth2;
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
 },{"../fetch":260,"../shared":275,"buffer":54,"crypto":63,"stream":175,"timers":181}],286:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "nodemailer",
-      "/home/gabiru/Repositorios/TrabalhoFinalPI2A6"
-    ]
-  ],
-  "_from": "nodemailer@latest",
-  "_hasShrinkwrap": false,
+  "_from": "nodemailer",
   "_id": "nodemailer@4.6.8",
-  "_inCache": true,
-  "_installable": true,
+  "_inBundle": false,
+  "_integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
   "_location": "/nodemailer",
-  "_nodeVersion": "10.4.0",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/nodemailer_4.6.8_1534351602860_0.8166117668816155"
-  },
-  "_npmUser": {
-    "email": "andris@kreata.ee",
-    "name": "andris"
-  },
-  "_npmVersion": "6.1.0",
   "_phantomChildren": {},
   "_requested": {
-    "name": "nodemailer",
+    "type": "tag",
+    "registry": true,
     "raw": "nodemailer",
+    "name": "nodemailer",
+    "escapedName": "nodemailer",
     "rawSpec": "",
-    "scope": null,
-    "spec": "latest",
-    "type": "tag"
+    "saveSpec": null,
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
-    "#USER"
+    "#USER",
+    "/"
   ],
   "_resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
   "_shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
-  "_shrinkwrap": null,
   "_spec": "nodemailer",
-  "_where": "/home/gabiru/Repositorios/TrabalhoFinalPI2A6",
+  "_where": "C:\\Users\\GABRIEL\\Documents\\Repositorios\\TrabalhoFinalPI2A6",
   "author": {
     "name": "Andris Reinman"
   },
   "bugs": {
     "url": "https://github.com/nodemailer/nodemailer/issues"
   },
+  "bundleDependencies": false,
   "dependencies": {},
+  "deprecated": false,
   "description": "Easy as cake e-mail sending from your Node.js applications",
   "devDependencies": {
     "bunyan": "^1.8.12",
@@ -57127,34 +56622,16 @@ module.exports={
     "sinon": "^6.1.5",
     "smtp-server": "^3.4.6"
   },
-  "directories": {},
-  "dist": {
-    "fileCount": 38,
-    "integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
-    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbdFjyCRA9TVsSAnZWagAAkckQAJJt6B/JeTv3Uobqihi5\nCqTIUGGqwObgQjfmlkt/qBMBsjjhVyMuej3gNCErOthNROwqzUEZUYuKO1m6\n2gfTndkvu8Ofb9WHaTJAkdFMDsu+AR+IHRGYu9Za40WTMt8bnbG3rKIdYTsE\ni8XSd+qgjM/nTvYRlKC8ayR+fk2iRY0wXvWJiTnxNEEUSF5oduU9GZuYUb0O\nN5Qvk8uPtji6rxgKNRCd0U5/moFb+y6wAMKxAMnnIrbKzvZS5Mdx7tZC0/Pi\nyn6wHW4kNvPpcc7E0cilBtWLgltFtIEdJLt59ERanBklntxLDNaxkrj/YqrP\nqOf2/PF1OLLXKLP9pjBssiyU9lylrGm0pz1agExPLt0qsIUPkAClewcA/ich\nfLC9ZHL8Ljrki+DEW6+431WjRKXmaaR7gCP7+rLF2Fb0VyQmHawpoILrvtSB\nDmh6AV6Fbrvyqm329z1Yp3YVUne00bnmeORyhu1WiHYTIA4kMS9v8h6KtqJh\nWHuCI3YvwtuG9P6El+5gqE/OaEcR8oO3BZNqFHxSNAxaMxXGx3WVM0FLzWsx\nzAFNH6ijDoKSxafhlqzf8ud6Jyelcps6UsXrJzsgoVSoNETDKoLQbe2XNWuz\nmQuHW/KKxCUA9whXT14mo92J5XecDCqYRaHmE97H9DV2xByhemdpGga7wl6I\n3B5P\r\n=yvh8\r\n-----END PGP SIGNATURE-----\r\n",
-    "shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
-    "tarball": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
-    "unpackedSize": 444450
-  },
   "engines": {
     "node": ">=6.0.0"
   },
-  "gitHead": "bc2b52082186fdf8712b8a4737abe88e46061c3e",
   "homepage": "https://nodemailer.com/",
   "keywords": [
     "Nodemailer"
   ],
   "license": "MIT",
   "main": "lib/nodemailer.js",
-  "maintainers": [
-    {
-      "name": "andris",
-      "email": "andris@node.ee"
-    }
-  ],
   "name": "nodemailer",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nodemailer/nodemailer.git"
@@ -57497,6 +56974,12 @@ module.exports = {
 		return data;
 	},
 
+	dataHoraAtual: function(){
+		var d = new Date();
+		var data = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		return data;
+	},
+
 	sobeLinhas: function(caminho){
 		require('fs').readFile(caminho, 'latin1', (err, data) => {
 			data = data.replace(/(\r\n|\n|\r)/gm, " ");
@@ -57667,6 +57150,15 @@ module.exports = {
 			req.write(texto);
 		}
 		req.end();
+	},
+
+	formataData: function(data){
+		if(data.substring(0, 10) == "1001-01-01"){
+			return "-";
+		}
+		var separado = data.substring(0, 10).split('-');
+		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
+		return resultado;
 	}
 };
 }).call(this,require("buffer").Buffer)

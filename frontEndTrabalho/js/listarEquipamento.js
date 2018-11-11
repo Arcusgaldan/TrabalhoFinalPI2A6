@@ -1,8 +1,8 @@
 function criaElementos(listaEquipamentos){
 	for(let i = 0; i < listaEquipamentos.length; i++){
-		$("#tabelaEquipamentos").append("<tr>\
+		$("#tabelaEquipamentos").append("<tr class='trEquipamentos'>\
 	                      <th id='nomeEquipamentoLista"+i+"'></th>\
-	                      <td>\
+	                      <td class='tdEquipamentos'>\
 	                        <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseEquipamentosLista"+i+"' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
 	                        <button id='alterarEquipamentoLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Equipamentos</button>\
 	                        <button id='excluirEquipamentoLista"+i+"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Equipamentos</button>\

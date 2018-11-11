@@ -1,8 +1,8 @@
 module.exports = {
 	validar: function(pesquisa){
 		var validates = require('./../validates.js');
-		if(!validates.req(pesquisa.id) || !validates.min(pesquisa.titulo, 10) || !validates.req(pesquisa.codDocente) || !validates.req(pesquisa.codLinha) ||
-			!validates.min(pesquisa.tipo, 10) || validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
+		if(!validates.req(pesquisa.id) || !validates.min(pesquisa.titulo, 10) || !validates.req(pesquisa.codDocente) || !validates.req(pesquisa.codLinha) || 
+			!validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
@@ -106,6 +106,14 @@ module.exports = {
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
+			cb(resultado);
+		});
+	},
+
+	buscarGrupo: function(idGrupo, cb){
+		var sql = 'SELECT p.*, d.nome docenteNome, d.id docenteId, l.id linhaId, l.nome linhaNome FROM TBPesquisa p JOIN TBDocente d ON d.id = p.codDocente JOIN TBGrupo g ON g.id = d.codGrupo JOIN TBLinhaPesquisa l ON p.codLinha = l.id WHERE g.id = ' + idGrupo + ';'
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
 		});
 	}

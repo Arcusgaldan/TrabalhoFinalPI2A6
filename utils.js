@@ -234,5 +234,14 @@ module.exports = {
 			req.write(texto);
 		}
 		req.end();
+	},
+
+	formataData: function(data){
+		if(data.substring(0, 10) == "1001-01-01"){
+			return "-";
+		}
+		var separado = data.substring(0, 10).split('-');
+		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
+		return resultado;
 	}
 };

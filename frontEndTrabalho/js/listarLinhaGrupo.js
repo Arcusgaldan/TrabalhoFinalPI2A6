@@ -536,7 +536,7 @@ function preencheTabela(listaLinha){
 				}
 				console.log("entrou no append" + JSON.stringify(listaLinha));
 				for(var i = 0; i < listaLinha.length; i++){
-					$("#tabelaLinhasGrupo").append("<tr><th id='nomeLinhaLista"+i+"'></th><td><strong id='codigoLinhaLista"+i+"'></strong></td><td><button id='btnAlterarLinhaGrupoLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal'>Alterar Linhas de pesquisa</button></td></tr>");
+					$("#tabelaLinhasGrupo").append("<tr class='trListaLinha'><th id='nomeLinhaLista"+i+"'></th><td><strong id='codigoLinhaLista"+i+"'></strong></td><td><button id='btnAlterarLinhaGrupoLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal'>Alterar Linhas de pesquisa</button></td></tr>");
 				
 					document.getElementById("codigoLinhaLista"+i).innerHTML = vetorLinhasGerais[listaLinha[i].codLinha].codigo;
 					document.getElementById("nomeLinhaLista"+i).innerHTML = vetorLinhasGerais[listaLinha[i].codLinha].nome;

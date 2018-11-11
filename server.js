@@ -56,6 +56,43 @@ http.createServer(function(req, res){
                     }
                 });
                 return;                
+            }else if(operacao == "BUSCARGRUPO"){
+                if(objeto == "Pesquisa"){
+                    var cPesquisa = require('./controller/cPesquisa.js');
+                    cPesquisa.buscarGrupo(jsonRqs['idGrupo'], function(resultado){
+                        if(resultado){
+                            res.statusCode = 200;
+                            res.write(JSON.stringify(resultado));
+                            res.end();
+                            return;
+                        }else{
+                            res.statusCode = 400;
+                            res.end();
+                            return;
+                        }
+                    });
+                    return;
+                }else if(objeto == "Publicacao"){
+                    var cPublicacao = require('./controller/cPublicacao.js');
+                    cPublicacao.buscarGrupo(jsonRqs['idGrupo'], function(resultado){
+                        if(resultado){
+                            res.statusCode = 200;
+                            res.write(JSON.stringify(resultado));
+                            res.end();
+                            return;
+                        }else{
+                            res.statusCode = 400;
+                            res.end();
+                            return;
+                        }
+                    });
+                    return;
+                }else{
+                    console.log("Objeto " + objeto + " não suporta a operação BUSCARGRUPO");
+                    res.statusCode = 400;
+                    res.end();
+                    return;
+                }
             }else if(objeto != "Reset" && objeto != "DataAtual" && objeto != "DataHoraAtual"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
                 var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
@@ -86,6 +123,7 @@ http.createServer(function(req, res){
             }
             switch(req.headers['operacao']){
                 case 'INSERIR':
+                    console.log("Opa, pedido de operação INSERIR!");
                     controller.inserir(jsonRqs, function(codRes){
                         if(codRes == 200){
                             res.statusCode = 200;
