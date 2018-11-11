@@ -46,7 +46,7 @@ function criaElementos(listaDocente){
           <td>\
           <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseDocenteLista"+i+"' role='button' aria-expanded='false' aria-controls='collapse'> Mostra Dados <span class='fas fa-plus'></span></button>  \
             <button id='alterarDocenteLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Docente</button>\
-            <button id='' class='btn btn-warning' data-toggle='modal' data-target='#alteraLinhaModal' >Adicionar linha de Pesquisa</button>\
+            <button id='adicionarLinhaPesquisa"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraLinhaModal' >Adicionar linha de Pesquisa</button>\
             <button id='excluirDocenteLista"+i+"' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Docente</button>\
             <div id='collapseDocenteLista"+i+"' class='collapse mostraLista' >\
               <div class='card card-body'>\
@@ -85,6 +85,9 @@ function criaElementos(listaDocente){
 			document.getElementById("excluirDocenteLista"+ i).addEventListener("click", function(){
 				preencheModalExcluir(docente);
 			}, false);
+			document.getElementById("adicionarLinhaPesquisa"+i).addEventListener("click", function(){
+				preencheModalLinha(docente);
+			}, false);
 		}());
 	}
 }
@@ -115,6 +118,10 @@ function preencheModalExcluir(docente){
 	console.log("entrei no modal Excluir com Docente = " + JSON.stringify(docente.nome));
 	document.getElementById("nomeDocenteExcluir").innerHTML = docente.nome;
 	document.getElementById("idDocenteExcluir").value = docente.id;
+}
+
+function preencheModalLinha(docente){
+	document.getElementById("idDocenteCadLinha").value = docente.id;
 }
 
 var url = window.location.pathname;

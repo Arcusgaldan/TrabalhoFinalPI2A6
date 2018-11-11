@@ -234,5 +234,11 @@ module.exports = {
 			req.write(texto);
 		}
 		req.end();
+	},
+
+	formataData: function(data){
+		var separado = data.substring(0, 10).split('-');
+		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
+		return resultado;
 	}
 };

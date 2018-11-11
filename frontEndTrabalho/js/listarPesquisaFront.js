@@ -33109,74 +33109,46 @@ module.exports = {
 	}
 }
 },{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
-function populaVetorLinhasGerais(cb){
-	var http = require('http');
-	var utils = require('./../../utils.js');
+var utils = require('./../../utils.js');
+var vetorLinhas = [];
+utils.enviaRequisicao('LinhaPesquisa', 'LISTAR', '', function(res){
+	if(res.statusCode == 200){
+		var msg = "";
+		res.on('data', function(chunk){
+			msg += chunk;
+		});
+		res.on('end', function(){
+			var vetor = JSON.parse(msg);
+			for(let i = 0; i < vetor.length; i++){
+				vetorLinhas[vetor[i].id] = vetor[i];
+			}
+		});
+	}else{
+		document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa";
+		$("#erroModal").modal('show');
+	}
+});
 
-	var opcoesHTTP = utils.opcoesHTTP("");
-	opcoesHTTP.headers.Objeto = "LinhaPesquisa";
-	opcoesHTTP.headers.Operacao = "LISTAR";
-
-	var req = http.request(opcoesHTTP, (res) => {
-		console.log("Resposta para listar todas as linhas gerais recebida!");
+document.getElementById('docentePesquisaCadastrar').addEventListener('change', function(){
+	utils.enviaRequisicao('VinculoDocenteLinha', 'BUSCAR', {campo: 'codDocente', valor: document.getElementById('docentePesquisaCadastrar').value}, function(res){
 		if(res.statusCode == 200){
 			var msg = "";
 			res.on('data', function(chunk){
 				msg += chunk;
 			});
 			res.on('end', function(){
-				var vetorOrganizado = [];
-				var vetor = JSON.parse(msg);
-				for(var i = 0; i < vetor.length; i++){
-					vetorOrganizado[vetor[i].id] = vetor[i];
+				var vetorVinculo = JSON.parse(msg).resultado;
+				$("#linhaPesquisaCadastrar > option").remove();
+				for(let i = 0; i < vetorVinculo.length; i++){
+					$("#linhaPesquisaCadastrar").append("<option value='" + vetorVinculo[i].codLinha + "'>" + vetorLinhas[vetorVinculo[i].codLinha].nome + "</option>");
 				}
-				cb(vetorOrganizado);
-			});
+			});				
 		}else{
-			cb(null);
+			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas do docente";
+			$("#erroModal").modal('show');
 		}
 	});
-
-	req.end();
-}
-
-function populaVetorLinhasGrupo(cb){
-	var http = require('http');
-	var utils = require('./../../utils.js');
-	var url = window.location.pathname;
-	buscaGrupo(url.split("/")[2], function(idGrupo){
-		var objeto = {
-			campo: "codGrupo",
-			valor: idGrupo
-		};
-
-		var texto = JSON.stringify(objeto);
-
-		var opcoesHTTP = utils.opcoesHTTP(texto);
-		opcoesHTTP.headers.Objeto = "VinculoGrupoLinha";
-		opcoesHTTP.headers.Operacao = "BUSCAR";
-
-		var req = http.request(opcoesHTTP, (res) => {
-			console.log("Resposta recebida em buscarLinhasGrupo!");
-			if(res.statusCode == 200){
-				var msg = "";
-				res.on('data', function(chunk){
-					msg += chunk;
-				});
-				res.on('end', function(){
-					let vetor = JSON.parse(msg).resultado;
-					cb(vetor)
-				});
-			}else{
-				console.log("Não foi possível buscar linhas grupo");
-				cb(null);
-			}				
-		});
-		req.write(texto);
-		req.end();
-	});
-}
-
+}, false);
 
 function buscaGrupo(sigla, cb){
 	var utils = require('./../../utils.js');
@@ -33209,35 +33181,135 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
-function preencheSelect(select, listaLinha){
-	$("#" + select + " > option").remove();
-	for(var i = 0; i < listaLinha.length; i++){
-		$("#" + select).append("<option value='" + listaLinha[i].id + "'> " + listaLinha[i].codigo + " - " + listaLinha[i].nome + "</option>");
-	}
+function preencheDocentes(idGrupo){
+	var utils = require('./../../utils.js');
+	utils.enviaRequisicao('Docente', "BUSCAR", {campo: "codGrupo", valor: idGrupo}, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});	
+			res.on('end', function(){
+				var vetor = JSON.parse(msg).resultado;
+				for(let i = 0; i < vetor.length; i++){
+					$("#docentePesquisaCadastrar").append("<option value='" + vetor[i].id + "'>" + vetor[i].nome + "</option>");
+				}
+			});
+		}
+	});
 }
 
-var vetorLinhasGerais;
-var vetorLinhasGrupo;
 
-populaVetorLinhasGerais(function(vetor){
-	if(vetor){
-		vetorLinhasGerais = vetor;
-		populaVetorLinhasGrupo(function(vetor){
-			if(vetor){
-				vetorLinhasGrupo = vetor;
-				var vetorFinal = [];
-				for(let i = 0; i < vetorLinhasGrupo.length; i++){
-					vetorFinal.push(vetorLinhasGerais[vetorLinhasGrupo[i].codLinha]);
+function preencheTabela(listaPesquisa){
+	var utils = require('./../../utils.js');
+	utils.enviaRequisicao('Aluno', "BUSCAR", {campo: "atual", valor: 1}, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});	
+			res.on('end', function(){
+				var vetorAlunos = [];
+				var vetRes = JSON.parse(msg).resultado;
+				for(let j = 0; j < vetRes.length; j++){
+					vetorAlunos[vetRes[j].codPesquisa] = vetRes[j];
 				}
-				preencheSelect("linhaDocenteCadastrar", vetorFinal);
-			}else{
-				console.log("Erro ao listar linhas grupo");
-			}
-		});
-	}else{
-		console.log("Erro ao listar linhas gerais");
-	}
+
+				for(var i=0;i<listaPesquisa.length;i++){
+					$("#tabelaPesquisa").append("<tr>\
+			                        <th id='tituloPesquisaLista" + i + "'></th>\
+			                        <td>\
+			                          <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapsePesquisaLista" + i + "' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
+			                          <button id='alterarPesquisaLista" + i + "' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Projeto</button>\
+			                          <button id='excluirPesquisaLista" + i + "' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Projeto</button>\
+			                          <div id='collapsePesquisaLista" + i + "' class='collapse mostraLista'>\
+			                            <div class='card card-body'>\
+			                              <p><strong>Docente responsável: </strong> <span id='docentePesquisaDados" + i + "'></span></p>\
+			                              <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaDados" + i + "'></span></p>\
+			                              <p>\
+			                                <strong>Aluno: </strong> <span id='nomeAlunoDados" + i + "'>\
+			                                  <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseAlunoLista" + i + "' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
+			                                </span>\
+			                              </p>\
+			                              <div id='collapseAlunoLista' class='collapse mostraAluno'>\
+			                               <p><strong>Curso: </strong> <span id='cursoAlunoDados" + i + "'></span></p>\
+			                               <p><strong>Currículo Lattes: </strong> <span id='linkLattesAlunoDados" + i + "'></span></p>\
+			                              <p><strong>Tipo de bolsa: </strong> <span id='tipoAlunoDados" + i + "'></span></p>\
+			                               <p><strong>Data de Início da Orientação: </strong> <span id='dataInicioAlunoDados" + i + "'></span></p>\
+			                               <p><strong>Data de Término da Orientação: </strong> <span id='dataFimAlunoDados" + i + "'></span></p>\
+			                             </div>\
+			                             <p><strong>Data de Inicio: </strong> <span id='dataInicioPesquisaDados" + i + "'></span></p>\
+			                             <p><strong>Data de Término: </strong> <span id='dataFimPesquisaDados" + i + "'></span></p>\
+			                           </div>\
+			                         </td>\
+			                       </tr>");
+				 
+
+					//Puxa o nome que refenrencia o usuário na row
+					document.getElementById("tituloPesquisaLista" + i).innerHTML = listaPesquisa[i].nome;
+
+					// PREEENCHE INFORMAÇÕES
+					document.getElementById("docentePesquisaDados" + i).innerHTML = listaPesquisa[i].docenteNome;
+					document.getElementById("linhaPesquisaDados" + i).innerHTML = listaPesquisa[i].linhaNome;
+					document.getElementById("dataInicioPesquisaDados" + i).innerHTML = listaPesquisa[i].dataInicio;
+					document.getElementById("dataFimPesquisaDados" + i).innerHTML = listaPesquisa[i].dataFim;
+
+					document.getElementById("nomeAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
+					document.getElementById("cursoAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
+					document.getElementById("linkLattesAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
+					document.getElementById("dataInicioAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].dataInicio;
+					document.getElementById("dataFimAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].dataFim;
+
+
+					
+					(function(){
+						var pesquisa = listaPesquisa[i];		
+						var aluno = vetorAlunos[pesquisa.id];
+						document.getElementById("alterarPesquisaLista"+ i).addEventListener("click", function(){
+							preencheModalAlterar(pesquisa, aluno);
+						}, false);
+						document.getElementById("excluirPesquisaLista"+ i).addEventListener("click", function(){
+							preencheModalExcluir(pesquisa);
+						}, false);
+					}());
+				}
+			});						
+		}else if(res.statusCode != 747){
+				document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar alunos";
+				$("#erroModal").modal('show');
+		}			
+	});
+}
+
+function preencheModalAlterar(pesquisa, aluno){
+
+}	
+
+function preencheModalExcluir(aluno){
+
+}
+
+
+var url = window.location.pathname;
+buscaGrupo(url.split("/")[2], function(idGrupo){
+	var utils = require('./../../utils.js');
+	utils.enviaRequisicao("Pesquisa", "BUSCARGRUPO", {idGrupo: idGrupo}, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){				
+				preencheTabela(JSON.parse(msg));
+				preencheDocentes(idGrupo);
+			});
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar pesquisas";
+			$("#erroModal").modal('show');
+		}
+	});	
 });
+
 },{"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
 module.exports = {
 	especifica: function(objeto){
@@ -56571,39 +56643,52 @@ module.exports = XOAuth2;
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
 },{"../fetch":260,"../shared":275,"buffer":54,"crypto":63,"stream":175,"timers":181}],286:[function(require,module,exports){
 module.exports={
-  "_from": "nodemailer",
+  "_args": [
+    [
+      "nodemailer",
+      "/home/gabiru/Repositorios/TrabalhoFinalPI2A6"
+    ]
+  ],
+  "_from": "nodemailer@latest",
+  "_hasShrinkwrap": false,
   "_id": "nodemailer@4.6.8",
-  "_inBundle": false,
-  "_integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
+  "_inCache": true,
+  "_installable": true,
   "_location": "/nodemailer",
+  "_nodeVersion": "10.4.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/nodemailer_4.6.8_1534351602860_0.8166117668816155"
+  },
+  "_npmUser": {
+    "email": "andris@kreata.ee",
+    "name": "andris"
+  },
+  "_npmVersion": "6.1.0",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "nodemailer",
     "name": "nodemailer",
-    "escapedName": "nodemailer",
+    "raw": "nodemailer",
     "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
   },
   "_requiredBy": [
-    "#USER",
-    "/"
+    "#USER"
   ],
   "_resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
   "_shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
+  "_shrinkwrap": null,
   "_spec": "nodemailer",
-  "_where": "C:\\Users\\GABRIEL\\Documents\\Repositorios\\TrabalhoFinalPI2A6",
+  "_where": "/home/gabiru/Repositorios/TrabalhoFinalPI2A6",
   "author": {
     "name": "Andris Reinman"
   },
   "bugs": {
     "url": "https://github.com/nodemailer/nodemailer/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {},
-  "deprecated": false,
   "description": "Easy as cake e-mail sending from your Node.js applications",
   "devDependencies": {
     "bunyan": "^1.8.12",
@@ -56622,16 +56707,34 @@ module.exports={
     "sinon": "^6.1.5",
     "smtp-server": "^3.4.6"
   },
+  "directories": {},
+  "dist": {
+    "fileCount": 38,
+    "integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbdFjyCRA9TVsSAnZWagAAkckQAJJt6B/JeTv3Uobqihi5\nCqTIUGGqwObgQjfmlkt/qBMBsjjhVyMuej3gNCErOthNROwqzUEZUYuKO1m6\n2gfTndkvu8Ofb9WHaTJAkdFMDsu+AR+IHRGYu9Za40WTMt8bnbG3rKIdYTsE\ni8XSd+qgjM/nTvYRlKC8ayR+fk2iRY0wXvWJiTnxNEEUSF5oduU9GZuYUb0O\nN5Qvk8uPtji6rxgKNRCd0U5/moFb+y6wAMKxAMnnIrbKzvZS5Mdx7tZC0/Pi\nyn6wHW4kNvPpcc7E0cilBtWLgltFtIEdJLt59ERanBklntxLDNaxkrj/YqrP\nqOf2/PF1OLLXKLP9pjBssiyU9lylrGm0pz1agExPLt0qsIUPkAClewcA/ich\nfLC9ZHL8Ljrki+DEW6+431WjRKXmaaR7gCP7+rLF2Fb0VyQmHawpoILrvtSB\nDmh6AV6Fbrvyqm329z1Yp3YVUne00bnmeORyhu1WiHYTIA4kMS9v8h6KtqJh\nWHuCI3YvwtuG9P6El+5gqE/OaEcR8oO3BZNqFHxSNAxaMxXGx3WVM0FLzWsx\nzAFNH6ijDoKSxafhlqzf8ud6Jyelcps6UsXrJzsgoVSoNETDKoLQbe2XNWuz\nmQuHW/KKxCUA9whXT14mo92J5XecDCqYRaHmE97H9DV2xByhemdpGga7wl6I\n3B5P\r\n=yvh8\r\n-----END PGP SIGNATURE-----\r\n",
+    "shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
+    "tarball": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
+    "unpackedSize": 444450
+  },
   "engines": {
     "node": ">=6.0.0"
   },
+  "gitHead": "bc2b52082186fdf8712b8a4737abe88e46061c3e",
   "homepage": "https://nodemailer.com/",
   "keywords": [
     "Nodemailer"
   ],
   "license": "MIT",
   "main": "lib/nodemailer.js",
+  "maintainers": [
+    {
+      "name": "andris",
+      "email": "andris@node.ee"
+    }
+  ],
   "name": "nodemailer",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nodemailer/nodemailer.git"

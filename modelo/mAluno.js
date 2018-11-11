@@ -8,6 +8,7 @@ module.exports = {
 		final.dataInicio = objeto.dataInicio; //date
 		final.dataFim = objeto.dataFim; //date
 		final.codPesquisa = objeto.codPesquisa; //int chave estrangeira apontando para Pesquisa
+		final.tipo = objeto.tipo; //varchar(100)
 		return final;
 	},
 
@@ -20,11 +21,12 @@ module.exports = {
 		final.dataInicio = "";
 		final.dataFim = "";
 		final.codPesquisa = 0;
+		final.tipo = "";
 		return final;
 	},
 
 	isString: function(atributo){
-		var strings = ["nome", "curso", "linkLattes", "dataInicio", "dataFim"];
+		var strings = ["nome", "curso", "linkLattes", "dataInicio", "dataFim", "tipo"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

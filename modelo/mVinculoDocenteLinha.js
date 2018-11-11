@@ -15,7 +15,7 @@ module.exports = {
 		final.codDocente = 0;
 		final.codLinha = 0;
 		final.dataInicio = "";
-		final.dataFim = "";	
+		final.dataFim = "1001-01-01";	
 		return final;
 	},
 
