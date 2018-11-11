@@ -112,6 +112,8 @@
 [-] A data de criação do grupo está por padrão "01-01-1000" antes de alterar.
 [-] Forçando um erro no cadastrar informativo percebi que quando tenta cadastrar sem selecionar o o campo a aser mudado ele não apresenta erro no front porem nao deixa mais cadastrar nada.
 [-] Verificar confirmação do cadastro docente
+[-] Após cadastrar linha de pesquisa aparece o modal de sucesso e não acontece mais nada.
+[-] Após Docente aparece o modal de sucesso e não acontece mais nada.
 
 -- DOCUMENTAÇÃO
 
