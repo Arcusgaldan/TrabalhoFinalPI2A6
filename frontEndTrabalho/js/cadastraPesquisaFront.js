@@ -33267,7 +33267,7 @@ module.exports = {
 	},
 
 	buscarGrupo: function(idGrupo, cb){
-		var sql = 'SELECT p.*, d.nome docenteNome, l.nome linhaNome FROM TBPesquisa p JOIN TBDocente d ON d.id = p.codDocente JOIN TBGrupo g ON g.id = d.codGrupo JOIN TBLinhaPesquisa l ON p.codLinha = l.id WHERE g.id = ' + idGrupo + ';'
+		var sql = 'SELECT p.*, d.nome docenteNome, d.id docenteId, l.id linhaId, l.nome linhaNome FROM TBPesquisa p JOIN TBDocente d ON d.id = p.codDocente JOIN TBGrupo g ON g.id = d.codGrupo JOIN TBLinhaPesquisa l ON p.codLinha = l.id WHERE g.id = ' + idGrupo + ';'
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
@@ -33380,7 +33380,7 @@ function cadastraAluno(){
 }
 
 function cadastra(){
-	if(document.getElementById('cursoAlunoCadastrarTemp').value == ""){
+	if(document.getElementById('cursoAlunoCadastrarTemp').value === ""){
 		document.getElementById('msgErroModal').innerHTML = "Por favor cadastre um aluno";
 		$("#erroModal").modal('show');
 	}
@@ -57442,6 +57442,9 @@ module.exports = {
 	},
 
 	formataData: function(data){
+		if(data.substring(0, 10) == "1001-01-01"){
+			return "-";
+		}
 		var separado = data.substring(0, 10).split('-');
 		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
 		return resultado;
