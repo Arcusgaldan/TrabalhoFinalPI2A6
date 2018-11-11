@@ -1,24 +1,33 @@
 var utils = require('./../../utils.js');
 var vetorLinhas = [];
-utils.enviaRequisicao('LinhaPesquisa', 'LISTAR', '', function(res){
-	if(res.statusCode == 200){
-		var msg = "";
-		res.on('data', function(chunk){
-			msg += chunk;
-		});
-		res.on('end', function(){
-			var vetor = JSON.parse(msg);
-			for(let i = 0; i < vetor.length; i++){
-				vetorLinhas[vetor[i].id] = vetor[i];
-			}
-		});
-	}else{
-		document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa";
-		$("#erroModal").modal('show');
-	}
-});
 
-document.getElementById('docentePesquisaCadastrar').addEventListener('change', function(){
+function listaLinhas(cb){
+	utils.enviaRequisicao('LinhaPesquisa', 'LISTAR', '', function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){
+				var vetor = JSON.parse(msg);
+				for(let i = 0; i < vetor.length; i++){
+					vetorLinhas[vetor[i].id] = vetor[i];
+				}
+				cb(200);
+			});
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa";
+			$("#erroModal").modal('show');
+			cb(400);
+		}
+	});
+}
+
+document.getElementById('docentePesquisaCadastrar').addEventListener('change', puxaLinhasDocenteCadastrar, false);
+
+document.getElementById('docentePesquisaAlterar').addEventListener('change', puxaLinhasDocenteAlterar, false);
+
+function puxaLinhasDocenteCadastrar(){
 	utils.enviaRequisicao('VinculoDocenteLinha', 'BUSCAR', {campo: 'codDocente', valor: document.getElementById('docentePesquisaCadastrar').value}, function(res){
 		if(res.statusCode == 200){
 			var msg = "";
@@ -37,9 +46,7 @@ document.getElementById('docentePesquisaCadastrar').addEventListener('change', f
 			$("#erroModal").modal('show');
 		}
 	});
-}, false);
-
-document.getElementById('docentePesquisaAlterar').addEventListener('change', puxaLinhasDocenteAlterar, false);
+}
 
 function puxaLinhasDocenteAlterar(){
 	utils.enviaRequisicao('VinculoDocenteLinha', 'BUSCAR', {campo: 'codDocente', valor: document.getElementById('docentePesquisaAlterar').value}, function(res){
@@ -103,12 +110,17 @@ function preencheDocentes(idGrupo){
 			});	
 			res.on('end', function(){
 				var vetor = JSON.parse(msg).resultado;
+				$("#docentePesquisaCadastrar > option").remove();
+				$("#docentePesquisaAlterar > option").remove();
 				for(let i = 0; i < vetor.length; i++){
 					$("#docentePesquisaCadastrar").append("<option value='" + vetor[i].id + "'>" + vetor[i].nome + "</option>");
-					document.getElementById('docentePesquisaCadastrar').value = vetor[i].id;
 					$("#docentePesquisaAlterar").append("<option value='" + vetor[i].id + "'>" + vetor[i].nome + "</option>");
-					document.getElementById('docentePesquisaAlterar').value = vetor[i].id;
+					if(i == 0){
+						document.getElementById('docentePesquisaCadastrar').value = vetor[i].id;
+						document.getElementById('docentePesquisaAlterar').value = vetor[i].id;						
+					}
 				}
+				puxaLinhasDocenteCadastrar();
 				puxaLinhasDocenteAlterar();
 			});			
 		}
@@ -234,23 +246,30 @@ function preencheModalExcluir(aluno){
 }
 
 
-var url = window.location.pathname;
-buscaGrupo(url.split("/")[2], function(idGrupo){
-	var utils = require('./../../utils.js');
-	utils.enviaRequisicao("Pesquisa", "BUSCARGRUPO", {idGrupo: idGrupo}, function(res){
-		if(res.statusCode == 200){
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-			res.on('end', function(){				
-				preencheTabela(JSON.parse(msg));
-			});
-		}else{
-			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar pesquisas";
-			$("#erroModal").modal('show');
-		}
+listaLinhas(function(resultadoLinhas){
+	if(resultadoLinhas == 200){
+		var url = window.location.pathname;
+		buscaGrupo(url.split("/")[2], function(idGrupo){
+			var utils = require('./../../utils.js');
+			utils.enviaRequisicao("Pesquisa", "BUSCARGRUPO", {idGrupo: idGrupo}, function(res){
+				if(res.statusCode == 200){
+					var msg = "";
+					res.on('data', function(chunk){
+						msg += chunk;
+					});
+					res.on('end', function(){				
+						preencheTabela(JSON.parse(msg));
+					});
+				}else{
+					document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar pesquisas";
+					$("#erroModal").modal('show');
+				}
 
-		preencheDocentes(idGrupo);
-	});	
+				preencheDocentes(idGrupo);
+			});	
+		});
+	}else{
+		document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa";
+		$("#erroModal").modal('show');
+	}
 });
