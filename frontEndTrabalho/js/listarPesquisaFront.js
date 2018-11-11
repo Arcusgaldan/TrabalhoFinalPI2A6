@@ -33227,11 +33227,12 @@ function preencheTabela(listaPesquisa){
 			                              <p><strong>Docente responsável: </strong> <span id='docentePesquisaDados" + i + "'></span></p>\
 			                              <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaDados" + i + "'></span></p>\
 			                              <p>\
-			                                <strong>Aluno: </strong> <span id='nomeAlunoDados" + i + "'>\
-			                                  <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseAlunoLista" + i + "' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
+			                                <strong>Aluno: </strong> <span>\
+			                                	<span id='nomeAlunoDados" + i + "'></span>\
+			                                	<button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseAlunoLista" + i + "' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
 			                                </span>\
 			                              </p>\
-			                              <div id='collapseAlunoLista' class='collapse mostraAluno'>\
+			                              <div id='collapseAlunoLista" + i + "' class='collapse mostraAluno'>\
 			                               <p><strong>Curso: </strong> <span id='cursoAlunoDados" + i + "'></span></p>\
 			                               <p><strong>Currículo Lattes: </strong> <span id='linkLattesAlunoDados" + i + "'></span></p>\
 			                              <p><strong>Tipo de bolsa: </strong> <span id='tipoAlunoDados" + i + "'></span></p>\
@@ -33246,19 +33247,22 @@ function preencheTabela(listaPesquisa){
 				 
 
 					//Puxa o nome que refenrencia o usuário na row
-					document.getElementById("tituloPesquisaLista" + i).innerHTML = listaPesquisa[i].nome;
+					document.getElementById("tituloPesquisaLista" + i).innerHTML = listaPesquisa[i].titulo;
 
 					// PREEENCHE INFORMAÇÕES
 					document.getElementById("docentePesquisaDados" + i).innerHTML = listaPesquisa[i].docenteNome;
 					document.getElementById("linhaPesquisaDados" + i).innerHTML = listaPesquisa[i].linhaNome;
-					document.getElementById("dataInicioPesquisaDados" + i).innerHTML = listaPesquisa[i].dataInicio;
-					document.getElementById("dataFimPesquisaDados" + i).innerHTML = listaPesquisa[i].dataFim;
+					document.getElementById("dataInicioPesquisaDados" + i).innerHTML = utils.formataData(listaPesquisa[i].dataInicio);
+					document.getElementById("dataFimPesquisaDados" + i).innerHTML = utils.formataData(listaPesquisa[i].dataFim);
 
-					document.getElementById("nomeAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
-					document.getElementById("cursoAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
-					document.getElementById("linkLattesAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
-					document.getElementById("dataInicioAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].dataInicio;
-					document.getElementById("dataFimAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].dataFim;
+					console.log("Pesquisa #" + i + " é de ID " + listaPesquisa[i].id + " e nome " + listaPesquisa[i].titulo);
+
+					document.getElementById("nomeAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
+					document.getElementById("cursoAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
+					document.getElementById("linkLattesAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
+					document.getElementById("dataInicioAlunoDados" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataInicio);
+					document.getElementById("dataFimAlunoDados" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataFim);
+					document.getElementById("tipoAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].tipo;
 
 
 					
@@ -33277,7 +33281,9 @@ function preencheTabela(listaPesquisa){
 		}else if(res.statusCode != 747){
 				document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar alunos";
 				$("#erroModal").modal('show');
-		}			
+		}else{
+			console.log("Não foi possível buscar alunos");
+		}		
 	});
 }
 
@@ -56643,52 +56649,39 @@ module.exports = XOAuth2;
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
 },{"../fetch":260,"../shared":275,"buffer":54,"crypto":63,"stream":175,"timers":181}],286:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "nodemailer",
-      "/home/gabiru/Repositorios/TrabalhoFinalPI2A6"
-    ]
-  ],
-  "_from": "nodemailer@latest",
-  "_hasShrinkwrap": false,
+  "_from": "nodemailer",
   "_id": "nodemailer@4.6.8",
-  "_inCache": true,
-  "_installable": true,
+  "_inBundle": false,
+  "_integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
   "_location": "/nodemailer",
-  "_nodeVersion": "10.4.0",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/nodemailer_4.6.8_1534351602860_0.8166117668816155"
-  },
-  "_npmUser": {
-    "email": "andris@kreata.ee",
-    "name": "andris"
-  },
-  "_npmVersion": "6.1.0",
   "_phantomChildren": {},
   "_requested": {
-    "name": "nodemailer",
+    "type": "tag",
+    "registry": true,
     "raw": "nodemailer",
+    "name": "nodemailer",
+    "escapedName": "nodemailer",
     "rawSpec": "",
-    "scope": null,
-    "spec": "latest",
-    "type": "tag"
+    "saveSpec": null,
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
-    "#USER"
+    "#USER",
+    "/"
   ],
   "_resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
   "_shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
-  "_shrinkwrap": null,
   "_spec": "nodemailer",
-  "_where": "/home/gabiru/Repositorios/TrabalhoFinalPI2A6",
+  "_where": "C:\\Users\\GABRIEL\\Documents\\Repositorios\\TrabalhoFinalPI2A6",
   "author": {
     "name": "Andris Reinman"
   },
   "bugs": {
     "url": "https://github.com/nodemailer/nodemailer/issues"
   },
+  "bundleDependencies": false,
   "dependencies": {},
+  "deprecated": false,
   "description": "Easy as cake e-mail sending from your Node.js applications",
   "devDependencies": {
     "bunyan": "^1.8.12",
@@ -56707,34 +56700,16 @@ module.exports={
     "sinon": "^6.1.5",
     "smtp-server": "^3.4.6"
   },
-  "directories": {},
-  "dist": {
-    "fileCount": 38,
-    "integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
-    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbdFjyCRA9TVsSAnZWagAAkckQAJJt6B/JeTv3Uobqihi5\nCqTIUGGqwObgQjfmlkt/qBMBsjjhVyMuej3gNCErOthNROwqzUEZUYuKO1m6\n2gfTndkvu8Ofb9WHaTJAkdFMDsu+AR+IHRGYu9Za40WTMt8bnbG3rKIdYTsE\ni8XSd+qgjM/nTvYRlKC8ayR+fk2iRY0wXvWJiTnxNEEUSF5oduU9GZuYUb0O\nN5Qvk8uPtji6rxgKNRCd0U5/moFb+y6wAMKxAMnnIrbKzvZS5Mdx7tZC0/Pi\nyn6wHW4kNvPpcc7E0cilBtWLgltFtIEdJLt59ERanBklntxLDNaxkrj/YqrP\nqOf2/PF1OLLXKLP9pjBssiyU9lylrGm0pz1agExPLt0qsIUPkAClewcA/ich\nfLC9ZHL8Ljrki+DEW6+431WjRKXmaaR7gCP7+rLF2Fb0VyQmHawpoILrvtSB\nDmh6AV6Fbrvyqm329z1Yp3YVUne00bnmeORyhu1WiHYTIA4kMS9v8h6KtqJh\nWHuCI3YvwtuG9P6El+5gqE/OaEcR8oO3BZNqFHxSNAxaMxXGx3WVM0FLzWsx\nzAFNH6ijDoKSxafhlqzf8ud6Jyelcps6UsXrJzsgoVSoNETDKoLQbe2XNWuz\nmQuHW/KKxCUA9whXT14mo92J5XecDCqYRaHmE97H9DV2xByhemdpGga7wl6I\n3B5P\r\n=yvh8\r\n-----END PGP SIGNATURE-----\r\n",
-    "shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
-    "tarball": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
-    "unpackedSize": 444450
-  },
   "engines": {
     "node": ">=6.0.0"
   },
-  "gitHead": "bc2b52082186fdf8712b8a4737abe88e46061c3e",
   "homepage": "https://nodemailer.com/",
   "keywords": [
     "Nodemailer"
   ],
   "license": "MIT",
   "main": "lib/nodemailer.js",
-  "maintainers": [
-    {
-      "name": "andris",
-      "email": "andris@node.ee"
-    }
-  ],
   "name": "nodemailer",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nodemailer/nodemailer.git"

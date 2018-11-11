@@ -365,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `DBPronn`.`TBAluno` (
   `dataFim` DATE NULL,
   `codPesquisa` INT NOT NULL,
   `atual` TINYINT NOT NULL,
+  `tipo` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`, `codPesquisa`),
   INDEX `fk_TBAluno_TBPesquisa1_idx` (`codPesquisa` ASC),
   CONSTRAINT `fk_TBAluno_TBPesquisa1`
