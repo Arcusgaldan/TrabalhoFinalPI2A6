@@ -10,38 +10,7 @@
     <meta name="author" content="">
 
     <style type="text/css">
-      .autocomplete {
-        /*the container must be positioned relative:*/
-        position: relative;
-        display: inline-block;
-      }
-
-      .autocomplete-items {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        /*position the autocomplete items to be the same width as the container:*/
-        top: 100%;
-        left: 0;
-        right: 0;
-      }
-      .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: #fff; 
-        border-bottom: 1px solid #d4d4d4; 
-      }
-      .autocomplete-items div:hover {
-        /*when hovering an item:*/
-        background-color: #e9e9e9; 
-      }
-      .autocomplete-active {
-        /*when navigating through the items using the arrow keys:*/
-        background-color: DodgerBlue !important; 
-        color: #ffffff; 
-      }
+      /*retirei esse css e coloquei na sb-admin.css*/
     </style>
 
     <title>Pronn</title>
@@ -119,21 +88,21 @@
 
       <div id="content-wrapper">
 
-        <div class="container-fluid">
+        <div class="container-fluid margin-control-01">
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item active">Gerenciamento de Linhas de pesquisa</li>
           </ol>
 
-          <div class="container">
+          <div class="container margin-control-01">
               <div class="card mx-auto mt-5 mb-5">
                 <div class="card-header">Gerenciamento de Linhas de pesquisa 
                   <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal" style="margin-right: 5px;">Cadastrar Linhas de pesquisa</button>
 
                   <a class="btn btn-warning float-right" onclick="goBack()" style="margin-right: 5px;">Voltar</a>
                 </div>
-                <div class="card-body">
+                <div class="card-body margin-control-01">
                   <p>
                     
                   </p>

@@ -178,6 +178,19 @@ function preencheTabela(listaPesquisa){
 
 function preencheModalAlterar(pesquisa, aluno){
 
+	document.getElementById("tituloPesquisaAlterar" + i).innerHTML = listaPesquisa[i].titulo;
+	document.getElementById("docentePesquisaAlterar" + i).innerHTML = listaPesquisa[i].docenteNome;
+	document.getElementById("linhaPesquisaAlterar" + i).innerHTML = listaPesquisa[i].docenteNome;
+	document.getElementById("dataInicioPesquisaAlterar" + i).innerHTML = utils.formataData(listaPesquisa[i].dataInicio);
+	document.getElementById("dataFimPesquisaAlterar" + i).innerHTML = utils.formataData(listaPesquisa[i].dataFim);
+	document.getElementById("alunoPesquisaAlterar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
+
+	document.getElementById("nomeAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
+	document.getElementById("cursoAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
+	document.getElementById("linkLattesAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
+	document.getElementById("tipoAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].tipo;
+	document.getElementById("dataInicioAlunoCadastrar" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataInicio);
+	document.getElementById("terminoOrientacaoAlunoCadastra" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataFim);
 }	
 
 function preencheModalExcluir(aluno){
@@ -196,11 +209,12 @@ buscaGrupo(url.split("/")[2], function(idGrupo){
 			});
 			res.on('end', function(){				
 				preencheTabela(JSON.parse(msg));
-				preencheDocentes(idGrupo);
 			});
 		}else{
 			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar pesquisas";
 			$("#erroModal").modal('show');
 		}
+
+		preencheDocentes(idGrupo);
 	});	
 });

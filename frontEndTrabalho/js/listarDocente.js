@@ -43,7 +43,7 @@ function criaElementos(listaDocente){
 		$("#tabelaDocente").append("\
 		<tr>\
           <th id='nomeDocenteLista"+i+"'></th>\
-          <td>\
+          <td class='tdDocente'>\
           <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseDocenteLista"+i+"' role='button' aria-expanded='false' aria-controls='collapse'> Mostra Dados <span class='fas fa-plus'></span></button>  \
             <button id='alterarDocenteLista"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Docente</button>\
             <button id='adicionarLinhaPesquisa"+i+"' class='btn btn-warning' data-toggle='modal' data-target='#alteraLinhaModal' >Adicionar linha de Pesquisa</button>\
