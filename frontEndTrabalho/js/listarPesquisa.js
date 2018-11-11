@@ -116,11 +116,12 @@ function preencheTabela(listaPesquisa){
 			                              <p><strong>Docente responsável: </strong> <span id='docentePesquisaDados" + i + "'></span></p>\
 			                              <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaDados" + i + "'></span></p>\
 			                              <p>\
-			                                <strong>Aluno: </strong> <span id='nomeAlunoDados" + i + "'>\
-			                                  <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseAlunoLista" + i + "' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
+			                                <strong>Aluno: </strong> <span>\
+			                                	<span id='nomeAlunoDados" + i + "'></span>\
+			                                	<button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapseAlunoLista" + i + "' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>\
 			                                </span>\
 			                              </p>\
-			                              <div id='collapseAlunoLista' class='collapse mostraAluno'>\
+			                              <div id='collapseAlunoLista" + i + "' class='collapse mostraAluno'>\
 			                               <p><strong>Curso: </strong> <span id='cursoAlunoDados" + i + "'></span></p>\
 			                               <p><strong>Currículo Lattes: </strong> <span id='linkLattesAlunoDados" + i + "'></span></p>\
 			                              <p><strong>Tipo de bolsa: </strong> <span id='tipoAlunoDados" + i + "'></span></p>\
@@ -135,19 +136,22 @@ function preencheTabela(listaPesquisa){
 				 
 
 					//Puxa o nome que refenrencia o usuário na row
-					document.getElementById("tituloPesquisaLista" + i).innerHTML = listaPesquisa[i].nome;
+					document.getElementById("tituloPesquisaLista" + i).innerHTML = listaPesquisa[i].titulo;
 
 					// PREEENCHE INFORMAÇÕES
 					document.getElementById("docentePesquisaDados" + i).innerHTML = listaPesquisa[i].docenteNome;
 					document.getElementById("linhaPesquisaDados" + i).innerHTML = listaPesquisa[i].linhaNome;
-					document.getElementById("dataInicioPesquisaDados" + i).innerHTML = listaPesquisa[i].dataInicio;
-					document.getElementById("dataFimPesquisaDados" + i).innerHTML = listaPesquisa[i].dataFim;
+					document.getElementById("dataInicioPesquisaDados" + i).innerHTML = utils.formataData(listaPesquisa[i].dataInicio);
+					document.getElementById("dataFimPesquisaDados" + i).innerHTML = utils.formataData(listaPesquisa[i].dataFim);
 
-					document.getElementById("nomeAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
-					document.getElementById("cursoAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
-					document.getElementById("linkLattesAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
-					document.getElementById("dataInicioAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].dataInicio;
-					document.getElementById("dataFimAlunoDados").innerHTML = vetorAlunos[listaPesquisa[i].id].dataFim;
+					console.log("Pesquisa #" + i + " é de ID " + listaPesquisa[i].id + " e nome " + listaPesquisa[i].titulo);
+
+					document.getElementById("nomeAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
+					document.getElementById("cursoAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
+					document.getElementById("linkLattesAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
+					document.getElementById("dataInicioAlunoDados" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataInicio);
+					document.getElementById("dataFimAlunoDados" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataFim);
+					document.getElementById("tipoAlunoDados" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].tipo;
 
 
 					
@@ -166,7 +170,9 @@ function preencheTabela(listaPesquisa){
 		}else if(res.statusCode != 747){
 				document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar alunos";
 				$("#erroModal").modal('show');
-		}			
+		}else{
+			console.log("Não foi possível buscar alunos");
+		}		
 	});
 }
 

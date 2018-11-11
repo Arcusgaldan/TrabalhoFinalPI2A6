@@ -10,6 +10,8 @@ function cadastraAluno(){
 	modelo.linkLattes = document.getElementById('linkLattesAlunoCadastrar').value;
 	modelo.dataInicio = document.getElementById('dataInicioAlunoCadastrar').value;
 	modelo.dataFim = document.getElementById('dataFimAlunoCadastrar').value;
+	if(modelo.dataFim == "")
+		modelo.dataFim = "1001-01-01";
 	modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
 	modelo.codPesquisa = 0;
 
@@ -33,6 +35,11 @@ function cadastraAluno(){
 }
 
 function cadastra(){
+	if(document.getElementById('cursoAlunoCadastrarTemp').value == ""){
+		document.getElementById('msgErroModal').innerHTML = "Por favor cadastre um aluno";
+		$("#erroModal").modal('show');
+	}
+
 	var pesquisa = require('./../../modelo/mPesquisa.js').novo();
 	var aluno = require('./../../modelo/mAluno.js').novo();
 
@@ -40,10 +47,12 @@ function cadastra(){
 
 	pesquisa.id = 0;
 	pesquisa.titulo = document.getElementById('tituloPesquisaCadastrar').value;
-	pesquisa.codDocente = document.getElementById('docentePesquisaCadastrar').value;
-	pesquisa.codLinha = document.getElementById('linhaPesquisaCadastrar').value;
+	pesquisa.codDocente = parseInt(document.getElementById('docentePesquisaCadastrar').value);
+	pesquisa.codLinha = parseInt(document.getElementById('linhaPesquisaCadastrar').value);
 	pesquisa.dataInicio = document.getElementById('dataInicioPesquisaCadastrar').value;
 	pesquisa.dataFim = document.getElementById('dataFimPesquisaCadastrar').value;
+	if(pesquisa.dataFim == "")
+		pesquisa.dataFim = "1001-01-01";
 
 	aluno.id = 0;
 	aluno.nome = document.getElementById('alunoPesquisaCadastrar').value;
@@ -52,6 +61,7 @@ function cadastra(){
 	aluno.dataInicio = document.getElementById('dataInicioAlunoCadastrarTemp').value;
 	aluno.dataFim = document.getElementById('dataFimAlunoCadastrarTemp').value;
 	aluno.tipo = document.getElementById('tipoAlunoCadastrarTemp').value;
+	aluno.atual = 1;
 
 
 	var controller = require('./../../controller/cPesquisa.js');
@@ -83,7 +93,7 @@ function cadastra(){
 								document.getElementById('msgErroModal').innerHTML = "Falha ao cadastrar aluno.";
 								$("#erroModal").modal('show');
 								$('#erroModal').on('hide.bs.modal', function(){location.reload()});
-								utils.enviaRequisicao("Pesquisa", "EXCLUIR", aluno.codPesquisa, function(res){
+								utils.enviaRequisicao("Pesquisa", "EXCLUIR", {id: aluno.codPesquisa}, function(res){
 									console.log("Pesquisa excluida!");
 								});
 							}
