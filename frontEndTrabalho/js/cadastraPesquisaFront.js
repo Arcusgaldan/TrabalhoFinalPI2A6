@@ -32924,7 +32924,7 @@ module.exports = {
 	validar: function(aluno){
 		var validates = require('./../validates.js');
 		if(!validates.req(aluno.id) || !validates.min(aluno.nome, 10) || !validates.req(aluno.curso) || !validates.req(aluno.linkLattes) ||
-			!validates.req(aluno.dataInicio) || validates.req(aluno.codAluno)){ //Retirar campos opcionais desta validação						
+			!validates.req(aluno.dataInicio) || !validates.req(aluno.codPesquisa)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
@@ -33158,7 +33158,7 @@ module.exports = {
 	validar: function(pesquisa){
 		var validates = require('./../validates.js');
 		if(!validates.req(pesquisa.id) || !validates.min(pesquisa.titulo, 10) || !validates.req(pesquisa.codDocente) || !validates.req(pesquisa.codLinha) ||
-			!validates.min(pesquisa.tipo, 10) || validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
+			!validates.req(pesquisa.tipo) || !validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
@@ -33264,6 +33264,14 @@ module.exports = {
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
 			cb(resultado);
 		});
+	},
+
+	buscarGrupo: function(idGrupo, cb){
+		var sql = 'SELECT p.*, d.nome docenteNome, l.nome linhaNome FROM TBPesquisa p JOIN TBDocente d ON d.id = p.codDocente JOIN TBGrupo g ON g.id = d.codGrupo JOIN TBLinhaPesquisa l ON p.codLinha = l.id WHERE g.id = ' + idGrupo + ';'
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql, function(resultado){
+			cb(resultado);
+		});
 	}
 }
 },{"./../dao.js":193,"./../modelo/mPesquisa.js":197,"./../validates.js":307}],193:[function(require,module,exports){
@@ -33347,19 +33355,25 @@ function cadastraAluno(){
 	modelo.linkLattes = document.getElementById('linkLattesAlunoCadastrar').value;
 	modelo.dataInicio = document.getElementById('dataInicioAlunoCadastrar').value;
 	modelo.dataFim = document.getElementById('dataFimAlunoCadastrar').value;
+	modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
 	modelo.codPesquisa = 0;
 
+	console.log("MODELO EM cadastraPesquisa::cadastraAluno: " + JSON.stringify(modelo));
+
 	if(!controller.validar(modelo)){
+		console.log("Não passou na validação                      em cadastraPesquisa::cadastraAluno com modelo = " + JSON.stringify(modelo));
 		document.getElementById('msgErroModal').innerHTML = "Por favor preencha os campos corretamente.";
 		$("#erroModal").modal('show');
 		return;
 	}
 
-	document.getElementById('alunoPublicacaoCadastrar').value = modelo.nome;
-	document.getElementById('cursoAlunoCadastrar').value = modelo.curso;
-	document.getElementById('linkLattesAlunoCadastrar').value = modelo.linkLattes;
-	document.getElementById('inicioOrientacaoAlunoCadastrar').value = modelo.dataInicio;
-	document.getElementById('terminoOrientacaoAlunoCadastrar').value = modelo.dataFim;
+	document.getElementById('alunoPesquisaCadastrar').value = modelo.nome;
+	document.getElementById('cursoAlunoCadastrarTemp').value = modelo.curso;
+	document.getElementById('linkLattesAlunoCadastrarTemp').value = modelo.linkLattes;
+	document.getElementById('dataInicioAlunoCadastrarTemp').value = modelo.dataInicio;
+	document.getElementById('dataFimAlunoCadastrarTemp').value = modelo.dataFim;
+	document.getElementById('tipoAlunoCadastrarTemp').value = modelo.tipo;
+	$("#cadastraAlunoModal").modal('toggle');
 
 }
 
@@ -33367,23 +33381,31 @@ function cadastra(){
 	var pesquisa = require('./../../modelo/mPesquisa.js').novo();
 	var aluno = require('./../../modelo/mAluno.js').novo();
 
-	var cAluno = require('./../../controller/cAluno.js');
 	var cPesquisa = require('./../../controller/cPesquisa.js');
 
 	pesquisa.id = 0;
-	pesquisa.tiulo = document.getElementById('tituloPesquisaCadastrar').value;
+	pesquisa.titulo = document.getElementById('tituloPesquisaCadastrar').value;
 	pesquisa.codDocente = document.getElementById('docentePesquisaCadastrar').value;
 	pesquisa.codLinha = document.getElementById('linhaPesquisaCadastrar').value;
-	pesquisa.tipo = document.getElementById('tipoPesquisaCadastrar').value;
 	pesquisa.dataInicio = document.getElementById('dataInicioPesquisaCadastrar').value;
 	pesquisa.dataFim = document.getElementById('dataFimPesquisaCadastrar').value;
 
 	aluno.id = 0;
-	aluno.nome = document.getElementById('alunoPublicacaoCadastrar').value;
-	aluno.curso = document.getElementById('cursoAlunoCadastrar').value;
-	aluno.linkLattes = document.getElementById('linkLattesAlunoCadastrar').value;
-	aluno.dataInicio = document.getElementById('inicioOrientacaoAlunoCadastrar').value;
-	aluno.dataFim = document.getElementById('terminoOrientacaoAlunoCadastrar').value;
+	aluno.nome = document.getElementById('alunoPesquisaCadastrar').value;
+	aluno.curso = document.getElementById('cursoAlunoCadastrarTemp').value;
+	aluno.linkLattes = document.getElementById('linkLattesAlunoCadastrarTemp').value;
+	aluno.dataInicio = document.getElementById('dataInicioAlunoCadastrarTemp').value;
+	aluno.dataFim = document.getElementById('dataFimAlunoCadastrarTemp').value;
+	aluno.tipo = document.getElementById('tipoAlunoCadastrarTemp').value;
+
+
+	var controller = require('./../../controller/cPesquisa.js');
+
+	if(!cPesquisa.validar(pesquisa)){		
+		document.getElementById('msgErroModal').innerHTML = /*"Por favor preencha os campos corretamente"*/ "Não passou na validação com modelo = " + JSON.stringify(pesquisa);
+		$("#erroModal").modal('show');
+		return;
+	}
 
 	var utils = require('./../../utils.js');
 
@@ -33436,6 +33458,7 @@ module.exports = {
 		final.dataInicio = objeto.dataInicio; //date
 		final.dataFim = objeto.dataFim; //date
 		final.codPesquisa = objeto.codPesquisa; //int chave estrangeira apontando para Pesquisa
+		final.tipo = objeto.tipo; //varchar(100)
 		return final;
 	},
 
@@ -33448,11 +33471,12 @@ module.exports = {
 		final.dataInicio = "";
 		final.dataFim = "";
 		final.codPesquisa = 0;
+		final.tipo = "";
 		return final;
 	},
 
 	isString: function(atributo){
-		var strings = ["nome", "curso", "linkLattes", "dataInicio", "dataFim"];
+		var strings = ["nome", "curso", "linkLattes", "dataInicio", "dataFim", "tipo"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;
@@ -33499,7 +33523,6 @@ module.exports = {
 		final.titulo = objeto.titulo; //varchar(300)
 		final.codDocente = objeto.codDocente; //int chave estrangeira apontando para Docente
 		final.codLinha = objeto.codLinha; //int chave estrangeira apontando para LinhaPesquisa
-		final.tipo = objeto.tipo; //varchar(100)
 		final.dataInicio = objeto.dataInicio; //date
 		final.dataFim = objeto.dataFim; //date
 		return final;
@@ -33511,7 +33534,6 @@ module.exports = {
 		final.titulo = "";
 		final.codDocente = 0;
 		final.codLinha = 0;
-		final.tipo = "";
 		final.dataInicio = "";
 		final.dataFim = "";
 		return final;
@@ -56828,52 +56850,39 @@ module.exports = XOAuth2;
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
 },{"../fetch":264,"../shared":279,"buffer":54,"crypto":63,"stream":175,"timers":181}],290:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "nodemailer",
-      "/home/gabiru/Repositorios/TrabalhoFinalPI2A6"
-    ]
-  ],
-  "_from": "nodemailer@latest",
-  "_hasShrinkwrap": false,
+  "_from": "nodemailer",
   "_id": "nodemailer@4.6.8",
-  "_inCache": true,
-  "_installable": true,
+  "_inBundle": false,
+  "_integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
   "_location": "/nodemailer",
-  "_nodeVersion": "10.4.0",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/nodemailer_4.6.8_1534351602860_0.8166117668816155"
-  },
-  "_npmUser": {
-    "email": "andris@kreata.ee",
-    "name": "andris"
-  },
-  "_npmVersion": "6.1.0",
   "_phantomChildren": {},
   "_requested": {
-    "name": "nodemailer",
+    "type": "tag",
+    "registry": true,
     "raw": "nodemailer",
+    "name": "nodemailer",
+    "escapedName": "nodemailer",
     "rawSpec": "",
-    "scope": null,
-    "spec": "latest",
-    "type": "tag"
+    "saveSpec": null,
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
-    "#USER"
+    "#USER",
+    "/"
   ],
   "_resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
   "_shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
-  "_shrinkwrap": null,
   "_spec": "nodemailer",
-  "_where": "/home/gabiru/Repositorios/TrabalhoFinalPI2A6",
+  "_where": "C:\\Users\\GABRIEL\\Documents\\Repositorios\\TrabalhoFinalPI2A6",
   "author": {
     "name": "Andris Reinman"
   },
   "bugs": {
     "url": "https://github.com/nodemailer/nodemailer/issues"
   },
+  "bundleDependencies": false,
   "dependencies": {},
+  "deprecated": false,
   "description": "Easy as cake e-mail sending from your Node.js applications",
   "devDependencies": {
     "bunyan": "^1.8.12",
@@ -56892,34 +56901,16 @@ module.exports={
     "sinon": "^6.1.5",
     "smtp-server": "^3.4.6"
   },
-  "directories": {},
-  "dist": {
-    "fileCount": 38,
-    "integrity": "sha512-A3s7EM/426OBIZbLHXq2KkgvmKbn2Xga4m4G+ZUA4IaZvG8PcZXrFh+2E4VaS2o+emhuUVRnzKN2YmpkXQ9qwA==",
-    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbdFjyCRA9TVsSAnZWagAAkckQAJJt6B/JeTv3Uobqihi5\nCqTIUGGqwObgQjfmlkt/qBMBsjjhVyMuej3gNCErOthNROwqzUEZUYuKO1m6\n2gfTndkvu8Ofb9WHaTJAkdFMDsu+AR+IHRGYu9Za40WTMt8bnbG3rKIdYTsE\ni8XSd+qgjM/nTvYRlKC8ayR+fk2iRY0wXvWJiTnxNEEUSF5oduU9GZuYUb0O\nN5Qvk8uPtji6rxgKNRCd0U5/moFb+y6wAMKxAMnnIrbKzvZS5Mdx7tZC0/Pi\nyn6wHW4kNvPpcc7E0cilBtWLgltFtIEdJLt59ERanBklntxLDNaxkrj/YqrP\nqOf2/PF1OLLXKLP9pjBssiyU9lylrGm0pz1agExPLt0qsIUPkAClewcA/ich\nfLC9ZHL8Ljrki+DEW6+431WjRKXmaaR7gCP7+rLF2Fb0VyQmHawpoILrvtSB\nDmh6AV6Fbrvyqm329z1Yp3YVUne00bnmeORyhu1WiHYTIA4kMS9v8h6KtqJh\nWHuCI3YvwtuG9P6El+5gqE/OaEcR8oO3BZNqFHxSNAxaMxXGx3WVM0FLzWsx\nzAFNH6ijDoKSxafhlqzf8ud6Jyelcps6UsXrJzsgoVSoNETDKoLQbe2XNWuz\nmQuHW/KKxCUA9whXT14mo92J5XecDCqYRaHmE97H9DV2xByhemdpGga7wl6I\n3B5P\r\n=yvh8\r\n-----END PGP SIGNATURE-----\r\n",
-    "shasum": "f82fb407828bf2e76d92acc34b823d83e774f89c",
-    "tarball": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.6.8.tgz",
-    "unpackedSize": 444450
-  },
   "engines": {
     "node": ">=6.0.0"
   },
-  "gitHead": "bc2b52082186fdf8712b8a4737abe88e46061c3e",
   "homepage": "https://nodemailer.com/",
   "keywords": [
     "Nodemailer"
   ],
   "license": "MIT",
   "main": "lib/nodemailer.js",
-  "maintainers": [
-    {
-      "name": "andris",
-      "email": "andris@node.ee"
-    }
-  ],
   "name": "nodemailer",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nodemailer/nodemailer.git"
@@ -57438,6 +57429,12 @@ module.exports = {
 			req.write(texto);
 		}
 		req.end();
+	},
+
+	formataData: function(data){
+		var separado = data.substring(0, 10).split('-');
+		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
+		return resultado;
 	}
 };
 }).call(this,require("buffer").Buffer)

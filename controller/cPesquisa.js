@@ -2,7 +2,7 @@ module.exports = {
 	validar: function(pesquisa){
 		var validates = require('./../validates.js');
 		if(!validates.req(pesquisa.id) || !validates.min(pesquisa.titulo, 10) || !validates.req(pesquisa.codDocente) || !validates.req(pesquisa.codLinha) ||
-			!validates.min(pesquisa.tipo, 10) || validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
+			!validates.req(pesquisa.tipo) || !validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;

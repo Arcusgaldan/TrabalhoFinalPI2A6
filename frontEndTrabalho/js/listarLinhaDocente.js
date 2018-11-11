@@ -99,7 +99,6 @@ function buscaGrupo(sigla, cb){
 }
 
 function preencheSelect(select, listaLinha){
-	console.log("entrou em preencheSelect com listaLinha[0].nome = " + listaLinha[0].nome);
 	$("#" + select + " > option").remove();
 	for(var i = 0; i < listaLinha.length; i++){
 		$("#" + select).append("<option value='" + listaLinha[i].id + "'> " + listaLinha[i].codigo + " - " + listaLinha[i].nome + "</option>");

@@ -10,19 +10,25 @@ function cadastraAluno(){
 	modelo.linkLattes = document.getElementById('linkLattesAlunoCadastrar').value;
 	modelo.dataInicio = document.getElementById('dataInicioAlunoCadastrar').value;
 	modelo.dataFim = document.getElementById('dataFimAlunoCadastrar').value;
+	modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
 	modelo.codPesquisa = 0;
 
+	console.log("MODELO EM cadastraPesquisa::cadastraAluno: " + JSON.stringify(modelo));
+
 	if(!controller.validar(modelo)){
+		console.log("Não passou na validação                      em cadastraPesquisa::cadastraAluno com modelo = " + JSON.stringify(modelo));
 		document.getElementById('msgErroModal').innerHTML = "Por favor preencha os campos corretamente.";
 		$("#erroModal").modal('show');
 		return;
 	}
 
-	document.getElementById('alunoPublicacaoCadastrar').value = modelo.nome;
-	document.getElementById('cursoAlunoCadastrar').value = modelo.curso;
-	document.getElementById('linkLattesAlunoCadastrar').value = modelo.linkLattes;
-	document.getElementById('inicioOrientacaoAlunoCadastrar').value = modelo.dataInicio;
-	document.getElementById('terminoOrientacaoAlunoCadastrar').value = modelo.dataFim;
+	document.getElementById('alunoPesquisaCadastrar').value = modelo.nome;
+	document.getElementById('cursoAlunoCadastrarTemp').value = modelo.curso;
+	document.getElementById('linkLattesAlunoCadastrarTemp').value = modelo.linkLattes;
+	document.getElementById('dataInicioAlunoCadastrarTemp').value = modelo.dataInicio;
+	document.getElementById('dataFimAlunoCadastrarTemp').value = modelo.dataFim;
+	document.getElementById('tipoAlunoCadastrarTemp').value = modelo.tipo;
+	$("#cadastraAlunoModal").modal('toggle');
 
 }
 
@@ -30,23 +36,31 @@ function cadastra(){
 	var pesquisa = require('./../../modelo/mPesquisa.js').novo();
 	var aluno = require('./../../modelo/mAluno.js').novo();
 
-	var cAluno = require('./../../controller/cAluno.js');
 	var cPesquisa = require('./../../controller/cPesquisa.js');
 
 	pesquisa.id = 0;
-	pesquisa.tiulo = document.getElementById('tituloPesquisaCadastrar').value;
+	pesquisa.titulo = document.getElementById('tituloPesquisaCadastrar').value;
 	pesquisa.codDocente = document.getElementById('docentePesquisaCadastrar').value;
 	pesquisa.codLinha = document.getElementById('linhaPesquisaCadastrar').value;
-	pesquisa.tipo = document.getElementById('tipoPesquisaCadastrar').value;
 	pesquisa.dataInicio = document.getElementById('dataInicioPesquisaCadastrar').value;
 	pesquisa.dataFim = document.getElementById('dataFimPesquisaCadastrar').value;
 
 	aluno.id = 0;
-	aluno.nome = document.getElementById('alunoPublicacaoCadastrar').value;
-	aluno.curso = document.getElementById('cursoAlunoCadastrar').value;
-	aluno.linkLattes = document.getElementById('linkLattesAlunoCadastrar').value;
-	aluno.dataInicio = document.getElementById('inicioOrientacaoAlunoCadastrar').value;
-	aluno.dataFim = document.getElementById('terminoOrientacaoAlunoCadastrar').value;
+	aluno.nome = document.getElementById('alunoPesquisaCadastrar').value;
+	aluno.curso = document.getElementById('cursoAlunoCadastrarTemp').value;
+	aluno.linkLattes = document.getElementById('linkLattesAlunoCadastrarTemp').value;
+	aluno.dataInicio = document.getElementById('dataInicioAlunoCadastrarTemp').value;
+	aluno.dataFim = document.getElementById('dataFimAlunoCadastrarTemp').value;
+	aluno.tipo = document.getElementById('tipoAlunoCadastrarTemp').value;
+
+
+	var controller = require('./../../controller/cPesquisa.js');
+
+	if(!cPesquisa.validar(pesquisa)){		
+		document.getElementById('msgErroModal').innerHTML = /*"Por favor preencha os campos corretamente"*/ "Não passou na validação com modelo = " + JSON.stringify(pesquisa);
+		$("#erroModal").modal('show');
+		return;
+	}
 
 	var utils = require('./../../utils.js');
 

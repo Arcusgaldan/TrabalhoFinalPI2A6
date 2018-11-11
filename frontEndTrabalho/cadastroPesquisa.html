@@ -162,10 +162,10 @@
                 <div class="form-label-group">
                   <select id="tipoPesquisaCadastrar" class="form-control" onchange="getval(this);">
                     <option value="0" readonly>Tipo do Projeto</option>
-                    <option value="1">Voluntário</option>
-                    <option value="2">PIBIFSP</option>
-                    <option value="3">CNPQ</option>
-                    <option value="4">Outras</option>
+                    <option value="Voluntário">Voluntário</option>
+                    <option value="PIBIFSP">PIBIFSP</option>
+                    <option value="CNPQ">CNPQ</option>
+                    <option value="Outras">Outras</option>
                   </select>
                 </div>
               </div>
@@ -201,8 +201,8 @@
               </div>
 
               <div class="form-group">
-                <label for="dataTerminoPesquisaCadastrar">Data de Término</label>
-                <input type="date" id="dataTerminoPesquisaCadastrar" class="form-control" name="terminoPesquisaCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataFimPesquisaCadastrar">Data de Término</label>
+                <input type="date" id="dataFimPesquisaCadastrar" class="form-control" name="terminoPesquisaCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
@@ -212,10 +212,10 @@
                 </div>
               </div>
 
-              <div style="display: none;" id="cursoAlunoCadastrar"></div>
-              <div style="display: none;" id="linkLattesAlunoCadastrar"></div>
-              <div style="display: none;" id="inicioOrientacaoAlunoCadastrar"></div>
-              <div style="display: none;" id="terminoOrientacaoAlunoCadastrar"></div>
+              <div style="display: none;" id="cursoAlunoCadastrarTemp"></div>
+              <div style="display: none;" id="linkLattesAlunoCadastrarTemp"></div>
+              <div style="display: none;" id="dataInicioAlunoCadastrarTemp"></div>
+              <div style="display: none;" id="dataFimAlunoCadastrarTemp"></div>
 
             </form>
           </div>
@@ -303,13 +303,13 @@
               </div>
 
               <div class="form-group">
-                <label for="inicioPesquisaAlterar">Data da Inicio</label>
-                <input type="date" id="inicioPesquisaAlterar" class="form-control" name="inicioPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataInicioPesquisaAlterar">Data da Inicio</label>
+                <input type="date" id="dataInicioPesquisaAlterar" class="form-control" name="inicioPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
-                <label for="terminoPesquisaAlterar">Data da Término</label>
-                <input type="date" id="terminoPesquisaAlterar" class="form-control" name="terminoPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataFimPesquisaAlterar">Data da Término</label>
+                <input type="date" id="dataFimPesquisaAlterar" class="form-control" name="terminoPesquisaAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
@@ -351,15 +351,15 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="nomeAlunoCadastrar" class="form-control" name="nomeAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="nomeAlunoCadastra">Nome do aluno</label>
+                  <input type="text" id="nomeAlunoCadastrar" class="form-control" name="nomeAlunoCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="nomeAlunoCadastrar">Nome do aluno</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="cursoAlunoCadastrar" class="form-control" name="cursoAlunoCadastra"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="cursoAlunoCadastra">Nome do Curso</label>
+                  <input type="text" id="cursoAlunoCadastrar" class="form-control" name="cursoAlunoCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <label for="cursoAlunoCadastrar">Nome do Curso</label>
                 </div>
               </div>
 
@@ -377,13 +377,13 @@
               </div>
 
               <div class="form-group">
-                <label for="">Data de inicio da orientação</label>
-                <input type="date" id="inicioOrientacaoAlunoCadastrar" class="form-control" name="inicioOrientacaoAlunoCadastra"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
+                <input type="date" id="dataInicioAlunoCadastrar" class="form-control" name="inicioOrientacaoAlunoCadastra"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
+                <label for="dataInicioAlunoCadastrar">Data de inicio da orientação</label>
               </div>
 
               <div class="form-group">
-                <label for="">Data de fim da orientação</label>
-                <input type="date" id="terminoOrientacaoAlunoCadastrar" class="form-control" name="terminoOrientacaoAlunoCadastra"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
+                <input type="date" id="dataFimAlunoCadastrar" class="form-control" name="terminoOrientacaoAlunoCadastra"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
+                <label for="dataFimAlunoCadastrar">Data de fim da orientação</label>
               </div>
             </form>
           </div>
@@ -553,6 +553,7 @@
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
     <script type="text/javascript" src="/js/listarPesquisaFront.js"></script>
+    <script type="text/javascript" src="/js/cadastraPesquisaFront.js"></script>
     <!-- <script type="text/javascript" src="js/alteraProjetosFront.js"></script> -->
     <!-- <script type="text/javascript" src="js/excluiProjetosFront.js"></script> -->
 

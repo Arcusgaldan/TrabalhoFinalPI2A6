@@ -102,6 +102,7 @@ http.createServer(function(req, res){
             }
             switch(req.headers['operacao']){
                 case 'INSERIR':
+                    console.log("Opa, pedido de operação INSERIR!");
                     controller.inserir(jsonRqs, function(codRes){
                         if(codRes == 200){
                             res.statusCode = 200;
