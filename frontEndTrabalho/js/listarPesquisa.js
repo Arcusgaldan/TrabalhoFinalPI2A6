@@ -190,11 +190,12 @@ buscaGrupo(url.split("/")[2], function(idGrupo){
 			});
 			res.on('end', function(){				
 				preencheTabela(JSON.parse(msg));
-				preencheDocentes(idGrupo);
 			});
 		}else{
 			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar pesquisas";
 			$("#erroModal").modal('show');
 		}
+
+		preencheDocentes(idGrupo);
 	});	
 });

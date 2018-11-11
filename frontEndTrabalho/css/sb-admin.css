@@ -437,12 +437,110 @@ select{
   #textoInfo0, #textoInfo1{
     text-align: justify;
   }
-  #tabelaUsuario .btn{
+  td button{
     width: 100%;
     margin-bottom: 5px;
   }
+  .card-header{
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 120%;
+  }
+  .card-header .btn{
+    margin-top: 10px;
+    width: 100%;
+  }
+  .table th{
+    vertical-align: inherit;
+  }
+  .table td{
+    vertical-align: inherit;
+  }
+  .sidebar{
+    width: 100%!important;
+    position: absolute;
+    z-index: 9;
+    background: #212529e0;
+    height: 100%;
+  }
+  .sidebar .nav-item .nav-link{
+    width: 100%;
+  }
+  .sidebar .nav-item .nav-link span{
+    font-size: 1.2em;
+    text-align: left;
+  }
+  .sidebar .nav-item .nav-link .fas{
+    float: left;
+    font-size: 1.5em;
+    margin-right: 10px;
+  }
+  .tdDocente button{
+    white-space: normal;
+    line-height: 120%;
+  }
+  .margin-control-01{
+    padding: 0 5px;
+  }
+  .trListaLinha th{
+    font-size: 0.8em;
+    padding: 15px 2px;
+    white-space: normal;
+    line-height: 120%;
+  }
+  .trListaLinha td{
+    font-size: 0.8em;
+    padding: 10px 2px;
+    white-space: normal;
+  }
+    .trListaLinha td .btn{
+    white-space: normal;
+    line-height: 120%;
+  }
+  .tdEquipamentos button{
+    white-space: normal;
+    line-height: 120%;
+    font-size: 0.8em;
+  }
+  .trEquipamentos th{
+    padding: 0 7px;
+    font-size: 0.9em;
+  }
 }
 
-#nomeUsuarioAlterar{
+#nomeUsuarioAlterar, #nomeTecnicoCadastrar{
   margin-bottom: 15px;
+}
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
 }

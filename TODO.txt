@@ -66,9 +66,8 @@
 [v] colocar modal de confirmação e erro no "cadastroInformativos"
 [v] Trocar id do texto no modal erroModal para "msgErroModal" em todas as páginas
 [v] Trocar o type do modal alterar grupo que está email
-[v ] Separar campos data termino e data inicio no cadastro projetos
-
-
+[v] Separar campos data termino e data inicio no cadastro projetos
+[v] O javascript:history.back() da página "404.hmt" não está funcionando devido ao servidor.
 
 -- CANCELADOS
 
@@ -101,7 +100,7 @@
 [-] Tratar os console log do servidor
 [-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
 [-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
-[-] fazer script para instalar "express" e "nodemsiler"
+[-] fazer script para instalar "express" e "nodemailer"
 
 -- FRONT + BACK
 
@@ -112,7 +111,6 @@
 [-] Quando digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
 [-] A data de criação do grupo está por padrão "01-01-1000" antes de alterar.
 [-] Forçando um erro no cadastrar informativo percebi que quando tenta cadastrar sem selecionar o o campo a aser mudado ele não apresenta erro no front porem nao deixa mais cadastrar nada.
-[-] O javascript:history.back() da página "404.hmt" não está funcionando devido ao servidor.
 [-] Verificar confirmação do cadstro codente
 
 -- DOCUMENTAÇÃO
