@@ -86,13 +86,13 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Página Geral de Projetos</li>
+            <li class="breadcrumb-item active">Página Geral de Pesquisa</li>
           </ol>
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Página Geral de Projetos
-                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPesquisa" class="btn btn-success float-right">Cadastrar Projetos</button>
+                <div class="card-header">Página Geral de Pesquisa
+                  <button data-toggle="modal" data-target="#cadastraModal" id="btnCadastrarPesquisa" class="btn btn-success float-right">Cadastrar Pesquisa</button>
                 </div>
                 <div class="card-body">
                   <p>
@@ -126,7 +126,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="">Cadastra Projetos</h5>
+            <h5 class="modal-title" id="">Cadastra Pesquisas</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="fechaCadastraModal">
               <span aria-hidden="true">×</span>
             </button>
@@ -153,19 +153,6 @@
                 <div class="form-label-group">
                   <select id="linhaPesquisaCadastrar" class="form-control form-control-lg">
                     <option value="0" readonly>Linha de pesquisa</option>
-                  </select>
-                </div>
-              </div>
-              
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="tipoPesquisaCadastrar" class="form-control" onchange="getval(this);">
-                    <option value="0" readonly>Tipo do Projeto</option>
-                    <option value="Voluntário">Voluntário</option>
-                    <option value="PIBIFSP">PIBIFSP</option>
-                    <option value="CNPQ">CNPQ</option>
-                    <option value="Outras">Outras</option>
                   </select>
                 </div>
               </div>
@@ -233,7 +220,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="">Alterar Projetos</h5>
+            <h5 class="modal-title" id="">Alterar Pesquisa</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -373,6 +360,18 @@
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+
+               <div class="form-group">
+                <div class="form-label-group">
+                  <select id="tipoAlunoCadastrar" class="form-control" onchange="getval(this);">
+                    <option value="0" readonly>Tipo do Projeto</option>
+                    <option value="Voluntário">Voluntário</option>
+                    <option value="PIBIFSP">PIBIFSP</option>
+                    <option value="CNPQ">CNPQ</option>
+                    <option value="Outras">Outras</option>
+                  </select>
                 </div>
               </div>
 

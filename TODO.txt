@@ -113,6 +113,7 @@
 [-] A data de criação do grupo está por padrão "01-01-1000" antes de alterar.
 [-] Forçando um erro no cadastrar informativo percebi que quando tenta cadastrar sem selecionar o o campo a aser mudado ele não apresenta erro no front porem nao deixa mais cadastrar nada.
 [-] O javascript:history.back() da página "404.hmt" não está funcionando devido ao servidor.
+[-] Verificar confirmação do cadstro codente
 
 -- DOCUMENTAÇÃO
 
