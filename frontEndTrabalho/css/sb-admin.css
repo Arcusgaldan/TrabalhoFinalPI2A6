@@ -398,15 +398,6 @@ body.sidebar-toggled footer.sticky-footer {
   padding: 2.375rem .75rem 0;
 }
 
-@media (max-width: 480px) {
-  .nomeGrupo {
-    font-size: 2em;
-  }
-  .siglaGrupo{
-    font-size: 1em;
-  }
-}
-
 table{
   border-radius: 10px;
 }
@@ -425,4 +416,33 @@ select{
   background: #d2d2d2;
   padding: 15px;
   border-radius: 10px;
+}
+
+#cardHeaderGrupo .btn{
+  margin-bottom: 10px;
+}
+
+
+@media (max-width: 480px) {
+  .nomeGrupo {
+    font-size: 2em;
+  }
+  .siglaGrupo{
+    font-size: 1em;
+  }
+  #tituloInfo0, #tituloInfo1{
+    text-align: justify;
+    font-size: 2em;
+  } 
+  #textoInfo0, #textoInfo1{
+    text-align: justify;
+  }
+  #tabelaUsuario .btn{
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+#nomeUsuarioAlterar{
+  margin-bottom: 15px;
 }
