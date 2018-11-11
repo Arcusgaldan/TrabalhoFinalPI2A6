@@ -35,7 +35,7 @@ function cadastraAluno(){
 }
 
 function cadastra(){
-	if(document.getElementById('cursoAlunoCadastrarTemp').value == ""){
+	if(document.getElementById('cursoAlunoCadastrarTemp').value === ""){
 		document.getElementById('msgErroModal').innerHTML = "Por favor cadastre um aluno";
 		$("#erroModal").modal('show');
 	}

@@ -33150,6 +33150,29 @@ document.getElementById('docentePesquisaCadastrar').addEventListener('change', f
 	});
 }, false);
 
+document.getElementById('docentePesquisaAlterar').addEventListener('change', puxaLinhasDocenteAlterar, false);
+
+function puxaLinhasDocenteAlterar(){
+	utils.enviaRequisicao('VinculoDocenteLinha', 'BUSCAR', {campo: 'codDocente', valor: document.getElementById('docentePesquisaAlterar').value}, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+			res.on('end', function(){
+				var vetorVinculo = JSON.parse(msg).resultado;
+				$("#linhaPesquisaAlterar > option").remove();
+				for(let i = 0; i < vetorVinculo.length; i++){
+					$("#linhaPesquisaAlterar").append("<option value='" + vetorVinculo[i].codLinha + "'>" + vetorLinhas[vetorVinculo[i].codLinha].nome + "</option>");
+				}
+			});				
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas do docente";
+			$("#erroModal").modal('show');
+		}
+	});
+}
+
 function buscaGrupo(sigla, cb){
 	var utils = require('./../../utils.js');
 	var http = require('http');
@@ -33193,8 +33216,12 @@ function preencheDocentes(idGrupo){
 				var vetor = JSON.parse(msg).resultado;
 				for(let i = 0; i < vetor.length; i++){
 					$("#docentePesquisaCadastrar").append("<option value='" + vetor[i].id + "'>" + vetor[i].nome + "</option>");
+					document.getElementById('docentePesquisaCadastrar').value = vetor[i].id;
+					$("#docentePesquisaAlterar").append("<option value='" + vetor[i].id + "'>" + vetor[i].nome + "</option>");
+					document.getElementById('docentePesquisaAlterar').value = vetor[i].id;
 				}
-			});
+				puxaLinhasDocenteAlterar();
+			});			
 		}
 	});
 }
@@ -33289,19 +33316,28 @@ function preencheTabela(listaPesquisa){
 
 function preencheModalAlterar(pesquisa, aluno){
 
+	document.getElementById("idPesquisaAlterar").value = pesquisa.id;
 	document.getElementById("tituloPesquisaAlterar").value = pesquisa.titulo;
-	document.getElementById("docentePesquisaAlterar").value = pesquisa.docenteNome;
-	document.getElementById("linhaPesquisaAlterar").value = pesquisa.linhaNome;
+	document.getElementById("docentePesquisaAlterar").value = pesquisa.docenteId;
+	document.getElementById("linhaPesquisaAlterar").value = pesquisa.linhaId;
 	document.getElementById("dataInicioPesquisaAlterar").value = pesquisa.dataInicio.substring(0, 10);
 	document.getElementById("dataFimPesquisaAlterar").value = pesquisa.dataFim.substring(0, 10);
 	document.getElementById("alunoPesquisaAlterar").value = aluno.nome;
 
+	document.getElementById("idAlunoAlterar").value = aluno.id;
+	document.getElementById("idAntigoAlunoAlterar").value = aluno.id;
 	document.getElementById("nomeAlunoAlterar").value = aluno.nome;
+	document.getElementById("nomeAntigoAlunoAlterar").value = aluno.nome;
 	document.getElementById("cursoAlunoAlterar").value = aluno.curso;
+	document.getElementById("cursoAntigoAlunoAlterar").value = aluno.curso;
 	document.getElementById("linkLattesAlunoAlterar").value = aluno.linkLattes;
+	document.getElementById("linkLattesAntigoAlunoAlterar").value = aluno.linkLattes;
 	document.getElementById("tipoAlunoAlterar").value = aluno.tipo;
+	document.getElementById("tipoAntigoAlunoAlterar").value = aluno.tipo;
 	document.getElementById("dataInicioAlunoAlterar").value = aluno.dataInicio.substring(0, 10);
+	document.getElementById("dataInicioAntigoAlunoAlterar").value = aluno.dataInicio.substring(0, 10);
 	document.getElementById("dataFimAlunoAlterar").value = aluno.dataFim.substring(0, 10);
+	document.getElementById("dataFimAntigoAlunoAlterar").value = aluno.dataFim.substring(0, 10);
 }	
 
 function preencheModalExcluir(aluno){
@@ -57245,6 +57281,9 @@ module.exports = {
 	},
 
 	formataData: function(data){
+		if(data.substring(0, 10) == "1001-01-01"){
+			return "-";
+		}
 		var separado = data.substring(0, 10).split('-');
 		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
 		return resultado;

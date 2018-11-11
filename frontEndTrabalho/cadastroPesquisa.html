@@ -264,7 +264,7 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="alunoPesquisaAlterar" class="form-control" name="alunoPesquisaAlterar"  placeholder="Título" required="required" autofocus="autofocus">
+                  <input type="text" id="alunoPesquisaAlterar" class="form-control" name="alunoPesquisaAlterar"  placeholder="Título" required="required" autofocus="autofocus" disabled="true">
                   <label for="alunoPesquisaAlterar">Aluno</label>
                 </div>
               </div>
@@ -275,12 +275,13 @@
               <div style="display: none;" id="linkLattesAlunoAlterarTemp"></div>
               <div style="display: none;" id="dataInicioAlunoAlterarTemp"></div>
               <div style="display: none;" id="dataFimAlunoAlterarTemp"></div>
+              <div style="display: none;" id="tipoAlunoAlterarTemp"></div>
 
             </form>
           </div>
           <div class="modal-footer">
-            <button id="btnAlteraAlunoModal" class="btn btn-warning" data-toggle="modal" data-target="#alteraAlunoModal">Cadastrar Aluno</button>
-            <button class="btn btn-success" type="button" id="btnAlterar">Alterar</button>
+            <button id="btnAlteraAlunoModal" class="btn btn-warning" data-toggle="modal" data-target="#alteraAlunoModal">Alterar Aluno</button>
+            <button class="btn btn-success" type="button" id="btnAlterarPesquisa">Alterar</button>
           </div>
         </div>
       </div>
@@ -392,7 +393,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="" method="get">
+            <form action="" method="get" id="formAlteraAluno">
 
               <div class="form-group">
                 <div class="form-label-group">
@@ -423,12 +424,12 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="tipoPesquisaAlterar" class="form-control" onchange="getvalAlterar(this);">
-                    <option value="0" readonly>Tipo do Projeto</option>
-                    <option value="1">Voluntário</option>
-                    <option value="2">PIBIFSP</option>
-                    <option value="3">CNPQ</option>
-                    <option value="4">Outras</option>
+                  <select id="tipoAlunoAlterar" class="form-control" onchange="getvalAlterar(this);">
+                    <option value="Tipo do Projeto" readonly>Tipo do Projeto</option>
+                    <option value="Voluntário">Voluntário</option>
+                    <option value="PIBIFSP">PIBIFSP</option>
+                    <option value="CNPQ">CNPQ</option>
+                    <option value="Outras">Outras</option>
                   </select>
                 </div>
               </div>
@@ -445,7 +446,7 @@
                 }
               </script>
 
-              <div id="divOutrosTipoAlteraAluno2" class="form-group" style="display: none;">
+              <div id="divOutrosTipoAlteraAluno" class="form-group" style="display: none;">
                 <div class="form-row">
 
                   <div class="col-md-12">
@@ -460,17 +461,26 @@
 
               <div class="form-group">
                 <label for="">Data de Inicio da orientação</label>
-                <input type="date" id="inicioOrientacaoAlunoAlterar" class="form-control" name="inicioOrientacaoAlunoAlterar"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
+                <input type="date" id="dataInicioAlunoAlterar" class="form-control" name="inicioOrientacaoAlunoAlterar"  placeholder="Data de Inicio da orientação" required="required" autofocus="autofocus">
               </div>
 
               <div class="form-group">
                 <label for="">Data de fim da orientação</label>
-                <input type="date" id="terminoOrientacaoAlunoAlterar" class="form-control" name="terminoOrientacaoAlunoAlterar"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
+                <input type="date" id="dataFimAlunoAlterar" class="form-control" name="terminoOrientacaoAlunoAlterar"  placeholder="Data de fim da orientação" required="required" autofocus="autofocus">
               </div>
             </form>
           </div>
+          <div style="display: none;" id="idAlunoAlterar"></div>
+          <div style="display: none;" id="idAntigoAlunoAlterar"></div>
+          <div style="display: none;" id="nomeAntigoAlunoAlterar"></div>
+          <div style="display: none;" id="cursoAntigoAlunoAlterar"></div>
+          <div style="display: none;" id="linkLattesAntigoAlunoAlterar"></div>
+          <div style="display: none;" id="dataInicioAntigoAlunoAlterar"></div>
+          <div style="display: none;" id="dataFimAntigoAlunoAlterar"></div>
+          <div style="display: none;" id="tipoAntigoAlunoAlterar"></div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button" id="btnAlunoAlterar">Cadastar</button>
+            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmaTrocaAlunoModal">Novo aluno</button>
+            <button class="btn btn-success" type="button" id="btnAlterarAluno">Alterar</button>
           </div>
         </div>
       </div>
@@ -508,6 +518,33 @@
             </div>
             <div class="modal-body"><p id="nomeExcluir" style="color: #000">Sua operação foi realizada com sucesso!</p></div>
             <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONFIRMA Troca Aluno Modal-->
+      <div class="modal fade" id="confirmaTrocaAlunoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="">Sucesso</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Deseja mesmo trocar o aluno? Esta operação faz com que o aluno atual tenha sua orientação terminada e inicia a orientação do novo aluno a ser inserido.</p></div>
+            <div class="modal-footer">
+              <button class="btn btn-success" id="btnTrocarAluno">SIM</button>
+              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
+              <script type="text/javascript">
+                document.getElementById('btnTrocarAluno').addEventListener('click', function(){
+                  var form = document.getElementById('formAlteraAluno');
+                  form.reset();
+                  document.getElementById('idAlunoAlterar').value = 0;
+                  $("#confirmaTrocaAlunoModal").modal('toggle');
+                }, false);
+              </script>
             </div>
           </div>
         </div>
@@ -566,6 +603,7 @@
     <script type="text/javascript" src="/js/logout.js"></script>
     <script type="text/javascript" src="/js/listarPesquisaFront.js"></script>
     <script type="text/javascript" src="/js/cadastraPesquisaFront.js"></script>
+    <script type="text/javascript" src="/js/alteraPesquisaFront.js"></script>
 
   </body>
 
