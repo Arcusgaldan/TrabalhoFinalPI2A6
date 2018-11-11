@@ -178,19 +178,19 @@ function preencheTabela(listaPesquisa){
 
 function preencheModalAlterar(pesquisa, aluno){
 
-	document.getElementById("tituloPesquisaAlterar" + i).innerHTML = listaPesquisa[i].titulo;
-	document.getElementById("docentePesquisaAlterar" + i).innerHTML = listaPesquisa[i].docenteNome;
-	document.getElementById("linhaPesquisaAlterar" + i).innerHTML = listaPesquisa[i].docenteNome;
-	document.getElementById("dataInicioPesquisaAlterar" + i).innerHTML = utils.formataData(listaPesquisa[i].dataInicio);
-	document.getElementById("dataFimPesquisaAlterar" + i).innerHTML = utils.formataData(listaPesquisa[i].dataFim);
-	document.getElementById("alunoPesquisaAlterar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
+	document.getElementById("tituloPesquisaAlterar").value = pesquisa.titulo;
+	document.getElementById("docentePesquisaAlterar").value = pesquisa.docenteNome;
+	document.getElementById("linhaPesquisaAlterar").value = pesquisa.linhaNome;
+	document.getElementById("dataInicioPesquisaAlterar").value = pesquisa.dataInicio.substring(0, 10);
+	document.getElementById("dataFimPesquisaAlterar").value = pesquisa.dataFim.substring(0, 10);
+	document.getElementById("alunoPesquisaAlterar").value = aluno.nome;
 
-	document.getElementById("nomeAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].nome;
-	document.getElementById("cursoAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].curso;
-	document.getElementById("linkLattesAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].linkLattes;
-	document.getElementById("tipoAlunoCadastrar" + i).innerHTML = vetorAlunos[listaPesquisa[i].id].tipo;
-	document.getElementById("dataInicioAlunoCadastrar" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataInicio);
-	document.getElementById("terminoOrientacaoAlunoCadastra" + i).innerHTML = utils.formataData(vetorAlunos[listaPesquisa[i].id].dataFim);
+	document.getElementById("nomeAlunoAlterar").value = aluno.nome;
+	document.getElementById("cursoAlunoAlterar").value = aluno.curso;
+	document.getElementById("linkLattesAlunoAlterar").value = aluno.linkLattes;
+	document.getElementById("tipoAlunoAlterar").value = aluno.tipo;
+	document.getElementById("dataInicioAlunoAlterar").value = aluno.dataInicio.substring(0, 10);
+	document.getElementById("dataFimAlunoAlterar").value = aluno.dataFim.substring(0, 10);
 }	
 
 function preencheModalExcluir(aluno){
