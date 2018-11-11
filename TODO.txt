@@ -111,7 +111,7 @@
 [-] Quando digito um número diferente de 7 no prontuario nao acontece nada nem erro nem cadastro
 [-] A data de criação do grupo está por padrão "01-01-1000" antes de alterar.
 [-] Forçando um erro no cadastrar informativo percebi que quando tenta cadastrar sem selecionar o o campo a aser mudado ele não apresenta erro no front porem nao deixa mais cadastrar nada.
-[-] Verificar confirmação do cadstro codente
+[-] Verificar confirmação do cadastro docente
 
 -- DOCUMENTAÇÃO
 
