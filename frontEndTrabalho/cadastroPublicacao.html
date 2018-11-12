@@ -229,7 +229,6 @@
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="docentePublicacaoAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
                   </select>
                 </div>
               </div>  
@@ -237,7 +236,7 @@
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="pesquisaPublicacaoAlterar" class="form-control form-control-lg">
-                    <option value="">Publicação sem projeto</option>
+                    <option value="0">Publicação sem projeto</option>
                   </select>
                 </div>
               </div>           
@@ -245,7 +244,6 @@
               <div class="form-group">
                 <div class="form-label-group">
                   <select id="linhaPublicacaoAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Linha de pesquisa</option>
                   </select>
                 </div>
               </div>
@@ -262,10 +260,12 @@
                 <label for="dataPublicacaoAlterar">Data da Publicação</label>
               </div>
 
+              <div style="display: none;" id="idPublicacaoAlterar"></div>
+
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button" id="btnAlterarPublicacoes">Alterar</button>
+            <button class="btn btn-success" type="button" id="btnAlterar">Alterar</button>
           </div>
         </div>
       </div>
@@ -281,8 +281,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="nomePublicaçõesExcluir"></span> ?</p></div>
-            <div style="display: none;" id="idPublicaçõesExcluir"></div>
+            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="tituloPublicacaoExcluir"></span> ?</p></div>
+            <div style="display: none;" id="idPublicacaoExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -371,8 +371,8 @@
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
-    <!-- <script type="text/javascript" src="js/alteraPublicaçõesFront.js"></script> -->
-    <!-- <script type="text/javascript" src="js/excluiPublicaçõesFront.js"></script> -->
+    <script type="text/javascript" src="/js/alteraPublicacaoFront.js"></script>
+    <script type="text/javascript" src="/js/excluiPublicacaoFront.js"></script>
 
 
   </body>

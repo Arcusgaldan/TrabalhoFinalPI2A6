@@ -8,25 +8,23 @@ var vetorLinhas = [];
 document.getElementById('pesquisaPublicacaoCadastrar').addEventListener('change', function(){
 	var utils = require('./../../utils.js');
 	if(document.getElementById('pesquisaPublicacaoCadastrar').value == "0"){
-		var url = window.location.pathname;
-		buscaGrupo(url.split("/")[2], function(idGrupo){
-			utils.enviaRequisicao("VinculoLinhaGrupo", "BUSCAR", {campo: "codGrupo", valor: idGrupo}, function(res){
-				if(res.statusCode == 200){
-					var msg = "";
-					res.on('data', function(chunk){
-						msg += chunk;
-					});
-					res.on('end', function(){
-						var vetorLinhasGrupo = JSON.parse(msg).resultado;
-						for(let i = 0; i < vetorLinhasGrupo.length; i++){
-							$("#linhaPublicacaoCadastrar").append("<option value='"+vetorLinhasGrupo[i].codLinha+"'>"+vetorLinhas[vetorLinhasGrupo[i].codLinha].nome+"</option>");
-						}
-					});
-				}else{
-					document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa do grupo";
-					$("#erroModal").modal('show');
-				}
-			});
+		utils.enviaRequisicao("VinculoDocenteLinha", "BUSCAR", {campo: "codDocente", valor: document.getElementById('docentePublicacaoCadastrar').value}, function(res){
+			if(res.statusCode == 200){
+				var msg = "";
+				res.on('data', function(chunk){
+					msg += chunk;
+				});
+				res.on('end', function(){
+					var vetorLinhasDocente = JSON.parse(msg).resultado;
+					$("#linhaPublicacaoCadastrar > option").remove();
+					for(let i = 0; i < vetorLinhasDocente.length; i++){
+						$("#linhaPublicacaoCadastrar").append("<option value='"+vetorLinhasDocente[i].codLinha+"'>"+vetorLinhas[vetorLinhasDocente[i].codLinha].nome+"</option>");
+					}
+				});
+			}else{
+				document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa do grupo";
+				$("#erroModal").modal('show');
+			}
 		});
 	}else{
 		utils.enviaRequisicao("Pesquisa", "BUSCAR", {campo: "id", valor: document.getElementById('pesquisaPublicacaoCadastrar').value}, function(res){
@@ -65,25 +63,23 @@ document.getElementById('pesquisaPublicacaoCadastrar').addEventListener('change'
 document.getElementById('pesquisaPublicacaoAlterar').addEventListener('change', function(){
 	var utils = require('./../../utils.js');
 	if(document.getElementById('pesquisaPublicacaoAlterar').value == "0"){
-		var url = window.location.pathname;
-		buscaGrupo(url.split("/")[2], function(idGrupo){
-			utils.enviaRequisicao("VinculoLinhaGrupo", "BUSCAR", {campo: "codGrupo", valor: idGrupo}, function(res){
-				if(res.statusCode == 200){
-					var msg = "";
-					res.on('data', function(chunk){
-						msg += chunk;
-					});
-					res.on('end', function(){
-						var vetorLinhasGrupo = JSON.parse(msg).resultado;
-						for(let i = 0; i < vetorLinhasGrupo.length; i++){
-							$("#linhaPublicacaoAlterar").append("<option value='"+vetorLinhasGrupo[i].codLinha+"'>"+vetorLinhas[vetorLinhasGrupo[i].codLinha].nome+"</option>");
-						}
-					});
-				}else{
-					document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa do grupo";
-					$("#erroModal").modal('show');
-				}
-			});
+		utils.enviaRequisicao("VinculoDocenteLinha", "BUSCAR", {campo: "codDocente", valor: document.getElementById('docentePublicacaoAlterar').value}, function(res){
+			if(res.statusCode == 200){
+				var msg = "";
+				res.on('data', function(chunk){
+					msg += chunk;
+				});
+				res.on('end', function(){
+					var vetorLinhasDocente = JSON.parse(msg).resultado;
+					$("#linhaPublicacaoAlterar > option").remove();
+					for(let i = 0; i < vetorLinhasDocente.length; i++){
+						$("#linhaPublicacaoAlterar").append("<option value='"+vetorLinhasDocente[i].codLinha+"'>"+vetorLinhas[vetorLinhasDocente[i].codLinha].nome+"</option>");
+					}
+				});
+			}else{
+				document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa do grupo";
+				$("#erroModal").modal('show');
+			}
 		});
 	}else{
 		utils.enviaRequisicao("Pesquisa", "BUSCAR", {campo: "id", valor: document.getElementById('pesquisaPublicacaoAlterar').value}, function(res){
@@ -225,7 +221,7 @@ function preencheTabela(listaPublicacao, idGrupo){
 						var publicacao = listaPublicacao[i];
 						var pesquisa = vetorPesquisa[publicacao.codPesquisa];		
 						document.getElementById("alterarPublicacaoLista"+ i).addEventListener("click", function(){
-							preencheModalAlterar(publicacao, pesquisa);
+							preencheModalAlterar(publicacao);
 						}, false);
 						document.getElementById("excluirPublicacaoLista"+ i).addEventListener("click", function(){
 							preencheModalExcluir(publicacao);
@@ -238,6 +234,26 @@ function preencheTabela(listaPublicacao, idGrupo){
 			$("#erroModal").modal('show');
 		}
 	});
+}
+
+function preencheModalAlterar(publicacao){
+	document.getElementById('idPublicacaoAlterar').value = publicacao.id;
+	document.getElementById('tituloPublicacaoAlterar').value = publicacao.titulo;
+	document.getElementById('tipoPublicacaoAlterar').value = publicacao.tipo;
+	document.getElementById('docentePublicacaoAlterar').value = publicacao.docenteId;
+	if(!publicacao.codPesquisa){
+		document.getElementById('pesquisaPublicacaoAlterar').value = "0";
+	}else{
+		document.getElementById('pesquisaPublicacaoAlterar').value = publicacao.codPesquisa;
+	}
+	document.getElementById('linhaPublicacaoAlterar').value = publicacao.linhaId;
+	document.getElementById('referenciaPublicacaoAlterar').value = publicacao.referencia;
+	document.getElementById('dataPublicacaoAlterar').value = publicacao.data.substring(0, 10);
+}
+
+function preencheModalExcluir(publicacao){
+	document.getElementById('idPublicacaoExcluir').value = publicacao.id;
+	document.getElementById('tituloPublicacaoExcluir').innerHTML = publicacao.titulo;
 }
 
 function preencheDocentes(idGrupo){
