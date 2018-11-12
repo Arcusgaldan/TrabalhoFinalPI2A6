@@ -9,6 +9,7 @@ module.exports = {
 		final.dataFim = objeto.dataFim; //date
 		final.codPesquisa = objeto.codPesquisa; //int chave estrangeira apontando para Pesquisa
 		final.tipo = objeto.tipo; //varchar(100)
+		final.atual = objeto.atual;
 		return final;
 	},
 
@@ -22,6 +23,7 @@ module.exports = {
 		final.dataFim = "";
 		final.codPesquisa = 0;
 		final.tipo = "";
+		final.atual = 0;
 		return final;
 	},
 
