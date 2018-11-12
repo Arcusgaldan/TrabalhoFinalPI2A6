@@ -340,10 +340,11 @@
               </div>
 
               <script type="text/javascript">
-                function getvalAlterar(sel)
+                function getval(sel)
                 {
                   console.log("Entrando em getval...");
-                  if(sel.value == "4"){
+                  console.log("Valor do get val é : " + sel.value);
+                  if(sel.value == "Outras"){
                     $("#divOutrosTipoAlteraAluno1").css("display", "block");
                   }else{
                     $("#divOutrosTipoAlteraAluno1").css("display", "none");
@@ -438,7 +439,7 @@
                 function getvalAlterar(sel)
                 {
                   console.log("Entrando em getval...");
-                  if(sel.value == "4"){
+                  if(sel.value == "Outras"){
                     $("#divOutrosTipoAlteraAluno2").css("display", "block");
                   }else{
                     $("#divOutrosTipoAlteraAluno2").css("display", "none");
@@ -446,7 +447,7 @@
                 }
               </script>
 
-              <div id="divOutrosTipoAlteraAluno" class="form-group" style="display: none;">
+              <div id="divOutrosTipoAlteraAluno2" class="form-group" style="display: none;">
                 <div class="form-row">
 
                   <div class="col-md-12">
