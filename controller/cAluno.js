@@ -2,7 +2,7 @@ module.exports = {
 	validar: function(aluno){
 		var validates = require('./../validates.js');
 		if(!validates.req(aluno.id) || !validates.min(aluno.nome, 10) || !validates.req(aluno.curso) || !validates.req(aluno.linkLattes) ||
-			!validates.req(aluno.dataInicio) || !validates.req(aluno.codPesquisa)){ //Retirar campos opcionais desta validação						
+			!validates.req(aluno.dataInicio) || !validates.req(aluno.codPesquisa) || !validates.req(aluno.atual)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;

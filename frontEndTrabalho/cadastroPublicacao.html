@@ -100,37 +100,8 @@
                   </p>
                   
                   <table class="table table-bordered table-dark text-center">
-                    <tbody id="tabelaPublicações">
-                      <tr>
-                      <th id='nomePublicacoesLista'>Publicação 001</th>
-                      <td>
-                        <button class='btn btn-info' scope='row' data-toggle='collapse' href='#collapsePublicacoesLista' role='button' aria-expanded='false' aria-controls='collapseExample'> Mostra Dados <span class='fas fa-plus'></span></button>
-                        <button id='alterarPublicacoesLista' class='btn btn-warning' data-toggle='modal' data-target='#alteraModal' >Alterar Publicação</button>
-                        <button id='excluirPublicacoesLista' class='btn btn-danger' data-toggle='modal' data-target='#excluirModal'>Excluir Publicação</button>
-                        <div id='collapsePublicacoesLista' class='collapse mostraLista' >
-                          <div class='card card-body'>
-                            <p><strong>Nome da Publicação: </strong><span id='nomePublicacoesDados'>Publicação 001</span></p>
-
-                            <p><strong>Projeto (opcional): </strong> <span id='descricaoPublicacoesDados'>Projeto 001</span></p>
-
-                            <p><strong>Título: </strong> <span id='tituloPublicacoesDados'>Título 001</span></p>
-                            
-                            <p><strong>Tipo da Publicação: </strong> <span id='tipoPublicacoesDados'>Anais</span></p>
-
-
-                            <p><strong>Descrição da Publicação: </strong> <span id='descricaoPublicacoesDados'>Uma bela descrição</span></p>
-
-                            <p><strong>Docente responsável pela publicação: </strong> <span id='docentePublicacoesDados'>Docente 001</span></p>
-
-                            <p><strong>Linha de pesquisa: </strong> <span id='linhaPesquisaPublicacoesDados'>Linha 001</span></p>
-
-                            <p><strong>Referência ABNT: </strong> <span id='referenciaPublicacoesDados'>SOBRENOME DO AUTOR, Prenome. Título: subtítulo. Edição. Local de publicação: Editora, ano de publicação.</span></p>
-
-                            <p><strong>Data de publicação: </strong> <span id='fundPublicacoesDados'>01-08-2018</span></p>
-                          </div>
-                        
-                      </td>
-                    </tr>
+                    <tbody id="tabelaPublicacao">
+                      
                     </tbody>
                   </table>
                  </div>
@@ -164,78 +135,55 @@
             <form action="" method="get">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="nomePublicacoesCadastrar" class="form-control" name="nomePublicacoesCadastrar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
-                  <label for="nomePublicacoesCadastrar">Nome da Publicação</label>
+                  <input type="text" id="tituloPublicacaoCadastrar" class="form-control" name="tituloPublicacaoCadastrar"  placeholder="Tipo da Publicação" required="required" autofocus="autofocus">
+                  <label for="tituloPublicacaoCadastrar">Titulo da Publicação</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="projetoPublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Selecione um projeto</option>
-                    <option value="">Publicação sem projeto</option>
-                    <option value="">Projeto 001</option>
-                    <option value="">Projeto 002</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="tituloPublicacoesCadastrar" class="form-control" name="tituloPublicacoesCadastrar"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="tituloPublicacoesCadastrar">Título</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="tipoPublicacoesCadastrar" class="form-control">
+                  <select id="tipoPublicacaoCadastrar" class="form-control">
                     <option value="0" readonly>Tipo da publicação</option>
-                    <option value="0">Livro</option>
-                    <option value="0">Capitulo de Livro</option>
-                    <option value="0">Anais</option>
-                    <option value="0">Periódico</option>
+                    <option value="Livro">Livro</option>
+                    <option value="Capítulo de Livro">Capitulo de Livro</option>
+                    <option value="Anais">Anais</option>
+                    <option value="Periódico">Periódico</option>
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="docentePublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
-                    <option value="">Docente 001</option>
-                    <option value="">Docente 002</option>
+                  <select id="docentePublicacaoCadastrar" class="form-control form-control-lg">
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="linhaPublicacoesCadastrar" class="form-control form-control-lg">
-                    <option value="0" readonly>Linha de pesquisa</option>
-                    <option value="">Linha 001</option>
-                    <option value="">Linha 002</option>
+                  <select id="pesquisaPublicacaoCadastrar" class="form-control form-control-lg">
+                    <option value="0">Publicação sem pesquisa</option>
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <textarea id="descricaoPublicacoesCadastrar" rows="4" class="form-control" name="descricaoPublicacoesCadastrar" placeholder="Descrição da Publicação" required="required"> </textarea>
-                  <label for="descricaoPublicacoesCadastrar">Descrição da Publicação</label>
+                  <select id="linhaPublicacaoCadastrar" class="form-control form-control-lg">
+                  </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <textarea id="referenciaPublicacoesCadastrar" rows="4" class="form-control" name="referenciaPublicacoesCadastrar" placeholder="Referência ABNT" required="required"> </textarea>
-                  <label for="referenciaPublicacoesCadastrar">Referência ABNT</label>
+                  <textarea id="referenciaPublicacaoCadastrar" rows="4" class="form-control" name="referenciaPublicacaoCadastrar" placeholder="Referência ABNT" required="required"> </textarea>
+                  <label for="referenciaPublicacaoCadastrar">Referência ABNT</label>
                 </div>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="dataPublicacoesCadastrar" class="form-control" name="dataPublicacoesCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                <label for="dataPublicacoesCadastrar">Data da Publicação</label>
+                <input type="date" id="dataPublicacaoCadastrar" class="form-control" name="dataPublicacaoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataPublicacaoCadastrar">Data da Publicação</label>
               </div>
             </form>
           </div>
@@ -261,84 +209,63 @@
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="nomePublicacoesAlterar" class="form-control" name="nomePublicacoesAlterar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
-                  <label for="nomePublicacoesAlterar">Nome da Publicação</label>
+                  <input type="text" id="tituloPublicacaoAlterar" class="form-control" name="nomePublicacaoAlterar"  placeholder="Nome do Publicações" required="required" autofocus="autofocus">
+                  <label for="tituloPublicacaoAlterar">Nome da Publicação</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="projetoPublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Selecione um projeto</option>
-                    <option value="">Publicação sem projeto</option>
-                    <option value="">Projeto 001</option>
-                    <option value="">Projeto 002</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="tituloPublicacoesAlterar" class="form-control" name="tituloPublicacoesAlterar"  placeholder="Título" required="required" autofocus="autofocus">
-                  <label for="tituloPublicacoesAlterar">Título</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <select id="tipoPublicacoesAlterar" class="form-control">
+                  <select id="tipoPublicacaoAlterar" class="form-control">
                     <option value="0" readonly>Tipo da publicação</option>
-                    <option value="0">Livro</option>
-                    <option value="0">Capitulo de Livro</option>
-                    <option value="0">Anais</option>
-                    <option value="0">Periódico</option>
+                    <option value="Livro">Livro</option>
+                    <option value="Capitulo de Livro">Capitulo de Livro</option>
+                    <option value="Anais">Anais</option>
+                    <option value="Periódico">Periódico</option>
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="docentePublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Docente responsável pela publicação</option>
-                    <option value="">Docente 001</option>
-                    <option value="">Docente 002</option>
+                  <select id="docentePublicacaoAlterar" class="form-control form-control-lg">
+                  </select>
+                </div>
+              </div>  
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <select id="pesquisaPublicacaoAlterar" class="form-control form-control-lg">
+                    <option value="0">Publicação sem projeto</option>
+                  </select>
+                </div>
+              </div>           
+
+              <div class="form-group">
+                <div class="form-label-group">
+                  <select id="linhaPublicacaoAlterar" class="form-control form-control-lg">
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="form-label-group">
-                  <select id="linhaPublicacoesAlterar" class="form-control form-control-lg">
-                    <option value="0" readonly>Linha de pesquisa</option>
-                    <option value="">Linha 001</option>
-                    <option value="">Linha 002</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <textarea id="descricaoPublicacoesAlterar" rows="4" class="form-control" name="descricaoPublicacoesAlterar" placeholder="Descrição da Publicação" required="required"> </textarea>
-                  <label for="descricaoPublicacoesAlterar">Descrição da Publicação</label>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-label-group">
-                  <textarea id="referenciaPublicacoesAlterar" rows="4" class="form-control" name="referenciaPublicacoesAlterar" placeholder="Referência ABNT" required="required"> </textarea>
-                  <label for="referenciaPublicacoesAlterar">Referência ABNT</label>
+                  <textarea id="referenciaPublicacaoAlterar" rows="4" class="form-control" name="referenciaPublicacaoAlterar" placeholder="Referência ABNT" required="required"> </textarea>
+                  <label for="referenciaPublicacaoAlterar">Referência ABNT</label>
                 </div>
               </div>
 
               <div class="form-label-group">
-                <input type="date" id="dataPublicacoesAlterar" class="form-control" name="dataPublicacoesAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                <label for="dataPublicacoesAlterar">Data da Publicação</label>
+                <input type="date" id="dataPublicacaoAlterar" class="form-control" name="dataPublicacaoAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
+                <label for="dataPublicacaoAlterar">Data da Publicação</label>
               </div>
+
+              <div style="display: none;" id="idPublicacaoAlterar"></div>
 
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="button" id="btnAlterarPublicacoes">Alterar</button>
+            <button class="btn btn-success" type="button" id="btnAlterar">Alterar</button>
           </div>
         </div>
       </div>
@@ -354,8 +281,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="nomePublicaçõesExcluir"></span> ?</p></div>
-            <div style="display: none;" id="idPublicaçõesExcluir"></div>
+            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id="tituloPublicacaoExcluir"></span> ?</p></div>
+            <div style="display: none;" id="idPublicacaoExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -420,32 +347,32 @@
     </a>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script src="/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="js/demo/datatables-demo.js"></script>
-    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script>
 
-    <!-- <script type="text/javascript" src="js/cadastraPublicaçõesFront.js"></script> -->
-    <!-- <script type="text/javascript" src="js/listarPublicaçõesFront.js"></script> -->
+    <script type="text/javascript" src="/js/cadastraPublicacaoFront.js"></script>
+    <script type="text/javascript" src="/js/listarPublicacaoFront.js"></script>
     <!-- <script type="text/javascript" src="js/listarLiderFront.js"></script> -->
-    <script type="text/javascript" src="js/verificaLoginFront.js"></script>
-    <script type="text/javascript" src="js/loginFront.js"></script>
-    <script type="text/javascript" src="js/logout.js"></script>
-    <!-- <script type="text/javascript" src="js/alteraPublicaçõesFront.js"></script> -->
-    <!-- <script type="text/javascript" src="js/excluiPublicaçõesFront.js"></script> -->
+    <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="/js/loginFront.js"></script>
+    <script type="text/javascript" src="/js/logout.js"></script>
+    <script type="text/javascript" src="/js/alteraPublicacaoFront.js"></script>
+    <script type="text/javascript" src="/js/excluiPublicacaoFront.js"></script>
 
 
   </body>

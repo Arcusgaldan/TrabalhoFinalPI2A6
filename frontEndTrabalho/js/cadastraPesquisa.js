@@ -14,6 +14,7 @@ function cadastraAluno(){
 		modelo.dataFim = "1001-01-01";
 	modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
 	modelo.codPesquisa = 0;
+	modelo.atual = 1;
 
 	console.log("MODELO EM cadastraPesquisa::cadastraAluno: " + JSON.stringify(modelo));
 

@@ -1,8 +1,8 @@
 module.exports = {
 	validar: function(publicacao){
 		var validates = require('./../validates.js');
-		if(!validates.req(publicacao.id) || !validates.req(publicacao.codDocente) || !validates.min(publicacao.titulo, 10) || !validates.min(publicacao.tipo, 10) ||
-			!validates.req(publicacao.data) || validates.min(publicacao.referencia, 10)){ //Retirar campos opcionais desta validação						
+		if(!validates.req(publicacao.id) || !validates.req(publicacao.codDocente) || !validates.req(publicacao.codLinha) || !validates.min(publicacao.titulo, 10) || !validates.req(publicacao.tipo) ||
+			!validates.req(publicacao.data) || !validates.min(publicacao.referencia, 10)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
@@ -106,6 +106,14 @@ module.exports = {
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
+			cb(resultado);
+		});
+	},
+
+	buscarGrupo: function(idGrupo, cb){
+		var sql = 'SELECT p.*, d.nome docenteNome, d.id docenteId, l.id linhaId, l.nome linhaNome FROM TBPublicacao p JOIN TBDocente d ON d.id = p.codDocente JOIN TBGrupo g ON g.id = d.codGrupo JOIN TBLinhaPesquisa l ON p.codLinha = l.id WHERE g.id = ' + idGrupo + ';'
+		var dao = require('./../dao.js');
+		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
 		});
 	}
