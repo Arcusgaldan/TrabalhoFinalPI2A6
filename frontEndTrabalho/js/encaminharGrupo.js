@@ -92,8 +92,8 @@ function listarPublicacoes(){
                     msg += chunk;
                 });
                 res.on("end", function(){
-                    console.log("resultado publicacoes: " + vetorPublicacao.length);
                     var vetorPublicacao = JSON.parse(msg);
+                    console.log("resultado publicacoes: " + vetorPublicacao.length);
                     for (let i = 0; i < vetorPublicacao.length; i++) {
                         $("#publicacoesGrupo").append(vetorPublicacao[i].titulo + "<br>");
                     }
