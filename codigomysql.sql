@@ -330,7 +330,6 @@ DROP TABLE IF EXISTS `DBPronn`.`TBPesquisa` ;
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPesquisa` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(300) NULL,
-  `tipo` VARCHAR(100) NULL,
   `dataInicio` DATE NULL,
   `dataFim` DATE NULL,
   `codDocente` INT NOT NULL,
@@ -358,10 +357,10 @@ DROP TABLE IF EXISTS `DBPronn`.`TBAluno` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBAluno` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(100) NULL,
-  `curso` VARCHAR(200) NULL,
-  `linkLattes` VARCHAR(300) NULL,
-  `dataInicio` DATE NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `curso` VARCHAR(200) NOT NULL,
+  `linkLattes` VARCHAR(300) NOT NULL,
+  `dataInicio` DATE NOT NULL,
   `dataFim` DATE NULL,
   `codPesquisa` INT NOT NULL,
   `atual` TINYINT NOT NULL,
@@ -411,9 +410,11 @@ CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPublicacao` (
   `referencia` TEXT NULL,
   `codDocente` INT NOT NULL,
   `codPesquisa` INT NULL,
-  PRIMARY KEY (`id`, `codDocente`),
+  `codLinha` INT NOT NULL,
+  PRIMARY KEY (`id`, `codDocente`, `codLinha`),
   INDEX `fk_TBPublicacao_TBDocente1_idx` (`codDocente` ASC),
   INDEX `fk_TBPublicacao_TBPesquisa1_idx` (`codPesquisa` ASC),
+  INDEX `fk_TBPublicacao_TBLinhaPesquisa1_idx` (`codLinha` ASC),
   CONSTRAINT `fk_TBPublicacao_TBDocente1`
     FOREIGN KEY (`codDocente`)
     REFERENCES `DBPronn`.`TBDocente` (`id`)
@@ -423,6 +424,11 @@ CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPublicacao` (
     FOREIGN KEY (`codPesquisa`)
     REFERENCES `DBPronn`.`TBPesquisa` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TBPublicacao_TBLinhaPesquisa1`
+    FOREIGN KEY (`codLinha`)
+    REFERENCES `DBPronn`.`TBLinhaPesquisa` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -430,24 +436,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-
-INSERT INTO TBTipoUsuario (id, nome) VALUES (1, "Lider");
-INSERT INTO TBTipoUsuario (id, nome) VALUES (2, "Administrador");
-
-INSERT INTO TBTextoIndex (id, titulo, texto) VALUES (1, "Cadastramento de grupos de pesquisa", "A Pró-Reitoria de Pesquisa, Inovação e Pós-Graduação (PRP) é a responsável pelo cadastramento no Diretório dos Grupos de Pesquisa no Brasil, no Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq), e mantém a relação dos grupos cadastrados no link Grupos de Pesquisa do IFSP.
-A Portaria nº 1.718, de 5 de maio de 2017, estabeleceu o novo regulamento dos Grupos de Pesquisa Institucionais e está disponível para consulta no link Grupos de Pesquisa da PRP. Conforme o Art. 17 desta Portaria, para a proposta de criação de grupo deverá ser utilizado o formulário de Grupo de Pesquisa Institucional, disponível no link supracitado, a ser encaminhado pelo primeiro líder ao presidente do Compesq do câmpus por e-mail para pesquisa.brt@ifsp.edu.br, com a indicação do assunto “Criação de Grupo de Pesquisa”. Devem constar as seguintes informações no corpo da mensagem:
-• nome do grupo de pesquisa;
-• nome do primeiro líder, titulação, câmpus de lotação e n.º do CPF;
-• nome e titulação dos membros pesquisadores;
-• linhas de pesquisa;
-• justificativa para a formação do grupo, demonstrando a relevância e as perspectivas de contribuição científica, tecnológica, artística ou cultural em até 600 caracteres, incluindo os espaços;
-• justificativa para atipicidade, se for o caso, considerando os termos do Art. 23 da referida Portaria, em até 200 caracteres, incluindo os espaços;
-• descrição do grupo de, no máximo, 400 caracteres, incluindo os espaços, para ser apresentada na página da PRP, junto com a logomarca.
-É importante que o primeiro líder, antes de enviar a proposta, observe o disposto no Art. 9.º e no Art. 30 da referida Portaria");
-
-INSERT INTO TBTextoIndex (id, titulo, texto) VALUES (2, "Produção Científica e Tecnológica", "Dados referentes às produções científica e tecnológica dos servidores do câmpus podem ser consultados na pasta abaixo. Essas informações foram extraídas da Plataforma Lattes do CNPq, a partir da Plataforma Stela Experta, e são válidas até a data indicada no nome do arquivo.");
-
-INSERT INTO `tbusuario` (`id`, `prontuario`, `nome`, `email`, `senha`, `curriculoLattes`, `foto`, `data`, `primeiroAcesso`, `codTipoUsuario`) VALUES ('0', '1690320', 'Tiago', 'admin@email.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'lattes.com/tiago', 'C:\\Foto', '2018-07-17', '0', '2'), ('0', '1690311', 'Lider de Grupo ', 'lider@email.com', 'c9200fcde58c80962a416040d0c8300fce7d43e4924cb5eb733adfc7b475d557', 'lattes.com/lider_de_grupo', 'C:\\FotoLider', '2018-05-10', '0', '1');
-

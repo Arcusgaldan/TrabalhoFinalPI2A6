@@ -57,6 +57,7 @@ http.createServer(function(req, res){
                 });
                 return;                
             }else if(operacao == "BUSCARGRUPO"){
+                console.log("OPERAÇÃO BUSCAR GRUPO!!!!!!!");
                 if(objeto == "Pesquisa"){
                     var cPesquisa = require('./controller/cPesquisa.js');
                     cPesquisa.buscarGrupo(jsonRqs['idGrupo'], function(resultado){
@@ -73,6 +74,7 @@ http.createServer(function(req, res){
                     });
                     return;
                 }else if(objeto == "Publicacao"){
+                    console.log("OPA, É PUBLICAÇÂO COM BUSCARGRUPO");
                     var cPublicacao = require('./controller/cPublicacao.js');
                     cPublicacao.buscarGrupo(jsonRqs['idGrupo'], function(resultado){
                         if(resultado){
