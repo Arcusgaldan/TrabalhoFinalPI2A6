@@ -15,8 +15,8 @@ function enviarEmail(mensagem, email, assunto){
 	console.log("O texto em cadastraUsuario::enviarEmail é" + texto);
 
 	var opcoesHTTP = utils.opcoesHTTP(texto);
-	opcoesHTTP.headers.Objeto = "Usuario";
-	opcoesHTTP.headers.Operacao = "EMAIL";
+	opcoesHTTP.headers.Objeto = "Email";
+	opcoesHTTP.headers.Operacao = "ENVIAR";
 
 	var req = http.request(opcoesHTTP, (res) => {
 		console.log("Chegou a resposta do email!!");
