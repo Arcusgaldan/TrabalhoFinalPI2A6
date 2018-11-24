@@ -85,6 +85,9 @@
 -- FRONT-END
 [-] Revisar todo o layuot em vers�es de telas menores
 [-] Info grupos (ver "CHIPS" no materialize) 
+[-] Usar função de formatação de data em todos os lugares em que for mostrar uma data
+[-] Colocar imagem padrão caso não haja uma imagem (para fotos e logotipo)
+[-] Organizar botões do líder do grupo
 
 -- BACK-END
 
@@ -101,6 +104,7 @@
 [-] Corrigir cadastraLinhaPesquisaDocente e alterarLinhaPesquisaGrupo (puxar APENAS AS LINHAS QUE REALMENTE EXISTEM NO GRUPO) (adicionar data a todos os cadastros/alterações de vinculo com linha)
 [-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
 [-] fazer script para instalar "express" e "nodemailer"
+[-] Retirar mensagem de erro na listagem de equipamentos em página de grupo caso não haja equipamento cadastrado
 
 -- FRONT + BACK
 
