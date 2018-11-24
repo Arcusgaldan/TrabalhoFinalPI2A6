@@ -105,6 +105,7 @@
 [-] Fazer tabela no banco do tipo de publicação (livro, capitulo de livro, anais, periódico)
 [-] fazer script para instalar "express" e "nodemailer"
 [-] Retirar mensagem de erro na listagem de equipamentos em página de grupo caso não haja equipamento cadastrado
+[-] Quando entro na página do drupo me aparece um modal de erro "Falha ao buscar equipamento"
 
 -- FRONT + BACK
 
