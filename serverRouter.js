@@ -21,7 +21,8 @@ var agrupamentos = {
 	"linhas": "frontEndTrabalho/cadastroLinhasGrupo.html",
 	"equipamentos": "frontEndTrabalho/cadastroEquipamentos.html",
 	"publicacoes": "frontEndTrabalho/cadastroPublicacao.html",
-	"pesquisas": "frontEndTrabalho/cadastroPesquisa.html"
+	"pesquisas": "frontEndTrabalho/cadastroPesquisa.html",
+	"paginaRelatorios": "frontEndTrabalho/paginaRelatorios.html"
 };
 
 function mimeType(arquivo){

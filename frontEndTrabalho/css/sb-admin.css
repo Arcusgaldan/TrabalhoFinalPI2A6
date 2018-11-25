@@ -421,6 +421,35 @@ select{
 #cardHeaderGrupo .btn{
   margin-bottom: 10px;
 }
+.tlt-grupo{
+  padding-bottom: 11px;
+  font-size: 2em;
+  border-bottom: 1px solid;
+}
+@media (max-width: 991px) {
+  .tlt-grupo{
+    font-size: 3em;
+    text-align: center;
+  }
+  .card-header .btn{
+    width: 47%;
+    /*float: unset!important;
+    display: block;
+    margin: auto;*/
+  }
+}
+@media (max-width: 767px) {
+  .tlt-grupo{
+    font-size: 2.4em;
+    text-align: center;
+  }
+  .card-header .btn{
+    width: 47%;
+    /*float: unset!important;
+    display: block;
+    margin: auto;*/
+  }
+}
 @media (max-width: 680px) {
   .card-header{
     font-size: 2em;
@@ -433,14 +462,25 @@ select{
     display: block;
     margin: auto;*/
   }
+  .tlt-grupo{
+    padding-bottom: 11px;
+    font-size: 1.8em;
+    border-bottom: 1px solid;
+    line-height: 100%;
+  }
 }
-
 @media (max-width: 480px) {
   .nomeGrupo {
     font-size: 2em;
   }
   .siglaGrupo{
     font-size: 1em;
+  }
+  .tlt-grupo{
+    padding-bottom: 11px;
+    font-size: 1.7em;
+    border-bottom: 1px solid;
+    line-height: 110%;
   }
   #tituloInfo0, #tituloInfo1{
     text-align: justify;
@@ -555,4 +595,23 @@ select{
   /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important; 
   color: #ffffff; 
+}
+
+.plus-btn{
+  font-size: 1.7em;
+}
+.bnt-relatorio{
+  cursor: pointer;
+}
+.bnt-relatorio p{
+  display: inline-block;
+  font-size: 1.7em;
+}
+.tlt-relatorio{
+  font-size: 1.5em;
+}
+.bnt-relatorio:hover{
+  opacity: 0.5;
+  box-shadow: 1 1;
+  border: rgba(0,0,0,.3);
 }

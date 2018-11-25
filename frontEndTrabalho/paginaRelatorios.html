@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pronn</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-png">
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" rel="stylesheet">
+
+    <style type="text/css">
+      .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+      }
+
+      .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+      .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+      }
+      .autocomplete-items div:hover {
+        /*when hovering an item:*/
+        background-color: #e9e9e9; 
+      }
+      .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important; 
+        color: #ffffff; 
+      }
+    </style>
+
+ 
+  </head>
+
+  <body id="page-top" class="sidebar-toggled" >
+
+     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+      <a class="navbar-brand mr-1" href="/index">Pronn</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="/#">
+        <i class="fas fa-bars"></i>
+      </button>
+ 
+   <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
+        <div class="form-row align-items-center">
+          <div class="col-sm-4 my-1">
+            <label class="sr-only" for="usuarioLogin">Email</label>
+            <input type="text" class="form-control" id="emailLogin" placeholder="Email">
+          </div>
+          <div class="col-sm-4 my-1">
+            <label class="sr-only" for="senhaLogin">Senha</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="senhaLogin" placeholder="Senha">
+            </div>
+          </div>
+         
+            <button type="button" id="btnLogin" class="btn btn-primary">ENTRAR</button>
+          <!-- <div class="col-sm-4 my-1"> -->
+
+            <button type="button" id="" class="btn btn-primary" data-toggle="modal" data-target="#recuperaEmailModal" style="font-size: 15px;margin-left: 10px;"><small>Redefinir senha</small></button>
+          <!-- </div> -->
+        </div>
+   </form>
+
+
+    <!-- Navbar -->
+    <ul id="boxLogado" class="navbar-nav ml-auto display-none">
+                 
+        <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="/#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle fa-fw"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <button id="logout" class="dropdown-item" >Sair do Sistema</button>
+          </div>
+        </li>
+    </ul> 
+
+    </nav>  
+
+    <div id="wrapper">
+
+       <!-- Sidebar -->
+      <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
+      <ul id="sidebarWrapper" class="sidebar navbar-nav toggled">
+        
+      </ul>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Página de Relatórios</li>
+          </ol>
+
+          <div class="container">
+              <div class="card mx-auto mt-5 mb-5">
+                <div class="card-header">
+                  <p class="tlt-relatorio">Página de Relatórios</p>
+                </div>
+
+                <div class="card-header bnt-relatorio" data-toggle="modal" data-target="#filtraRelatorio" style="margin-top: 30px">
+                  <i class="fas fa-plus plus-btn"></i>
+                  <p class=""> Gerar um novo relatório</p>                  
+                </div>
+                
+              </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="/#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+     <!-- CADASTRA LINHA Modal -->
+    
+    <div class="modal fade" id="alteraLinhaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Linhas de pesquisa</h5>
+            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p>
+              Neste formulário serão inseridas as informações para o cadastro de Linhas de pesquisa.
+            </p>
+
+            <form action="" method="get" >
+              
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                        <select id="linhaDocenteCadastrar" class="form-control form-control-lg">
+                          
+                        </select>
+                      </div>
+                  </div>
+                </div>
+              </div>  
+              <div style="display: none;" id="idDocenteCadLinha"></div>                           
+              
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" id="btnCadastroLinhaDocente">Cadastrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CADASTRA Modal -->
+    
+    <div class="modal fade" id="filtraRelatorio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModalCadastrar">Selecione o relatório desejado</h5>
+            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p>
+              Favor Selecione o relatório desejado
+            </p>
+
+            <form id="formCadastroDocente" action="" method="post" encType="multipart/form-data">
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="anoPesquisa" class="form-control" name="" placeholder="Ano a ser pesquisado" required="required" autofocus="autofocus">
+                      <label for="anoPesquisa">Ano a ser pesquisado</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                        <select id="tipoPesquisa" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;">
+                          <option value="option">option</option>
+                          <option value="option">option</option>
+                          <option value="option">option</option>
+                          <option value="option">option</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+              </div>  
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" id="btnPesquisar">Pesquisar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+     <!-- ALTERA Modal -->
+
+    <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Docente</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+             <p>
+              Neste formulário serão inseridas as informações para a alteração do Docente
+            </p>
+            <form action="" method="post" id="formAlteraDocente" encType="multipart/form-data">
+
+              <div class="form-group">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="nomeDocenteAlterar" class="form-control" name="nomeDocenteAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeDocenteAlterar">Nome Completo</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+        
+              <div class="form-group">
+                <div class="form-row">
+
+                  <div class="col-md-5">
+                    <div class="form-label-group">
+                        <select id="formacaoDocenteAlterar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getvalAlterar(this);">
+                          <option value="0" readonly >Maior formação <br> Academica</option>
+                          <option value="1">Ensino Fundamental</option>
+                          <option value="2">Ensino Médio</option>
+                          <option value="3">Ensino Superior</option>
+                          <option value="4">Especialização</option>
+                          <option value="5">Mestrado</option>
+                          <option value="6">Doutorado</option>
+                        </select>
+                      </div>
+                  </div>
+                  <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
+              <script type="text/javascript">
+                function getvalAlterar(sel)
+                {
+                  if(sel.value != 0 && sel.value != 1 && sel.value != 2 ){
+                    $("#divNomeCursoAlterar").css("display", "block");
+                  }else{
+                    $("#divNomeCursoAlterar").css("display", "none");
+                  }
+                }
+              </script>
+
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <input type="text" id="anoConclusaoDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="anoConclusaoDocenteAlterar" >Ano de Conclusão</label>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+
+
+              <div id="divNomeCursoAlterar" class="form-group" style="display: none;">
+                <div class="form-row">
+
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="text" id="nomeCursoDocenteAlterar" class="form-control" name="nomeCursoDocenteAlterar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
+                      <label for="nomeCursoDocenteAlterar">Nome do Curso</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="url" class="form-control" id="lattesDocenteAlterar" placeholder="Link do Lattes">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12 ">
+                    <div class="form-label-group">
+                      <input type="file" id="fotoDocenteAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
+                      <label for="fotoDocenteAlterar">Foto de Perfil</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="date" id="dataEntradaDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="dataEntradaDocenteAlterar" >Data de entrada</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none;" id="idDocenteAlterar"></div>
+              <!-- <div style="display: none;" id="codTipoUsuarioAlterar"></div>
+              <div style="display: none;" id="senhaUsuarioAlterar"></div> -->
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-alert" id="btnAlterarDocente" type="button">Alterar</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXCLUIR Modal-->
+      <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id=""></h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Docentes <span id="nomeDocenteExcluir" style="color: #000"></span> ?</p></div>
+            <div style="display: none;" id="idDocenteExcluir"></div>
+            <div class="modal-footer">
+              <button class="btn btn-success" id="btnExcluir">SIM</button>
+              <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- SUCESSO Modal -->
+      <div class="modal fade" id="sucessoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="">Sucesso</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Sua operação foi realizada</p></div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Erro Modal -->
+      <div class="modal fade" id="erroModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="">Erro</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body"><p id="msgErroModal" style="color: #000">Erro ao realizar a operação!</p></div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Neumann Project</span>
+          </div>
+        </div>
+      </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="/#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <!-- <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script> -->
+
+    <script type="text/javascript" src="/js/loginFront.js"></script>
+    <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
+    <script type="text/javascript" src="/js/logout.js"></script>
+    
+    <!-- <script type="text/javascript" src="/js/listarLinhaDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/cadastraDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/listarDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/alterarDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/excluiDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/cadastraLinhaDocenteFront.js"></script> -->
+
+  </body>
+
+</html>
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
