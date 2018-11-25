@@ -69,6 +69,23 @@ module.exports = {
 					}
 				});
 				break;
+
+			case "BUSCARCOMPLETO":
+				this.buscarCompleto(msg, function(res){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
+						cb(resposta);
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+				break;
+
 			default:
 				resposta.codigo = 400;
 				cb(resposta);
@@ -212,5 +229,11 @@ module.exports = {
 		// dao.buscar(dao.criaConexao(), sql, function(resultado){
 		// 	cb(resultado);
 		// });
+	},
+
+	buscarCompleto: function(argumentos, cb){
+		require('./controller.js').buscarCompleto("Publicacao", argumentos, function(resposta){
+			cb(resposta);
+		});
 	}
 }

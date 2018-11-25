@@ -143,7 +143,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(codUsuario, codPermissao){
+	excluir: function(permissaoUsuario, cb){
 		// var sql = "DELETE FROM TBPermissaoUsuario WHERE codUsuario = " + codUsuario + " AND codPermissao = " + codPermissao + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql);

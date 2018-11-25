@@ -45,7 +45,7 @@ function listarEquipamentos(){
                         $("#equipamentosGrupo").append(vetorEquipamento[i].nome + "<br>");
                     }
                 });
-            }else{
+            }else if(res.statusCode != 747){
                 document.getElementById('msgErroModal').innerHTML = "Falha ao buscar Equipamento";
                 $("#erroModal").modal('show');
             }
@@ -73,7 +73,7 @@ function listarPesquisas(){
                         }
                     }
                 });
-            }else{
+            }else if(res.statusCode != 747){
                 document.getElementById('msgErroModal').innerHTML = "Falha ao buscar Pesquisa";
                 $("#erroModal").modal('show');
             }
@@ -98,7 +98,7 @@ function listarPublicacoes(){
                         $("#publicacoesGrupo").append(vetorPublicacao[i].titulo + "<br>");
                     }
                 });
-            }else{
+            }else if(res.statusCode != 747){                
                 document.getElementById('msgErroModal').innerHTML = "Falha ao buscar Publicacao";
                 $("#erroModal").modal('show');
             }

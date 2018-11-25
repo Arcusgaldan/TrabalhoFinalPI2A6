@@ -156,7 +156,7 @@
 
      <!-- CADASTRA LINHA Modal -->
     
-    <div class="modal fade" id="alteraLinhaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="alteraLinhaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -194,7 +194,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- CADASTRA Modal -->
     
@@ -218,8 +218,8 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="anoPesquisa" class="form-control" name="" placeholder="Ano a ser pesquisado" required="required" autofocus="autofocus">
-                      <label for="anoPesquisa">Ano a ser pesquisado</label>
+                      <input type="text" id="anoRelatorio" class="form-control" name="" placeholder="Ano a ser pesquisado" required="required" autofocus="autofocus">
+                      <label for="anoRelatorio">Ano a ser pesquisado</label>
                     </div>
                   </div>
                 </div>
@@ -229,11 +229,19 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                        <select id="tipoPesquisa" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;">
-                          <option value="option">option</option>
-                          <option value="option">option</option>
-                          <option value="option">option</option>
-                          <option value="option">option</option>
+                        <select id="tipoRelatorio" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;">
+                          <option value="0">Selecione um tipo de relatório</option>
+                          <option value="1">Linhas de Pesquisa do Grupo</option>
+                          <option value="2">Linhas de Pesquisa + Docentes Vinculados</option>
+                          <option value="3">Docentes</option>
+                          <option value="4">Docentes + Linhas de Pesquisa Vinculadas</option>
+                          <option value="5">Discentes</option>
+                          <option value="6">Discentes + Orientadores</option>
+                          <option value="7">Discentes + Orientadores + Linhas de Pesquisa</option>
+                          <option value="8">Técnicos</option>
+                          <option value="9">Equipamentos</option>
+                          <option value="10">Publicações</option>
+                          <option value="11">Projetos Finalizados</option>
                         </select>
                       </div>
                   </div>
@@ -241,7 +249,7 @@
               </div>  
             </form>
             <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnPesquisar">Pesquisar</button>
+              <button class="btn btn-success" type="button" id="btnRelatorio">Gerar Relatório</button>
             </div>
           </div>
         </div>
@@ -472,6 +480,7 @@
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
     <script type="text/javascript" src="/js/logout.js"></script>
+    <script type="text/javascript" src="/js/geraRelatorioFront.js"></script>
     
     <!-- <script type="text/javascript" src="/js/listarLinhaDocenteFront.js"></script> -->
     <!-- <script type="text/javascript" src="/js/cadastraDocenteFront.js"></script> -->

@@ -88,6 +88,7 @@
 [-] Usar função de formatação de data em todos os lugares em que for mostrar uma data
 [-] Colocar imagem padrão caso não haja uma imagem (para fotos e logotipo)
 [-] Organizar botões do líder do grupo
+[-] Centralizar título da página interna do grupo, adicionar sigla após título
 
 -- BACK-END
 

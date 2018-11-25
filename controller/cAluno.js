@@ -54,6 +54,22 @@ module.exports = {
 					}
 				});
 				break;
+
+			case "BUSCARCOMPLETO":
+				this.buscarCompleto(msg, function(res){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
+						cb(resposta);
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+				break;
 		}
 	},
 
@@ -163,6 +179,12 @@ module.exports = {
 
 	buscar: function(campo, valor, cb){
 		require('./controller.js').buscar("Aluno", campo, valor, function(resposta){
+			cb(resposta);
+		});
+	},
+
+	buscarCompleto: function(argumentos, cb){
+		require('./controller.js').buscarCompleto("Aluno", argumentos, function(resposta){
 			cb(resposta);
 		});
 	}

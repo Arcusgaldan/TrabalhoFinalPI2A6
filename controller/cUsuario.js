@@ -154,7 +154,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(usuario, cb){
 		// var sql = "DELETE FROM TBUsuario WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){

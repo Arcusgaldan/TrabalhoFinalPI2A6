@@ -163,7 +163,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(linhaPesquisa, cb){
 		// var sql = "DELETE FROM TBLinhaPesquisa WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){
@@ -218,7 +218,7 @@ module.exports = {
 		switch(grauLinha){
 			case 1:
 				var parte = linha.codigo.split(".")[0] + ".";
-				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 					cb(resposta);
 				});
 				break;
@@ -226,12 +226,12 @@ module.exports = {
 				var parte;
 				if(tipoBusca == 0){
 					parte = linha.codigo.split(".")[0] + ".00.00.00";					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}else{
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1];					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}
@@ -240,19 +240,19 @@ module.exports = {
 				var parte;
 				if(tipoBusca == 0){
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + ".00.00";					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}else{
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2];					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}
 				break;
 			case 4:				
 				var parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2] + ".00";				
-				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 					cb(resposta);
 				});				
 				break;

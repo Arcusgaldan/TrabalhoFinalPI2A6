@@ -150,7 +150,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(docenteColaborador, cb){
 		// var sql = "DELETE FROM TBDocenteColaborador WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){

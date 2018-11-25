@@ -59,7 +59,7 @@ module.exports = {
 
 	validar: function(logLider){
 		var validates = require('./../validates.js');
-		if(!validates.req(logLogLider.id) || !validates.req(logLogLider.data) || !validates.req(logLogLider.codGrupo) || !validates.req(logLogLider.novoLogLider)){ //Retirar campos opcionais desta validação						
+		if(!validates.req(logLider.id) || !validates.req(logLider.data) || !validates.req(logLider.codGrupo) || !validates.req(logLider.novoLider)){ //Retirar campos opcionais desta validação						
 			return false;
 		}else{
 			return true;
@@ -67,15 +67,15 @@ module.exports = {
 	},
 
 	inserir: function(logLider, cb){
-		if(!this.validar(logLogLider)){							
+		if(!this.validar(logLider)){							
 				return false;
 		}else{
-			// logLogLider['id'] = 0;
+			// logLider['id'] = 0;
 			// var sql = "INSERT INTO TBLogLogLider (";
 			// var campos = "";
 			// var valores = "";
-			// for(var key in logLogLider){
-			// 	if(logLogLider[key] == null)
+			// for(var key in logLider){
+			// 	if(logLider[key] == null)
 			// 		continue;
 
 			// 	if(campos == ""){
@@ -88,11 +88,11 @@ module.exports = {
 			// 	var aux = "";
 
 			// 	if(modelo.isString(key)){
-			// 		aux = '"' + logLogLider[key] + '"';
+			// 		aux = '"' + logLider[key] + '"';
 					
 			// 	}
 			// 	else
-			// 		aux = logLogLider[key];
+			// 		aux = logLider[key];
 
 			// 	if(valores == ""){
 			// 		valores += aux;
@@ -113,12 +113,12 @@ module.exports = {
 	},
 
 	alterar: function(logLider, cb){
-		if(!this.validar(logLogLider)){
+		if(!this.validar(logLider)){
 			return false;
 		}else{
 			// var sql = "UPDATE TBLogLogLider SET ";
 			// var campos = "";
-			// for(var key in logLogLider){
+			// for(var key in logLider){
 			// 	if(key == 'id')
 			// 		continue;
 
@@ -126,11 +126,11 @@ module.exports = {
 			// 	var aux = "";
 
 			// 	if(modelo.isString(key)){
-			// 		aux = '"' + logLogLider[key] + '"';
+			// 		aux = '"' + logLider[key] + '"';
 					
 			// 	}
 			// 	else
-			// 		aux = logLogLider[key];
+			// 		aux = logLider[key];
 
 			// 	if(campos == ""){
 			// 		campos += key + " = " + aux;
@@ -138,7 +138,7 @@ module.exports = {
 			// 		campos += ", " + key + " = " + aux;
 			// 	}
 			// }
-			// sql += campos + " WHERE id = " + logLogLider['id'] + ";";
+			// sql += campos + " WHERE id = " + logLider['id'] + ";";
 			// var dao = require('./../dao.js');
 			// dao.inserir(dao.criaConexao(), sql, function(codRes){
 			// 	cb(codRes);
@@ -149,7 +149,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(logLider, cb){
 		// var sql = "DELETE FROM TBLogLogLider WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){

@@ -204,7 +204,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id){
+	excluir: function(linkResetSenha){
 		// var sql = "DELETE FROM TBLinkResetSenha WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql);

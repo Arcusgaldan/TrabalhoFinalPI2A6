@@ -144,7 +144,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id){
+	excluir: function(permissao){
 		// var sql = "DELETE FROM TBPermissao WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql);
