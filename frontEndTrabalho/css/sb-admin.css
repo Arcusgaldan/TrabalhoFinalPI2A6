@@ -421,7 +421,19 @@ select{
 #cardHeaderGrupo .btn{
   margin-bottom: 10px;
 }
-
+@media (max-width: 680px) {
+  .card-header{
+    font-size: 2em;
+    text-align: center;
+    line-height: 150%;
+  }
+  .card-header .btn{
+    width: 100%;
+    /*float: unset!important;
+    display: block;
+    margin: auto;*/
+  }
+}
 
 @media (max-width: 480px) {
   .nomeGrupo {
