@@ -22,12 +22,6 @@ function sidebarLider(grupo){
            <span>"+grupo.nome+"</span> \
           </a>\
         </li>\
-        <li class='nav-item active'>\
-          <a class='nav-link' href='/paginaRelatorios/" + grupo.sigla + "'>\
-            <i class='fas fa-fw fa-home'></i>\
-           <span>Página de Relatórios</span> \
-          </a>\
-        </li>\
     ");
 }
 function sidebarLiderSemGrupo(grupo){
