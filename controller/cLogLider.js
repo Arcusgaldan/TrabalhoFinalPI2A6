@@ -57,7 +57,7 @@ module.exports = {
 		}
 	},
 
-	validar: function(logLogLider){
+	validar: function(logLider){
 		var validates = require('./../validates.js');
 		if(!validates.req(logLogLider.id) || !validates.req(logLogLider.data) || !validates.req(logLogLider.codGrupo) || !validates.req(logLogLider.novoLogLider)){ //Retirar campos opcionais desta validação						
 			return false;
@@ -66,7 +66,7 @@ module.exports = {
 		}
 	},
 
-	inserir: function(logLogLider, cb){
+	inserir: function(logLider, cb){
 		if(!this.validar(logLogLider)){							
 				return false;
 		}else{
@@ -112,7 +112,7 @@ module.exports = {
 		}
 	},
 
-	alterar: function(logLogLider, cb){
+	alterar: function(logLider, cb){
 		if(!this.validar(logLogLider)){
 			return false;
 		}else{

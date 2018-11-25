@@ -1,4 +1,5 @@
 function criaElementos(listaEquipamentos){
+	var utils = require('./../../utils.js');
 	for(let i = 0; i < listaEquipamentos.length; i++){
 		$("#tabelaEquipamentos").append("<tr class='trEquipamentos'>\
 	                      <th id='nomeEquipamentoLista"+i+"'></th>\
@@ -20,8 +21,9 @@ function criaElementos(listaEquipamentos){
 		document.getElementById('nomeEquipamentoLista' + i).innerHTML = listaEquipamentos[i].nome;
 		document.getElementById('nomeEquipamentoDados' + i).innerHTML = listaEquipamentos[i].nome;
 		document.getElementById('descricaoEquipamentoDados' + i).innerHTML = listaEquipamentos[i].descricao;
-		document.getElementById('dataEntradaEquipamentoDados' + i).innerHTML = listaEquipamentos[i].dataEntrada.substring(0, 10);
-		document.getElementById('dataDescarteEquipamentoDados' + i).innerHTML = listaEquipamentos[i].dataDescarte.substring(0, 10);
+		document.getElementById('dataEntradaEquipamentoDados' + i).innerHTML = utils.formataData(listaEquipamentos[i].dataEntrada);
+		//console.log("Teste formato data: " + listaEquipamentos[i].dataEntrada);
+		document.getElementById('dataDescarteEquipamentoDados' + i).innerHTML = utils.formataData(listaEquipamentos[i].dataDescarte);
 
 		(function(){
 			var equipamento = listaEquipamentos[i];		

@@ -245,6 +245,18 @@ module.exports = {
 		return resultado;
 	},
 
+	formataDataHora: function(data){
+		if(data == "1001-01-01T00:00:000Z"){
+			return "-";
+		}
+
+		var diaMes = data.substring(0, 10);
+		var hora = data.substring(11, 23);
+		var separado = diaMes.split('-');
+		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0] + " " + hora;
+		return resultado;
+	},
+
 	comparaData: function(a, b){
 		a = a.split('-');
 		b = b.split('-');

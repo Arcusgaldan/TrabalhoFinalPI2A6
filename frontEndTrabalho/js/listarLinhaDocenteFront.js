@@ -32921,6 +32921,79 @@ function extend() {
 
 },{}],190:[function(require,module,exports){
 module.exports = {
+	trataOperacao: function(operacao, msg, cb){
+		var resposta = {};
+		switch(operacao){
+			case "INSERIR":
+				this.inserir(msg, function(codRes){
+					resposta.codigo = codRes;
+					cb(resposta);
+				});
+				break;
+
+			case "ALTERAR":
+				this.alterar(msg, function(codRes){
+					resposta.codigo = codRes;
+					cb(resposta);
+				});
+				break;
+
+			case "EXCLUIR":
+				this.excluir(msg, function(codRes){
+					resposta.codigo = codRes;
+					cb(resposta);
+				});
+				break;
+
+			case "LISTAR":
+				this.listar(function(res){
+					if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
+						cb(resposta);
+					}else if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+				break;
+
+			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
+				this.buscar(msg.campo, msg.valor, function(res){
+					if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
+						cb(resposta);
+					}else if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+				break;
+
+			case "BUSCARPARENTE":
+				this.buscarParente(msg.tipoBusca, msg.linha, function(res){
+					if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
+						cb(resposta);
+					}else if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+		}
+	},
+
 	validar: function(linhaPesquisa){
 		var validates = require('./../validates.js');
 		if(!validates.req(linhaPesquisa.id) || !validates.exact(linhaPesquisa.codigo, 12) || !validates.req(linhaPesquisa.nome)){ //Retirar campos opcionais desta validação	
@@ -32934,12 +33007,195 @@ module.exports = {
 		if(!this.validar(linhaPesquisa)){							
 				return false;
 		}else{
-			linhaPesquisa['id'] = 0;
-			var sql = "INSERT INTO TBLinhaPesquisa (";
+			// linhaPesquisa['id'] = 0;
+			// var sql = "INSERT INTO TBLinhaPesquisa (";
+			// var campos = "";
+			// var valores = "";
+			// for(var key in linhaPesquisa){
+			// 	if(linhaPesquisa[key] == null)
+			// 		continue;
+
+			// 	if(campos == ""){
+			// 		campos += key;
+			// 	}else{
+			// 		campos += ", " + key;
+			// 	}
+
+			// 	var modelo = require('./../modelo/mLinhaPesquisa.js');
+			// 	var aux = "";
+
+			// 	if(modelo.isString(key)){
+			// 		aux = '"' + linhaPesquisa[key] + '"';					
+			// 	}
+			// 	else
+			// 		aux = linhaPesquisa[key];
+
+			// 	if(valores == ""){
+			// 		valores += aux;
+			// 	}else{
+			// 		valores += ", " + aux;
+			// 	}
+			// }
+			// sql += campos + ") values (" + valores + ");";
+			// var dao = require('./../dao.js');
+			// dao.inserir(dao.criaConexao(), sql, function(codRes){
+			// 	console.log("CODRES: " + codRes);
+			// 	cb(codRes);
+			// });
+			require('./controller.js').inserir("LinhaPesquisa", linhaPesquisa, function(codRes){
+				cb(codRes);
+			});
+		}
+	},
+
+	alterar: function(linhaPesquisa, cb){
+		if(!this.validar(linhaPesquisa)){
+			return false;
+		}else{
+			// var sql = "UPDATE TBLinhaPesquisa SET ";
+			// var campos = "";
+			// for(var key in linhaPesquisa){
+			// 	if(key == 'id')
+			// 		continue;
+
+			// 	var modelo = require('./../modelo/mLinhaPesquisa.js');
+			// 	var aux = "";
+
+			// 	if(modelo.isString(key)){
+			// 		aux = '"' + linhaPesquisa[key] + '"';
+					
+			// 	}
+			// 	else
+			// 		aux = linhaPesquisa[key];
+
+			// 	if(campos == ""){
+			// 		campos += key + " = " + aux;
+			// 	}else{
+			// 		campos += ", " + key + " = " + aux;
+			// 	}
+			// }
+			// sql += campos + " WHERE id = " + linhaPesquisa['id'] + ";";
+			// var dao = require('./../dao.js');
+			// dao.inserir(dao.criaConexao(), sql, function(codRes){
+			// 	cb(codRes);
+			// });
+			require('./controller.js').alterar("LinhaPesquisa", linhaPesquisa, function(codRes){
+				cb(codRes);
+			});
+		}
+	},
+
+	excluir: function(id, cb){
+		// var sql = "DELETE FROM TBLinhaPesquisa WHERE id = " + id + ";";
+		// var dao = require('./../dao.js');
+		// dao.inserir(dao.criaConexao(), sql, function(codRes){
+		// 	cb(codRes);
+		// });
+		require('./controller.js').excluir("LinhaPesquisa", linhaPesquisa, function(codRes){
+			cb(codRes);
+		});
+	},
+
+	listar: function(cb){
+		// var sql = "SELECT * FROM TBLinhaPesquisa;";
+		// var dao = require('./../dao.js');
+		// dao.buscar(dao.criaConexao(), sql, function(resultado){
+		// 	cb(resultado);
+		// });
+		require('./controller.js').listar("LinhaPesquisa", function(resposta){
+			cb(resposta);
+		});
+	},
+
+	buscar: function(campo, valor, cb){
+		// var sql = 'SELECT * FROM TBLinhaPesquisa WHERE ' + campo + ' = "' + valor + '";';
+		// console.log("SQL: " + sql);
+		// var dao = require('./../dao.js');
+		// dao.buscar(dao.criaConexao(), sql, function(resultado){			
+		// 	cb(resultado);
+		// });
+		require('./controller.js').buscar("LinhaPesquisa", campo, valor, function(resposta){
+			cb(resposta);
+		});
+	},
+
+	buscarParente: function(tipoBusca, linha, cb){
+		// var sql = 'SELECT * FROM TBLinhaPesquisa WHERE codigo LIKE "' + valor + '%";';
+		// console.log("cLinhaPesquisa::buscarParente - sql = " + sql);
+		// var dao = require('./../dao.js');
+		// dao.buscar(dao.criaConexao(), sql, function(resultado){
+		// 	cb(resultado);
+		// });
+
+		var grauLinha = require('./../utils.js').getGrauLinha(linha);
+		if(grauLinha == 0){
+			cb(null);
+		}
+		if(tipoBusca == 0 && grauLinha == 1){
+			cb(null);
+		}else if(tipoBusca == 1 && grauLinha == 4){
+			cb(null);
+		}
+
+		switch(grauLinha){
+			case 1:
+				var parte = linha.codigo.split(".")[0] + ".";
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					cb(resposta);
+				});
+				break;
+			case 2:
+				var parte;
+				if(tipoBusca == 0){
+					parte = linha.codigo.split(".")[0] + ".00.00.00";					
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+						cb(resposta);
+					});
+				}else{
+					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1];					
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+						cb(resposta);
+					});
+				}
+				break;
+			case 3:
+				var parte;
+				if(tipoBusca == 0){
+					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + ".00.00";					
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+						cb(resposta);
+					});
+				}else{
+					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2];					
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+						cb(resposta);
+					});
+				}
+				break;
+			case 4:				
+				var parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2] + ".00";				
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					cb(resposta);
+				});				
+				break;
+			default:
+				cb(null);
+		}
+		
+	}
+}
+},{"./../utils.js":302,"./../validates.js":303,"./controller.js":191}],191:[function(require,module,exports){
+module.exports = {
+	inserir: function(alvo, msg, cb){
+		if(!this.validar(msg)){							
+				cb(400);
+		}else{
+			msg['id'] = 0;
+			var sql = "INSERT INTO TB" + alvo + " (";
 			var campos = "";
 			var valores = "";
-			for(var key in linhaPesquisa){
-				if(linhaPesquisa[key] == null)
+			for(var key in msg){
+				if(msg[key] == null)
 					continue;
 
 				if(campos == ""){
@@ -32948,14 +33204,14 @@ module.exports = {
 					campos += ", " + key;
 				}
 
-				var modelo = require('./../modelo/mLinhaPesquisa.js');
+				var modelo = require('./../modelo/m' + alvo + '.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + linhaPesquisa[key] + '"';					
+					aux = '"' + msg[key] + '"';					
 				}
 				else
-					aux = linhaPesquisa[key];
+					aux = msg[key];
 
 				if(valores == ""){
 					valores += aux;
@@ -32966,31 +33222,31 @@ module.exports = {
 			sql += campos + ") values (" + valores + ");";
 			var dao = require('./../dao.js');
 			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				console.log("CODRES: " + codRes);
+				//console.log("CODRES: " + codRes);
 				cb(codRes);
 			});
 		}
 	},
 
-	alterar: function(linhaPesquisa, cb){
-		if(!this.validar(linhaPesquisa)){
+	alterar: function(alvo, msg, cb){
+		if(!this.validar(msg)){
 			return false;
 		}else{
-			var sql = "UPDATE TBLinhaPesquisa SET ";
+			var sql = "UPDATE TB" + alvo + " SET ";
 			var campos = "";
-			for(var key in linhaPesquisa){
+			for(var key in msg){
 				if(key == 'id')
 					continue;
 
-				var modelo = require('./../modelo/mLinhaPesquisa.js');
+				var modelo = require('./../modelo/m' + alvo + '.js');
 				var aux = "";
 
 				if(modelo.isString(key)){
-					aux = '"' + linhaPesquisa[key] + '"';
+					aux = '"' + msg[key] + '"';
 					
 				}
 				else
-					aux = linhaPesquisa[key];
+					aux = msg[key];
 
 				if(campos == ""){
 					campos += key + " = " + aux;
@@ -32998,7 +33254,7 @@ module.exports = {
 					campos += ", " + key + " = " + aux;
 				}
 			}
-			sql += campos + " WHERE id = " + linhaPesquisa['id'] + ";";
+			sql += campos + " WHERE id = " + msg['id'] + ";";
 			var dao = require('./../dao.js');
 			dao.inserir(dao.criaConexao(), sql, function(codRes){
 				cb(codRes);
@@ -33006,41 +33262,87 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
-		var sql = "DELETE FROM TBLinhaPesquisa WHERE id = " + id + ";";
+	excluir: function(alvo, msg, cb){
+		var sql = "DELETE FROM TB" + alvo + " WHERE id = " + msg.id + ";";
 		var dao = require('./../dao.js');
 		dao.inserir(dao.criaConexao(), sql, function(codRes){
 			cb(codRes);
 		});
 	},
 
-	listar: function(cb){
-		var sql = "SELECT * FROM TBLinhaPesquisa;";
+	listar: function(alvo, cb){
+		var sql = "SELECT * FROM TB" + alvo + ";";
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
 		});
 	},
 
-	buscar: function(campo, valor, cb){
-		var sql = 'SELECT * FROM TBLinhaPesquisa WHERE ' + campo + ' = "' + valor + '";';
+	buscar: function(alvo, campo, valor, cb){
+		var sql = 'SELECT * FROM TB' + alvo + ' WHERE ' + campo + ' = "' + valor + '";';
 		console.log("SQL: " + sql);
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){			
-			cb(resultado);
+			cb({resultado: resultado});
 		});
 	},
 
-	buscarParente: function(valor, cb){
-		var sql = 'SELECT * FROM TBLinhaPesquisa WHERE codigo LIKE "' + valor + '%";';
-		console.log("cLinhaPesquisa::buscarParente - sql = " + sql);
+	buscarCompleto: function(alvo, argumentos, cb){
+		var sql = "SELECT ";		
+		var selectCampos = "";
+		var comparacoes = "";
+		var joins = "";
+		var orderCampos = "id";
+		var orderSentido = "ASC";
+		var aliasTabela = "";
+
+		if(argumentos.aliasTabela){
+			aliasTabela = argumentos.aliasTabela;
+		}
+
+		if(argumentos.selectCampos){
+			for(let i = 0; i < argumentos.selectCampos.length; i++){
+				if(i == argumentos.selectCampos.length - 1){
+					selectCampos += argumentos.selectCampos[i];
+				}else{
+					selectCampos += argumentos.selectCampos[i] + ", ";
+				}
+			}
+		}else{
+			selectCampos = "*";
+		}
+
+		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
+
+		if(argumentos.joins){
+			for(let i = 0; i < argumentos.joins.length; i++){
+				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+			}
+		}
+
+		if(!argumentos.where){
+			cb(null);
+		}
+
+		if(argumentos.orderBy){
+			if(argumentos.orderBy.campos){
+				orderCampos = argumentos.orderBy.campos;
+			}
+
+			if(argumentos.orderBy.sentido && (sentido == "ASC" || sentido == "DESC")){
+				orderSentido = argumentos.orderBy.sentido
+			}
+		}
+
+		sql += joins + "WHERE " + argumentos.where + " ORDER BY " + orderCampos + " " + orderSentido + ";";
+
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
 			cb(resultado);
 		});
 	}
 }
-},{"./../dao.js":191,"./../modelo/mLinhaPesquisa.js":193,"./../validates.js":303}],191:[function(require,module,exports){
+},{"./../dao.js":192}],192:[function(require,module,exports){
 module.exports = {
 	criaConexao: function(){
 		var mysql = require('mysql');
@@ -33108,7 +33410,7 @@ module.exports = {
 		});
 	}
 }
-},{"mysql":198,"nodemailer":269}],192:[function(require,module,exports){
+},{"mysql":198,"nodemailer":269}],193:[function(require,module,exports){
 function populaVetorLinhasGerais(cb){
 	var http = require('http');
 	var utils = require('./../../utils.js');
@@ -33238,38 +33540,7 @@ populaVetorLinhasGerais(function(vetor){
 		console.log("Erro ao listar linhas gerais");
 	}
 });
-},{"./../../utils.js":302,"http":176}],193:[function(require,module,exports){
-module.exports = {
-	especifica: function(objeto){
-		var final = {};
-		final.id = objeto.id;
-		final.codigo = objeto.codigo;
-		final.nome = objeto.nome;
-		final.grau = objeto.grau;
-		final.personalizada = objeto.personalizada;
-		return final;
-	},
-
-	novo: function(){
-		var final = {};
-		final.id = 0;
-		final.codigo = "";
-		final.nome = "";
-		final.grau = 0;
-		final.personalizada = 1;
-		return final;
-	},
-
-	isString: function(atributo){
-		var strings = ["codigo", "nome"];
-		for (var i = strings.length - 1; i >= 0; i--) {
-			if(strings[i] == atributo)
-				return true;
-		}
-		return false;
-	}
-}
-},{}],194:[function(require,module,exports){
+},{"./../../utils.js":302,"http":176}],194:[function(require,module,exports){
 /*! bignumber.js v4.1.0 https://github.com/MikeMcl/bignumber.js/LICENCE */
 
 ;(function (globalObj) {
@@ -57159,10 +57430,35 @@ module.exports = {
 		var separado = data.substring(0, 10).split('-');
 		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
 		return resultado;
+	},
+
+	comparaData: function(a, b){
+		a = a.split('-');
+		b = b.split('-');
+
+		if(parseInt(a[2]) < parseInt(b[2])){
+			return -1;
+		}else if(parseInt(a[2]) > parseInt(b[2])){
+			return 1;
+		}else{
+			if(parseInt(a[1]) < parseInt(b[1])){
+				return -1;
+			}else if(parseInt(a[1]) > parseInt(b[1])){
+				return 1;
+			}else{
+				if(parseInt(a[0]) < parseInt(b[0])){
+					return -1;
+				}else if(parseInt(a[0]) > parseInt(b[0])){
+					return 1;
+				}else{
+					return 0;
+				}
+			}
+		}
 	}
 };
 }).call(this,require("buffer").Buffer)
-},{"./controller/cLinhaPesquisa.js":190,"./dao.js":191,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":198}],303:[function(require,module,exports){
+},{"./controller/cLinhaPesquisa.js":190,"./dao.js":192,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)
@@ -57217,4 +57513,4 @@ module.exports = {
 	}
 
 }
-},{}]},{},[192]);
+},{}]},{},[193]);

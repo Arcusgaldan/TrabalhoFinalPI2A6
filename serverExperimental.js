@@ -41,8 +41,17 @@ http.createServer(function(req, res){
             var operacao = req.headers['operacao'];
             
             if(objeto != "Reset" && objeto != "DataAtual" && objeto != "DataHoraAtual"){//Para toda operação de servidor que não tenha um controller associado, adiciona a exceção neste if (ex: Email)
+                console.log("Criando controller do objeto " + objeto);
                 var caminho = './controller/c' + objeto + '.js';
                 var controller = require(caminho);
+                console.log("Entrando em trataOperacao com objeto " + objeto + " e operação " + operacao);
+                controller.trataOperacao(operacao, jsonRqs, function(resposta){
+                    res.statusCode = resposta.codigo;
+                    if(resposta.msg){
+                        res.write(resposta.msg);
+                    }
+                    res.end();
+                });    
                 if(controller == null){
                     res.statusCode = 400;
                     res.write('Objeto inexistente.');
@@ -67,14 +76,6 @@ http.createServer(function(req, res){
                 res.write(data);
                 res.end();
                 return;
-            }else{
-                controller.trataOperacao(operacao, jsonRqs, function(resposta){
-                    res.statusCode = resposta.codigo;
-                    if(resposta.msg){
-                        res.write(resposta.msg);
-                    }
-                    res.end();
-                });         
             }
         }
     })    
