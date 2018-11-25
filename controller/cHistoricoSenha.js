@@ -101,7 +101,7 @@ module.exports = {
 			// sql += campos + ") values (" + valores + ");";
 			// var dao = require('./../dao.js');
 			// return dao.inserir(dao.criaConexao(), sql);
-			require('./controller.js').inserir("Senha", senha, function(codRes){
+			require('./controller.js').inserir("HistoricoSenha", historicoSenha, function(codRes){
 				cb(codRes);
 			});
 		}
@@ -137,17 +137,17 @@ module.exports = {
 			// sql += campos + " WHERE codUsuario = " + historicoSenha['codUsuario'] + ";";
 			// var dao = require('./../dao.js');
 			// dao.inserir(dao.criaConexao(), sql);
-			require('./controller.js').alterar("Senha", senha, function(codRes){
+			require('./controller.js').alterar("HistoricoSenha", historicoSenha, function(codRes){
 				cb(codRes);
 			});
 		}
 	},
 
-	excluir: function(id){
+	excluir: function(historicoSenha){
 		// var sql = "DELETE FROM TBHistoricoSenha WHERE codUsuario = " + codUsuario + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql);
-		require('./controller.js').excluir("Senha", senha, function(codRes){
+		require('./controller.js').excluir("HistoricoSenha", historicoSenha, function(codRes){
 			cb(codRes);
 		});
 	},
@@ -156,7 +156,7 @@ module.exports = {
 		// var sql = "SELECT * FROM TBHistoricoSenha;";
 		// var dao = require('./../dao.js');
 		// dao.buscar(dao.criaConexao(), sql);
-		require('./controller.js').listar("Senha", function(resposta){
+		require('./controller.js').listar("HistoricoSenha", function(resposta){
 			cb(resposta);
 		});
 	},
@@ -165,7 +165,7 @@ module.exports = {
 		// var sql = "SELECT * FROM TBHistoricoSenha WHERE " + campo + " = " + valor + ";";
 		// var dao = require('./../dao.js');
 		// dao.buscar(dao.criaConexao(), sql);
-		require('./controller.js').buscar("Senha", campo, valor, function(resposta){
+		require('./controller.js').buscar("HistoricoSenha", campo, valor, function(resposta){
 			cb(resposta);
 		});
 	}

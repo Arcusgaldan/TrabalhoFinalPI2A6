@@ -54,6 +54,22 @@ module.exports = {
 					}
 				});
 				break;
+
+			case "BUSCARCOMPLETO":
+				this.buscarCompleto(msg, function(res){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
+						cb(resposta);
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+				break;
 		}
 	},
 
@@ -173,7 +189,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(docente, cb){
 		// var sql = "DELETE FROM TBDocente WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){
@@ -203,6 +219,12 @@ module.exports = {
 		// 	cb(resultado);
 		// });
 		require('./controller.js').buscar("Docente", campo, valor, function(resposta){
+			cb(resposta);
+		});
+	},
+
+	buscarCompleto: function(argumentos, cb){
+		require('./controller.js').buscarCompleto("Docente", argumentos, function(resposta){
 			cb(resposta);
 		});
 	}

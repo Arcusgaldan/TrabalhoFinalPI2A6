@@ -149,7 +149,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(textoIndex, cb){
 		// var sql = "DELETE FROM TBTextoIndex WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){

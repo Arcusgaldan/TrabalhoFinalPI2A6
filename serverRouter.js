@@ -11,7 +11,7 @@ var paginas = {
 	"/cadastroPermissoes": "frontEndTrabalho/cadastroPermissoes.html",
 	"/cadastroInformativos": "frontEndTrabalho/cadastroInformativos.html",
 	"/cadastroAdministrador": "frontEndTrabalho/cadastroAdministrador.html",
-	"/primeiroAcessoUsuario": "frontEndTrabalho/primeiroAcessoUsuario.html"
+	"/primeiroAcessoUsuario": "frontEndTrabalho/primeiroAcessoUsuario.html",
 };
 
 var agrupamentos = {

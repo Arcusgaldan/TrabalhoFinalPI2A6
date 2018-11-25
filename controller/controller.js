@@ -1,78 +1,71 @@
 module.exports = {
 	inserir: function(alvo, msg, cb){
-		if(!this.validar(msg)){							
-				cb(400);
-		}else{
-			msg['id'] = 0;
-			var sql = "INSERT INTO TB" + alvo + " (";
-			var campos = "";
-			var valores = "";
-			for(var key in msg){
-				if(msg[key] == null)
-					continue;
+		msg['id'] = 0;
+		var sql = "INSERT INTO TB" + alvo + " (";
+		var campos = "";
+		var valores = "";
+		for(var key in msg){
+			if(msg[key] == null)
+				continue;
 
-				if(campos == ""){
-					campos += key;
-				}else{
-					campos += ", " + key;
-				}
-
-				var modelo = require('./../modelo/m' + alvo + '.js');
-				var aux = "";
-
-				if(modelo.isString(key)){
-					aux = '"' + msg[key] + '"';					
-				}
-				else
-					aux = msg[key];
-
-				if(valores == ""){
-					valores += aux;
-				}else{
-					valores += ", " + aux;
-				}
+			if(campos == ""){
+				campos += key;
+			}else{
+				campos += ", " + key;
 			}
-			sql += campos + ") values (" + valores + ");";
-			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				//console.log("CODRES: " + codRes);
-				cb(codRes);
-			});
+
+			var modelo = require('./../modelo/m' + alvo + '.js');
+			var aux = "";
+
+			if(modelo.isString(key)){
+				aux = '"' + msg[key] + '"';					
+			}
+			else
+				aux = msg[key];
+
+			if(valores == ""){
+				valores += aux;
+			}else{
+				valores += ", " + aux;
+			}
 		}
+		sql += campos + ") values (" + valores + ");";
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql, function(codRes){
+			//console.log("CODRES: " + codRes);
+			cb(codRes);
+		});
+		
 	},
 
 	alterar: function(alvo, msg, cb){
-		if(!this.validar(msg)){
-			return false;
-		}else{
-			var sql = "UPDATE TB" + alvo + " SET ";
-			var campos = "";
-			for(var key in msg){
-				if(key == 'id')
-					continue;
+		var sql = "UPDATE TB" + alvo + " SET ";
+		var campos = "";
+		for(var key in msg){
+			if(key == 'id')
+				continue;
 
-				var modelo = require('./../modelo/m' + alvo + '.js');
-				var aux = "";
+			var modelo = require('./../modelo/m' + alvo + '.js');
+			var aux = "";
 
-				if(modelo.isString(key)){
-					aux = '"' + msg[key] + '"';
-					
-				}
-				else
-					aux = msg[key];
-
-				if(campos == ""){
-					campos += key + " = " + aux;
-				}else{
-					campos += ", " + key + " = " + aux;
-				}
+			if(modelo.isString(key)){
+				aux = '"' + msg[key] + '"';
+				
 			}
-			sql += campos + " WHERE id = " + msg['id'] + ";";
-			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				cb(codRes);
-			});
+			else
+				aux = msg[key];
+
+			if(campos == ""){
+				campos += key + " = " + aux;
+			}else{
+				campos += ", " + key + " = " + aux;
+			}
 		}
+		sql += campos + " WHERE id = " + msg['id'] + ";";
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql, function(codRes){
+			cb(codRes);
+		});
 	},
 
 	excluir: function(alvo, msg, cb){
@@ -148,6 +141,7 @@ module.exports = {
 		}
 
 		sql += joins + "WHERE " + argumentos.where + " ORDER BY " + orderCampos + " " + orderSentido + ";";
+		console.log("SQL FINAL EM BUSCAR COMPLETO: " + sql);
 
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
