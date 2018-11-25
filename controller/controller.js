@@ -107,6 +107,11 @@ module.exports = {
 		var joins = "";
 		var orderCampos = "id";
 		var orderSentido = "ASC";
+		var aliasTabela = "";
+
+		if(argumentos.aliasTabela){
+			aliasTabela = argumentos.aliasTabela;
+		}
 
 		if(argumentos.selectCampos){
 			for(let i = 0; i < argumentos.selectCampos.length; i++){
@@ -120,7 +125,7 @@ module.exports = {
 			selectCampos = "*";
 		}
 
-		sql += selectCampos + " FROM TB" + alvo + " ";
+		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
 			for(let i = 0; i < argumentos.joins.length; i++){
