@@ -89,6 +89,7 @@
 [-] Colocar imagem padrão caso não haja uma imagem (para fotos e logotipo)
 [-] Organizar botões do líder do grupo
 [-] Centralizar título da página interna do grupo, adicionar sigla após título
+[-] Página "publicações" não tem o botão voltar
 
 -- BACK-END
 

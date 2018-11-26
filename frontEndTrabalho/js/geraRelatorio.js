@@ -49,6 +49,20 @@ function relatorioLinhaGrupo(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome da linha de pesquisa:</strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da linha:</strong> <span id='mostraDataInicioLinha"+i+"'></span></p>\
+	                  <p><strong>Data de fim da linha:</strong> <span id='mostraDataFinalLinha"+i+"'></span></p>\
+	                </div>\
+					");
+
+
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+				}
 			});
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
