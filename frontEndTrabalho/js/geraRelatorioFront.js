@@ -33466,6 +33466,7 @@ function relatorioLinhaGrupo(ano, idGrupo){
 					document.getElementById("mostraDataFinalLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
 				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');

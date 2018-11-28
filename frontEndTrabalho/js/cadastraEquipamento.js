@@ -28,7 +28,99 @@ function buscaGrupo(sigla, cb){
 	});
 }
 
+function verificaCadastro(){
+	if(document.getElementById("nomeEquipamentoCadastrar").value.length == 0){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no tecnico";
+		$("#erroModal").modal("show");
+		return false;
+	}else if (document.getElementById("nomeEquipamentoCadastrar").value.length < 3){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome com mais de três caracteres";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("dataEntradaEquipamentoCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Favor inserir data de cadastro</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("dataDescarteEquipamentoCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Favor inserir data de descarte</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}	
+	 
+	var verificaDataEntrada = document.getElementById("dataEntradaEquipamentoCadastrar").value.split("-");
+	var verificaDataDescarte = document.getElementById("dataDescarteEquipamentoCadastrar").value.split("-");
+	
+	var anoEntrada = verificaDataEntrada[0];
+	var mesEntrada = verificaDataEntrada[1];
+	var diaEntrada = verificaDataEntrada[2];
+
+	var anoDescarte = verificaDataDescarte[0];
+	var mesDescarte = verificaDataDescarte[1];
+	var diaDescarte = verificaDataDescarte[2];
+	
+	if (anoDescarte<anoEntrada){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Ano de entrada superior ao ano de descarte</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}else if (anoDescarte=anoEntrada){
+		if (mesDescarte<mesEntrada){
+			document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+			document.getElementById("msgErroModal").innerHTML = "<p>Mês de entrada superior ao mês de descarte</p>";
+			$("#erroModal").modal("show");
+			return false;
+		}else if (mesDescarte==mesEntrada) {
+			if (diaDescarte<diaEntrada){
+				document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+				document.getElementById("msgErroModal").innerHTML = "<p>Dia de entrada superior ao dia de descarte</p>";
+				$("#erroModal").modal("show");
+				return false;
+			}else{
+			}
+		}else{
+		}
+	}else{
+	}
+
+	// if(verificaDataEntrada[0] <= verificaDataDescarte[0]){
+	// 	if(verificaDataEntrada[1] <= verificaDataDescarte[1]){
+	// 		if(verificaDataEntrada[2] <= verificaDataDescarte[2]){
+	// 		}else{
+	// 			document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+	// 			document.getElementById("msgErroModal").innerHTML = "<p>Favor inserir data de descarte superior a de entrada (dia)</p>";
+	// 			$("#erroModal").modal("show");
+	// 			return false		
+	// 		}
+	// 	}else{
+	// 		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+	// 		document.getElementById("msgErroModal").innerHTML = "<p>Favor inserir data de descarte superior a de entrada (mes)</p>";
+	// 		$("#erroModal").modal("show");
+	// 		return false	
+	// 	}
+	// }else{
+	// 	document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+	// 	document.getElementById("msgErroModal").innerHTML = "<p>Favor inserir data de descarte superior a de entrada (ano)</p>";
+	// 	$("#erroModal").modal("show");
+	// 	return false
+	// }
+	
+	if(document.getElementById("descricaoEquipamentoCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir descrição";
+		document.getElementById("msgErroModal").innerHTML = "<p>Favor inserir descrição do equipamento</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	return true;
+}
+
 function cadastra(){
+	if(!verificaCadastro()){
+		return;
+	}
 	var modelo = require('./../../modelo/mEquipamento.js').novo();
 	modelo.nome = document.getElementById("nomeEquipamentoCadastrar").value;
 	modelo.dataEntrada = document.getElementById("dataEntradaEquipamentoCadastrar").value;
