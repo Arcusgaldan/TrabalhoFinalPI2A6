@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `DBPronn`.`TBTipoUsuario` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBTipoUsuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(20) NULL,
+  `nome` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
@@ -34,19 +34,20 @@ DROP TABLE IF EXISTS `DBPronn`.`TBUsuario` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBUsuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `prontuario` CHAR(10) NULL,
-  `nome` VARCHAR(100) NULL,
-  `email` VARCHAR(80) NULL,
-  `senha` VARCHAR(300) NULL,
-  `curriculoLattes` VARCHAR(300) NULL,
+  `prontuario` CHAR(10) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(80) NOT NULL,
+  `senha` VARCHAR(300) NOT NULL,
+  `curriculoLattes` VARCHAR(300) NOT NULL,
   `foto` VARCHAR(200) NULL,
   `data` DATE NULL,
-  `primeiroAcesso` TINYINT NULL,
+  `primeiroAcesso` TINYINT NOT NULL,
   `codTipoUsuario` INT NOT NULL,
   PRIMARY KEY (`id`, `codTipoUsuario`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_TBUsuario_TBTipoUsuario1_idx` (`codTipoUsuario` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `prontuario_UNIQUE` (`prontuario` ASC),
   CONSTRAINT `fk_TBUsuario_TBTipoUsuario1`
     FOREIGN KEY (`codTipoUsuario`)
     REFERENCES `DBPronn`.`TBTipoUsuario` (`id`)
@@ -62,7 +63,7 @@ DROP TABLE IF EXISTS `DBPronn`.`TBPermissao` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPermissao` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NULL,
+  `nome` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
@@ -99,8 +100,8 @@ DROP TABLE IF EXISTS `DBPronn`.`TBHistoricoSenha` ;
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBHistoricoSenha` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `codUsuario` INT NOT NULL,
-  `senhaAntiga` VARCHAR(64) NULL,
-  `data` DATETIME NULL,
+  `senhaAntiga` VARCHAR(64) NOT NULL,
+  `data` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `codUsuario`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   CONSTRAINT `fk_TBHistoricoSenha_TBUsuario1`
@@ -118,8 +119,8 @@ DROP TABLE IF EXISTS `DBPronn`.`TBLinkResetSenha` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBLinkResetSenha` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `link` VARCHAR(64) NULL,
-  `data` DATE NULL,
+  `link` VARCHAR(64) NOT NULL,
+  `data` DATE NOT NULL,
   `codUsuario` INT NOT NULL,
   PRIMARY KEY (`id`, `codUsuario`),
   INDEX `fk_TBLinkResetSenha_TBUsuario1_idx` (`codUsuario` ASC),
@@ -139,9 +140,9 @@ DROP TABLE IF EXISTS `DBPronn`.`TBGrupo` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBGrupo` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(20) NULL,
-  `nome` VARCHAR(100) NULL,
-  `sigla` VARCHAR(10) NULL,
+  `status` VARCHAR(20) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `sigla` VARCHAR(10) NOT NULL,
   `descricao` TEXT NULL,
   `dataFundacao` DATE NULL,
   `codUsuario` INT NOT NULL,
@@ -166,7 +167,7 @@ DROP TABLE IF EXISTS `DBPronn`.`TBLogLider` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBLogLider` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `data` DATETIME NULL,
+  `data` DATETIME NOT NULL,
   `codGrupo` INT NOT NULL,
   `novoLider` INT NOT NULL,
   PRIMARY KEY (`id`, `codGrupo`, `novoLider`),
@@ -193,8 +194,8 @@ DROP TABLE IF EXISTS `DBPronn`.`TBTextoIndex` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBTextoIndex` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `titulo` TEXT NULL,
-  `texto` TEXT NULL,
+  `titulo` TEXT NOT NULL,
+  `texto` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
@@ -207,13 +208,14 @@ DROP TABLE IF EXISTS `DBPronn`.`TBTecnico` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBTecnico` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `atividade` VARCHAR(100) NULL,
-  `formacao` VARCHAR(200) NULL,
-  `anoConclusao` VARCHAR(4) NULL,
+  `atividade` VARCHAR(100) NOT NULL,
+  `formacao` VARCHAR(200) NOT NULL,
+  `anoConclusao` VARCHAR(4) NOT NULL,
   `nomeCurso` VARCHAR(300) NULL,
-  `linkLattes` VARCHAR(300) NULL,
+  `linkLattes` VARCHAR(300) NOT NULL,
   `foto` VARCHAR(200) NULL,
-  `dataEntrada` DATE NULL,
+  `dataEntrada` DATE NOT NULL,
+  `dataSaida` DATE NOT NULL,
   `codGrupo` INT NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`, `codGrupo`),
@@ -233,12 +235,13 @@ DROP TABLE IF EXISTS `DBPronn`.`TBDocente` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBDocente` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `formacao` VARCHAR(200) NULL,
-  `anoConclusao` VARCHAR(4) NULL,
+  `formacao` VARCHAR(200) NOT NULL,
+  `anoConclusao` VARCHAR(4) NOT NULL,
   `nomeCurso` VARCHAR(300) NULL,
-  `linkLattes` VARCHAR(300) NULL,
+  `linkLattes` VARCHAR(300) NOT NULL,
   `foto` VARCHAR(200) NULL,
-  `dataEntrada` DATE NULL,
+  `dataEntrada` DATE NOT NULL,
+  `dataSaida` DATE NULL,
   `codGrupo` INT NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
@@ -329,8 +332,8 @@ DROP TABLE IF EXISTS `DBPronn`.`TBPesquisa` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPesquisa` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(300) NULL,
-  `dataInicio` DATE NULL,
+  `titulo` VARCHAR(300) NOT NULL,
+  `dataInicio` DATE NOT NULL,
   `dataFim` DATE NULL,
   `codDocente` INT NOT NULL,
   `codLinha` INT NOT NULL,
@@ -357,13 +360,13 @@ DROP TABLE IF EXISTS `DBPronn`.`TBAluno` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBAluno` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(100) NULL,
-  `curso` VARCHAR(200) NULL,
-  `linkLattes` VARCHAR(300) NULL,
-  `dataInicio` DATE NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `curso` VARCHAR(200) NOT NULL,
+  `linkLattes` VARCHAR(300) NOT NULL,
+  `dataInicio` DATE NOT NULL,
   `dataFim` DATE NULL,
   `codPesquisa` INT NOT NULL,
-  `tipo` VARCHAR(100) NULL,
+  `tipo` VARCHAR(100) NOT NULL,
   `atual` INT NOT NULL,
   PRIMARY KEY (`id`, `codPesquisa`),
   INDEX `fk_TBAluno_TBPesquisa1_idx` (`codPesquisa` ASC),
@@ -382,9 +385,9 @@ DROP TABLE IF EXISTS `DBPronn`.`TBEquipamento` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBEquipamento` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(100) NULL,
-  `descricao` TEXT NULL,
-  `dataEntrada` DATE NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `descricao` TEXT NOT NULL,
+  `dataEntrada` DATE NOT NULL,
   `dataDescarte` DATE NULL,
   `codGrupo` INT NOT NULL,
   PRIMARY KEY (`id`, `codGrupo`),
@@ -404,10 +407,10 @@ DROP TABLE IF EXISTS `DBPronn`.`TBPublicacao` ;
 
 CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPublicacao` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(300) NULL,
-  `tipo` VARCHAR(100) NULL,
-  `data` DATE NULL,
-  `referencia` TEXT NULL,
+  `titulo` VARCHAR(300) NOT NULL,
+  `tipo` VARCHAR(100) NOT NULL,
+  `data` DATE NOT NULL,
+  `referencia` TEXT NOT NULL,
   `codDocente` INT NOT NULL,
   `codPesquisa` INT NULL,
   `codLinha` INT NOT NULL,
@@ -436,6 +439,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 
 INSERT INTO TBTipoUsuario (id, nome) VALUES (1, "Lider");

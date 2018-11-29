@@ -32947,12 +32947,12 @@ module.exports = {
 
 			case "LISTAR":
 				this.listar(function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -32963,12 +32963,28 @@ module.exports = {
 
 			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
 				this.buscar(msg.campo, msg.valor, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
 						cb(resposta);
-					}else if(res == null){
+					}else{
+						resposta.codigo = 747;
+						cb(resposta);
+					}
+				});
+				break;
+
+			case "BUSCARCOMPLETO":
+				this.buscarCompleto(msg, function(res){
+					if(res == null){
 						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
+						resposta.codigo = 200;
+						resposta.msg = JSON.stringify(res);
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -33095,7 +33111,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(docente, cb){
 		// var sql = "DELETE FROM TBDocente WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){
@@ -33125,6 +33141,12 @@ module.exports = {
 		// 	cb(resultado);
 		// });
 		require('./controller.js').buscar("Docente", campo, valor, function(resposta){
+			cb(resposta);
+		});
+	},
+
+	buscarCompleto: function(argumentos, cb){
+		require('./controller.js').buscarCompleto("Docente", argumentos, function(resposta){
 			cb(resposta);
 		});
 	}
@@ -33157,12 +33179,12 @@ module.exports = {
 
 			case "LISTAR":
 				this.listar(function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -33173,12 +33195,12 @@ module.exports = {
 
 			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
 				this.buscar(msg.campo, msg.valor, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -33189,12 +33211,12 @@ module.exports = {
 
 			case "BUSCARPARENTE":
 				this.buscarParente(msg.tipoBusca, msg.linha, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -33295,7 +33317,7 @@ module.exports = {
 		}
 	},
 
-	excluir: function(id, cb){
+	excluir: function(linhaPesquisa, cb){
 		// var sql = "DELETE FROM TBLinhaPesquisa WHERE id = " + id + ";";
 		// var dao = require('./../dao.js');
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){
@@ -33350,7 +33372,7 @@ module.exports = {
 		switch(grauLinha){
 			case 1:
 				var parte = linha.codigo.split(".")[0] + ".";
-				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 					cb(resposta);
 				});
 				break;
@@ -33358,12 +33380,12 @@ module.exports = {
 				var parte;
 				if(tipoBusca == 0){
 					parte = linha.codigo.split(".")[0] + ".00.00.00";					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}else{
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1];					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}
@@ -33372,19 +33394,19 @@ module.exports = {
 				var parte;
 				if(tipoBusca == 0){
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + ".00.00";					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}else{
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2];					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}
 				break;
 			case 4:				
 				var parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2] + ".00";				
-				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 					cb(resposta);
 				});				
 				break;
@@ -33397,79 +33419,72 @@ module.exports = {
 },{"./../utils.js":304,"./../validates.js":305,"./controller.js":192}],192:[function(require,module,exports){
 module.exports = {
 	inserir: function(alvo, msg, cb){
-		if(!this.validar(msg)){							
-				cb(400);
-		}else{
-			msg['id'] = 0;
-			var sql = "INSERT INTO TB" + alvo + " (";
-			var campos = "";
-			var valores = "";
-			for(var key in msg){
-				if(msg[key] == null)
-					continue;
+		msg['id'] = 0;
+		var sql = "INSERT INTO TB" + alvo + " (";
+		var campos = "";
+		var valores = "";
+		for(var key in msg){
+			if(msg[key] == null)
+				continue;
 
-				if(campos == ""){
-					campos += key;
-				}else{
-					campos += ", " + key;
-				}
-
-				var modelo = require('./../modelo/m' + alvo + '.js');
-				var aux = "";
-
-				if(modelo.isString(key)){
-					aux = '"' + msg[key] + '"';					
-				}
-				else
-					aux = msg[key];
-
-				if(valores == ""){
-					valores += aux;
-				}else{
-					valores += ", " + aux;
-				}
+			if(campos == ""){
+				campos += key;
+			}else{
+				campos += ", " + key;
 			}
-			sql += campos + ") values (" + valores + ");";
-			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				//console.log("CODRES: " + codRes);
-				cb(codRes);
-			});
+
+			var modelo = require('./../modelo/m' + alvo + '.js');
+			var aux = "";
+
+			if(modelo.isString(key)){
+				aux = '"' + msg[key] + '"';					
+			}
+			else
+				aux = msg[key];
+
+			if(valores == ""){
+				valores += aux;
+			}else{
+				valores += ", " + aux;
+			}
 		}
+		sql += campos + ") values (" + valores + ");";
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql, function(codRes){
+			//console.log("CODRES: " + codRes);
+			cb(codRes);
+		});
+		
 	},
 
 	alterar: function(alvo, msg, cb){
-		if(!this.validar(msg)){
-			return false;
-		}else{
-			var sql = "UPDATE TB" + alvo + " SET ";
-			var campos = "";
-			for(var key in msg){
-				if(key == 'id')
-					continue;
+		var sql = "UPDATE TB" + alvo + " SET ";
+		var campos = "";
+		for(var key in msg){
+			if(key == 'id')
+				continue;
 
-				var modelo = require('./../modelo/m' + alvo + '.js');
-				var aux = "";
+			var modelo = require('./../modelo/m' + alvo + '.js');
+			var aux = "";
 
-				if(modelo.isString(key)){
-					aux = '"' + msg[key] + '"';
-					
-				}
-				else
-					aux = msg[key];
-
-				if(campos == ""){
-					campos += key + " = " + aux;
-				}else{
-					campos += ", " + key + " = " + aux;
-				}
+			if(modelo.isString(key)){
+				aux = '"' + msg[key] + '"';
+				
 			}
-			sql += campos + " WHERE id = " + msg['id'] + ";";
-			var dao = require('./../dao.js');
-			dao.inserir(dao.criaConexao(), sql, function(codRes){
-				cb(codRes);
-			});
+			else
+				aux = msg[key];
+
+			if(campos == ""){
+				campos += key + " = " + aux;
+			}else{
+				campos += ", " + key + " = " + aux;
+			}
 		}
+		sql += campos + " WHERE id = " + msg['id'] + ";";
+		var dao = require('./../dao.js');
+		dao.inserir(dao.criaConexao(), sql, function(codRes){
+			cb(codRes);
+		});
 	},
 
 	excluir: function(alvo, msg, cb){
@@ -33545,6 +33560,7 @@ module.exports = {
 		}
 
 		sql += joins + "WHERE " + argumentos.where + " ORDER BY " + orderCampos + " " + orderSentido + ";";
+		console.log("SQL FINAL EM BUSCAR COMPLETO: " + sql);
 
 		var dao = require('./../dao.js');
 		dao.buscar(dao.criaConexao(), sql, function(resultado){
@@ -57684,6 +57700,18 @@ module.exports = {
 		}
 		var separado = data.substring(0, 10).split('-');
 		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0];
+		return resultado;
+	},
+
+	formataDataHora: function(data){
+		if(data == "1001-01-01T00:00:000Z"){
+			return "-";
+		}
+
+		var diaMes = data.substring(0, 10);
+		var hora = data.substring(11, 23);
+		var separado = diaMes.split('-');
+		var resultado = separado[2] + "/" + separado[1] + "/" + separado[0] + " " + hora;
 		return resultado;
 	},
 

@@ -32947,12 +32947,12 @@ module.exports = {
 
 			case "LISTAR":
 				this.listar(function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -32963,12 +32963,12 @@ module.exports = {
 
 			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
 				this.buscar(msg.campo, msg.valor, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -32979,12 +32979,12 @@ module.exports = {
 
 			case "BUSCARPARENTE":
 				this.buscarParente(msg.tipoBusca, msg.linha, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -33140,7 +33140,7 @@ module.exports = {
 		switch(grauLinha){
 			case 1:
 				var parte = linha.codigo.split(".")[0] + ".";
-				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 					cb(resposta);
 				});
 				break;
@@ -33148,12 +33148,12 @@ module.exports = {
 				var parte;
 				if(tipoBusca == 0){
 					parte = linha.codigo.split(".")[0] + ".00.00.00";					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}else{
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1];					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}
@@ -33162,19 +33162,19 @@ module.exports = {
 				var parte;
 				if(tipoBusca == 0){
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + ".00.00";					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}else{
 					parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2];					
-					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+					require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 						cb(resposta);
 					});
 				}
 				break;
 			case 4:				
 				var parte = linha.codigo.split(".")[0] + "." + linha.codigo.split(".")[1] + "." + linha.codigo.split(".")[2] + ".00";				
-				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%';"}, function(resposta){
+				require('./controller.js').buscarCompleto("LinhaPesquisa", {where: "codigo LIKE '" + parte + "%'"}, function(resposta){
 					cb(resposta);
 				});				
 				break;

@@ -25,12 +25,12 @@ module.exports = {
 
 			case "LISTAR":
 				this.listar(function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -41,12 +41,12 @@ module.exports = {
 
 			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
 				this.buscar(msg.campo, msg.valor, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;
@@ -56,12 +56,12 @@ module.exports = {
 				break;
 			case "BUSCARGRUPO":
 				this.buscarGrupo(msg.idGrupo, function(res){
-					if(res != ""){
+					if(res == null){
+						resposta.codigo = 400;
+						cb(resposta);
+					}else if(res != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else if(res == null){
-						resposta.codigo = 400;
 						cb(resposta);
 					}else{
 						resposta.codigo = 747;

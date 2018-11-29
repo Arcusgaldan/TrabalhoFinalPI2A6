@@ -150,7 +150,14 @@ if(localStorage.id != null){
 					sidebarAdm();
 				}
 			});
-		}
+		}else{
+      document.getElementById("msgErroModal").innerHTML = "Não foi possível te autenticar.";
+      $("#erroModal").modal('show');
+      localStorage.removeItem('id');      
+      $('#erroModal').on('hide.bs.modal', function(){location.href = "/index"});
+      setTimeout(function(){location.href = "/index";} , 2000);
+      return;
+    }
 	});
 	req.write(texto);
 	req.end();
