@@ -33472,7 +33472,7 @@ function relatorioLinhaGrupo(ano, idGrupo){
 				$('#mostraRelatorio div').remove();
 				$('#mostraRelatorio').append("\
 					<div class='card card-body body-pesquisas'>\
-                      <h1 class='text-center'>Linhas de pesquisas</h1>\
+                      <h1 class='text-center'>Linhas de pesquisa</h1>\
 	                </div>\
 				");
 				for (let i = 0;i<relatorio.length;i++) {
@@ -33554,37 +33554,7 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
 				}
 			});
-		}else if(res.statusCode == 747){
-			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
-			$("#erroModal").modal('show');
-			return;
-		}else{
-			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
-			$("#erroModal").modal('show');
-			return;
-		}
-	});
-}
-
-function relatorioDocente(ano, idGrupo){
-	//elect * from tbdocente d JOIN tbgrupo g ON d.codGrupo = g.id WHERE d.codGrupo = 2;
-	var argumentos = {};
-	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano;
-	argumentos.aliasTabela = "d";
-	argumentos.selectCampos = "d.nome, d.dataEntrada, d.dataSaida";
-	argumentos.joins = [{Ttabela: "TBGrupo g", on: "d.codGrupo = g.id"}];
-
-	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
-		if(res.statusCode == 200){
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-
-			res.on('end', function(){
-				var relatorio = JSON.parse(msg);
-				console.log("Relatorio: " + msg);//Trocar pelos appends
-			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -33665,6 +33635,125 @@ function relatorioDocenteLinha(ano, idGrupo){
 	});
 }
 
+function relatorioAluno(ano, idGrupo){
+	// select a.* from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id 
+	// WHERE d.codGrupo = ->IDGRUPO<- 
+	// AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) 
+	// AND year(p.dataInicio) <= ->ANO<- AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= ->ANO<-) 
+	// AND year(a.dataInicio) <= ->ANO<- AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= ->ANO<-)
+	// ORDER BY a.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+
+}
+
+function relatorioAlunoDocente(ano, idGrupo){
+	// select a.*, d.nome docenteNome from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id 
+	// WHERE d.codGrupo = 1 
+	// AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+	// AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+	// AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+	// ORDER BY a.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo", "d.nome docenteNome"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioAlunoDocenteLinha(ano, idGrupo){
+	// select a.*, p.titulo pesquisaTitulo, d.nome docenteNome, l.nome linhaNome from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id
+	// join tblinhapesquisa l on l.id = p.codLinha
+	// WHERE d.codGrupo = 1 
+	// AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+	// AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+	// AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+	// ORDER BY a.id ASC;	
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo", "d.nome docenteNome", "l.nome linhaNome"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
 function gerar(){
 	console.log("Entrou na função gerar");
 	var regex = /[1-2][0-9][0-9][0-9]/;
@@ -33704,6 +33793,18 @@ function gerar(){
 
 			case '4':
 				relatorioDocenteLinha(ano, idGrupo);
+				break;
+
+			case '5':
+				relatorioAluno(ano, idGrupo);
+				break;
+
+			case '6':
+				relatorioAlunoDocente(ano, idGrupo);
+				break;
+
+			case '7':
+				relatorioAlunoDocenteLinha(ano, idGrupo);
 				break;
 			default:
 				document.getElementById('msgErroModal').innerHTML = "Tipo de relatório ainda não implementado.";

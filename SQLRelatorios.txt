@@ -5,16 +5,33 @@ SELECT d.nome, d.dataEntrada, d.dataSaida FROM TBDocente d JOIN TBGrupo g ON d.c
 SELECT d.nome, l.nome, vdl.dataInicio, vdl.dataFim FROM TBDocente d JOIN TBGrupo g ON d.codGrupo = g.id JOIN TBVinculoDocenteLinha vdl ON vdl.codDocente = d.id JOIN TBLinhaPesquisa l ON vdl.codLinha = l.id WHERE d.codGrupo = ->IDGRUPO<- AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) ORDER BY d.id ASC;
 
 //Discentes
-select a.* from tbdocente d join tbpesquisa p on p.codDocente = d.id join tbaluno a on a.codPesquisa = p.id WHERE d.codGrupo = ->IDGRUPO<- AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) AND year(p.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) AND year(a.dataEntrada) <= ->ANO<- AND (a.dataSaida = '1001-01-01' OR year(a.dataSaida) >= ->ANO<-);
-
-
-
-
-//TESTE DISCENTES
-select a.* from tbdocente d 
+select a.*, p.titulo pesquisaTitulo from tbdocente d 
 join tbpesquisa p on p.codDocente = d.id 
 join tbaluno a on a.codPesquisa = p.id 
-WHERE d.codGrupo = 2 
+WHERE d.codGrupo = 1 
+AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+ORDER BY a.id ASC;
+
+/Discentes + Orientadores
+
+select a.*, p.titulo pesquisaTitulo, d.nome docenteNome from tbdocente d 
+join tbpesquisa p on p.codDocente = d.id 
+join tbaluno a on a.codPesquisa = p.id 
+WHERE d.codGrupo = 1 
+AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+ORDER BY a.id ASC;
+
+/Discentes + Orientadores + Linha de Pesquisa
+
+select a.*, p.titulo pesquisaTitulo, d.nome docenteNome, l.nome linhaNome from tbdocente d 
+join tbpesquisa p on p.codDocente = d.id 
+join tbaluno a on a.codPesquisa = p.id
+join tblinhapesquisa l on l.id = p.codLinha
+WHERE d.codGrupo = 1 
 AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
 AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
 AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
