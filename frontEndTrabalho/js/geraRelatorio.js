@@ -31,6 +31,16 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
+function copiaTexto(texto){
+	console.log("Entrei em copiaTexto com texto = " + texto + "!");
+	const el = document.createElement('textarea');
+	el.value = texto;
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+}
+
 function relatorioLinhaGrupo(ano, idGrupo){
 	var argumentos = {};
 
@@ -54,14 +64,28 @@ function relatorioLinhaGrupo(ano, idGrupo){
 					<div class='card card-body body-pesquisas'>\
 	                  <p><strong>Nome da linha de pesquisa:</strong> <span id='mostraNomeLinha"+i+"'></span></p>\
 	                  <p><strong>Data de inicio da linha:</strong> <span id='mostraDataInicioLinha"+i+"'></span></p>\
-	                  <p><strong>Data de fim da linha:</strong> <span id='mostraDataFinalLinha"+i+"'></span></p>\
+	                  <p><strong>Data de fim da linha:</strong> <span id='mostraDataFimLinha"+i+"'></span></p>\
 	                </div>\
 					");
 
 
 					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
 					document.getElementById("mostraDataInicioLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
-					document.getElementById("mostraDataFinalLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+					document.getElementById("mostraDataFimLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioLinha' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFimLinha' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);						
+					}());
 				}
 			});
 			$('#filtraRelatorio').modal('hide');
@@ -109,12 +133,12 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 }
 
 function relatorioDocente(ano, idGrupo){
-	//elect * from tbdocente d JOIN tbgrupo g ON d.codGrupo = g.id WHERE d.codGrupo = 2;
+	//select * from tbdocente d JOIN tbgrupo g ON d.codGrupo = g.id WHERE d.codGrupo = 2;
 	var argumentos = {};
-	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano;
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ")";
 	argumentos.aliasTabela = "d";
-	argumentos.selectCampos = "d.nome, d.dataEntrada, d.dataSaida";
-	argumentos.joins = [{Ttabela: "TBGrupo g", on: "d.codGrupo = g.id"}];
+	argumentos.selectCampos = ["d.nome", "d.dataEntrada", "d.dataSaida"];
+	argumentos.joins = [{tabela: "TBGrupo g", on: "d.codGrupo = g.id"}];
 
 	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
 		if(res.statusCode == 200){
@@ -137,6 +161,47 @@ function relatorioDocente(ano, idGrupo){
 			return;
 		}
 	});
+}
+
+function relatorioDocenteLinha(ano, idGrupo){
+	//SELECT d.nome, l.nome linhaNome, vdl.dataInicio vinculoDataInicio, vdl.dataFim vinculoDataFim FROM TBDocente d 
+	//JOIN TBGrupo g ON d.codGrupo = g.id 
+	//JOIN TBVinculoDocenteLinha vdl ON vdl.codDocente = d.id 
+	//JOIN TBLinhaPesquisa l ON vdl.codLinha = l.id 
+	//WHERE d.codGrupo = ->IDGRUPO<- AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) 
+	//ORDER BY d.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["d.nome", "l.nome linhaNome", "vdl.dataInicio vinculoDataInicio", "vdl.dataFim vinculoDataFim"];
+	argumentos.joins = [{tabela: "TBGrupo g", on: "d.codGrupo = g.id"}, {tabela: "TBVinculoDocenteLinha vdl", on: "vdl.codDocente = d.id"}, {tabela: "TBLinhaPesquisa l", on: "vdl.codLinha = l.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioDiscente(ano, idGrupo){
+	
 }
 
 function gerar(){
@@ -170,6 +235,14 @@ function gerar(){
 
 			case '2':
 				relatorioLinhaGrupoDocente(ano, idGrupo);
+				break;
+
+			case '3':
+				relatorioDocente(ano, idGrupo);
+				break;
+
+			case '4':
+				relatorioDocenteLinha(ano, idGrupo);
 				break;
 			default:
 				document.getElementById('msgErroModal').innerHTML = "Tipo de relatório ainda não implementado.";
