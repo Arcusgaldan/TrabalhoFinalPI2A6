@@ -32987,22 +32987,6 @@ module.exports = {
 					}
 				});
 				break;
-
-			case "BUSCARCOMPLETO":
-				this.buscarCompleto(msg, function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
 		}
 	},
 
@@ -33655,7 +33639,7 @@ function buscaGrupo(sigla, cb){
 
 function verificaCadastro(){
 	if(document.getElementById("nomeEquipamentoCadastrar").value.length == 0){
-		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no tecnico";
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no equipamento";
 		$("#erroModal").modal("show");
 		return false;
 	}else if (document.getElementById("nomeEquipamentoCadastrar").value.length < 3){

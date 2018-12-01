@@ -73,7 +73,87 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
+function verificaCadastro(){
+	if(document.getElementById("nomeDocenteCadastrar").value.length == 0){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no docente";
+		$("#erroModal").modal("show");
+		return false;
+	}else if (document.getElementById("nomeDocenteCadastrar").value.length < 3){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome com mais de três caracteres";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("formacaoDocenteCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir formação do docente";
+		document.getElementById("msgErroModal").innerHTML = "<p>Selecione uma formação para o docente a ser cadastrado</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("formacaoDocenteCadastrar").value > 2){
+		if (document.getElementById("nomeCursoDocenteCadastrar").value.length == 0){
+			document.getElementById("tltErroModal").innerHTML = "Erro ao inserir nome";
+			document.getElementById("msgErroModal").innerHTML = "<p>Favor coloque o nome do curso do docente</p>";
+			$("#erroModal").modal("show");	
+			return false;
+		}else if(document.getElementById("nomeCursoDocenteCadastrar").value.length < 3){
+			document.getElementById("tltErroModal").innerHTML = "Erro ao inserir nome";
+			document.getElementById("msgErroModal").innerHTML = "<p>Nome do curso do docente deve ter no mínimo 3 caracteres</p>";
+			$("#erroModal").modal("show");	
+			return false;
+		}
+
+	}
+	if(document.getElementById("anoConclusaoDocenteCadastrar").value.length == 0){
+		// console.log("Entrou no if do ano");
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Favor insira um ano de formação para o docente</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	var anoAtual = (new Date).getFullYear();
+	if(document.getElementById("anoConclusaoDocenteCadastrar").value > anoAtual){
+		// console.log("Entrou no if do ano");
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Ano de conclusão maior que data atual</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("anoConclusaoDocenteCadastrar").value.length != 4){
+		// console.log("Entrou no if do ano");
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Ano de conclusão deve conter 4 digitos</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("linkLattesDocenteCadastrar").value.length == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir Link Lattes";
+		document.getElementById("msgErroModal").innerHTML = "<p>Por favor insira um link lattes</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("dataEntradaDocenteCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>insira uma data de vínculo do docente com o grupo</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	var verificaDataEntrada = document.getElementById("dataEntradaDocenteCadastrar").value.split("-");
+	var anoEntrada = verificaDataEntrada[0];
+
+	if(document.getElementById("dataEntradaDocenteCadastrar").value > anoEntrada){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Ano de vínculo do docente maior que ano atual</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	return true;
+}
+
+
 function cadastra(){
+	if(!verificaCadastro()){
+		return;
+	}
 	var modelo = require('./../../modelo/mDocente.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');

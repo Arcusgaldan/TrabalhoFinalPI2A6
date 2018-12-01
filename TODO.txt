@@ -108,7 +108,8 @@
 [-] fazer script para instalar "express" e "nodemailer"
 [-] Retirar mensagem de erro na listagem de equipamentos em página de grupo caso não haja equipamento cadastrado
 [-] Quando entro na página do drupo me aparece um modal de erro "Falha ao buscar equipamento"
-
+[-] Quando tento cadastrar uma linha vinculada ao grupo que não existe não exibe erro algum nem no servidor nem nada.
+[-] Precisa criar uma validação que não deixe a data de vinculo do docente( e todos os outros itens que tem data de vinculo) ser menor que a e criação do grupo  
 -- FRONT + BACK
 
 [-] Verificar se banco est� desligado e redirecionar para 404 se sim
@@ -121,6 +122,7 @@
 [-] Verificar confirmação do cadastro docente
 [-] Após cadastrar linha de pesquisa aparece o modal de sucesso e não acontece mais nada.
 [-] Após Docente aparece o modal de sucesso e não acontece mais nada.
+[-] Não está excluindo linhas vinculadas ao grupo.
 
 -- DOCUMENTAÇÃO
 

@@ -49,6 +49,12 @@ function relatorioLinhaGrupo(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Linhas de pesquisa</h1>\
+	                </div>\
+				");
 				for (let i = 0;i<relatorio.length;i++) {
 				$('#mostraRelatorio').append("\
 					<div class='card card-body body-pesquisas'>\
@@ -57,8 +63,6 @@ function relatorioLinhaGrupo(ano, idGrupo){
 	                  <p><strong>Data de fim da linha:</strong> <span id='mostraDataFinalLinha"+i+"'></span></p>\
 	                </div>\
 					");
-
-
 					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
 					document.getElementById("mostraDataInicioLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
 					document.getElementById("mostraDataFinalLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
@@ -95,7 +99,28 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Linha de pesquisa + Docentes Vículados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome da linha de pesquisa: </strong> <span id='mostraNomeLinhaGrupoDocente"+i+"'></span></p>\
+	                  <p><strong>Docente: </strong> <span id='mostraDocenteLinhaGrupoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo: </strong> <span id='mostraDataInicioLinhaGrupoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo: </strong> <span id='mostraDataFinalLinhaGrupoDocente"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeLinhaGrupoDocente"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');

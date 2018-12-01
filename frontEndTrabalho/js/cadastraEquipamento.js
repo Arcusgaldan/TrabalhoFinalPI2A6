@@ -30,7 +30,7 @@ function buscaGrupo(sigla, cb){
 
 function verificaCadastro(){
 	if(document.getElementById("nomeEquipamentoCadastrar").value.length == 0){
-		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no tecnico";
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no equipamento";
 		$("#erroModal").modal("show");
 		return false;
 	}else if (document.getElementById("nomeEquipamentoCadastrar").value.length < 3){
