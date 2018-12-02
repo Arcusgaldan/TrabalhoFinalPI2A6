@@ -12,14 +12,19 @@ function cadastraAluno(){
 	modelo.dataFim = document.getElementById('dataFimAlunoCadastrar').value;
 	if(modelo.dataFim == "")
 		modelo.dataFim = "1001-01-01";
-	modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
+	if(document.getElementById('tipoAlunoCadastrar').value == 0){
+		modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
+	}else{
+		modelo.tipo = document.getElementById('outrosTipoPesquisaCadastrar').value;
+	}
+
 	modelo.codPesquisa = 0;
 	modelo.atual = 1;
 
 	console.log("MODELO EM cadastraPesquisa::cadastraAluno: " + JSON.stringify(modelo));
 
 	if(!controller.validar(modelo)){
-		console.log("Não passou na validação                      em cadastraPesquisa::cadastraAluno com modelo = " + JSON.stringify(modelo));
+		console.log("Não passou na validação em cadastraPesquisa::cadastraAluno com modelo = " + JSON.stringify(modelo));
 		document.getElementById('msgErroModal').innerHTML = "Por favor preencha os campos corretamente.";
 		$("#erroModal").modal('show');
 		return;

@@ -33280,12 +33280,15 @@ module.exports = {
 		var selectCampos = "";
 		var comparacoes = "";
 		var joins = "";
-		var orderCampos = "id";
+		var orderCampos = "";
 		var orderSentido = "ASC";
 		var aliasTabela = "";
 
 		if(argumentos.aliasTabela){
 			aliasTabela = argumentos.aliasTabela;
+			orderCampos += aliasTabela + ".id";
+		}else{
+			orderCampos = "id";
 		}
 
 		if(argumentos.selectCampos){
@@ -33303,8 +33306,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 
@@ -33468,10 +33477,10 @@ function listarPesquisas(){
                 res.on("end", function(){
                     var vetorPesquisa = JSON.parse(msg);
                         for (let i = 0; i < vetorPesquisa.length; i++) {
-                            if (vetorPesquisa[i].dataFim == "1001-01-01"){
-                                $("#pesqAtivosGrupo").append(vetorPesquisa[i].titulo + "<br>");
+                            if (require("./../../utils.js").formataData(vetorPesquisa[i].dataFim) == "1001-01-01" || require("./../../utils.js").formataData(vetorPesquisa[i].dataFim) == "-"){
+                                $("#pesqInativosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
                             }else{
-                                $("#pesqInativosGrupo").append(vetorPesquisa[i].titulo + "<br>");
+                                $("#pesqAtivosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
                         }
                     }
                 });

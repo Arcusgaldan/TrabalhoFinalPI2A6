@@ -33285,12 +33285,15 @@ module.exports = {
 		var selectCampos = "";
 		var comparacoes = "";
 		var joins = "";
-		var orderCampos = "id";
+		var orderCampos = "";
 		var orderSentido = "ASC";
 		var aliasTabela = "";
 
 		if(argumentos.aliasTabela){
 			aliasTabela = argumentos.aliasTabela;
+			orderCampos += aliasTabela + ".id";
+		}else{
+			orderCampos = "id";
 		}
 
 		if(argumentos.selectCampos){
@@ -33675,7 +33678,7 @@ listaLinhas(function(resultadoLinhas){
 				preencheDocentes(idGrupo);
 			});	
 		});
-	}else{
+	}else if (resultadoLinhas != 747){
 		document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa";
 		$("#erroModal").modal('show');
 	}

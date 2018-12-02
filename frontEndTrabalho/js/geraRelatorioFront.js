@@ -16719,7 +16719,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
   "_spec": "elliptic@^6.0.0",
-  "_where": "C:\\Users\\Thales\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
+  "_where": "C:\\Users\\GABRIEL\\AppData\\Roaming\\npm\\node_modules\\browserify\\node_modules\\browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -18926,10 +18926,10 @@ module.exports = Array.isArray || function (arr) {
 };
 
 },{}],111:[function(require,module,exports){
-(function (Buffer){
 'use strict'
 var inherits = require('inherits')
 var HashBase = require('hash-base')
+var Buffer = require('safe-buffer').Buffer
 
 var ARRAY16 = new Array(16)
 
@@ -19043,7 +19043,7 @@ MD5.prototype._digest = function () {
   this._update()
 
   // produce result
-  var buffer = new Buffer(16)
+  var buffer = Buffer.allocUnsafe(16)
   buffer.writeInt32LE(this._a, 0)
   buffer.writeInt32LE(this._b, 4)
   buffer.writeInt32LE(this._c, 8)
@@ -19073,8 +19073,7 @@ function fnI (a, b, c, d, m, k, s) {
 
 module.exports = MD5
 
-}).call(this,require("buffer").Buffer)
-},{"buffer":54,"hash-base":92,"inherits":108}],112:[function(require,module,exports){
+},{"hash-base":92,"inherits":108,"safe-buffer":166}],112:[function(require,module,exports){
 var bn = require('bn.js');
 var brorand = require('brorand');
 
@@ -25871,7 +25870,7 @@ module.exports = function (password, salt, iterations, keylen) {
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
 },{"../../is-buffer/index.js":109}],137:[function(require,module,exports){
 var md5 = require('create-hash/md5')
-var rmd160 = require('ripemd160')
+var RIPEMD160 = require('ripemd160')
 var sha = require('sha.js')
 
 var checkParameters = require('./precondition')
@@ -25928,8 +25927,11 @@ function getDigest (alg) {
   function shaFunc (data) {
     return sha(alg).update(data).digest()
   }
+  function rmd160Func (data) {
+    return new RIPEMD160().update(data).digest()
+  }
 
-  if (alg === 'rmd160' || alg === 'ripemd160') return rmd160
+  if (alg === 'rmd160' || alg === 'ripemd160') return rmd160Func
   if (alg === 'md5') return md5
   return shaFunc
 }
@@ -26207,266 +26209,259 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],140:[function(require,module,exports){
-exports.publicEncrypt = require('./publicEncrypt');
-exports.privateDecrypt = require('./privateDecrypt');
+exports.publicEncrypt = require('./publicEncrypt')
+exports.privateDecrypt = require('./privateDecrypt')
 
-exports.privateEncrypt = function privateEncrypt(key, buf) {
-  return exports.publicEncrypt(key, buf, true);
-};
-
-exports.publicDecrypt = function publicDecrypt(key, buf) {
-  return exports.privateDecrypt(key, buf, true);
-};
-},{"./privateDecrypt":142,"./publicEncrypt":143}],141:[function(require,module,exports){
-(function (Buffer){
-var createHash = require('create-hash');
-module.exports = function (seed, len) {
-  var t = new Buffer('');
-  var  i = 0, c;
-  while (t.length < len) {
-    c = i2ops(i++);
-    t = Buffer.concat([t, createHash('sha1').update(seed).update(c).digest()]);
-  }
-  return t.slice(0, len);
-};
-
-function i2ops(c) {
-  var out = new Buffer(4);
-  out.writeUInt32BE(c,0);
-  return out;
+exports.privateEncrypt = function privateEncrypt (key, buf) {
+  return exports.publicEncrypt(key, buf, true)
 }
-}).call(this,require("buffer").Buffer)
-},{"buffer":54,"create-hash":59}],142:[function(require,module,exports){
-(function (Buffer){
-var parseKeys = require('parse-asn1');
-var mgf = require('./mgf');
-var xor = require('./xor');
-var bn = require('bn.js');
-var crt = require('browserify-rsa');
-var createHash = require('create-hash');
-var withPublic = require('./withPublic');
-module.exports = function privateDecrypt(private_key, enc, reverse) {
-  var padding;
-  if (private_key.padding) {
-    padding = private_key.padding;
-  } else if (reverse) {
-    padding = 1;
-  } else {
-    padding = 4;
-  }
-  
-  var key = parseKeys(private_key);
-  var k = key.modulus.byteLength();
-  if (enc.length > k || new bn(enc).cmp(key.modulus) >= 0) {
-    throw new Error('decryption error');
-  }
-  var msg;
-  if (reverse) {
-    msg = withPublic(new bn(enc), key);
-  } else {
-    msg = crt(enc, key);
-  }
-  var zBuffer = new Buffer(k - msg.length);
-  zBuffer.fill(0);
-  msg = Buffer.concat([zBuffer, msg], k);
-  if (padding === 4) {
-    return oaep(key, msg);
-  } else if (padding === 1) {
-    return pkcs1(key, msg, reverse);
-  } else if (padding === 3) {
-    return msg;
-  } else {
-    throw new Error('unknown padding');
-  }
-};
 
-function oaep(key, msg){
-  var n = key.modulus;
-  var k = key.modulus.byteLength();
-  var mLen = msg.length;
-  var iHash = createHash('sha1').update(new Buffer('')).digest();
-  var hLen = iHash.length;
-  var hLen2 = 2 * hLen;
+exports.publicDecrypt = function publicDecrypt (key, buf) {
+  return exports.privateDecrypt(key, buf, true)
+}
+
+},{"./privateDecrypt":142,"./publicEncrypt":143}],141:[function(require,module,exports){
+var createHash = require('create-hash')
+var Buffer = require('safe-buffer').Buffer
+
+module.exports = function (seed, len) {
+  var t = Buffer.alloc(0)
+  var i = 0
+  var c
+  while (t.length < len) {
+    c = i2ops(i++)
+    t = Buffer.concat([t, createHash('sha1').update(seed).update(c).digest()])
+  }
+  return t.slice(0, len)
+}
+
+function i2ops (c) {
+  var out = Buffer.allocUnsafe(4)
+  out.writeUInt32BE(c, 0)
+  return out
+}
+
+},{"create-hash":59,"safe-buffer":166}],142:[function(require,module,exports){
+var parseKeys = require('parse-asn1')
+var mgf = require('./mgf')
+var xor = require('./xor')
+var BN = require('bn.js')
+var crt = require('browserify-rsa')
+var createHash = require('create-hash')
+var withPublic = require('./withPublic')
+var Buffer = require('safe-buffer').Buffer
+
+module.exports = function privateDecrypt (privateKey, enc, reverse) {
+  var padding
+  if (privateKey.padding) {
+    padding = privateKey.padding
+  } else if (reverse) {
+    padding = 1
+  } else {
+    padding = 4
+  }
+
+  var key = parseKeys(privateKey)
+  var k = key.modulus.byteLength()
+  if (enc.length > k || new BN(enc).cmp(key.modulus) >= 0) {
+    throw new Error('decryption error')
+  }
+  var msg
+  if (reverse) {
+    msg = withPublic(new BN(enc), key)
+  } else {
+    msg = crt(enc, key)
+  }
+  var zBuffer = Buffer.alloc(k - msg.length)
+  msg = Buffer.concat([zBuffer, msg], k)
+  if (padding === 4) {
+    return oaep(key, msg)
+  } else if (padding === 1) {
+    return pkcs1(key, msg, reverse)
+  } else if (padding === 3) {
+    return msg
+  } else {
+    throw new Error('unknown padding')
+  }
+}
+
+function oaep (key, msg) {
+  var k = key.modulus.byteLength()
+  var iHash = createHash('sha1').update(Buffer.alloc(0)).digest()
+  var hLen = iHash.length
   if (msg[0] !== 0) {
-    throw new Error('decryption error');
+    throw new Error('decryption error')
   }
-  var maskedSeed = msg.slice(1, hLen + 1);
-  var maskedDb =  msg.slice(hLen + 1);
-  var seed = xor(maskedSeed, mgf(maskedDb, hLen));
-  var db = xor(maskedDb, mgf(seed, k - hLen - 1));
+  var maskedSeed = msg.slice(1, hLen + 1)
+  var maskedDb = msg.slice(hLen + 1)
+  var seed = xor(maskedSeed, mgf(maskedDb, hLen))
+  var db = xor(maskedDb, mgf(seed, k - hLen - 1))
   if (compare(iHash, db.slice(0, hLen))) {
-    throw new Error('decryption error');
+    throw new Error('decryption error')
   }
-  var i = hLen;
+  var i = hLen
   while (db[i] === 0) {
-    i++;
+    i++
   }
   if (db[i++] !== 1) {
-    throw new Error('decryption error');
+    throw new Error('decryption error')
   }
-  return db.slice(i);
+  return db.slice(i)
 }
 
-function pkcs1(key, msg, reverse){
-  var p1 = msg.slice(0, 2);
-  var i = 2;
-  var status = 0;
+function pkcs1 (key, msg, reverse) {
+  var p1 = msg.slice(0, 2)
+  var i = 2
+  var status = 0
   while (msg[i++] !== 0) {
     if (i >= msg.length) {
-      status++;
-      break;
+      status++
+      break
     }
   }
-  var ps = msg.slice(2, i - 1);
-  var p2 = msg.slice(i - 1, i);
+  var ps = msg.slice(2, i - 1)
 
-  if ((p1.toString('hex') !== '0002' && !reverse) || (p1.toString('hex') !== '0001' && reverse)){
-    status++;
+  if ((p1.toString('hex') !== '0002' && !reverse) || (p1.toString('hex') !== '0001' && reverse)) {
+    status++
   }
   if (ps.length < 8) {
-    status++;
+    status++
   }
   if (status) {
-    throw new Error('decryption error');
+    throw new Error('decryption error')
   }
-  return  msg.slice(i);
+  return msg.slice(i)
 }
-function compare(a, b){
-  a = new Buffer(a);
-  b = new Buffer(b);
-  var dif = 0;
-  var len = a.length;
+function compare (a, b) {
+  a = Buffer.from(a)
+  b = Buffer.from(b)
+  var dif = 0
+  var len = a.length
   if (a.length !== b.length) {
-    dif++;
-    len = Math.min(a.length, b.length);
+    dif++
+    len = Math.min(a.length, b.length)
   }
-  var i = -1;
+  var i = -1
   while (++i < len) {
-    dif += (a[i] ^ b[i]);
+    dif += (a[i] ^ b[i])
   }
-  return dif;
+  return dif
 }
-}).call(this,require("buffer").Buffer)
-},{"./mgf":141,"./withPublic":144,"./xor":145,"bn.js":21,"browserify-rsa":44,"buffer":54,"create-hash":59,"parse-asn1":131}],143:[function(require,module,exports){
-(function (Buffer){
-var parseKeys = require('parse-asn1');
-var randomBytes = require('randombytes');
-var createHash = require('create-hash');
-var mgf = require('./mgf');
-var xor = require('./xor');
-var bn = require('bn.js');
-var withPublic = require('./withPublic');
-var crt = require('browserify-rsa');
 
-var constants = {
-  RSA_PKCS1_OAEP_PADDING: 4,
-  RSA_PKCS1_PADDIN: 1,
-  RSA_NO_PADDING: 3
-};
+},{"./mgf":141,"./withPublic":144,"./xor":145,"bn.js":21,"browserify-rsa":44,"create-hash":59,"parse-asn1":131,"safe-buffer":166}],143:[function(require,module,exports){
+var parseKeys = require('parse-asn1')
+var randomBytes = require('randombytes')
+var createHash = require('create-hash')
+var mgf = require('./mgf')
+var xor = require('./xor')
+var BN = require('bn.js')
+var withPublic = require('./withPublic')
+var crt = require('browserify-rsa')
+var Buffer = require('safe-buffer').Buffer
 
-module.exports = function publicEncrypt(public_key, msg, reverse) {
-  var padding;
-  if (public_key.padding) {
-    padding = public_key.padding;
+module.exports = function publicEncrypt (publicKey, msg, reverse) {
+  var padding
+  if (publicKey.padding) {
+    padding = publicKey.padding
   } else if (reverse) {
-    padding = 1;
+    padding = 1
   } else {
-    padding = 4;
+    padding = 4
   }
-  var key = parseKeys(public_key);
-  var paddedMsg;
+  var key = parseKeys(publicKey)
+  var paddedMsg
   if (padding === 4) {
-    paddedMsg = oaep(key, msg);
+    paddedMsg = oaep(key, msg)
   } else if (padding === 1) {
-    paddedMsg = pkcs1(key, msg, reverse);
+    paddedMsg = pkcs1(key, msg, reverse)
   } else if (padding === 3) {
-    paddedMsg = new bn(msg);
+    paddedMsg = new BN(msg)
     if (paddedMsg.cmp(key.modulus) >= 0) {
-      throw new Error('data too long for modulus');
+      throw new Error('data too long for modulus')
     }
   } else {
-    throw new Error('unknown padding');
+    throw new Error('unknown padding')
   }
   if (reverse) {
-    return crt(paddedMsg, key);
+    return crt(paddedMsg, key)
   } else {
-    return withPublic(paddedMsg, key);
+    return withPublic(paddedMsg, key)
   }
-};
+}
 
-function oaep(key, msg){
-  var k = key.modulus.byteLength();
-  var mLen = msg.length;
-  var iHash = createHash('sha1').update(new Buffer('')).digest();
-  var hLen = iHash.length;
-  var hLen2 = 2 * hLen;
+function oaep (key, msg) {
+  var k = key.modulus.byteLength()
+  var mLen = msg.length
+  var iHash = createHash('sha1').update(Buffer.alloc(0)).digest()
+  var hLen = iHash.length
+  var hLen2 = 2 * hLen
   if (mLen > k - hLen2 - 2) {
-    throw new Error('message too long');
+    throw new Error('message too long')
   }
-  var ps = new Buffer(k - mLen - hLen2 - 2);
-  ps.fill(0);
-  var dblen = k - hLen - 1;
-  var seed = randomBytes(hLen);
-  var maskedDb = xor(Buffer.concat([iHash, ps, new Buffer([1]), msg], dblen), mgf(seed, dblen));
-  var maskedSeed = xor(seed, mgf(maskedDb, hLen));
-  return new bn(Buffer.concat([new Buffer([0]), maskedSeed, maskedDb], k));
+  var ps = Buffer.alloc(k - mLen - hLen2 - 2)
+  var dblen = k - hLen - 1
+  var seed = randomBytes(hLen)
+  var maskedDb = xor(Buffer.concat([iHash, ps, Buffer.alloc(1, 1), msg], dblen), mgf(seed, dblen))
+  var maskedSeed = xor(seed, mgf(maskedDb, hLen))
+  return new BN(Buffer.concat([Buffer.alloc(1), maskedSeed, maskedDb], k))
 }
-function pkcs1(key, msg, reverse){
-  var mLen = msg.length;
-  var k = key.modulus.byteLength();
+function pkcs1 (key, msg, reverse) {
+  var mLen = msg.length
+  var k = key.modulus.byteLength()
   if (mLen > k - 11) {
-    throw new Error('message too long');
+    throw new Error('message too long')
   }
-  var ps;
+  var ps
   if (reverse) {
-    ps = new Buffer(k - mLen - 3);
-    ps.fill(0xff);
+    ps = Buffer.alloc(k - mLen - 3, 0xff)
   } else {
-    ps = nonZero(k - mLen - 3);
+    ps = nonZero(k - mLen - 3)
   }
-  return new bn(Buffer.concat([new Buffer([0, reverse?1:2]), ps, new Buffer([0]), msg], k));
+  return new BN(Buffer.concat([Buffer.from([0, reverse ? 1 : 2]), ps, Buffer.alloc(1), msg], k))
 }
-function nonZero(len, crypto) {
-  var out = new Buffer(len);
-  var i = 0;
-  var cache = randomBytes(len*2);
-  var cur = 0;
-  var num;
+function nonZero (len) {
+  var out = Buffer.allocUnsafe(len)
+  var i = 0
+  var cache = randomBytes(len * 2)
+  var cur = 0
+  var num
   while (i < len) {
     if (cur === cache.length) {
-      cache = randomBytes(len*2);
-      cur = 0;
+      cache = randomBytes(len * 2)
+      cur = 0
     }
-    num = cache[cur++];
+    num = cache[cur++]
     if (num) {
-      out[i++] = num;
+      out[i++] = num
     }
   }
-  return out;
-}
-}).call(this,require("buffer").Buffer)
-},{"./mgf":141,"./withPublic":144,"./xor":145,"bn.js":21,"browserify-rsa":44,"buffer":54,"create-hash":59,"parse-asn1":131,"randombytes":150}],144:[function(require,module,exports){
-(function (Buffer){
-var bn = require('bn.js');
-function withPublic(paddedMsg, key) {
-  return new Buffer(paddedMsg
-    .toRed(bn.mont(key.modulus))
-    .redPow(new bn(key.publicExponent))
-    .fromRed()
-    .toArray());
+  return out
 }
 
-module.exports = withPublic;
-}).call(this,require("buffer").Buffer)
-},{"bn.js":21,"buffer":54}],145:[function(require,module,exports){
-module.exports = function xor(a, b) {
-  var len = a.length;
-  var i = -1;
+},{"./mgf":141,"./withPublic":144,"./xor":145,"bn.js":21,"browserify-rsa":44,"create-hash":59,"parse-asn1":131,"randombytes":150,"safe-buffer":166}],144:[function(require,module,exports){
+var BN = require('bn.js')
+var Buffer = require('safe-buffer').Buffer
+
+function withPublic (paddedMsg, key) {
+  return Buffer.from(paddedMsg
+    .toRed(BN.mont(key.modulus))
+    .redPow(new BN(key.publicExponent))
+    .fromRed()
+    .toArray())
+}
+
+module.exports = withPublic
+
+},{"bn.js":21,"safe-buffer":166}],145:[function(require,module,exports){
+module.exports = function xor (a, b) {
+  var len = a.length
+  var i = -1
   while (++i < len) {
-    a[i] ^= b[i];
+    a[i] ^= b[i]
   }
   return a
-};
+}
+
 },{}],146:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -33311,8 +33306,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 
@@ -33472,7 +33473,7 @@ function relatorioLinhaGrupo(ano, idGrupo){
 				$('#mostraRelatorio div').remove();
 				$('#mostraRelatorio').append("\
 					<div class='card card-body body-pesquisas'>\
-                      <h1 class='text-center'>Linhas de pesquisas</h1>\
+                      <h1 class='text-center'>Linhas de pesquisa</h1>\
 	                </div>\
 				");
 				for (let i = 0;i<relatorio.length;i++) {
@@ -33536,7 +33537,7 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 				$('#mostraRelatorio div').remove();
 				$('#mostraRelatorio').append("\
 					<div class='card card-body body-pesquisas'>\
-                      <h1 class='text-center'>Linha de pesquisa + Docentes Vículados</h1>\
+                      <h1 class='text-center'>Linha de pesquisa + Docentes Vinculados</h1>\
 	                </div>\
 				");
 				for (let i = 0;i<relatorio.length;i++) {
@@ -33548,43 +33549,32 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 	                  <p><strong>Data de fim do vínculo: </strong> <span id='mostraDataFinalLinhaGrupoDocente"+i+"'></span></p>\
 	                </div>\
 					");
+
 					document.getElementById("mostraNomeLinhaGrupoDocente"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
 					document.getElementById("mostraDataInicioLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
 					document.getElementById("mostraDataFinalLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
-					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
+
+					(function(){
+						document.getElementById('mostraNomeLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDocenteLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
 				}
 			});
-		}else if(res.statusCode == 747){
-			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
-			$("#erroModal").modal('show');
-			return;
-		}else{
-			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
-			$("#erroModal").modal('show');
-			return;
-		}
-	});
-}
-
-function relatorioDocente(ano, idGrupo){
-	//elect * from tbdocente d JOIN tbgrupo g ON d.codGrupo = g.id WHERE d.codGrupo = 2;
-	var argumentos = {};
-	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano;
-	argumentos.aliasTabela = "d";
-	argumentos.selectCampos = "d.nome, d.dataEntrada, d.dataSaida";
-	argumentos.joins = [{Ttabela: "TBGrupo g", on: "d.codGrupo = g.id"}];
-
-	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
-		if(res.statusCode == 200){
-			var msg = "";
-			res.on('data', function(chunk){
-				msg += chunk;
-			});
-
-			res.on('end', function(){
-				var relatorio = JSON.parse(msg);
-				console.log("Relatorio: " + msg);//Trocar pelos appends
-			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -33615,7 +33605,40 @@ function relatorioDocente(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Docentes Vinculados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Docente: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo docente: </strong> <span id='mostraDataInicioVinculoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo docente: </strong> <span id='mostraDataFinalVinculoDocente"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDataInicioVinculoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataSaida);
+
+					(function(){
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataSaida));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -33652,7 +33675,590 @@ function relatorioDocenteLinha(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Docentes Vinculados + Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Docente: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Nome do linha de pesquisa: </strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo docente: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo docente: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].vinculoDataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].vinculoDataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].vinculoDataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].vinculoDataFim));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioAluno(ano, idGrupo){
+	// select a.* from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id 
+	// WHERE d.codGrupo = ->IDGRUPO<- 
+	// AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) 
+	// AND year(p.dataInicio) <= ->ANO<- AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= ->ANO<-) 
+	// AND year(a.dataInicio) <= ->ANO<- AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= ->ANO<-)
+	// ORDER BY a.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Aluno</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Aluno: </strong> <span id='mostraNomeAluno"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo Aluno: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo Aluno: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeAluno"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeAluno' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+
+}
+
+function relatorioAlunoDocente(ano, idGrupo){
+	// select a.*, d.nome docenteNome from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id 
+	// WHERE d.codGrupo = 1 
+	// AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+	// AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+	// AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+	// ORDER BY a.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo", "d.nome docenteNome"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Discentes + Orientador</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Discente: </strong> <span id='mostraNomeDiscente"+i+"'></span></p>\
+	                  <p><strong>Nome do Orientador: </strong> <span id='mostraNomeOrientador"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDiscente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeOrientador"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDiscente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeOrientador' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioAlunoDocenteLinha(ano, idGrupo){
+	// select a.*, p.titulo pesquisaTitulo, d.nome docenteNome, l.nome linhaNome from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id
+	// join tblinhapesquisa l on l.id = p.codLinha
+	// WHERE d.codGrupo = 1 
+	// AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+	// AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+	// AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+	// ORDER BY a.id ASC;	
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo", "d.nome docenteNome", "l.nome linhaNome"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Discentes + Orientadores + Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Discente: </strong> <span id='mostraNomeDiscente"+i+"'></span></p>\
+	                  <p><strong>Nome do Orientador: </strong> <span id='mostraNomeOrientador"+i+"'></span></p>\
+	                  <p><strong>Nome da linha de pesquisa: </strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDiscente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeOrientador"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDiscente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeOrientador' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioTecnico(ano, idGrupo){	
+	// select t.* from TBTecnico t 
+	// where t.codGrupo = ->IDGRUPO<-
+	// AND year(t.dataEntrada) <= ->ANO<- AND (t.dataSaida = '1001-01-01' OR year(t.dataSaida) >= ->ANO<-);	
+
+	var argumentos = {};
+	argumentos.where = "t.codGrupo = " + idGrupo + " AND year(t.dataEntrada) <= + " + ano + " AND (t.dataSaida = '1001-01-01' OR year(t.dataSaida) >= " + ano + ")";
+	argumentos.aliasTabela = "t";
+	argumentos.selectCampos = ["t.*"];
+	// argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}];
+
+	require('./../../utils.js').enviaRequisicao("Tecnico", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Técnicos</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+					$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Técnico: </strong> <span id='mostraNomeTecnico"+i+"'></span></p>\
+	                  <p><strong>Atividade do Técnico: </strong> <span id='mostraAtividadeTecnico"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeTecnico"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraAtividadeTecnico"+i).innerHTML = relatorio[i].atividade;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataSaida);
+
+					(function(){
+						document.getElementById('mostraNomeTecnico' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraAtividadeTecnico' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].atividade);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataSaida));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioEquipamento(ano, idGrupo){
+	// select e.* from TBEquipamento t 
+	// where e.codGrupo = ->IDGRUPO<-
+	// AND year(e.dataEntrada) <= ->ANO<- AND (e.dataDescarte = '1001-01-01' OR year(t.dataDescarte) >= ->ANO<-);	
+
+	var argumentos = {};
+	argumentos.where = "e.codGrupo = " + idGrupo + " AND year(e.dataEntrada) <= + " + ano + " AND (e.dataDescarte = '1001-01-01' OR year(e.dataDescarte) >= " + ano + ")";
+	argumentos.aliasTabela = "e";
+	argumentos.selectCampos = ["e.*"];
+
+	require('./../../utils.js').enviaRequisicao("Equipamento", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Equipamento</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do equipamento: </strong> <span id='mostraNomeEquipamento"+i+"'></span></p>\
+	                  <p><strong>Descrição do equipamento: </strong> <span id='mostraDescricaoEquipamento"+i+"'></span></p>\
+	                  <p><strong>Data de entrada do equipamento: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de descarte do equipamento: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeEquipamento"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDescricaoEquipamento"+i).innerHTML = relatorio[i].descricao;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataDescarte);
+
+					(function(){
+						document.getElementById('mostraNomeEquipamento' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDescricaoEquipamento' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].descricao);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataDescarte));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioPublicacao(ano, idGrupo){
+	// select p.*, d.nome docenteNome, pes.titulo pesquisaTitulo, l.nome linhaNome from tbpublicacao p 
+	// JOIN TBDocente d ON d.id = p.codDocente 
+	// JOIN TBLinhaPesquisa l ON l.id = p.codLinha 
+	// LEFT JOIN TBPesquisa pes ON pes.id = p.codPesquisa 
+	// WHERE d.codGrupo = ->IDGRUPO<-
+	// AND year(p.data) = ->ANO<-;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(p.data) = " + ano;
+	argumentos.aliasTabela = "p";
+	argumentos.selectCampos = ["p.*", "d.nome docenteNome", "pes.titulo pesquisaTitulo", "l.nome linhaNome"];
+	argumentos.joins = [{tabela: "TBDocente d", on: "d.id = p.codDocente"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}, {tabela: "TBPesquisa pes", on: "pes.id = p.codPesquisa", tipo: "LEFT"}];
+
+	require('./../../utils.js').enviaRequisicao("Publicacao", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Publicação</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Título da Publicação: </strong> <span id='mostraTituloPublicacao"+i+"'></span></p>\
+	                  <p><strong>Título da Pesquisa: </strong> <span id='mostraTituloPesquisa"+i+"'></span></p>\
+	                  <p><strong>Docente Responsável: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Linha de Pesquisa: </strong> <span id='mostraLinhaPesquisa"+i+"'></span></p>\
+	                  <p><strong>Tipo da Publicação: </strong> <span id='mostraTipoPublicacao"+i+"'></span></p>\
+	                  <p><strong>Referência da Publicação: </strong> <span id='mostraReferenciaPublicacao"+i+"'></span></p>\
+	                  <p><strong>Data da Publicação: </strong> <span id='mostraDataPublicacao"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraTituloPublicacao"+i).innerHTML = relatorio[i].titulo;
+					document.getElementById("mostraTituloPesquisa"+i).innerHTML = relatorio[i].pesquisaTitulo;
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraLinhaPesquisa"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraTipoPublicacao"+i).innerHTML = relatorio[i].tipo;
+					document.getElementById("mostraReferenciaPublicacao"+i).innerHTML = relatorio[i].referencia;
+					document.getElementById("mostraDataPublicacao"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].data);
+
+					(function(){
+						document.getElementById('mostraTituloPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].titulo);
+						}, false);
+
+						document.getElementById('mostraTituloPesquisa' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].pesquisaTitulo);
+						}, false);
+
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraLinhaPesquisa' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraTipoPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].tipo);
+						}, false);
+
+						document.getElementById('mostraReferenciaPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].referencia);
+						}, false);
+
+						document.getElementById('mostraDataPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].data));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioPesquisaFinalizada(ano, idGrupo){
+	// select p.*, l.nome linhaNome, d.nome docenteNome from tbpesquisa p 
+	// JOIN TBLinhaPesquisa l ON l.id = p.codLinha 
+	// JOIN TBDocente d ON d.id = p.codDocente 
+	// WHERE d.codGrupo = 1 
+	// AND year(p.dataFim) = 2018;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(p.dataFim) = " + ano;
+	argumentos.aliasTabela = "p";
+	argumentos.selectCampos = ["p.*", "l.nome linhaNome", "d.nome docenteNome"];
+	argumentos.joins = [{tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}, {tabela: "TBDocente d", on: "d.id = p.codDocente"}];
+
+	require('./../../utils.js').enviaRequisicao("Pesquisa", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Projetos Finalizados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Título da Pesquisa: </strong> <span id='mostraTituloPesquisa"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da pesquisa: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da pesquisa: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraTituloPesquisa"+i).innerHTML = relatorio[i].titulo;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraTituloPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].titulo);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -33705,6 +34311,35 @@ function gerar(){
 			case '4':
 				relatorioDocenteLinha(ano, idGrupo);
 				break;
+
+			case '5':
+				relatorioAluno(ano, idGrupo);
+				break;
+
+			case '6':
+				relatorioAlunoDocente(ano, idGrupo);
+				break;
+
+			case '7':
+				relatorioAlunoDocenteLinha(ano, idGrupo);
+				break;
+
+			case '8':
+				relatorioTecnico(ano, idGrupo);
+				break;
+
+			case '9':
+				relatorioEquipamento(ano, idGrupo);
+				break;
+
+			case '10':
+				relatorioPublicacao(ano, idGrupo);
+				break;
+
+			case '11':
+				relatorioPesquisaFinalizada(ano, idGrupo);
+				break;
+				
 			default:
 				document.getElementById('msgErroModal').innerHTML = "Tipo de relatório ainda não implementado.";
 				$("#erroModal").modal('show');

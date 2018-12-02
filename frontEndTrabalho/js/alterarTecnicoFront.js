@@ -33507,12 +33507,15 @@ module.exports = {
 		var selectCampos = "";
 		var comparacoes = "";
 		var joins = "";
-		var orderCampos = "id";
+		var orderCampos = "";
 		var orderSentido = "ASC";
 		var aliasTabela = "";
 
 		if(argumentos.aliasTabela){
 			aliasTabela = argumentos.aliasTabela;
+			orderCampos += aliasTabela + ".id";
+		}else{
+			orderCampos = "id";
 		}
 
 		if(argumentos.selectCampos){
@@ -33734,6 +33737,7 @@ module.exports = {
 		final.linkLattes = objeto.linkLattes;
 		final.foto = objeto.foto;
 		final.dataEntrada = objeto.dataEntrada;	
+		final.dataSaida = objeto.dataSaida;
 		final.codGrupo = objeto.codGrupo;		
 		return final;
 	},
@@ -33749,12 +33753,13 @@ module.exports = {
 		final.linkLattes = "";
 		final.foto = "";
 		final.dataEntrada = "";
+		final.dataSaida = "1001-01-01";
 		final.codGrupo = 0;
 		return final;
 	},
 
 	isString: function(atributo){
-		var strings = ["formacao", "nome", "atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada"];
+		var strings = ["formacao", "nome", "atividade", "anoConclusao", "nomeCurso", "linkLattes", "foto", "dataEntrada", "dataSaida"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

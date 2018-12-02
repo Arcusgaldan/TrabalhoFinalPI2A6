@@ -268,7 +268,7 @@ listaLinhas(function(resultadoLinhas){
 				preencheDocentes(idGrupo);
 			});	
 		});
-	}else{
+	}else if (resultadoLinhas != 747){
 		document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar linhas de pesquisa";
 		$("#erroModal").modal('show');
 	}

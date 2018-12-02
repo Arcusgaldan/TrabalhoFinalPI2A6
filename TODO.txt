@@ -123,7 +123,8 @@
 [-] Após cadastrar linha de pesquisa aparece o modal de sucesso e não acontece mais nada.
 [-] Após Docente aparece o modal de sucesso e não acontece mais nada.
 [-] Não está excluindo linhas vinculadas ao grupo.
-
+[-] Na página geral do grupo quando um item existe mais de um ele nao tem separação nenhuma entre um iten e outro listado, precisa aparecer alguma virgula, outraço prara separar os itens listados.
+[-] Poderia fazer um botão de desativar pesquisa sem ter para dar um fim, sem ter que alterar a data.
 -- DOCUMENTAÇÃO
 
 [-] Colocar novas tabelas como Autoincrement
