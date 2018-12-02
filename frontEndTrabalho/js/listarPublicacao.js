@@ -266,6 +266,8 @@ function preencheDocentes(idGrupo){
 			});
 			res.on('end', function(){
 				var vetorDocente = JSON.parse(msg).resultado;
+				$("#docentePublicacaoCadastrar > option").remove();
+				// $("#docentePublicacaoCadastrar").append("<option value='0'>Docente</option>");
 				for(let i = 0; i < vetorDocente.length; i++){
 					$("#docentePublicacaoCadastrar").append("<option value='"+vetorDocente[i].id+"'>"+vetorDocente[i].nome+"</option>");
 					$("#docentePublicacaoAlterar").append("<option value='"+vetorDocente[i].id+"'>"+vetorDocente[i].nome+"</option>");
@@ -379,6 +381,7 @@ function puxaPesquisasDocenteAlterar(){
 listaLinhas(function(){
 	var url = window.location.pathname;
 	buscaGrupo(url.split("/")[2], function(idGrupo){
+		preencheDocentes(idGrupo);
 		var utils = require('./../../utils.js');
 		utils.enviaRequisicao("Publicacao", "BUSCARGRUPO", {idGrupo: idGrupo}, function(res){
 			if(res.statusCode == 200){
@@ -390,9 +393,8 @@ listaLinhas(function(){
 					var vetor = JSON.parse(msg);
 					//console.log("Publicações deste grupo: " + msg);
 					preencheTabela(vetor, idGrupo);
-					preencheDocentes(idGrupo);
 				});
-			}else{
+			}else if(res.statusCode != 747){
 				document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar publicações do grupo";
 				$("#erroModal").modal('show');
 			}

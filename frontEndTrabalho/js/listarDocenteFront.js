@@ -33285,12 +33285,15 @@ module.exports = {
 		var selectCampos = "";
 		var comparacoes = "";
 		var joins = "";
-		var orderCampos = "id";
+		var orderCampos = "";
 		var orderSentido = "ASC";
 		var aliasTabela = "";
 
 		if(argumentos.aliasTabela){
 			aliasTabela = argumentos.aliasTabela;
+			orderCampos += aliasTabela + ".id";
+		}else{
+			orderCampos = "id";
 		}
 
 		if(argumentos.selectCampos){
@@ -33462,8 +33465,7 @@ function criaElementos(listaDocente){
                 <p><strong>Link do Lattes: </strong> <span id='linkLattesDocenteDados"+i+"'></span></p>\
                 <p><strong>Formação: </strong> <span id='formacaoDocenteDados"+i+"'></span></p>\
                 <p><strong>Data de entrada no grupo: </strong> <span id='dataEntradaDocenteDados"+i+"'></span></p>\
-                // <p><strong>linha de pesquisa: </strong> <span id=''></span><i class='col-md-1 fas fa-plus fa-fw'></i></p> \
-                // <p><strong>data de começo do vinculo com a linha:</strong> <span id=''></span></p>\
+                <p><strong>Linhas de pesquisa: </strong> <span id='linhaPesquisaDocenteDados'"+i+"></span></p>\
               </div>\
             </div>\
           </td>\
@@ -33481,6 +33483,44 @@ function criaElementos(listaDocente){
 		document.getElementById("formacaoDocenteDados" + i).innerHTML = listaDocente[i].formacao;
 		document.getElementById("dataEntradaDocenteDados" + i).innerHTML = listaDocente[i].dataEntrada;
 		document.getElementById("fotoDocenteDados" + i).src = "/../upload/uploads/fotosDocente/" + listaDocente[i].id + ".jpg";
+
+		var utils = require('./../../utils.js');
+
+		//SELECT l.nome linhaNome, vdl.dataInicio dataInicioVinculo, vdl.dataFim dataFimVinculo FROM TBVinculoDocenteLinha vdl 
+		//JOIN TBLinhaPesquisa l ON l.id = vdl.codLinha 
+		//JOIN TBDocente d ON d.id = vdl.codDocente 
+		//WHERE d.codGrupo = 1 AND vdl.dataFim = '1001-01-01' 
+		//ORDER BY vdl.id ASC;
+
+		var argumentos = {};
+		argumentos.selectCampos = ["l.nome linhaNome", "vdl.dataInicio dataInicioVinculo", "vdl.dataFim dataFimVinculo"];
+		argumentos.aliasTabela = "vdl";
+		argumentos.joins = [{tabela: "TBLinhaPesquisa l", on: "l.id = vdl.codLinha"}, {tabela: "TBDocente d", on: "d.id = vdl.codDocente"}];
+
+		var url = window.location.pathname;
+		buscaGrupo(url.split("/")[2], function(idGrupo){
+			if(idGrupo != 0){
+				argumentos.where = "d.codGrupo = " + idGrupo + " AND vdl.dataFim = '1001-01-01'";
+				utils.enviaRequisicao("VinculoDocenteLinha", "BUSCARCOMPLETO", argumentos, function(res){
+					if(res.statusCode == 200){
+						var linhasDocente = "";
+						var msg = "";
+						res.on('data', function(chunk){
+							msg += chunk;
+						});
+						res.on('end', function(){
+							var vetorLinhasDocente = JSON.parse(msg);
+							for(var i = 0; i < vetorLinhasDocente.length; i++){
+								linhasDocente += "</br>Linha: " + vetorLinhasDocente[i].linhaNome + "</br>Data de Início do Vínculo: " + utils.formataData(vetorLinhasDocente[i].dataInicioVinculo) + "</br>Data de Fim do Vínculo: " + utils.formataData(vetorLinhasDocente[i].dataFimVinculo) + "</br>";
+							}
+							document.getElementById('linhaPesquisaDocenteDados').innerHTML = linhasDocente;
+						});
+					}
+				});		
+			}else{
+				document.getElementById('linhaPesquisaDocenteDados').innerHTML = "<i class='fas fa-plus'></i>";
+			}
+		});
 		
 		(function(){
 			console.log("Docente na closure: " + JSON.stringify(listaDocente[i]));
