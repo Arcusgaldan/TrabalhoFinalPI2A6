@@ -124,8 +124,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 
