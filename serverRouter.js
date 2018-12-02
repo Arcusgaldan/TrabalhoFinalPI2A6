@@ -16,6 +16,7 @@ var paginas = {
 
 var agrupamentos = {
 	"grupos": "frontEndTrabalho/grupo-de-pesquisa.html",
+	"reunioes": "frontEndTrabalho/cadastroReunioes.html",
 	"tecnicos": "frontEndTrabalho/cadastroTecnico.html",
 	"docentes": "frontEndTrabalho/cadastroDocente.html",
 	"linhas": "frontEndTrabalho/cadastroLinhasGrupo.html",
