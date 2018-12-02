@@ -50,4 +50,18 @@ select t.* from TBTecnico t
 where t.codGrupo = ->IDGRUPO<-
 AND year(t.dataEntrada) <= ->ANO<- AND (t.dataSaida = '1001-01-01' OR year(t.dataSaida) >= ->ANO<-);
 
+//Publicações
 
+select p.*, d.nome docenteNome, pes.titulo pesquisaTitulo, l.nome linhaNome from tbpublicacao p 
+JOIN TBDocente d ON d.id = p.codDocente 
+JOIN TBLinhaPesquisa l ON l.id = p.codLinha 
+LEFT JOIN TBPesquisa pes ON pes.id = p.codPesquisa 
+WHERE d.codGrupo = 1
+AND year(p.data) = ->ANO<-;
+
+//Pesquisas Finalizadas
+select p.*, l.nome linhaNome, d.nome docenteNome from tbpesquisa p 
+JOIN TBLinhaPesquisa l ON l.id = p.codLinha 
+JOIN TBDocente d ON d.id = p.codDocente 
+WHERE d.codGrupo = 1 
+AND year(p.dataFim) = 2018;

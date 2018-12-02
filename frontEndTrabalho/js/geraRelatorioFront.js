@@ -33311,8 +33311,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 
@@ -33822,7 +33828,76 @@ function relatorioEquipamento(ano, idGrupo){
 }
 
 function relatorioPublicacao(ano, idGrupo){
-	
+	// select p.*, d.nome docenteNome, pes.titulo pesquisaTitulo, l.nome linhaNome from tbpublicacao p 
+	// JOIN TBDocente d ON d.id = p.codDocente 
+	// JOIN TBLinhaPesquisa l ON l.id = p.codLinha 
+	// LEFT JOIN TBPesquisa pes ON pes.id = p.codPesquisa 
+	// WHERE d.codGrupo = ->IDGRUPO<-
+	// AND year(p.data) = ->ANO<-;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(p.data) = " + ano;
+	argumentos.aliasTabela = "p";
+	argumentos.selectCampos = ["p.*", "d.nome docenteNome", "pes.titulo pesquisaTitulo", "l.nome linhaNome"];
+	argumentos.joins = [{tabela: "TBDocente d", on: "d.id = p.codDocente"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}, {tabela: "TBPesquisa pes", on: "pes.id = p.codPesquisa", tipo: "LEFT"}];
+
+	require('./../../utils.js').enviaRequisicao("Publicacao", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioPesquisaFinalizada(ano, idGrupo){
+	// select p.*, l.nome linhaNome, d.nome docenteNome from tbpesquisa p 
+	// JOIN TBLinhaPesquisa l ON l.id = p.codLinha 
+	// JOIN TBDocente d ON d.id = p.codDocente 
+	// WHERE d.codGrupo = 1 
+	// AND year(p.dataFim) = 2018;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(p.dataFim) = " + ano;
+	argumentos.aliasTabela = "p";
+	argumentos.selectCampos = ["p.*", "l.nome linhaNome", "d.nome docenteNome"];
+	argumentos.joins = [{tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}, {tabela: "TBDocente d", on: "d.id = p.codDocente"}];
+
+	require('./../../utils.js').enviaRequisicao("Pesquisa", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
 }
 
 function gerar(){
@@ -33885,6 +33960,15 @@ function gerar(){
 			case '9':
 				relatorioEquipamento(ano, idGrupo);
 				break;
+
+			case '10':
+				relatorioPublicacao(ano, idGrupo);
+				break;
+
+			case '11':
+				relatorioPesquisaFinalizada(ano, idGrupo);
+				break;
+				
 			default:
 				document.getElementById('msgErroModal').innerHTML = "Tipo de relatório ainda não implementado.";
 				$("#erroModal").modal('show');
