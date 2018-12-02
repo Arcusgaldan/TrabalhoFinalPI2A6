@@ -33228,10 +33228,11 @@ module.exports = {
 
 			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
 				this.buscar(msg.campo, msg.valor, function(res){
-					if(res == null){
+					console.log("Em cUsuario.buscar, res = " + JSON.stringify(res));
+					if(res.resultado == null){
 						resposta.codigo = 400;
 						cb(resposta);
-					}else if(res != ""){
+					}else if(res.resultado != ""){
 						resposta.codigo = 200;
 						resposta.msg = JSON.stringify(res);
 						cb(resposta);
@@ -33476,12 +33477,15 @@ module.exports = {
 		var selectCampos = "";
 		var comparacoes = "";
 		var joins = "";
-		var orderCampos = "id";
+		var orderCampos = "";
 		var orderSentido = "ASC";
 		var aliasTabela = "";
 
 		if(argumentos.aliasTabela){
 			aliasTabela = argumentos.aliasTabela;
+			orderCampos += aliasTabela + ".id";
+		}else{
+			orderCampos = "id";
 		}
 
 		if(argumentos.selectCampos){

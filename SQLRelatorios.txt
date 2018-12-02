@@ -2,7 +2,14 @@
 SELECT d.nome, d.dataEntrada, d.dataSaida FROM TBDocente d JOIN TBGrupo g ON d.codGrupo = g.id WHERE d.codGrupo = ->IDGRUPO<- AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<- ORDER BY d.id ASC;
 
 //Docentes + Linha de Pesquisa
-SELECT d.nome, l.nome, vdl.dataInicio, vdl.dataFim FROM TBDocente d JOIN TBGrupo g ON d.codGrupo = g.id JOIN TBVinculoDocenteLinha vdl ON vdl.codDocente = d.id JOIN TBLinhaPesquisa l ON vdl.codLinha = l.id WHERE d.codGrupo = ->IDGRUPO<- AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) ORDER BY d.id ASC;
+SELECT d.nome, l.nome, vdl.dataInicio, vdl.dataFim FROM TBDocente d 
+JOIN TBGrupo g ON d.codGrupo = g.id 
+JOIN TBVinculoDocenteLinha vdl ON vdl.codDocente = d.id 
+JOIN TBLinhaPesquisa l ON vdl.codLinha = l.id 
+WHERE d.codGrupo = ->IDGRUPO<- 
+AND year(d.dataEntrada) <= ->ANO<- 
+AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) 
+ORDER BY d.id ASC;
 
 //Discentes
 select a.*, p.titulo pesquisaTitulo from tbdocente d 
@@ -14,7 +21,7 @@ AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) 
 AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
 ORDER BY a.id ASC;
 
-/Discentes + Orientadores
+//Discentes + Orientadores
 
 select a.*, p.titulo pesquisaTitulo, d.nome docenteNome from tbdocente d 
 join tbpesquisa p on p.codDocente = d.id 
@@ -25,7 +32,7 @@ AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) 
 AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
 ORDER BY a.id ASC;
 
-/Discentes + Orientadores + Linha de Pesquisa
+//Discentes + Orientadores + Linha de Pesquisa
 
 select a.*, p.titulo pesquisaTitulo, d.nome docenteNome, l.nome linhaNome from tbdocente d 
 join tbpesquisa p on p.codDocente = d.id 
@@ -36,3 +43,11 @@ AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSa
 AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
 AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
 ORDER BY a.id ASC;
+
+//Tecnicos
+
+select t.* from TBTecnico t 
+where t.codGrupo = ->IDGRUPO<-
+AND year(t.dataEntrada) <= ->ANO<- AND (t.dataSaida = '1001-01-01' OR year(t.dataSaida) >= ->ANO<-);
+
+

@@ -552,6 +552,77 @@ function relatorioAlunoDocenteLinha(ano, idGrupo){
 	});
 }
 
+function relatorioTecnico(ano, idGrupo){	
+	// select t.* from TBTecnico t 
+	// where t.codGrupo = ->IDGRUPO<-
+	// AND year(t.dataEntrada) <= ->ANO<- AND (t.dataSaida = '1001-01-01' OR year(t.dataSaida) >= ->ANO<-);	
+
+	var argumentos = {};
+	argumentos.where = "t.codGrupo = " + idGrupo + " AND year(t.dataEntrada) <= + " + ano + " AND (t.dataSaida = '1001-01-01' OR year(t.dataSaida) >= " + ano + ")";
+	argumentos.aliasTabela = "t";
+	argumentos.selectCampos = ["t.*"];
+	// argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}];
+
+	require('./../../utils.js').enviaRequisicao("Tecnico", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioEquipamento(ano, idGrupo){
+	// select e.* from TBEquipamento t 
+	// where e.codGrupo = ->IDGRUPO<-
+	// AND year(e.dataEntrada) <= ->ANO<- AND (e.dataDescarte = '1001-01-01' OR year(t.dataDescarte) >= ->ANO<-);	
+
+	var argumentos = {};
+	argumentos.where = "e.codGrupo = " + idGrupo + " AND year(e.dataEntrada) <= + " + ano + " AND (e.dataDescarte = '1001-01-01' OR year(e.dataDescarte) >= " + ano + ")";
+	argumentos.aliasTabela = "e";
+	argumentos.selectCampos = ["e.*"];
+
+	require('./../../utils.js').enviaRequisicao("Equipamento", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+			});
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioPublicacao(ano, idGrupo){
+	
+}
+
 function gerar(){
 	console.log("Entrou na função gerar");
 	var regex = /[1-2][0-9][0-9][0-9]/;
@@ -603,6 +674,14 @@ function gerar(){
 
 			case '7':
 				relatorioAlunoDocenteLinha(ano, idGrupo);
+				break;
+
+			case '8':
+				relatorioTecnico(ano, idGrupo);
+				break;
+
+			case '9':
+				relatorioEquipamento(ano, idGrupo);
 				break;
 			default:
 				document.getElementById('msgErroModal').innerHTML = "Tipo de relatório ainda não implementado.";

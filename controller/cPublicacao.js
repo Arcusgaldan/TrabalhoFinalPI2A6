@@ -141,7 +141,7 @@ module.exports = {
 			// 	console.log("CODRES: " + codRes);
 			// 	cb(codRes);
 			// });
-			require('./controller.js').inserir("Publicacao", aluno, function(codRes){
+			require('./controller.js').inserir("Publicacao", publicacao, function(codRes){
 				cb(codRes);
 			});
 		}
@@ -178,7 +178,7 @@ module.exports = {
 			// dao.inserir(dao.criaConexao(), sql, function(codRes){
 			// 	cb(codRes);
 			// });
-			require('./controller.js').alterar("Publicacao", aluno, function(codRes){
+			require('./controller.js').alterar("Publicacao", publicacao, function(codRes){
 				cb(codRes);
 			});
 		}
@@ -190,7 +190,7 @@ module.exports = {
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){
 		// 	cb(codRes);
 		// });
-		require('./controller.js').excluir("Publicacao", aluno, function(codRes){
+		require('./controller.js').excluir("Publicacao", publicacao, function(codRes){
 			cb(codRes);
 		});
 	},
