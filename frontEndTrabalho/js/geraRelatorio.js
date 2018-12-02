@@ -612,6 +612,7 @@ function relatorioTecnico(ano, idGrupo){
 					}());
 				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -683,6 +684,7 @@ function relatorioEquipamento(ano, idGrupo){
 					}());
 				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -719,7 +721,64 @@ function relatorioPublicacao(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Publicação</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Título da Publicação: </strong> <span id='mostraTituloPublicacao"+i+"'></span></p>\
+	                  <p><strong>Título da Pesquisa: </strong> <span id='mostraTituloPesquisa"+i+"'></span></p>\
+	                  <p><strong>Docente Responsável: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Linha de Pesquisa: </strong> <span id='mostraLinhaPesquisa"+i+"'></span></p>\
+	                  <p><strong>Tipo da Publicação: </strong> <span id='mostraTipoPublicacao"+i+"'></span></p>\
+	                  <p><strong>Referência da Publicação: </strong> <span id='mostraReferenciaPublicacao"+i+"'></span></p>\
+	                  <p><strong>Data da Publicação: </strong> <span id='mostraDataPublicacao"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraTituloPublicacao"+i).innerHTML = relatorio[i].titulo;
+					document.getElementById("mostraTituloPesquisa"+i).innerHTML = relatorio[i].pesquisaTitulo;
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraLinhaPesquisa"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraTipoPublicacao"+i).innerHTML = relatorio[i].tipo;
+					document.getElementById("mostraReferenciaPublicacao"+i).innerHTML = relatorio[i].referencia;
+					document.getElementById("mostraDataPublicacao"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].data);
+
+					(function(){
+						document.getElementById('mostraTituloPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].titulo);
+						}, false);
+
+						document.getElementById('mostraTituloPesquisa' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].pesquisaTitulo);
+						}, false);
+
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraLinhaPesquisa' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraTipoPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].tipo);
+						}, false);
+
+						document.getElementById('mostraReferenciaPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].referencia);
+						}, false);
+
+						document.getElementById('mostraDataPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].data));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -755,7 +814,40 @@ function relatorioPesquisaFinalizada(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Projetos Finalizados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Título da Pesquisa: </strong> <span id='mostraTituloPesquisa"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da pesquisa: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da pesquisa: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraTituloPesquisa"+i).innerHTML = relatorio[i].titulo;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraTituloPublicacao' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].titulo);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');

@@ -66,10 +66,10 @@ function listarPesquisas(){
                 res.on("end", function(){
                     var vetorPesquisa = JSON.parse(msg);
                         for (let i = 0; i < vetorPesquisa.length; i++) {
-                            if (vetorPesquisa[i].dataFim == "1001-01-01"){
-                                $("#pesqAtivosGrupo").append(vetorPesquisa[i].titulo + "<br>");
+                            if (require("./../../utils.js").formataData(vetorPesquisa[i].dataFim) == "1001-01-01" || require("./../../utils.js").formataData(vetorPesquisa[i].dataFim) == "-"){
+                                $("#pesqInativosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
                             }else{
-                                $("#pesqInativosGrupo").append(vetorPesquisa[i].titulo + "<br>");
+                                $("#pesqAtivosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
                         }
                     }
                 });
