@@ -13,7 +13,13 @@ function alteraAluno(){
 	modelo.dataFim = document.getElementById('dataFimAlunoAlterar').value;
 	if(modelo.dataFim == "")
 		modelo.dataFim = "1001-01-01";
-	modelo.tipo = document.getElementById('tipoAlunoAlterar').value;
+
+	if(document.getElementById('tipoAlunoAlterar').value == 0){
+		modelo.tipo = document.getElementById('tipoAlunoAlterar').value;
+	}else{
+		modelo.tipo = document.getElementById('outrosTipoPesquisaAlterar').value;
+	}
+	
 	modelo.codPesquisa = document.getElementById('idPesquisaAlterar').value;
 
 
