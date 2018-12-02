@@ -33978,6 +33978,44 @@ function relatorioTecnico(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Técnicos</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+					$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Técnico: </strong> <span id='mostraNomeTecnico"+i+"'></span></p>\
+	                  <p><strong>Atividade do Técnico: </strong> <span id='mostraAtividadeTecnico"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeTecnico"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraAtividadeTecnico"+i).innerHTML = relatorio[i].atividade;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataSaida);
+
+					(function(){
+						document.getElementById('mostraNomeTecnico' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraAtividadeTecnico' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].atividade);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataSaida));
+						}, false);
+					}());
+				}
 			});
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
@@ -34011,6 +34049,44 @@ function relatorioEquipamento(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Equipamento</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do equipamento: </strong> <span id='mostraNomeEquipamento"+i+"'></span></p>\
+	                  <p><strong>Descrição do equipamento: </strong> <span id='mostraDescricaoEquipamento"+i+"'></span></p>\
+	                  <p><strong>Data de entrada do equipamento: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de descarte do equipamento: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeEquipamento"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDescricaoEquipamento"+i).innerHTML = relatorio[i].descricao;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataDescarte);
+
+					(function(){
+						document.getElementById('mostraNomeEquipamento' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDescricaoEquipamento' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].descricao);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataDescarte));
+						}, false);
+					}());
+				}
 			});
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
