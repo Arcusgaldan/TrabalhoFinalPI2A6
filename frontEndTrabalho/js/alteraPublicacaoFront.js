@@ -33328,7 +33328,7 @@ module.exports = {
 			// 	console.log("CODRES: " + codRes);
 			// 	cb(codRes);
 			// });
-			require('./controller.js').inserir("Publicacao", aluno, function(codRes){
+			require('./controller.js').inserir("Publicacao", publicacao, function(codRes){
 				cb(codRes);
 			});
 		}
@@ -33365,7 +33365,7 @@ module.exports = {
 			// dao.inserir(dao.criaConexao(), sql, function(codRes){
 			// 	cb(codRes);
 			// });
-			require('./controller.js').alterar("Publicacao", aluno, function(codRes){
+			require('./controller.js').alterar("Publicacao", publicacao, function(codRes){
 				cb(codRes);
 			});
 		}
@@ -33377,7 +33377,7 @@ module.exports = {
 		// dao.inserir(dao.criaConexao(), sql, function(codRes){
 		// 	cb(codRes);
 		// });
-		require('./controller.js').excluir("Publicacao", aluno, function(codRes){
+		require('./controller.js').excluir("Publicacao", publicacao, function(codRes){
 			cb(codRes);
 		});
 	},
@@ -33466,6 +33466,7 @@ module.exports = {
 	},
 
 	alterar: function(alvo, msg, cb){
+		console.log("Entrei em controller:alterar com alvo = " + alvo);
 		var sql = "UPDATE TB" + alvo + " SET ";
 		var campos = "";
 		for(var key in msg){
@@ -33551,8 +33552,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 

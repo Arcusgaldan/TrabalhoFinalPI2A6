@@ -833,7 +833,7 @@ function relatorioPesquisaFinalizada(ano, idGrupo){
 					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
 
 					(function(){
-						document.getElementById('mostraTituloPublicacao' + i).addEventListener('click', function(){
+						document.getElementById('mostraTituloPesquisa' + i).addEventListener('click', function(){
 							copiaTexto(relatorio[i].titulo);
 						}, false);
 

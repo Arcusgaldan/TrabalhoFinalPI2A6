@@ -216,7 +216,6 @@ function preencheTabela(listaPesquisa){
 }
 
 function preencheModalAlterar(pesquisa, aluno){
-
 	document.getElementById("idPesquisaAlterar").value = pesquisa.id;
 	document.getElementById("tituloPesquisaAlterar").value = pesquisa.titulo;
 	document.getElementById("docentePesquisaAlterar").value = pesquisa.docenteId;
@@ -232,8 +231,14 @@ function preencheModalAlterar(pesquisa, aluno){
 	document.getElementById("cursoAlunoAlterar").value = aluno.curso;
 	document.getElementById("cursoAntigoAlunoAlterar").value = aluno.curso;
 	document.getElementById("linkLattesAlunoAlterar").value = aluno.linkLattes;
-	document.getElementById("linkLattesAntigoAlunoAlterar").value = aluno.linkLattes;
-	document.getElementById("tipoAlunoAlterar").value = aluno.tipo;
+	document.getElementById("linkLattesAntigoAlunoAlterar").value = aluno.linkLattes;	
+
+	if(aluno.tipo != "Voluntário" && aluno.tipo != "PIBIFSP" && aluno.tipo != "CNPQ"){
+		document.getElementById("tipoAlunoAlterar").value = "Outras";
+	}else{
+		document.getElementById("tipoAlunoAlterar").value = aluno.tipo;
+	}
+
 	document.getElementById("tipoAntigoAlunoAlterar").value = aluno.tipo;
 	document.getElementById("dataInicioAlunoAlterar").value = aluno.dataInicio.substring(0, 10);
 	document.getElementById("dataInicioAntigoAlunoAlterar").value = aluno.dataInicio.substring(0, 10);

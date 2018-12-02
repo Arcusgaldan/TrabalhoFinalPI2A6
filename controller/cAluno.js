@@ -130,7 +130,7 @@ module.exports = {
 
 	alterar: function(aluno, cb){
 		if(!this.validar(aluno)){
-			return false;
+			cb(400);
 		}else{
 			// var sql = "UPDATE TBAluno SET ";
 			// var campos = "";

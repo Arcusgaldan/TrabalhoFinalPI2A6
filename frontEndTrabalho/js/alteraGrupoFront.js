@@ -33226,6 +33226,7 @@ module.exports = {
 	},
 
 	alterar: function(alvo, msg, cb){
+		console.log("Entrei em controller:alterar com alvo = " + alvo);
 		var sql = "UPDATE TB" + alvo + " SET ";
 		var campos = "";
 		for(var key in msg){
@@ -33311,8 +33312,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 
@@ -33467,7 +33474,7 @@ module.exports = {
 		final.nome = "";
 		final.sigla = "";
 		final.descricao = "";
-		final.dataFundacao = "1000-01-01 00:00:00";
+		final.dataFundacao = "1001-01-01";
 		final.codUsuario = 0;
 		final.logotipo = "";
 		final.email = "";

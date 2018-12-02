@@ -33226,6 +33226,7 @@ module.exports = {
 	},
 
 	alterar: function(alvo, msg, cb){
+		console.log("Entrei em controller:alterar com alvo = " + alvo);
 		var sql = "UPDATE TB" + alvo + " SET ";
 		var campos = "";
 		for(var key in msg){
@@ -33311,8 +33312,14 @@ module.exports = {
 		sql += selectCampos + " FROM TB" + alvo + " " + aliasTabela + " ";
 
 		if(argumentos.joins){
+			var tipo;
 			for(let i = 0; i < argumentos.joins.length; i++){
-				joins += "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
+				if(argumentos.joins[i].tipo){
+					tipo = argumentos.joins[i].tipo + " ";
+				}else{
+					tipo = "";
+				}
+				joins += tipo + "JOIN " + argumentos.joins[i].tabela + " ON " + argumentos.joins[i].on + " ";
 			}
 		}
 
@@ -33626,7 +33633,6 @@ function preencheTabela(listaPesquisa){
 }
 
 function preencheModalAlterar(pesquisa, aluno){
-
 	document.getElementById("idPesquisaAlterar").value = pesquisa.id;
 	document.getElementById("tituloPesquisaAlterar").value = pesquisa.titulo;
 	document.getElementById("docentePesquisaAlterar").value = pesquisa.docenteId;
@@ -33642,8 +33648,14 @@ function preencheModalAlterar(pesquisa, aluno){
 	document.getElementById("cursoAlunoAlterar").value = aluno.curso;
 	document.getElementById("cursoAntigoAlunoAlterar").value = aluno.curso;
 	document.getElementById("linkLattesAlunoAlterar").value = aluno.linkLattes;
-	document.getElementById("linkLattesAntigoAlunoAlterar").value = aluno.linkLattes;
-	document.getElementById("tipoAlunoAlterar").value = aluno.tipo;
+	document.getElementById("linkLattesAntigoAlunoAlterar").value = aluno.linkLattes;	
+
+	if(aluno.tipo != "Voluntário" && aluno.tipo != "PIBIFSP" && aluno.tipo != "CNPQ"){
+		document.getElementById("tipoAlunoAlterar").value = "Outras";
+	}else{
+		document.getElementById("tipoAlunoAlterar").value = aluno.tipo;
+	}
+
 	document.getElementById("tipoAntigoAlunoAlterar").value = aluno.tipo;
 	document.getElementById("dataInicioAlunoAlterar").value = aluno.dataInicio.substring(0, 10);
 	document.getElementById("dataInicioAntigoAlunoAlterar").value = aluno.dataInicio.substring(0, 10);
