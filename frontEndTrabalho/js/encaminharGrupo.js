@@ -66,10 +66,10 @@ function listarPesquisas(){
                 res.on("end", function(){
                     var vetorPesquisa = JSON.parse(msg);
                         for (let i = 0; i < vetorPesquisa.length; i++) {
-                            if (require("./../../utils.js").formataData(vetorPesquisa[i].dataFim) == "1001-01-01" || require("./../../utils.js").formataData(vetorPesquisa[i].dataFim) == "-"){
-                                $("#pesqInativosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
+                            if (vetorPesquisa[i].dataFim.substring(0, 10) == '1001-01-01'){
+                                $("#pesqAtivosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");                            
                             }else{
-                                $("#pesqAtivosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
+                                $("#pesqInativosGrupo").append("<li>"+vetorPesquisa[i].titulo +"</li>");
                         }
                     }
                 });
@@ -141,18 +141,39 @@ var req = http.request(opcoesHTTP, (res) => {
     	window.location = "/404.html";
     }else if(res.statusCode == 200){
     	console.log("Ha cadastros!");
+        var msg = "";
     	//Preencher os valores do grupo
     	res.on('data', function(chunk){
-    		var grupo = JSON.parse(chunk).resultado[0];
-    		console.log("Resposta foi: " + chunk);
+            msg += chunk;
+        });
+        res.on('end', function(){
+    		var grupo = JSON.parse(msg).resultado[0];
+            utils.enviaRequisicao("USUARIO", "BUSCAR", {campo: "id", valor: grupo.codUsuario}, function(res){
+                if(res.statusCode == 200){
+                    var msg = "";
+                    res.on('data', function(chunk){
+                        msg += chunk;
+                    });
+                    res.on('end', function(){
+                        var lider = JSON.parse(msg).resultado[0];
+                        document.getElementById("liderGrupo").innerHTML = lider.nome;
+                    });
+                }
+            });
+    		console.log("Resposta foi: " + msg);
     		console.log("Nome do grupo: " + grupo.nome);
 			document.getElementById("siglaGrupo").innerHTML = grupo.sigla;
             document.getElementById("nomeGrupo").innerHTML = grupo.nome;
-            document.getElementById("descicaoGrupo").innerHTML = grupo.descricao;
-            document.getElementById("fundGrupo").innerHTML = grupo.dataFundacao.substring(0, 10);
-            document.getElementById("emailGrupo").innerHTML = grupo.email;
+            if(grupo.descricao != "" && grupo.descricao != " ")
+                document.getElementById("descicaoGrupo").innerHTML = grupo.descricao;
+            else
+                document.getElementById("descicaoGrupo").innerHTML = "-";
+            document.getElementById("fundGrupo").innerHTML = utils.formataData(grupo.dataFundacao);
+            if(grupo.email != "" && grupo.email != " ")
+                document.getElementById("emailGrupo").innerHTML = grupo.descricao;
+            else
+                document.getElementById("emailGrupo").innerHTML = "-";
             document.getElementById("logotipoGrupo").src = '/../upload/uploads/logosGrupo/' + grupo.id + '.jpg';
-            document.getElementById("liderGrupo").innerHTML = grupo.codUsuario;
 
             document.getElementById("siglaGrupoAlterar").value = grupo.sigla;
             document.getElementById("nomeGrupoAlterar").value = grupo.nome;

@@ -70,7 +70,7 @@ module.exports = {
 
 	inserir: function(grupo, cb){
 		if(!this.validar(grupo)){							
-				return false;
+				cb(412);
 		}else{
 			// grupo['id'] = 0;
 			// var sql = "INSERT INTO TBGrupo (";
@@ -115,7 +115,7 @@ module.exports = {
 
 	alterar: function(grupo, cb){
 		if(!this.validar(grupo)){
-			return false;
+			cb(412);
 		}else{
 			// var sql = "UPDATE TBGrupo SET ";
 			// var campos = "";

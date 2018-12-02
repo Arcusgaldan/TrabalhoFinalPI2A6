@@ -5,7 +5,7 @@ function alteraAluno(){
 	var modelo = require('./../../modelo/mAluno.js').novo();
 	var controller = require('./../../controller/cAluno.js');
 
-	modelo.id = document.getElementById('idAlunoAlterar')
+	modelo.id = document.getElementById('idAlunoAlterar').value;
 	modelo.nome = document.getElementById('nomeAlunoAlterar').value;
 	modelo.curso = document.getElementById('cursoAlunoAlterar').value;
 	modelo.linkLattes = document.getElementById('linkLattesAlunoAlterar').value;
@@ -41,6 +41,8 @@ function alteraAluno(){
 }
 
 function alteraPesquisa(){
+	console.log("Entrei em alteraPesquisa!");
+
 	if(document.getElementById('cursoAlunoAlterarTemp').value === ""){
 		document.getElementById('msgErroModal').innerHTML = "Por favor insira um aluno";
 		$("#erroModal").modal('show');
@@ -82,6 +84,8 @@ function alteraPesquisa(){
 		antigoAluno.atual = 0; 
 		antigoAluno.codPesquisa = pesquisa.id;
 	}
+
+	console.log("Pesquisa: " + JSON.stringify(pesquisa) + "\nAluno: " + JSON.stringify(aluno) + "\nAntigoAluno: " + JSON.stringify(antigoAluno));
 
 
 	var controller = require('./../../controller/cPesquisa.js');
@@ -139,6 +143,7 @@ function alteraPesquisa(){
 				});
 			}else{
 				utils.enviaRequisicao("Aluno", "ALTERAR", aluno, function(res){
+					console.log("LOG DO DEBUG LINHA 146");
 					if(res.statusCode == 200){
 						$("#sucessoModal").modal('show');
 						$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});

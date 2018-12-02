@@ -39,6 +39,7 @@ module.exports = {
 	},
 
 	alterar: function(alvo, msg, cb){
+		console.log("Entrei em controller:alterar com alvo = " + alvo);
 		var sql = "UPDATE TB" + alvo + " SET ";
 		var campos = "";
 		for(var key in msg){
