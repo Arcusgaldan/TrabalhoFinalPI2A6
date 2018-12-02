@@ -126,7 +126,7 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 				$('#mostraRelatorio div').remove();
 				$('#mostraRelatorio').append("\
 					<div class='card card-body body-pesquisas'>\
-                      <h1 class='text-center'>Linha de pesquisa + Docentes Vículados</h1>\
+                      <h1 class='text-center'>Linha de pesquisa + Docentes Vinculados</h1>\
 	                </div>\
 				");
 				for (let i = 0;i<relatorio.length;i++) {
@@ -138,10 +138,29 @@ function relatorioLinhaGrupoDocente(ano, idGrupo){
 	                  <p><strong>Data de fim do vínculo: </strong> <span id='mostraDataFinalLinhaGrupoDocente"+i+"'></span></p>\
 	                </div>\
 					");
+
 					document.getElementById("mostraNomeLinhaGrupoDocente"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
 					document.getElementById("mostraDataInicioLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
 					document.getElementById("mostraDataFinalLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
-					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
+
+					(function(){
+						document.getElementById('mostraNomeLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDocenteLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
 				}
 			});
 			$('#filtraRelatorio').modal('hide');
@@ -175,7 +194,40 @@ function relatorioDocente(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Docentes Vinculados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Docente: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo docente: </strong> <span id='mostraDataInicioVinculoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo docente: </strong> <span id='mostraDataFinalVinculoDocente"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDataInicioVinculoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataSaida);
+
+					(function(){
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataSaida));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -212,7 +264,46 @@ function relatorioDocenteLinha(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Docentes Vinculados + Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Docente: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Nome do linha de pesquisa: </strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo docente: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo docente: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].vinculoDataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].vinculoDataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].vinculoDataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].vinculoDataFim));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -251,7 +342,40 @@ function relatorioAluno(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Aluno</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Aluno: </strong> <span id='mostraNomeAluno"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo Aluno: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo Aluno: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeAluno"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeAluno' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -291,7 +415,46 @@ function relatorioAlunoDocente(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Discentes + Orientador</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Discente: </strong> <span id='mostraNomeDiscente"+i+"'></span></p>\
+	                  <p><strong>Nome do Orientador: </strong> <span id='mostraNomeOrientador"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDiscente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeOrientador"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDiscente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeOrientador' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');
@@ -331,7 +494,52 @@ function relatorioAlunoDocenteLinha(ano, idGrupo){
 			res.on('end', function(){
 				var relatorio = JSON.parse(msg);
 				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Discentes + Orientadores + Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Discente: </strong> <span id='mostraNomeDiscente"+i+"'></span></p>\
+	                  <p><strong>Nome do Orientador: </strong> <span id='mostraNomeOrientador"+i+"'></span></p>\
+	                  <p><strong>Nome da linha de pesquisa: </strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDiscente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeOrientador"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDiscente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeOrientador' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
 			});
+			$('#filtraRelatorio').modal('hide');
 		}else if(res.statusCode == 747){
 			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
 			$("#erroModal").modal('show');

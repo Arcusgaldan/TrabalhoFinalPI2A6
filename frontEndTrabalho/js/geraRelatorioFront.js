@@ -32972,198 +32972,6 @@ module.exports = {
 				});
 				break;
 
-			case "BUSCARCOMPLETO":
-				this.buscarCompleto(msg, function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-		}
-	},
-
-	validar: function(aluno){
-		var validates = require('./../validates.js');
-		if(!validates.req(aluno.id) || !validates.min(aluno.nome, 10) || !validates.req(aluno.curso) || !validates.req(aluno.linkLattes) ||
-			!validates.req(aluno.dataInicio) || !validates.req(aluno.codPesquisa) || !validates.req(aluno.atual)){ //Retirar campos opcionais desta validação						
-			return false;
-		}else{
-			return true;
-		}
-	},
-
-	inserir: function(aluno, cb){
-		if(!this.validar(aluno)){							
-				cb(400);
-		}else{
-			// aluno['id'] = 0;
-			// var sql = "INSERT INTO TBAluno (";
-			// var campos = "";
-			// var valores = "";
-			// for(var key in aluno){
-			// 	if(aluno[key] == null)
-			// 		continue;
-
-			// 	if(campos == ""){
-			// 		campos += key;
-			// 	}else{
-			// 		campos += ", " + key;
-			// 	}
-
-			// 	var modelo = require('./../modelo/mAluno.js');
-			// 	var aux = "";
-
-			// 	if(modelo.isString(key)){
-			// 		aux = '"' + aluno[key] + '"';					
-			// 	}
-			// 	else
-			// 		aux = aluno[key];
-
-			// 	if(valores == ""){
-			// 		valores += aux;
-			// 	}else{
-			// 		valores += ", " + aux;
-			// 	}
-			// }
-			// sql += campos + ") values (" + valores + ");";
-			// var dao = require('./../dao.js');
-			// dao.inserir(dao.criaConexao(), sql, function(codRes){
-			// 	console.log("CODRES: " + codRes);
-			// 	cb(codRes);
-			// });
-			require('./controller.js').inserir("Aluno", aluno, function(codRes){
-				cb(codRes);
-			});
-		}
-	},
-
-	alterar: function(aluno, cb){
-		if(!this.validar(aluno)){
-			return false;
-		}else{
-			// var sql = "UPDATE TBAluno SET ";
-			// var campos = "";
-			// for(var key in aluno){
-			// 	if(key == 'id')
-			// 		continue;
-
-			// 	var modelo = require('./../modelo/mAluno.js');
-			// 	var aux = "";
-
-			// 	if(modelo.isString(key)){
-			// 		aux = '"' + aluno[key] + '"';
-					
-			// 	}
-			// 	else
-			// 		aux = aluno[key];
-
-			// 	if(campos == ""){
-			// 		campos += key + " = " + aux;
-			// 	}else{
-			// 		campos += ", " + key + " = " + aux;
-			// 	}
-			// }
-			// sql += campos + " WHERE id = " + aluno['id'] + ";";
-			// var dao = require('./../dao.js');
-			// dao.inserir(dao.criaConexao(), sql, function(codRes){
-			// 	cb(codRes);
-			// });
-			require('./controller.js').alterar("Aluno", aluno, function(codRes){
-				cb(codRes);
-			});
-		}
-	},
-
-	excluir: function(aluno, cb){
-		require('./controller.js').excluir("Aluno", aluno, function(codRes){
-			cb(codRes);
-		});
-	},
-
-	listar: function(cb){
-		require('./controller.js').listar("Aluno", function(resposta){
-			cb(resposta);
-		});
-	},
-
-	buscar: function(campo, valor, cb){
-		require('./controller.js').buscar("Aluno", campo, valor, function(resposta){
-			cb(resposta);
-		});
-	},
-
-	buscarCompleto: function(argumentos, cb){
-		require('./controller.js').buscarCompleto("Aluno", argumentos, function(resposta){
-			cb(resposta);
-		});
-	}
-}
-},{"./../validates.js":307,"./controller.js":193}],191:[function(require,module,exports){
-module.exports = {
-	trataOperacao: function(operacao, msg, cb){
-		var resposta = {};
-		switch(operacao){
-			case "INSERIR":
-				this.inserir(msg, function(codRes){
-					resposta.codigo = codRes;
-					cb(resposta);
-				});
-				break;
-
-			case "ALTERAR":
-				this.alterar(msg, function(codRes){
-					resposta.codigo = codRes;
-					cb(resposta);
-				});
-				break;
-
-			case "EXCLUIR":
-				this.excluir(msg, function(codRes){
-					resposta.codigo = codRes;
-					cb(resposta);
-				});
-				break;
-
-			case "LISTAR":
-				this.listar(function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-
-			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
-				this.buscar(msg.campo, msg.valor, function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-
 			case "BUSCARPARENTE":
 				this.buscarParente(msg.tipoBusca, msg.linha, function(res){
 					if(res == null){
@@ -33371,246 +33179,7 @@ module.exports = {
 		
 	}
 }
-},{"./../utils.js":306,"./../validates.js":307,"./controller.js":193}],192:[function(require,module,exports){
-module.exports = {
-	trataOperacao: function(operacao, msg, cb){
-		var resposta = {};
-		switch(operacao){
-			case "INSERIR":
-				this.inserir(msg, function(codRes){
-					resposta.codigo = codRes;
-					cb(resposta);
-				});
-				break;
-
-			case "ALTERAR":
-				this.alterar(msg, function(codRes){
-					resposta.codigo = codRes;
-					cb(resposta);
-				});
-				break;
-
-			case "EXCLUIR":
-				this.excluir(msg, function(codRes){
-					resposta.codigo = codRes;
-					cb(resposta);
-				});
-				break;
-
-			case "LISTAR":
-				this.listar(function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-
-			case "BUSCAR": //Adicionar if else para saber se é BUSCAR antigo (apenas CAMPO e VALOR) ou novo (com argumentos complexos);
-				this.buscar(msg.campo, msg.valor, function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-			case "BUSCARGRUPO":
-				this.buscarGrupo(msg.idGrupo, function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-
-			case "BUSCARCOMPLETO":
-				this.buscarCompleto(msg, function(res){
-					if(res == null){
-						resposta.codigo = 400;
-						cb(resposta);
-					}else if(res != ""){
-						resposta.codigo = 200;
-						resposta.msg = JSON.stringify(res);
-						cb(resposta);
-					}else{
-						resposta.codigo = 747;
-						cb(resposta);
-					}
-				});
-				break;
-
-			default:
-				resposta.codigo = 400;
-				cb(resposta);
-		}
-	},
-
-	validar: function(pesquisa){
-		var validates = require('./../validates.js');
-		if(!validates.req(pesquisa.id) || !validates.min(pesquisa.titulo, 10) || !validates.req(pesquisa.codDocente) || !validates.req(pesquisa.codLinha) || 
-			!validates.req(pesquisa.dataInicio)){ //Retirar campos opcionais desta validação						
-			return false;
-		}else{
-			return true;
-		}
-	},
-
-	inserir: function(pesquisa, cb){
-		if(!this.validar(pesquisa)){							
-				cb(400);
-		}else{
-			// pesquisa['id'] = 0;
-			// var sql = "INSERT INTO TBPesquisa (";
-			// var campos = "";
-			// var valores = "";
-			// for(var key in pesquisa){
-			// 	if(pesquisa[key] == null)
-			// 		continue;
-
-			// 	if(campos == ""){
-			// 		campos += key;
-			// 	}else{
-			// 		campos += ", " + key;
-			// 	}
-
-			// 	var modelo = require('./../modelo/mPesquisa.js');
-			// 	var aux = "";
-
-			// 	if(modelo.isString(key)){
-			// 		aux = '"' + pesquisa[key] + '"';					
-			// 	}
-			// 	else
-			// 		aux = pesquisa[key];
-
-			// 	if(valores == ""){
-			// 		valores += aux;
-			// 	}else{
-			// 		valores += ", " + aux;
-			// 	}
-			// }
-			// sql += campos + ") values (" + valores + ");";
-			// var dao = require('./../dao.js');
-			// dao.inserir(dao.criaConexao(), sql, function(codRes){
-			// 	console.log("CODRES: " + codRes);
-			// 	cb(codRes);
-			// });
-			require('./controller.js').inserir("Pesquisa", pesquisa, function(codRes){
-				cb(codRes);
-			});
-		}
-	},
-
-	alterar: function(pesquisa, cb){
-		if(!this.validar(pesquisa)){
-			return false;
-		}else{
-			// var sql = "UPDATE TBPesquisa SET ";
-			// var campos = "";
-			// for(var key in pesquisa){
-			// 	if(key == 'id')
-			// 		continue;
-
-			// 	var modelo = require('./../modelo/mPesquisa.js');
-			// 	var aux = "";
-
-			// 	if(modelo.isString(key)){
-			// 		aux = '"' + pesquisa[key] + '"';
-					
-			// 	}
-			// 	else
-			// 		aux = pesquisa[key];
-
-			// 	if(campos == ""){
-			// 		campos += key + " = " + aux;
-			// 	}else{
-			// 		campos += ", " + key + " = " + aux;
-			// 	}
-			// }
-			// sql += campos + " WHERE id = " + pesquisa['id'] + ";";
-			// var dao = require('./../dao.js');
-			// dao.inserir(dao.criaConexao(), sql, function(codRes){
-			// 	cb(codRes);
-			// });
-			require('./controller.js').alterar("Pesquisa", pesquisa, function(codRes){
-				cb(codRes);
-			});
-		}
-	},
-
-	excluir: function(pesquisa, cb){
-		// var sql = "DELETE FROM TBPesquisa WHERE id = " + id + ";";
-		// var dao = require('./../dao.js');
-		// dao.inserir(dao.criaConexao(), sql, function(codRes){
-		// 	cb(codRes);
-		// });
-		require('./controller.js').excluir("Pesquisa", pesquisa, function(codRes){
-			cb(codRes);
-		});
-	},
-
-	listar: function(cb){
-		// var sql = "SELECT * FROM TBPesquisa;";
-		// var dao = require('./../dao.js');
-		// dao.buscar(dao.criaConexao(), sql, function(resultado){
-		// 	cb(resultado);
-		// });
-		require('./controller.js').listar("Pesquisa", function(resposta){
-			cb(resposta);
-		});
-	},
-
-	buscar: function(campo, valor, cb){
-		// var sql = 'SELECT * FROM TBPesquisa WHERE ' + campo + ' = "' + valor + '";';
-		// console.log("SQL: " + sql);
-		// var dao = require('./../dao.js');
-		// dao.buscar(dao.criaConexao(), sql, function(resultado){			
-		// 	cb(resultado);
-		// });
-		require('./controller.js').buscar("Pesquisa", campo, valor, function(resposta){
-			cb(resposta);
-		});
-	},
-
-	buscarGrupo: function(idGrupo, cb){
-		var argumentos = {aliasTabela: "p", selectCampos: ["p.*", "d.nome docenteNome", "d.id docenteId", "l.id linhaId", "l.nome linhaNome"], joins: [{tabela: "TBDocente d", on: "d.id = p.codDocente"}, {tabela: "TBGrupo g", on: "g.id = d.codGrupo"}, {tabela: "TBLinhaPesquisa l", on: "p.codLinha = l.id"}], where: "g.id = " + idGrupo}
-		require('./controller.js').buscarCompleto("Pesquisa", argumentos, function(resposta){
-			cb(resposta);
-		});
-		// var sql = 'SELECT p.*, d.nome docenteNome, d.id docenteId, l.id linhaId, l.nome linhaNome FROM TBPesquisa p JOIN TBDocente d ON d.id = p.codDocente JOIN TBGrupo g ON g.id = d.codGrupo JOIN TBLinhaPesquisa l ON p.codLinha = l.id WHERE g.id = ' + idGrupo + ';'
-		// var dao = require('./../dao.js');
-		// dao.buscar(dao.criaConexao(), sql, function(resultado){
-		// 	cb(resultado);
-		// });
-	},
-
-	buscarCompleto: function(argumentos, cb){
-		require('./controller.js').buscarCompleto("Pesquisa", argumentos, function(resposta){
-			cb(resposta);
-		});
-	}
-}
-},{"./../validates.js":307,"./controller.js":193}],193:[function(require,module,exports){
+},{"./../utils.js":302,"./../validates.js":303,"./controller.js":191}],191:[function(require,module,exports){
 module.exports = {
 	inserir: function(alvo, msg, cb){
 		msg['id'] = 0;
@@ -33765,7 +33334,7 @@ module.exports = {
 		});
 	}
 }
-},{"./../dao.js":194}],194:[function(require,module,exports){
+},{"./../dao.js":192}],192:[function(require,module,exports){
 module.exports = {
 	criaConexao: function(){
 		var mysql = require('mysql');
@@ -33833,200 +33402,621 @@ module.exports = {
 		});
 	}
 }
-},{"mysql":202,"nodemailer":273}],195:[function(require,module,exports){
-document.getElementById('btnAlunoCadastrar').addEventListener('click', cadastraAluno, false);
-document.getElementById('btnCadastrar').addEventListener('click', cadastra, false);
+},{"mysql":198,"nodemailer":269}],193:[function(require,module,exports){
+document.getElementById('btnRelatorio').addEventListener('click', gerar, false);
 
-function cadastraAluno(){
-	var modelo = require('./../../modelo/mAluno.js').novo();
-	var controller = require('./../../controller/cAluno.js');
+function buscaGrupo(sigla, cb){
+	var utils = require('./../../utils.js');
+	var http = require('http');
+	var objeto = {
+		campo: "sigla",
+		valor: sigla
+	};
+	var texto = JSON.stringify(objeto);
 
-	modelo.nome = document.getElementById('nomeAlunoCadastrar').value;
-	modelo.curso = document.getElementById('cursoAlunoCadastrar').value;
-	modelo.linkLattes = document.getElementById('linkLattesAlunoCadastrar').value;
-	modelo.dataInicio = document.getElementById('dataInicioAlunoCadastrar').value;
-	modelo.dataFim = document.getElementById('dataFimAlunoCadastrar').value;
-	if(modelo.dataFim == "")
-		modelo.dataFim = "1001-01-01";
-	if(document.getElementById('tipoAlunoCadastrar').value == 0){
-		modelo.tipo = document.getElementById('tipoAlunoCadastrar').value;
-	}else{
-		modelo.tipo = document.getElementById('outrosTipoPesquisaCadastrar').value;
-	}
+	var opcoesHTTP = utils.opcoesHTTP(texto);
+	opcoesHTTP.headers.Objeto = "Grupo";
+	opcoesHTTP.headers.Operacao = "BUSCAR";
 
-	modelo.codPesquisa = 0;
-	modelo.atual = 1;
+	var req = http.request(opcoesHTTP, (res) => {
+		console.log("Chegou a resposta!");
+		res.setEncoding('utf8');
 
-	console.log("MODELO EM cadastraPesquisa::cadastraAluno: " + JSON.stringify(modelo));
+		if(res.statusCode == 200){
+			res.on('data', function(chunk){
+				var grupo = JSON.parse(chunk).resultado[0];
+				cb(grupo.id);
+			});
+		}else{
+			cb(0);
+		}
+	});
 
-	if(!controller.validar(modelo)){
-		console.log("Não passou na validação                      em cadastraPesquisa::cadastraAluno com modelo = " + JSON.stringify(modelo));
-		document.getElementById('msgErroModal').innerHTML = "Por favor preencha os campos corretamente.";
-		$("#erroModal").modal('show');
-		return;
-	}
-
-	document.getElementById('alunoPesquisaCadastrar').value = modelo.nome;
-	document.getElementById('cursoAlunoCadastrarTemp').value = modelo.curso;
-	document.getElementById('linkLattesAlunoCadastrarTemp').value = modelo.linkLattes;
-	document.getElementById('dataInicioAlunoCadastrarTemp').value = modelo.dataInicio;
-	document.getElementById('dataFimAlunoCadastrarTemp').value = modelo.dataFim;
-	document.getElementById('tipoAlunoCadastrarTemp').value = modelo.tipo;
-	$("#cadastraAlunoModal").modal('toggle');
-
+	req.write(texto);
+	req.end();
 }
 
-function cadastra(){
-	if(document.getElementById('cursoAlunoCadastrarTemp').value === ""){
-		document.getElementById('msgErroModal').innerHTML = "Por favor cadastre um aluno";
-		$("#erroModal").modal('show');
-	}
+function copiaTexto(texto){
+	console.log("Entrei em copiaTexto com texto = " + texto + "!");
+	const el = document.createElement('textarea');
+	el.value = texto;
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+}
 
-	var pesquisa = require('./../../modelo/mPesquisa.js').novo();
-	var aluno = require('./../../modelo/mAluno.js').novo();
+function relatorioLinhaGrupo(ano, idGrupo){
+	var argumentos = {};
 
-	var cPesquisa = require('./../../controller/cPesquisa.js');
+	argumentos.where = "v.codGrupo = " + idGrupo + " AND year(v.dataInicio) <= " + ano + " AND (v.dataFim = '1001-01-01' OR year(v.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "v";
+	argumentos.selectCampos = ["v.*", "l.nome linhaNome"];
+	argumentos.joins = [{tabela: "TBLinhaPesquisa l", on: "v.codLinha = l.id"}, {tabela: "TBGrupo g", on: "g.id = v.codGrupo"}];
 
-	pesquisa.id = 0;
-	pesquisa.titulo = document.getElementById('tituloPesquisaCadastrar').value;
-	pesquisa.codDocente = parseInt(document.getElementById('docentePesquisaCadastrar').value);
-	pesquisa.codLinha = parseInt(document.getElementById('linhaPesquisaCadastrar').value);
-	pesquisa.dataInicio = document.getElementById('dataInicioPesquisaCadastrar').value;
-	pesquisa.dataFim = document.getElementById('dataFimPesquisaCadastrar').value;
-	if(pesquisa.dataFim == "")
-		pesquisa.dataFim = "1001-01-01";
-
-	aluno.id = 0;
-	aluno.nome = document.getElementById('alunoPesquisaCadastrar').value;
-	aluno.curso = document.getElementById('cursoAlunoCadastrarTemp').value;
-	aluno.linkLattes = document.getElementById('linkLattesAlunoCadastrarTemp').value;
-	aluno.dataInicio = document.getElementById('dataInicioAlunoCadastrarTemp').value;
-	aluno.dataFim = document.getElementById('dataFimAlunoCadastrarTemp').value;
-	aluno.tipo = document.getElementById('tipoAlunoCadastrarTemp').value;
-	aluno.atual = 1;
-
-
-	var controller = require('./../../controller/cPesquisa.js');
-
-	if(!cPesquisa.validar(pesquisa)){		
-		document.getElementById('msgErroModal').innerHTML = /*"Por favor preencha os campos corretamente"*/ "Não passou na validação com modelo = " + JSON.stringify(pesquisa);
-		$("#erroModal").modal('show');
-		return;
-	}
-
-	var utils = require('./../../utils.js');
-
-	utils.enviaRequisicao("Pesquisa", "INSERIR", pesquisa, function(res){
+	require('./../../utils.js').enviaRequisicao("VinculoGrupoLinha", "BUSCARCOMPLETO", argumentos, function(res){
 		if(res.statusCode == 200){
-			utils.enviaRequisicao("Pesquisa", "BUSCAR", {campo: "titulo", valor: pesquisa.titulo}, function(res){
-				if(res.statusCode == 200){
-					var msg = "";
-					res.on('data', function(chunk){
-						msg += chunk;
-					});
-					res.on('end', function(){
-						aluno.codPesquisa = JSON.parse(msg).resultado[0].id;
-						utils.enviaRequisicao("Aluno", "INSERIR", aluno, function(res){
-							if(res.statusCode == 200){
-								$('#sucessoModal').modal('show');
-								$('#sucessoModal').on('hide.bs.modal', function(){location.reload()});
-								setTimeout(function(){location.reload();} , 2000);
-							}else{
-								document.getElementById('msgErroModal').innerHTML = "Falha ao cadastrar aluno.";
-								$("#erroModal").modal('show');
-								$('#erroModal').on('hide.bs.modal', function(){location.reload()});
-								utils.enviaRequisicao("Pesquisa", "EXCLUIR", {id: aluno.codPesquisa}, function(res){
-									console.log("Pesquisa excluida!");
-								});
-							}
-						});
-					});
-				}else{					
-					document.getElementById('msgErroModal').innerHTML = "Falha ao buscar ID da pesquisa.";
-					$("#erroModal").modal('show');
-					return;		
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome da linha de pesquisa:</strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da linha:</strong> <span id='mostraDataInicioLinha"+i+"'></span></p>\
+	                  <p><strong>Data de fim da linha:</strong> <span id='mostraDataFimLinha"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFimLinha"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioLinha' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFimLinha' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);						
+					}());
 				}
-			});	
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
 		}else{
-			document.getElementById('msgErroModal').innerHTML = "Falha ao cadastrar pesquisa.";
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
 			$("#erroModal").modal('show');
 			return;
 		}
 	});
-}							
-},{"./../../controller/cAluno.js":190,"./../../controller/cPesquisa.js":192,"./../../modelo/mAluno.js":196,"./../../modelo/mPesquisa.js":197,"./../../utils.js":306}],196:[function(require,module,exports){
-module.exports = {
-	especifica: function(objeto){
-		var final = {};
-		final.id = objeto.id; //int primary key auto increment
-		final.nome = objeto.nome; //varchar(100)
-		final.curso = objeto.curso; //varchar(200)
-		final.linkLattes = objeto.linkLattes; //varchar(300)
-		final.dataInicio = objeto.dataInicio; //date
-		final.dataFim = objeto.dataFim; //date
-		final.codPesquisa = objeto.codPesquisa; //int chave estrangeira apontando para Pesquisa
-		final.tipo = objeto.tipo; //varchar(100)
-		final.atual = objeto.atual;
-		return final;
-	},
-
-	novo: function(){
-		var final = {};
-		final.id = 0;
-		final.nome = "";
-		final.curso = "";
-		final.linkLattes = "";
-		final.dataInicio = "";
-		final.dataFim = "";
-		final.codPesquisa = 0;
-		final.tipo = "";
-		final.atual = 0;
-		return final;
-	},
-
-	isString: function(atributo){
-		var strings = ["nome", "curso", "linkLattes", "dataInicio", "dataFim", "tipo"];
-		for (var i = strings.length - 1; i >= 0; i--) {
-			if(strings[i] == atributo)
-				return true;
-		}
-		return false;
-	}
 }
-},{}],197:[function(require,module,exports){
-module.exports = {
-	especifica: function(objeto){
-		var final = {};
-		final.id = objeto.id; //int primary_key auto increment
-		final.titulo = objeto.titulo; //varchar(300)
-		final.codDocente = objeto.codDocente; //int chave estrangeira apontando para Docente
-		final.codLinha = objeto.codLinha; //int chave estrangeira apontando para LinhaPesquisa
-		final.dataInicio = objeto.dataInicio; //date
-		final.dataFim = objeto.dataFim; //date
-		return final;
-	},
 
-	novo: function(){
-		var final = {};
-		final.id = 0;
-		final.titulo = "";
-		final.codDocente = 0;
-		final.codLinha = 0;
-		final.dataInicio = "";
-		final.dataFim = "1001-01-01";
-		return final;
-	},
+function relatorioLinhaGrupoDocente(ano, idGrupo){
+	var argumentos = {};
 
-	isString: function(atributo){
-		var strings = ["titulo", "tipo", "dataInicio", "dataFim"];
-		for (var i = strings.length - 1; i >= 0; i--) {
-			if(strings[i] == atributo)
-				return true;
+	argumentos.where = "vd.codLinha = v.codLinha AND year(vd.dataInicio) <= " + ano + " AND (vd.dataFim = '1001-01-01' OR year(vd.dataFim) >= " + ano + ") AND v.codGrupo = " + idGrupo + " AND year(v.dataInicio) <= " + ano + " AND (v.dataFim = '1001-01-01' OR year(v.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "v";
+	argumentos.selectCampos = ["v.*", "l.nome linhaNome", "d.nome docenteNome"];
+	argumentos.joins = [{tabela: "TBLinhaPesquisa l", on: "v.codLinha = l.id"}, {tabela: "TBGrupo g", on: "g.id = v.codGrupo"}, {tabela: "TBDocente d", on: "d.codGrupo = v.codGrupo"}, {tabela: "TBVinculoDocenteLinha vd", on: "d.id = vd.codDocente"}];
+
+	require('./../../utils.js').enviaRequisicao("VinculoGrupoLinha", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Linha de pesquisa + Docentes Vinculados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome da linha de pesquisa: </strong> <span id='mostraNomeLinhaGrupoDocente"+i+"'></span></p>\
+	                  <p><strong>Docente: </strong> <span id='mostraDocenteLinhaGrupoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo: </strong> <span id='mostraDataInicioLinhaGrupoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo: </strong> <span id='mostraDataFinalLinhaGrupoDocente"+i+"'></span></p>\
+	                </div>\
+					");
+
+					document.getElementById("mostraNomeLinhaGrupoDocente"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDocenteLinhaGrupoDocente"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraDataInicioLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalLinhaGrupoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDocenteLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalLinhaGrupoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
 		}
-		return false;
-	}
+	});
 }
-},{}],198:[function(require,module,exports){
+
+function relatorioDocente(ano, idGrupo){
+	//select * from tbdocente d JOIN tbgrupo g ON d.codGrupo = g.id WHERE d.codGrupo = 2;
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["d.nome", "d.dataEntrada", "d.dataSaida"];
+	argumentos.joins = [{tabela: "TBGrupo g", on: "d.codGrupo = g.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Docentes Vinculados</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Docente: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo docente: </strong> <span id='mostraDataInicioVinculoDocente"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo docente: </strong> <span id='mostraDataFinalVinculoDocente"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDataInicioVinculoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataEntrada);
+					document.getElementById("mostraDataFinalVinculoDocente"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataSaida);
+
+					(function(){
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataEntrada));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculoDocente' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataSaida));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioDocenteLinha(ano, idGrupo){
+	//SELECT d.nome, l.nome linhaNome, vdl.dataInicio vinculoDataInicio, vdl.dataFim vinculoDataFim FROM TBDocente d 
+	//JOIN TBGrupo g ON d.codGrupo = g.id 
+	//JOIN TBVinculoDocenteLinha vdl ON vdl.codDocente = d.id 
+	//JOIN TBLinhaPesquisa l ON vdl.codLinha = l.id 
+	//WHERE d.codGrupo = ->IDGRUPO<- AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) 
+	//ORDER BY d.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["d.nome", "l.nome linhaNome", "vdl.dataInicio vinculoDataInicio", "vdl.dataFim vinculoDataFim"];
+	argumentos.joins = [{tabela: "TBGrupo g", on: "d.codGrupo = g.id"}, {tabela: "TBVinculoDocenteLinha vdl", on: "vdl.codDocente = d.id"}, {tabela: "TBLinhaPesquisa l", on: "vdl.codLinha = l.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Docentes Vinculados + Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Docente: </strong> <span id='mostraNomeDocente"+i+"'></span></p>\
+	                  <p><strong>Nome do linha de pesquisa: </strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo docente: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo docente: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDocente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].vinculoDataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].vinculoDataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDocente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].vinculoDataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].vinculoDataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioAluno(ano, idGrupo){
+	// select a.* from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id 
+	// WHERE d.codGrupo = ->IDGRUPO<- 
+	// AND year(d.dataEntrada) <= ->ANO<- AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= ->ANO<-) 
+	// AND year(p.dataInicio) <= ->ANO<- AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= ->ANO<-) 
+	// AND year(a.dataInicio) <= ->ANO<- AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= ->ANO<-)
+	// ORDER BY a.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Aluno</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Aluno: </strong> <span id='mostraNomeAluno"+i+"'></span></p>\
+	                  <p><strong>Data de inicio do vínculo Aluno: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim do vínculo Aluno: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeAluno"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeAluno' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+
+}
+
+function relatorioAlunoDocente(ano, idGrupo){
+	// select a.*, d.nome docenteNome from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id 
+	// WHERE d.codGrupo = 1 
+	// AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+	// AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+	// AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+	// ORDER BY a.id ASC;
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo", "d.nome docenteNome"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Discentes + Orientador</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Discente: </strong> <span id='mostraNomeDiscente"+i+"'></span></p>\
+	                  <p><strong>Nome do Orientador: </strong> <span id='mostraNomeOrientador"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDiscente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeOrientador"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDiscente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeOrientador' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function relatorioAlunoDocenteLinha(ano, idGrupo){
+	// select a.*, p.titulo pesquisaTitulo, d.nome docenteNome, l.nome linhaNome from tbdocente d 
+	// join tbpesquisa p on p.codDocente = d.id 
+	// join tbaluno a on a.codPesquisa = p.id
+	// join tblinhapesquisa l on l.id = p.codLinha
+	// WHERE d.codGrupo = 1 
+	// AND year(d.dataEntrada) <= 2018 AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= 2018) 
+	// AND year(p.dataInicio) <= 2018 AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= 2018) 
+	// AND year(a.dataInicio) <= 2018 AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= 2018)
+	// ORDER BY a.id ASC;	
+
+	var argumentos = {};
+	argumentos.where = "d.codGrupo = " + idGrupo + " AND year(d.dataEntrada) <= + " + ano + " AND (d.dataSaida = '1001-01-01' OR year(d.dataSaida) >= " + ano + ") AND year(p.dataInicio) <= " + ano + " AND (p.dataFim = '1001-01-01' OR year(p.dataFim) >= " + ano + ") AND year(a.dataInicio) <= " + ano + " AND (a.dataFim = '1001-01-01' OR year(a.dataFim) >= " + ano + ")";
+	argumentos.aliasTabela = "d";
+	argumentos.selectCampos = ["a.*", "p.titulo pesquisaTitulo", "d.nome docenteNome", "l.nome linhaNome"];
+	argumentos.joins = [{tabela: "TBPesquisa p", on: "p.codDocente = d.id"}, {tabela: "TBAluno a", on: "a.codPesquisa = p.id"}, {tabela: "TBLinhaPesquisa l", on: "l.id = p.codLinha"}];
+
+	require('./../../utils.js').enviaRequisicao("Docente", "BUSCARCOMPLETO", argumentos, function(res){
+		if(res.statusCode == 200){
+			var msg = "";
+			res.on('data', function(chunk){
+				msg += chunk;
+			});
+
+			res.on('end', function(){
+				var relatorio = JSON.parse(msg);
+				console.log("Relatorio: " + msg);//Trocar pelos appends
+				$('#mostraRelatorio div').remove();
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+                      <h1 class='text-center'>Discentes + Orientadores + Linhas de pesquisa</h1>\
+	                </div>\
+				");
+				for (let i = 0;i<relatorio.length;i++) {
+				$('#mostraRelatorio').append("\
+					<div class='card card-body body-pesquisas'>\
+	                  <p><strong>Nome do Discente: </strong> <span id='mostraNomeDiscente"+i+"'></span></p>\
+	                  <p><strong>Nome do Orientador: </strong> <span id='mostraNomeOrientador"+i+"'></span></p>\
+	                  <p><strong>Nome da linha de pesquisa: </strong> <span id='mostraNomeLinha"+i+"'></span></p>\
+	                  <p><strong>Data de inicio da orientação: </strong> <span id='mostraDataInicioVinculo"+i+"'></span></p>\
+	                  <p><strong>Data de fim da orientação: </strong> <span id='mostraDataFinalVinculo"+i+"'></span></p>\
+	                </div>\
+					");
+					document.getElementById("mostraNomeDiscente"+i).innerHTML = relatorio[i].nome;
+					document.getElementById("mostraNomeOrientador"+i).innerHTML = relatorio[i].docenteNome;
+					document.getElementById("mostraNomeLinha"+i).innerHTML = relatorio[i].linhaNome;
+					document.getElementById("mostraDataInicioVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataInicio);
+					document.getElementById("mostraDataFinalVinculo"+i).innerHTML = require("./../../utils.js").formataData(relatorio[i].dataFim);
+
+					(function(){
+						document.getElementById('mostraNomeDiscente' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].nome);
+						}, false);
+
+						document.getElementById('mostraNomeOrientador' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].docenteNome);
+						}, false);
+
+						document.getElementById('mostraNomeLinha' + i).addEventListener('click', function(){
+							copiaTexto(relatorio[i].linhaNome);
+						}, false);
+
+						document.getElementById('mostraDataInicioVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataInicio));
+						}, false);
+
+						document.getElementById('mostraDataFinalVinculo' + i).addEventListener('click', function(){
+							copiaTexto(require("./../../utils.js").formataData(relatorio[i].dataFim));
+						}, false);
+					}());
+				}
+			});
+			$('#filtraRelatorio').modal('hide');
+		}else if(res.statusCode == 747){
+			document.getElementById('msgErroModal').innerHTML = "Não existem registros para o ano informado.";
+			$("#erroModal").modal('show');
+			return;
+		}else{
+			document.getElementById('msgErroModal').innerHTML = "Erro ao buscar relatório, contate o suporte.";
+			$("#erroModal").modal('show');
+			return;
+		}
+	});
+}
+
+function gerar(){
+	console.log("Entrou na função gerar");
+	var regex = /[1-2][0-9][0-9][0-9]/;
+	if(!document.getElementById('anoRelatorio').value.match(regex)){
+		document.getElementById('msgErroModal').innerHTML = "Por favor, insira um ano válido";
+		$("#erroModal").modal('show');
+		return;
+	}
+
+	if(document.getElementById('tipoRelatorio').value == '0'){		
+		document.getElementById('msgErroModal').innerHTML = "Por favor, selecione um relatório";
+		$("#erroModal").modal('show');
+		return;	
+	}
+
+	var ano = parseInt(document.getElementById('anoRelatorio').value);
+	var url = window.location.pathname;
+	buscaGrupo(url.split("/")[2], function(idGrupo){
+		if(idGrupo == 0){
+			document.getElementById('msgErroModal').innerHTML = "Não foi possível encontrar o grupo";
+			$("#erroModal").modal('show');
+			return;	
+		}
+		switch(document.getElementById('tipoRelatorio').value){
+			case '1':
+				//console.log("Vou gerar relatorio de linhas de pesquisa do grupo " + idGrupo + " no ano " + ano);
+				relatorioLinhaGrupo(ano, idGrupo);
+				break;
+
+			case '2':
+				relatorioLinhaGrupoDocente(ano, idGrupo);
+				break;
+
+			case '3':
+				relatorioDocente(ano, idGrupo);
+				break;
+
+			case '4':
+				relatorioDocenteLinha(ano, idGrupo);
+				break;
+
+			case '5':
+				relatorioAluno(ano, idGrupo);
+				break;
+
+			case '6':
+				relatorioAlunoDocente(ano, idGrupo);
+				break;
+
+			case '7':
+				relatorioAlunoDocenteLinha(ano, idGrupo);
+				break;
+			default:
+				document.getElementById('msgErroModal').innerHTML = "Tipo de relatório ainda não implementado.";
+				$("#erroModal").modal('show');
+				return;
+		}
+	});
+}
+},{"./../../utils.js":302,"http":176}],194:[function(require,module,exports){
 /*! bignumber.js v4.1.0 https://github.com/MikeMcl/bignumber.js/LICENCE */
 
 ;(function (globalObj) {
@@ -36762,7 +36752,7 @@ module.exports = {
     }
 })(this);
 
-},{}],199:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -36873,11 +36863,11 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],200:[function(require,module,exports){
+},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],196:[function(require,module,exports){
 arguments[4][17][0].apply(exports,arguments)
-},{"dup":17}],201:[function(require,module,exports){
+},{"dup":17}],197:[function(require,module,exports){
 arguments[4][110][0].apply(exports,arguments)
-},{"dup":110}],202:[function(require,module,exports){
+},{"dup":110}],198:[function(require,module,exports){
 var Classes = Object.create(null);
 
 /**
@@ -37040,7 +37030,7 @@ function loadClass(className) {
   return Class;
 }
 
-},{"./lib/Connection":203,"./lib/ConnectionConfig":204,"./lib/Pool":205,"./lib/PoolCluster":206,"./lib/PoolConfig":207,"./lib/protocol/SqlString":218,"./lib/protocol/constants/types":225}],203:[function(require,module,exports){
+},{"./lib/Connection":199,"./lib/ConnectionConfig":200,"./lib/Pool":201,"./lib/PoolCluster":202,"./lib/PoolConfig":203,"./lib/protocol/SqlString":214,"./lib/protocol/constants/types":221}],199:[function(require,module,exports){
 (function (process){
 var Crypto           = require('crypto');
 var Events           = require('events');
@@ -37549,7 +37539,7 @@ function wrapToDomain(ee, fn) {
 }
 
 }).call(this,require('_process'))
-},{"./ConnectionConfig":204,"./protocol/Protocol":216,"./protocol/SqlString":218,"./protocol/sequences/Query":252,"_process":139,"crypto":63,"events":90,"net":1,"tls":1,"util":187}],204:[function(require,module,exports){
+},{"./ConnectionConfig":200,"./protocol/Protocol":212,"./protocol/SqlString":214,"./protocol/sequences/Query":248,"_process":139,"crypto":63,"events":90,"net":1,"tls":1,"util":187}],200:[function(require,module,exports){
 var urlParse        = require('url').parse;
 var ClientConstants = require('./protocol/constants/client');
 var Charsets        = require('./protocol/constants/charsets');
@@ -37752,7 +37742,7 @@ ConnectionConfig.parseUrl = function(url) {
   return options;
 };
 
-},{"./protocol/constants/charsets":220,"./protocol/constants/client":221,"./protocol/constants/ssl_profiles":224,"url":183}],205:[function(require,module,exports){
+},{"./protocol/constants/charsets":216,"./protocol/constants/client":217,"./protocol/constants/ssl_profiles":220,"url":183}],201:[function(require,module,exports){
 (function (process){
 var mysql          = require('../');
 var Connection     = require('./Connection');
@@ -38050,7 +38040,7 @@ function spliceConnection(array, connection) {
 }
 
 }).call(this,require('_process'))
-},{"../":202,"./Connection":203,"./PoolConnection":208,"_process":139,"events":90,"util":187}],206:[function(require,module,exports){
+},{"../":198,"./Connection":199,"./PoolConnection":204,"_process":139,"events":90,"util":187}],202:[function(require,module,exports){
 (function (process){
 var Pool          = require('./Pool');
 var PoolConfig    = require('./PoolConfig');
@@ -38342,7 +38332,7 @@ function _cb(err) {
 function _noop() {}
 
 }).call(this,require('_process'))
-},{"./Pool":205,"./PoolConfig":207,"./PoolNamespace":209,"./PoolSelector":210,"_process":139,"events":90,"util":187}],207:[function(require,module,exports){
+},{"./Pool":201,"./PoolConfig":203,"./PoolNamespace":205,"./PoolSelector":206,"_process":139,"events":90,"util":187}],203:[function(require,module,exports){
 
 var ConnectionConfig = require('./ConnectionConfig');
 
@@ -38376,7 +38366,7 @@ PoolConfig.prototype.newConnectionConfig = function newConnectionConfig() {
   return connectionConfig;
 };
 
-},{"./ConnectionConfig":204}],208:[function(require,module,exports){
+},{"./ConnectionConfig":200}],204:[function(require,module,exports){
 var inherits   = require('util').inherits;
 var Connection = require('./Connection');
 var Events     = require('events');
@@ -38443,7 +38433,7 @@ PoolConnection.prototype._removeFromPool = function _removeFromPool() {
   pool._purgeConnection(this);
 };
 
-},{"./Connection":203,"events":90,"util":187}],209:[function(require,module,exports){
+},{"./Connection":199,"events":90,"util":187}],205:[function(require,module,exports){
 (function (process){
 var Connection   = require('./Connection');
 var PoolSelector = require('./PoolSelector');
@@ -38583,7 +38573,7 @@ PoolNamespace.prototype._getClusterNode = function _getClusterNode() {
 };
 
 }).call(this,require('_process'))
-},{"./Connection":203,"./PoolSelector":210,"_process":139}],210:[function(require,module,exports){
+},{"./Connection":199,"./PoolSelector":206,"_process":139}],206:[function(require,module,exports){
 
 /**
  * PoolSelector
@@ -38616,7 +38606,7 @@ PoolSelector.ORDER = function PoolSelectorOrder() {
   };
 };
 
-},{}],211:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer;
 var Crypto = require('crypto');
 var Auth   = exports;
@@ -38770,7 +38760,7 @@ Auth.int32Read = function(buffer, offset){
        + (buffer[offset + 3]);
 };
 
-},{"crypto":63,"safe-buffer":301}],212:[function(require,module,exports){
+},{"crypto":63,"safe-buffer":297}],208:[function(require,module,exports){
 
 module.exports = BufferList;
 function BufferList() {
@@ -38797,14 +38787,14 @@ BufferList.prototype.push = function push(buf) {
   this.size += buf.length;
 };
 
-},{}],213:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 module.exports = PacketHeader;
 function PacketHeader(length, number) {
   this.length = length;
   this.number = number;
 }
 
-},{}],214:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 var BIT_16            = Math.pow(2, 16);
 var BIT_24            = Math.pow(2, 24);
 var BUFFER_ALLOC_SIZE = Math.pow(2, 8);
@@ -39017,7 +39007,7 @@ PacketWriter.prototype._allocate = function _allocate(bytes) {
   oldBuffer.copy(this._buffer);
 };
 
-},{"safe-buffer":301}],215:[function(require,module,exports){
+},{"safe-buffer":297}],211:[function(require,module,exports){
 (function (process){
 var MAX_PACKET_LENGTH = Math.pow(2, 24) - 1;
 var MUL_32BIT         = Math.pow(2, 32);
@@ -39497,7 +39487,7 @@ Parser.prototype._advanceToNextPacket = function() {
 };
 
 }).call(this,require('_process'))
-},{"./BufferList":212,"./PacketHeader":213,"_process":139,"bignumber.js":198,"safe-buffer":301}],216:[function(require,module,exports){
+},{"./BufferList":208,"./PacketHeader":209,"_process":139,"bignumber.js":194,"safe-buffer":297}],212:[function(require,module,exports){
 (function (process){
 var Parser       = require('./Parser');
 var Sequences    = require('./sequences');
@@ -39958,7 +39948,7 @@ Protocol.prototype._debugPacket = function(incoming, packet) {
 };
 
 }).call(this,require('_process'))
-},{"./PacketWriter":214,"./Parser":215,"./packets":248,"./sequences":256,"_process":139,"stream":175,"util":187}],217:[function(require,module,exports){
+},{"./PacketWriter":210,"./Parser":211,"./packets":244,"./sequences":252,"_process":139,"stream":175,"util":187}],213:[function(require,module,exports){
 module.exports = ResultSet;
 function ResultSet(resultSetHeaderPacket) {
   this.resultSetHeaderPacket = resultSetHeaderPacket;
@@ -39967,10 +39957,10 @@ function ResultSet(resultSetHeaderPacket) {
   this.rows                  = [];
 }
 
-},{}],218:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 module.exports = require('sqlstring');
 
-},{"sqlstring":302}],219:[function(require,module,exports){
+},{"sqlstring":298}],215:[function(require,module,exports){
 var Timers = require('timers');
 
 module.exports = Timer;
@@ -40005,7 +39995,7 @@ Timer.prototype._onTimeout = function _onTimeout() {
   return this._object._onTimeout();
 };
 
-},{"timers":181}],220:[function(require,module,exports){
+},{"timers":181}],216:[function(require,module,exports){
 exports.BIG5_CHINESE_CI              = 1;
 exports.LATIN2_CZECH_CS              = 2;
 exports.DEC8_SWEDISH_CI              = 3;
@@ -40269,7 +40259,7 @@ exports.UTF8     = exports.UTF8_GENERAL_CI;
 exports.UTF8MB4  = exports.UTF8MB4_GENERAL_CI;
 exports.UTF32    = exports.UTF32_GENERAL_CI;
 
-},{}],221:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 // Manually extracted from mysql-5.5.23/include/mysql_com.h
 exports.CLIENT_LONG_PASSWORD     = 1; /* new more secure passwords */
 exports.CLIENT_FOUND_ROWS        = 2; /* Found instead of affected rows */
@@ -40297,7 +40287,7 @@ exports.CLIENT_PLUGIN_AUTH = 524288; /* Client supports plugin authentication */
 exports.CLIENT_SSL_VERIFY_SERVER_CERT = 1073741824;
 exports.CLIENT_REMEMBER_OPTIONS       = 2147483648;
 
-},{}],222:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 /**
  * MySQL error constants
  *
@@ -42715,7 +42705,7 @@ exports[3201] = 'ER_KEYRING_MIGRATION_FAILURE';
 exports[3202] = 'ER_KEYRING_ACCESS_DENIED_ERROR';
 exports[3203] = 'ER_KEYRING_MIGRATION_STATUS';
 
-},{}],223:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 // Manually extracted from mysql-5.5.23/include/mysql_com.h
 
 /**
@@ -42756,7 +42746,7 @@ exports.SERVER_QUERY_WAS_SLOW          = 2048;
 */
 exports.SERVER_PS_OUT_PARAMS = 4096;
 
-},{}],224:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 // Certificates for Amazon RDS
 exports['Amazon RDS'] = {
   ca: [
@@ -43498,7 +43488,7 @@ exports['Amazon RDS'] = {
   ]
 };
 
-},{}],225:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 // Manually extracted from mysql-5.7.9/include/mysql.h.pp
 // some more info here: http://dev.mysql.com/doc/refman/5.5/en/c-api-prepared-statement-type-codes.html
 exports.DECIMAL     = 0x00; // aka DECIMAL (http://dev.mysql.com/doc/refman/5.0/en/precision-math-decimal-changes.html)
@@ -43533,7 +43523,7 @@ exports.VAR_STRING  = 0xfd; // aka VARCHAR, VARBINARY
 exports.STRING      = 0xfe; // aka CHAR, BINARY
 exports.GEOMETRY    = 0xff; // aka GEOMETRY
 
-},{}],226:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 module.exports = AuthSwitchRequestPacket;
 function AuthSwitchRequestPacket(options) {
   options = options || {};
@@ -43555,7 +43545,7 @@ AuthSwitchRequestPacket.prototype.write = function write(writer) {
   writer.writeBuffer(this.authMethodData);
 };
 
-},{}],227:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 module.exports = AuthSwitchResponsePacket;
 function AuthSwitchResponsePacket(options) {
   options = options || {};
@@ -43571,7 +43561,7 @@ AuthSwitchResponsePacket.prototype.write = function write(writer) {
   writer.writeBuffer(this.data);
 };
 
-},{}],228:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer;
 
 module.exports = ClientAuthenticationPacket;
@@ -43627,7 +43617,7 @@ ClientAuthenticationPacket.prototype.write = function(writer) {
   }
 };
 
-},{"safe-buffer":301}],229:[function(require,module,exports){
+},{"safe-buffer":297}],225:[function(require,module,exports){
 module.exports = ComChangeUserPacket;
 function ComChangeUserPacket(options) {
   options = options || {};
@@ -43655,7 +43645,7 @@ ComChangeUserPacket.prototype.write = function(writer) {
   writer.writeUnsignedNumber(2, this.charsetNumber);
 };
 
-},{}],230:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 module.exports = ComPingPacket;
 function ComPingPacket() {
   this.command = 0x0e;
@@ -43669,7 +43659,7 @@ ComPingPacket.prototype.parse = function(parser) {
   this.command = parser.parseUnsignedNumber(1);
 };
 
-},{}],231:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 module.exports = ComQueryPacket;
 function ComQueryPacket(sql) {
   this.command = 0x03;
@@ -43686,7 +43676,7 @@ ComQueryPacket.prototype.parse = function(parser) {
   this.sql     = parser.parsePacketTerminatedString();
 };
 
-},{}],232:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 module.exports = ComQuitPacket;
 function ComQuitPacket() {
   this.command = 0x01;
@@ -43700,7 +43690,7 @@ ComQuitPacket.prototype.write = function write(writer) {
   writer.writeUnsignedNumber(1, this.command);
 };
 
-},{}],233:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 module.exports = ComStatisticsPacket;
 function ComStatisticsPacket() {
   this.command = 0x09;
@@ -43714,7 +43704,7 @@ ComStatisticsPacket.prototype.parse = function(parser) {
   this.command = parser.parseUnsignedNumber(1);
 };
 
-},{}],234:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 module.exports = EmptyPacket;
 function EmptyPacket() {
 }
@@ -43722,7 +43712,7 @@ function EmptyPacket() {
 EmptyPacket.prototype.write = function write() {
 };
 
-},{}],235:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 module.exports = EofPacket;
 function EofPacket(options) {
   options = options || {};
@@ -43749,7 +43739,7 @@ EofPacket.prototype.write = function(writer) {
   }
 };
 
-},{}],236:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 module.exports = ErrorPacket;
 function ErrorPacket(options) {
   options = options || {};
@@ -43786,7 +43776,7 @@ ErrorPacket.prototype.write = function(writer) {
   writer.writeString(this.message);
 };
 
-},{}],237:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 var Types = require('../constants/types');
 
 module.exports = Field;
@@ -43822,7 +43812,7 @@ function typeToString(t) {
   return undefined;
 }
 
-},{"../constants/types":225}],238:[function(require,module,exports){
+},{"../constants/types":221}],234:[function(require,module,exports){
 module.exports = FieldPacket;
 function FieldPacket(options) {
   options = options || {};
@@ -43917,7 +43907,7 @@ FieldPacket.prototype.write = function(writer) {
   }
 };
 
-},{}],239:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer;
 var Client = require('../constants/client');
 
@@ -44022,7 +44012,7 @@ HandshakeInitializationPacket.prototype.scrambleBuff = function() {
   return buffer;
 };
 
-},{"../constants/client":221,"safe-buffer":301}],240:[function(require,module,exports){
+},{"../constants/client":217,"safe-buffer":297}],236:[function(require,module,exports){
 module.exports = LocalDataFilePacket;
 
 /**
@@ -44039,7 +44029,7 @@ LocalDataFilePacket.prototype.write = function(writer) {
   writer.writeBuffer(this.data);
 };
 
-},{}],241:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 
 // Language-neutral expression to match ER_UPDATE_INFO
 var ER_UPDATE_INFO_REGEXP = /^[^:0-9]+: [0-9]+[^:0-9]+: ([0-9]+)[^:0-9]+: [0-9]+[^:0-9]*$/;
@@ -44085,7 +44075,7 @@ OkPacket.prototype.write = function(writer) {
   writer.writeString(this.message);
 };
 
-},{}],242:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 module.exports = OldPasswordPacket;
 function OldPasswordPacket(options) {
   options = options || {};
@@ -44102,7 +44092,7 @@ OldPasswordPacket.prototype.write = function(writer) {
   writer.writeFiller(1);
 };
 
-},{}],243:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 module.exports = ResultSetHeaderPacket;
 function ResultSetHeaderPacket(options) {
   options = options || {};
@@ -44129,7 +44119,7 @@ ResultSetHeaderPacket.prototype.write = function(writer) {
   }
 };
 
-},{}],244:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 var Types                        = require('../constants/types');
 var Charsets                     = require('../constants/charsets');
 var Field                        = require('./Field');
@@ -44264,7 +44254,7 @@ function typeMatch(type, list) {
   }
 }
 
-},{"../constants/charsets":220,"../constants/types":225,"./Field":237}],245:[function(require,module,exports){
+},{"../constants/charsets":216,"../constants/types":221,"./Field":233}],241:[function(require,module,exports){
 // http://dev.mysql.com/doc/internals/en/ssl.html
 // http://dev.mysql.com/doc/internals/en/connection-phase-packets.html#packet-Protocol::SSLRequest
 
@@ -44293,7 +44283,7 @@ SSLRequestPacket.prototype.write = function(writer) {
   writer.writeFiller(23);
 };
 
-},{"../constants/client":221}],246:[function(require,module,exports){
+},{"../constants/client":217}],242:[function(require,module,exports){
 module.exports = StatisticsPacket;
 function StatisticsPacket() {
   this.message      = undefined;
@@ -44315,7 +44305,7 @@ StatisticsPacket.prototype.write = function(writer) {
   writer.writeString(this.message);
 };
 
-},{}],247:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 module.exports = UseOldPasswordPacket;
 function UseOldPasswordPacket(options) {
   options = options || {};
@@ -44331,7 +44321,7 @@ UseOldPasswordPacket.prototype.write = function(writer) {
   writer.writeUnsignedNumber(1, this.firstByte);
 };
 
-},{}],248:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 exports.AuthSwitchRequestPacket = require('./AuthSwitchRequestPacket');
 exports.AuthSwitchResponsePacket = require('./AuthSwitchResponsePacket');
 exports.ClientAuthenticationPacket = require('./ClientAuthenticationPacket');
@@ -44355,7 +44345,7 @@ exports.SSLRequestPacket = require('./SSLRequestPacket');
 exports.StatisticsPacket = require('./StatisticsPacket');
 exports.UseOldPasswordPacket = require('./UseOldPasswordPacket');
 
-},{"./AuthSwitchRequestPacket":226,"./AuthSwitchResponsePacket":227,"./ClientAuthenticationPacket":228,"./ComChangeUserPacket":229,"./ComPingPacket":230,"./ComQueryPacket":231,"./ComQuitPacket":232,"./ComStatisticsPacket":233,"./EmptyPacket":234,"./EofPacket":235,"./ErrorPacket":236,"./Field":237,"./FieldPacket":238,"./HandshakeInitializationPacket":239,"./LocalDataFilePacket":240,"./OkPacket":241,"./OldPasswordPacket":242,"./ResultSetHeaderPacket":243,"./RowDataPacket":244,"./SSLRequestPacket":245,"./StatisticsPacket":246,"./UseOldPasswordPacket":247}],249:[function(require,module,exports){
+},{"./AuthSwitchRequestPacket":222,"./AuthSwitchResponsePacket":223,"./ClientAuthenticationPacket":224,"./ComChangeUserPacket":225,"./ComPingPacket":226,"./ComQueryPacket":227,"./ComQuitPacket":228,"./ComStatisticsPacket":229,"./EmptyPacket":230,"./EofPacket":231,"./ErrorPacket":232,"./Field":233,"./FieldPacket":234,"./HandshakeInitializationPacket":235,"./LocalDataFilePacket":236,"./OkPacket":237,"./OldPasswordPacket":238,"./ResultSetHeaderPacket":239,"./RowDataPacket":240,"./SSLRequestPacket":241,"./StatisticsPacket":242,"./UseOldPasswordPacket":243}],245:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -44398,7 +44388,7 @@ ChangeUser.prototype['ErrorPacket'] = function(packet) {
   this.end(err);
 };
 
-},{"../Auth":211,"../packets":248,"./Sequence":254,"util":187}],250:[function(require,module,exports){
+},{"../Auth":207,"../packets":244,"./Sequence":250,"util":187}],246:[function(require,module,exports){
 var Sequence        = require('./Sequence');
 var Util            = require('util');
 var Packets         = require('../packets');
@@ -44527,7 +44517,7 @@ Handshake.prototype['ErrorPacket'] = function(packet) {
   this.end(err);
 };
 
-},{"../Auth":211,"../constants/client":221,"../packets":248,"./Sequence":254,"util":187}],251:[function(require,module,exports){
+},{"../Auth":207,"../constants/client":217,"../packets":244,"./Sequence":250,"util":187}],247:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -44548,7 +44538,7 @@ Ping.prototype.start = function() {
   this.emit('packet', new Packets.ComPingPacket());
 };
 
-},{"../packets":248,"./Sequence":254,"util":187}],252:[function(require,module,exports){
+},{"../packets":244,"./Sequence":250,"util":187}],248:[function(require,module,exports){
 (function (process){
 var Sequence     = require('./Sequence');
 var Util         = require('util');
@@ -44770,7 +44760,7 @@ Query.prototype.stream = function(options) {
 };
 
 }).call(this,require('_process'))
-},{"../ResultSet":217,"../constants/server_status":223,"../packets":248,"./Sequence":254,"_process":139,"fs":1,"readable-stream":300,"util":187}],253:[function(require,module,exports){
+},{"../ResultSet":213,"../constants/server_status":219,"../packets":244,"./Sequence":250,"_process":139,"fs":1,"readable-stream":296,"util":187}],249:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -44812,7 +44802,7 @@ Quit.prototype.start = function() {
   this.emit('packet', new Packets.ComQuitPacket());
 };
 
-},{"../packets":248,"./Sequence":254,"util":187}],254:[function(require,module,exports){
+},{"../packets":244,"./Sequence":250,"util":187}],250:[function(require,module,exports){
 var Util           = require('util');
 var EventEmitter   = require('events').EventEmitter;
 var Packets        = require('../packets');
@@ -44939,7 +44929,7 @@ Sequence.prototype._onTimeout = function _onTimeout() {
   this.emit('timeout');
 };
 
-},{"../Timer":219,"../constants/errors":222,"../packets":248,"events":90,"util":187}],255:[function(require,module,exports){
+},{"../Timer":215,"../constants/errors":218,"../packets":244,"events":90,"util":187}],251:[function(require,module,exports){
 var Sequence = require('./Sequence');
 var Util     = require('util');
 var Packets  = require('../packets');
@@ -44971,7 +44961,7 @@ Statistics.prototype.determinePacket = function determinePacket(firstByte) {
   return undefined;
 };
 
-},{"../packets":248,"./Sequence":254,"util":187}],256:[function(require,module,exports){
+},{"../packets":244,"./Sequence":250,"util":187}],252:[function(require,module,exports){
 exports.ChangeUser = require('./ChangeUser');
 exports.Handshake = require('./Handshake');
 exports.Ping = require('./Ping');
@@ -44980,7 +44970,7 @@ exports.Quit = require('./Quit');
 exports.Sequence = require('./Sequence');
 exports.Statistics = require('./Statistics');
 
-},{"./ChangeUser":249,"./Handshake":250,"./Ping":251,"./Query":252,"./Quit":253,"./Sequence":254,"./Statistics":255}],257:[function(require,module,exports){
+},{"./ChangeUser":245,"./Handshake":246,"./Ping":247,"./Query":248,"./Quit":249,"./Sequence":250,"./Statistics":251}],253:[function(require,module,exports){
 'use strict';
 
 /**
@@ -45274,7 +45264,7 @@ function addressparser(str) {
 // expose to the world
 module.exports = addressparser;
 
-},{}],258:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -45420,7 +45410,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"buffer":54,"stream":175,"timers":181}],259:[function(require,module,exports){
+},{"buffer":54,"stream":175,"timers":181}],255:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -45675,7 +45665,7 @@ class DKIM {
 module.exports = DKIM;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"./message-parser":260,"./relaxed-body":261,"./sign":262,"buffer":54,"crypto":63,"fs":1,"path":132,"stream":175,"timers":181}],260:[function(require,module,exports){
+},{"./message-parser":256,"./relaxed-body":257,"./sign":258,"buffer":54,"crypto":63,"fs":1,"path":132,"stream":175,"timers":181}],256:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -45835,7 +45825,7 @@ class MessageParser extends Transform {
 module.exports = MessageParser;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"buffer":54,"stream":175,"timers":181}],261:[function(require,module,exports){
+},{"buffer":54,"stream":175,"timers":181}],257:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -45993,7 +45983,7 @@ class RelaxedBody extends Transform {
 module.exports = RelaxedBody;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"crypto":63,"stream":175}],262:[function(require,module,exports){
+},{"buffer":54,"crypto":63,"stream":175}],258:[function(require,module,exports){
 'use strict';
 
 const punycode = require('punycode');
@@ -46112,7 +46102,7 @@ function relaxedHeaderLine(line) {
         .trim();
 }
 
-},{"../mime-funcs":269,"crypto":63,"punycode":146}],263:[function(require,module,exports){
+},{"../mime-funcs":265,"crypto":63,"punycode":146}],259:[function(require,module,exports){
 'use strict';
 
 // module to handle cookies
@@ -46398,7 +46388,7 @@ class Cookies {
 
 module.exports = Cookies;
 
-},{"url":183}],264:[function(require,module,exports){
+},{"url":183}],260:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -46679,7 +46669,7 @@ function fetch(url, options) {
 }
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":290,"./cookies":263,"buffer":54,"http":176,"https":106,"stream":175,"timers":181,"url":183,"zlib":52}],265:[function(require,module,exports){
+},{"../../package.json":286,"./cookies":259,"buffer":54,"http":176,"https":106,"stream":175,"timers":181,"url":183,"zlib":52}],261:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -46765,7 +46755,7 @@ class JSONTransport {
 module.exports = JSONTransport;
 
 }).call(this,require("timers").setImmediate)
-},{"../../package.json":290,"../shared":279,"timers":181}],266:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"timers":181}],262:[function(require,module,exports){
 (function (Buffer){
 /* eslint no-undefined: 0 */
 
@@ -47314,7 +47304,7 @@ class MailComposer {
 module.exports = MailComposer;
 
 }).call(this,require("buffer").Buffer)
-},{"../mime-funcs":269,"../mime-node":271,"buffer":54}],267:[function(require,module,exports){
+},{"../mime-funcs":265,"../mime-node":267,"buffer":54}],263:[function(require,module,exports){
 'use strict';
 
 const EventEmitter = require('events');
@@ -47739,7 +47729,7 @@ class Mail extends EventEmitter {
 
 module.exports = Mail;
 
-},{"../../package.json":290,"../dkim":259,"../mail-composer":266,"../mime-funcs/mime-types":270,"../shared":279,"../smtp-connection/http-proxy-client":281,"./mail-message":268,"crypto":63,"dns":1,"events":90,"net":1,"url":183,"util":187}],268:[function(require,module,exports){
+},{"../../package.json":286,"../dkim":255,"../mail-composer":262,"../mime-funcs/mime-types":266,"../shared":275,"../smtp-connection/http-proxy-client":277,"./mail-message":264,"crypto":63,"dns":1,"events":90,"net":1,"url":183,"util":187}],264:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -48038,7 +48028,7 @@ class MailMessage {
 module.exports = MailMessage;
 
 }).call(this,{"isBuffer":require("../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")},require("timers").setImmediate)
-},{"../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109,"../mime-funcs":269,"../mime-node":271,"../shared":279,"timers":181}],269:[function(require,module,exports){
+},{"../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109,"../mime-funcs":265,"../mime-node":267,"../shared":275,"timers":181}],265:[function(require,module,exports){
 (function (Buffer){
 /* eslint no-control-regex:0 */
 
@@ -48670,7 +48660,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"../base64":258,"../qp":274,"./mime-types":270,"buffer":54}],270:[function(require,module,exports){
+},{"../base64":254,"../qp":270,"./mime-types":266,"buffer":54}],266:[function(require,module,exports){
 /* eslint quote-props: 0 */
 
 'use strict';
@@ -50781,7 +50771,7 @@ module.exports = {
     }
 };
 
-},{"path":132}],271:[function(require,module,exports){
+},{"path":132}],267:[function(require,module,exports){
 (function (Buffer,setImmediate){
 /* eslint no-undefined: 0, prefer-spread: 0 */
 
@@ -52027,7 +52017,7 @@ class MimeNode {
 module.exports = MimeNode;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../addressparser":257,"../base64":258,"../fetch":264,"../mime-funcs":269,"../qp":274,"./last-newline":272,"buffer":54,"crypto":63,"fs":1,"os":115,"punycode":146,"stream":175,"timers":181}],272:[function(require,module,exports){
+},{"../addressparser":253,"../base64":254,"../fetch":260,"../mime-funcs":265,"../qp":270,"./last-newline":268,"buffer":54,"crypto":63,"fs":1,"os":115,"punycode":146,"stream":175,"timers":181}],268:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -52064,7 +52054,7 @@ class LastNewline extends Transform {
 module.exports = LastNewline;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],273:[function(require,module,exports){
+},{"buffer":54,"stream":175}],269:[function(require,module,exports){
 (function (process,Buffer,setImmediate){
 'use strict';
 
@@ -52216,7 +52206,7 @@ module.exports.getTestMessageUrl = function(info) {
 };
 
 }).call(this,require('_process'),require("buffer").Buffer,require("timers").setImmediate)
-},{"../package.json":290,"./fetch":264,"./json-transport":265,"./mailer":267,"./sendmail-transport":275,"./ses-transport":278,"./shared":279,"./smtp-pool":283,"./smtp-transport":285,"./stream-transport":286,"_process":139,"buffer":54,"timers":181}],274:[function(require,module,exports){
+},{"../package.json":286,"./fetch":260,"./json-transport":261,"./mailer":263,"./sendmail-transport":271,"./ses-transport":274,"./shared":275,"./smtp-pool":279,"./smtp-transport":281,"./stream-transport":282,"_process":139,"buffer":54,"timers":181}],270:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -52439,7 +52429,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],275:[function(require,module,exports){
+},{"buffer":54,"stream":175}],271:[function(require,module,exports){
 'use strict';
 
 const spawn = require('child_process').spawn;
@@ -52649,7 +52639,7 @@ class SendmailTransport {
 
 module.exports = SendmailTransport;
 
-},{"../../package.json":290,"../shared":279,"./le-unix":276,"./le-windows":277,"child_process":1}],276:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"./le-unix":272,"./le-windows":273,"child_process":1}],272:[function(require,module,exports){
 'use strict';
 
 const stream = require('stream');
@@ -52694,7 +52684,7 @@ class LeWindows extends Transform {
 
 module.exports = LeWindows;
 
-},{"stream":175}],277:[function(require,module,exports){
+},{"stream":175}],273:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -52750,7 +52740,7 @@ class LeWindows extends Transform {
 module.exports = LeWindows;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],278:[function(require,module,exports){
+},{"buffer":54,"stream":175}],274:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -53066,7 +53056,7 @@ class SESTransport extends EventEmitter {
 module.exports = SESTransport;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":290,"../sendmail-transport/le-windows":277,"../shared":279,"buffer":54,"events":90,"timers":181}],279:[function(require,module,exports){
+},{"../../package.json":286,"../sendmail-transport/le-windows":273,"../shared":275,"buffer":54,"events":90,"timers":181}],275:[function(require,module,exports){
 (function (Buffer,setImmediate){
 /* eslint no-console: 0 */
 
@@ -53457,7 +53447,7 @@ function createDefaultLogger(levels) {
 }
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../fetch":264,"buffer":54,"fs":1,"timers":181,"url":183,"util":187}],280:[function(require,module,exports){
+},{"../fetch":260,"buffer":54,"fs":1,"timers":181,"url":183,"util":187}],276:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -53569,7 +53559,7 @@ class DataStream extends Transform {
 module.exports = DataStream;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"stream":175}],281:[function(require,module,exports){
+},{"buffer":54,"stream":175}],277:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -53704,7 +53694,7 @@ function httpProxyClient(proxyUrl, destinationPort, destinationHost, callback) {
 module.exports = httpProxyClient;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":54,"net":1,"tls":1,"url":183}],282:[function(require,module,exports){
+},{"buffer":54,"net":1,"tls":1,"url":183}],278:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -55277,7 +55267,7 @@ class SMTPConnection extends EventEmitter {
 module.exports = SMTPConnection;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":290,"../shared":279,"./data-stream":280,"buffer":54,"crypto":63,"events":90,"net":1,"os":115,"stream":175,"timers":181,"tls":1}],283:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"./data-stream":276,"buffer":54,"crypto":63,"events":90,"net":1,"os":115,"stream":175,"timers":181,"tls":1}],279:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -55881,7 +55871,7 @@ class SMTPPool extends EventEmitter {
 module.exports = SMTPPool;
 
 }).call(this,require("timers").setImmediate)
-},{"../../package.json":290,"../shared":279,"../smtp-connection":282,"../well-known":287,"./pool-resource":284,"events":90,"timers":181}],284:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"../smtp-connection":278,"../well-known":283,"./pool-resource":280,"events":90,"timers":181}],280:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -56137,7 +56127,7 @@ class PoolResource extends EventEmitter {
 module.exports = PoolResource;
 
 }).call(this,require("timers").setImmediate)
-},{"../shared":279,"../smtp-connection":282,"../xoauth2":289,"events":90,"timers":181}],285:[function(require,module,exports){
+},{"../shared":275,"../smtp-connection":278,"../xoauth2":285,"events":90,"timers":181}],281:[function(require,module,exports){
 (function (setImmediate){
 'use strict';
 
@@ -56548,7 +56538,7 @@ class SMTPTransport extends EventEmitter {
 module.exports = SMTPTransport;
 
 }).call(this,require("timers").setImmediate)
-},{"../../package.json":290,"../shared":279,"../smtp-connection":282,"../well-known":287,"../xoauth2":289,"events":90,"timers":181}],286:[function(require,module,exports){
+},{"../../package.json":286,"../shared":275,"../smtp-connection":278,"../well-known":283,"../xoauth2":285,"events":90,"timers":181}],282:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -56694,7 +56684,7 @@ class StreamTransport {
 module.exports = StreamTransport;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../../package.json":290,"../sendmail-transport/le-unix":276,"../sendmail-transport/le-windows":277,"../shared":279,"buffer":54,"timers":181}],287:[function(require,module,exports){
+},{"../../package.json":286,"../sendmail-transport/le-unix":272,"../sendmail-transport/le-windows":273,"../shared":275,"buffer":54,"timers":181}],283:[function(require,module,exports){
 'use strict';
 
 const services = require('./services.json');
@@ -56743,7 +56733,7 @@ module.exports = function(key) {
     return normalized[key] || false;
 };
 
-},{"./services.json":288}],288:[function(require,module,exports){
+},{"./services.json":284}],284:[function(require,module,exports){
 module.exports={
     "1und1": {
         "host": "smtp.1und1.de",
@@ -57010,7 +57000,7 @@ module.exports={
     }
 }
 
-},{}],289:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 (function (Buffer,setImmediate){
 'use strict';
 
@@ -57326,7 +57316,7 @@ class XOAuth2 extends Stream {
 module.exports = XOAuth2;
 
 }).call(this,require("buffer").Buffer,require("timers").setImmediate)
-},{"../fetch":264,"../shared":279,"buffer":54,"crypto":63,"stream":175,"timers":181}],290:[function(require,module,exports){
+},{"../fetch":260,"../shared":275,"buffer":54,"crypto":63,"stream":175,"timers":181}],286:[function(require,module,exports){
 module.exports={
   "_from": "nodemailer",
   "_id": "nodemailer@4.6.8",
@@ -57399,32 +57389,32 @@ module.exports={
   "version": "4.6.8"
 }
 
-},{}],291:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 arguments[4][138][0].apply(exports,arguments)
-},{"_process":139,"dup":138}],292:[function(require,module,exports){
+},{"_process":139,"dup":138}],288:[function(require,module,exports){
 arguments[4][153][0].apply(exports,arguments)
-},{"./_stream_readable":294,"./_stream_writable":296,"core-util-is":199,"dup":153,"inherits":200,"process-nextick-args":291}],293:[function(require,module,exports){
+},{"./_stream_readable":290,"./_stream_writable":292,"core-util-is":195,"dup":153,"inherits":196,"process-nextick-args":287}],289:[function(require,module,exports){
 arguments[4][154][0].apply(exports,arguments)
-},{"./_stream_transform":295,"core-util-is":199,"dup":154,"inherits":200}],294:[function(require,module,exports){
+},{"./_stream_transform":291,"core-util-is":195,"dup":154,"inherits":196}],290:[function(require,module,exports){
 arguments[4][155][0].apply(exports,arguments)
-},{"./_stream_duplex":292,"./internal/streams/BufferList":297,"./internal/streams/destroy":298,"./internal/streams/stream":299,"_process":139,"core-util-is":199,"dup":155,"events":90,"inherits":200,"isarray":201,"process-nextick-args":291,"safe-buffer":301,"string_decoder/":304,"util":23}],295:[function(require,module,exports){
+},{"./_stream_duplex":288,"./internal/streams/BufferList":293,"./internal/streams/destroy":294,"./internal/streams/stream":295,"_process":139,"core-util-is":195,"dup":155,"events":90,"inherits":196,"isarray":197,"process-nextick-args":287,"safe-buffer":297,"string_decoder/":300,"util":23}],291:[function(require,module,exports){
 arguments[4][156][0].apply(exports,arguments)
-},{"./_stream_duplex":292,"core-util-is":199,"dup":156,"inherits":200}],296:[function(require,module,exports){
+},{"./_stream_duplex":288,"core-util-is":195,"dup":156,"inherits":196}],292:[function(require,module,exports){
 arguments[4][157][0].apply(exports,arguments)
-},{"./_stream_duplex":292,"./internal/streams/destroy":298,"./internal/streams/stream":299,"_process":139,"core-util-is":199,"dup":157,"inherits":200,"process-nextick-args":291,"safe-buffer":301,"timers":181,"util-deprecate":305}],297:[function(require,module,exports){
+},{"./_stream_duplex":288,"./internal/streams/destroy":294,"./internal/streams/stream":295,"_process":139,"core-util-is":195,"dup":157,"inherits":196,"process-nextick-args":287,"safe-buffer":297,"timers":181,"util-deprecate":301}],293:[function(require,module,exports){
 arguments[4][158][0].apply(exports,arguments)
-},{"dup":158,"safe-buffer":301,"util":23}],298:[function(require,module,exports){
+},{"dup":158,"safe-buffer":297,"util":23}],294:[function(require,module,exports){
 arguments[4][159][0].apply(exports,arguments)
-},{"dup":159,"process-nextick-args":291}],299:[function(require,module,exports){
+},{"dup":159,"process-nextick-args":287}],295:[function(require,module,exports){
 arguments[4][160][0].apply(exports,arguments)
-},{"dup":160,"events":90}],300:[function(require,module,exports){
+},{"dup":160,"events":90}],296:[function(require,module,exports){
 arguments[4][162][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":292,"./lib/_stream_passthrough.js":293,"./lib/_stream_readable.js":294,"./lib/_stream_transform.js":295,"./lib/_stream_writable.js":296,"dup":162}],301:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":288,"./lib/_stream_passthrough.js":289,"./lib/_stream_readable.js":290,"./lib/_stream_transform.js":291,"./lib/_stream_writable.js":292,"dup":162}],297:[function(require,module,exports){
 arguments[4][166][0].apply(exports,arguments)
-},{"buffer":54,"dup":166}],302:[function(require,module,exports){
+},{"buffer":54,"dup":166}],298:[function(require,module,exports){
 module.exports = require('./lib/SqlString');
 
-},{"./lib/SqlString":303}],303:[function(require,module,exports){
+},{"./lib/SqlString":299}],299:[function(require,module,exports){
 (function (Buffer){
 var SqlString  = exports;
 
@@ -57665,11 +57655,11 @@ function convertTimezone(tz) {
 }
 
 }).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],304:[function(require,module,exports){
+},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":109}],300:[function(require,module,exports){
 arguments[4][180][0].apply(exports,arguments)
-},{"dup":180,"safe-buffer":301}],305:[function(require,module,exports){
+},{"dup":180,"safe-buffer":297}],301:[function(require,module,exports){
 arguments[4][185][0].apply(exports,arguments)
-},{"dup":185}],306:[function(require,module,exports){
+},{"dup":185}],302:[function(require,module,exports){
 (function (Buffer){
 module.exports = {
 	geraSenhaAleatoria: function(){
@@ -57956,7 +57946,7 @@ module.exports = {
 	}
 };
 }).call(this,require("buffer").Buffer)
-},{"./controller/cLinhaPesquisa.js":191,"./dao.js":194,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":202}],307:[function(require,module,exports){
+},{"./controller/cLinhaPesquisa.js":190,"./dao.js":192,"buffer":54,"crypto":63,"fs":1,"http":176,"mysql":198}],303:[function(require,module,exports){
 module.exports = {
 	max: function(palavra, valor){
 		if(palavra == null)
@@ -58011,4 +58001,4 @@ module.exports = {
 	}
 
 }
-},{}]},{},[195]);
+},{}]},{},[193]);
