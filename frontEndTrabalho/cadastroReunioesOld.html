@@ -23,7 +23,99 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/css/calendario.css" rel="stylesheet">
 
+    <style type="text/css">
+      .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+      }
+
+      .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+      .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+      }
+      .autocomplete-items div:hover {
+        /*when hovering an item:*/
+        background-color: #e9e9e9; 
+      }
+      .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important; 
+        color: #ffffff; 
+      }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+    
+    <style>
+
+      #wrap {
+        width: 1100px;
+        margin: 30px auto 0;
+        }
+        
+      #external-events {
+        float: left;
+        width: 150px;
+        padding: 0 10px;
+        text-align: left;
+        }
+        
+      #external-events h4 {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+        }
+        
+      .external-event { /* try to mimick the look of a real event */
+        margin: 10px 0;
+        padding: 2px 4px;
+        background: #3366CC;
+        color: #fff;
+        font-size: .85em;
+        cursor: pointer;
+        }
+        
+      #external-events p {
+        margin: 1.5em 0;
+        font-size: 11px;
+        color: #666;
+        }
+        
+      #external-events p input {
+        margin: 0;
+        vertical-align: middle;
+        }
+
+      #calendar {
+    /*    float: right; */
+            margin: 0 auto;
+        width: 900px;
+        background-color: #FFFFFF;
+          border-radius: 6px;
+            box-shadow: 0 1px 2px #C3C3C3;
+        -webkit-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
+    -moz-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
+    box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
+        }
+
+    </style>
  
   </head>
 
@@ -37,8 +129,7 @@
         <i class="fas fa-bars"></i>
       </button>
  
-   
-   <form id="formLogin" class="d-md-inline-block  my-2 my-md-0 offset-4 col-sm-6 display-none">
+   <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
         <div class="form-row align-items-center">
           <div class="col-sm-4 my-1">
             <label class="sr-only" for="usuarioLogin">Email</label>
@@ -89,27 +180,52 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Gerenciamento de Técnico</li>
+            <li class="breadcrumb-item active">Página de Reuniões</li>
           </ol>
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">Gerenciamento de Técnico 
-                  <button class="btn btn-success float-right" data-toggle="modal" data-target="#cadastraModal" style="margin-right: 5px;">Cadastrar Técnico</button>
+                <div class="card-header">
+                  <p class="tlt-relatorio display-inline">Página de Reuniões </p>
                   <a class="btn btn-warning float-right" onclick="goBack()" style="margin-right: 5px;">Voltar</a>
                 </div>
-                <div class="card-body">
-                  <p>
-                    
-                  </p>
+
+                <div id="mostraRelatorio">
                   
-                  <table class="table table-bordered table-dark text-center">
-                    <tbody id="tabelaTecnico">
+                    <div id='wrap'>
+
+                    <div id='calendar'></div>
+
+                    <div style='clear:both'></div>
                     
-                    </tbody>
-                  </table>
-                 
+                    <div class="card card-body body-legenda">
+                      <p class="legenda-reuniao">Legenda</p>
+                      <ul>
+                        <li class="reuniao-check">Reuniões realizadas</li>
+                        <li class="reuniao-uncheck">Reuniões não-realizadas</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!--Modelo output relatórios-->
+                  <!-- <div class="card card-body body-pesquisas">
+                    <h1>Linha 001</h1>
+                    <ul>
+                      <li>Professor 001</li>
+                      <li>Professor 002</li>
+                      <li>Professor 003</li>
+                      <li>Professor 004</li>
+                      <li>Professor 005</li>
+                    </ul>
+                  </div> -->
+
                 </div>
+
+                <div class="card-header bnt-relatorio" data-toggle="modal" data-target="#modalCadastraReuniao" style="margin-top: 30px">
+                  <i class="fas fa-plus plus-btn"></i>
+                  <p class="">Marcar uma nova reunião</p>                  
+                </div>
+                
               </div>
             </div>
 
@@ -127,14 +243,13 @@
       <i class="fas fa-angle-up"></i>
     </a>
 
-
-    <!-- CADASTRA Modal -->
+     <!-- CADASTRA LINHA Modal -->
     
-    <div class="modal fade" id="cadastraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="alteraLinhaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Técnico</h5>
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Linhas de pesquisa</h5>
             <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -142,104 +257,59 @@
 
           <div class="modal-body">
             <p>
-              Neste formulário serão inseridas as informações para o cadastro de Técnico
+              Neste formulário serão inseridas as informações para o cadastro de Linhas de pesquisa.
             </p>
 
-            <form action="" method="post" id="formCadastroTecnico" encType="multipart/form-data">
+            <form action="" method="get" >
+              
+
               <div class="form-group">
                 <div class="form-row">
-
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeTecnicoCadastrar" class="form-control" name="nomeTecnicoCadastrar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeTecnicoCadastrar">Nome Completo</label>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="atividadeTecnicoCadastrar" class="form-control" name="atividadeTecnicoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                      <label for="atividadeTecnicoCadastrar">Atividade dentro do grupo</label>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-        
-              <div class="form-group">
-                <div class="form-row">
-
-                  <div class="col-md-5">
-                    <div class="form-label-group">
-                        <select id="formacaoTecnicoCadastrar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getval(this);">
-                          <option value="0" readonly >Maior formação <br> Academica</option>
-                          <option value="1">Ensino Fundamental</option>
-                          <option value="2">Ensino Médio</option>
-                          <option value="3">Ensino Superior</option>
-                          <option value="4">Especialização</option>
-                          <option value="5">Mestrado</option>
-                          <option value="6">Doutorado</option>
+                        <select id="linhaDocenteCadastrar" class="form-control form-control-lg">
+                          
                         </select>
                       </div>
                   </div>
-                  <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="anoConclusaoTecnicoCadastrar" value="" class="form-control" name="anoConclusaoTecnicoCadastrar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                      <label for="anoConclusaoTecnicoCadastrar" >Ano de Conclusão</label>
-                    </div>
-                  </div>
                 </div>
               </div>  
+              <div style="display: none;" id="idDocenteCadLinha"></div>                           
+              
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" id="btnCadastroLinhaDocente">Cadastrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
 
-              <script type="text/javascript">
-                function getval(sel)
-                {
-                  if(sel.value != 0 && sel.value != 1 && sel.value != 2 ){
-                    $("#divNomeCurso").css("display", "block");
-                  }else{
-                    $("#nomeCursoTecnicoCadastrar").val("");
-                    $("#divNomeCurso").css("display", "none");
-                  }
-                }
-              </script>
+    <!-- TEXTAREA para copiar texto -->
 
-              <div id="divNomeCurso" class="form-group" style="display: none;">
-                <div class="form-row">
+    <textarea id="copiaTexto" style="display: none;"></textarea> 
 
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                      <input type="text" id="nomeCursoTecnicoCadastrar" class="form-control" name=""  placeholder="Nome do Curso" required="required" autofocus="autofocus">
-                      <label for="nomeCursoTecnicoCadastrar">Nome do Curso</label>
-                    </div>
-                  </div>
+    <!-- CADASTRA REUNIÃO -->
+    
+    <div class="modal fade" id="modalCadastraReuniao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Reunião</h5>
+            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
 
-                </div>
-              </div>
+          <div class="modal-body">
 
- 
-
+            <form id="formCadastroReuniao" action="" method="post" encType="multipart/form-data">
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-12">
-                    <div class="input-group">
-                      <input type="url" class="form-control" id="linkLattesTecnicoCadastrar" placeholder="Link do Lattes">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12 ">
                     <div class="form-label-group">
-                      <input type="file" id="fotoTecnicoCadastrar" name="fotoTecnicoCadastrar" class="form-control" placeholder="Foto de Perfil" required="required">
-                      <label for="fotoCadastrar">Foto de Perfil</label>
+                      <input type="text" id="pautaReuniao" class="form-control" name="" placeholder="Pauta da Reunião" required="required" autofocus="autofocus">
+                      <label for="pautaReuniao">Pauta da reunião</label>
                     </div>
                   </div>
                 </div>
@@ -249,15 +319,73 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="date" id="dataEntradaTecnicoCadastrar" class="form-control" name=" "  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                      <label for="dataEntradaTecnicoCadastrar">Data de entrada no grupo</label>
+                      <input type="date" id="dataReuniao" class="form-control" name="" placeholder="Data da Reunião" required="required" autofocus="autofocus">
+                      <label for="dataReuniao">Data da reunião</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="time" id="horaReuniao" class="form-control" name="" placeholder="Pauta da Reunião" required="required" autofocus="autofocus">
+                      <label for="horaReuniao">Hora Marcada</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <input type="time" id="horaRealReuniao" class="form-control" name="" placeholder="Pauta da Reunião" required="required" autofocus="autofocus">
+                      <label for="horaRealReuniao">Hora Realizada</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-success" type="button" id="btnRelatorio">Marcar reunião</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!-- CADASTRA REUNIÃO -->
+    
+    <div class="modal fade" id="modalCadastraAtaReuniao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Ata da Reunião</h5>
+            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <form id="formCadastroAtaReuniao" action="" method="post" encType="multipart/form-data">
+           
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <div class="form-label-group">
+                      <label for="pautaReuniao">Ata da reunião</label>
+                      <textarea type="textarea" id="textoAlterar" class="form-control" name="texto" rows="10" required="required" placeholder="Digite aqui a ata da reunião" autofocus="autofocus"></textarea>
                     </div>
                   </div>
                 </div>
               </div>
             </form>
             <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastrar">Cadastar</button>
+              <button class="btn btn-success" type="button" id="btnRelatorio">Cadastrar ata da reunião</button>
             </div>
           </div>
         </div>
@@ -265,40 +393,33 @@
     </div>
 
 
-    <!-- ALTERA Modal -->
+     <!-- ALTERA Modal -->
 
     <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar Técnico</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Alterar Docente</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
              <p>
-              Neste formulário serão inseridas as informações para a alteração do técnico
+              Neste formulário serão inseridas as informações para a alteração do Docente
             </p>
-            <form action="" method="post" id="formAlteraTecnico" encType="multipart/form-data">
+            <form action="" method="post" id="formAlteraDocente" encType="multipart/form-data">
 
               <div class="form-group">
                 <div class="form-row">
 
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeTecnicoAlterar" class="form-control" name="nomeTecnicoAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeTecnicoAlterar">Nome Completo</label>
+                      <input type="text" id="nomeDocenteAlterar" class="form-control" name="nomeDocenteAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
+                      <label for="nomeDocenteAlterar">Nome Completo</label>
                     </div>
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="atividadeTecnicoAlterar" class="form-control" name="atividadeTecnicoAlterar"  placeholder="Atividade dentro do grupo" required="required" autofocus="autofocus">
-                      <label for="atividadeTecnicoAlterar">Atividade dentro do grupo</label>
-                    </div>
-
-                  </div>
                 </div>
               </div>
         
@@ -307,7 +428,7 @@
 
                   <div class="col-md-5">
                     <div class="form-label-group">
-                        <select id="formacaoTecnicoAlterar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getvalAlterar(this);">
+                        <select id="formacaoDocenteAlterar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getvalAlterar(this);">
                           <option value="0" readonly >Maior formação <br> Academica</option>
                           <option value="1">Ensino Fundamental</option>
                           <option value="2">Ensino Médio</option>
@@ -325,7 +446,6 @@
                   if(sel.value != 0 && sel.value != 1 && sel.value != 2 ){
                     $("#divNomeCursoAlterar").css("display", "block");
                   }else{
-                    $("#nomeCursoTecnicoAlterar").val("");
                     $("#divNomeCursoAlterar").css("display", "none");
                   }
                 }
@@ -333,8 +453,8 @@
 
                   <div class="col-md-6">
                     <div class="form-label-group">
-                      <input type="text" id="anoConclusaoTecnicoAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
-                      <label for="anoConclusaoTecnicoAlterar" >Ano de Conclusão</label>
+                      <input type="text" id="anoConclusaoDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="anoConclusaoDocenteAlterar" >Ano de Conclusão</label>
                     </div>
                   </div>
                 </div>
@@ -346,8 +466,8 @@
 
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="text" id="nomeCursoTecnicoAlterar" class="form-control" name="nomeCursoTecnicoAlterar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
-                      <label for="nomeCursoTecnicoAlterar">Nome do Curso</label>
+                      <input type="text" id="nomeCursoDocenteAlterar" class="form-control" name="nomeCursoDocenteAlterar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
+                      <label for="nomeCursoDocenteAlterar">Nome do Curso</label>
                     </div>
                   </div>
 
@@ -358,7 +478,7 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="input-group">
-                      <input type="url" class="form-control" id="lattesTecnicoAlterar" placeholder="Link do Lattes">
+                      <input type="url" class="form-control" id="lattesDocenteAlterar" placeholder="Link do Lattes">
                       <div class="input-group-prepend">
                         <div class="input-group-text">http://lattes.cnpq.br/****</div>
                       </div>
@@ -371,8 +491,8 @@
                 <div class="form-row">
                   <div class="col-md-12 ">
                     <div class="form-label-group">
-                      <input type="file" id="fotoTecnicoAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
-                      <label for="fotoTecnicoAlterar">Foto de Perfil</label>
+                      <input type="file" id="fotoDocenteAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
+                      <label for="fotoDocenteAlterar">Foto de Perfil</label>
                     </div>
                   </div>
                 </div>
@@ -381,21 +501,20 @@
                 <div class="form-row">
                   <div class="col-md-12">
                     <div class="form-label-group">
-                      <input type="date" id="dataEntradaTecnicoAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
-                     
-                      <label for="dataEntradaTecnicoAlterar" >Data de entrada</label>
+                      <input type="date" id="dataEntradaDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
+                      <label for="dataEntradaDocenteAlterar" >Data de entrada</label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div style="display: none;" id="idTecnicoAlterar"></div>
+              <div style="display: none;" id="idDocenteAlterar"></div>
               <!-- <div style="display: none;" id="codTipoUsuarioAlterar"></div>
               <div style="display: none;" id="senhaUsuarioAlterar"></div> -->
             </form>
 
           </div>
           <div class="modal-footer">
-            <button class="btn btn-alert" id="btnAlterarTecnico" type="button">Alterar</button>
+            <button class="btn btn-alert" id="btnAlterarDocente" type="button">Alterar</button>
             
           </div>
         </div>
@@ -412,8 +531,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Técnico <span id="nomeTecnicoExcluir" style="color: #000"></span> ?</p></div>
-            <div style="display: none;" id="idTecnicoExcluir"></div>
+            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Docentes <span id="nomeDocenteExcluir" style="color: #000"></span> ?</p></div>
+            <div style="display: none;" id="idDocenteExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -444,7 +563,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="tltErroModal">Erro</h5>
+              <h5 class="modal-title" id="">Erro</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -483,6 +602,7 @@
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 
@@ -495,12 +615,16 @@
 
     <script type="text/javascript" src="/js/loginFront.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
-    <script type="text/javascript" src="/js/logout.js"></script>
-    
-    <script type="text/javascript" src="/js/cadastraTecnicoFront.js"></script>
-    <script type="text/javascript" src="/js/listarTecnicoFront.js"></script>
-    <script type="text/javascript" src="/js/excluiTecnicoFront.js"></script>
-    <script type="text/javascript" src="/js/alterarTecnicoFront.js"></script>
+    <script type="text/javascript" src="/js/logout.js"></script>    
+    <script type="text/javascript" src="/js/calendario.js"></script>
+    <!-- <script type="text/javascript" src="/js/geraRelatorioFront.js"></script> -->
+
+    <!-- <script type="text/javascript" src="/js/listarLinhaDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/cadastraDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/listarDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/alterarDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/excluiDocenteFront.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/cadastraLinhaDocenteFront.js"></script> -->
 
   </body>
 

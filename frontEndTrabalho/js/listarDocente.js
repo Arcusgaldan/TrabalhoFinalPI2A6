@@ -39,6 +39,7 @@ function criaElementos(listaDocente){
 	console.log(" vetor s " + listaDocente);
 
 	console.log("Tamanho vetor s " + listaDocente.length);
+	var utils = require('./../../utils.js');
 	for(var i=0;i<listaDocente.length;i++){
 		$("#tabelaDocente").append("\
 		<tr>\
@@ -71,7 +72,8 @@ function criaElementos(listaDocente){
 		document.getElementById("nomeDocenteDados" + i).innerHTML = listaDocente[i].nome;
 		document.getElementById("linkLattesDocenteDados" + i).innerHTML = listaDocente[i].linkLattes;
 		document.getElementById("formacaoDocenteDados" + i).innerHTML = listaDocente[i].formacao;
-		document.getElementById("dataEntradaDocenteDados" + i).innerHTML = listaDocente[i].dataEntrada;
+		document.getElementById("dataEntradaDocenteDados" + i).innerHTML = utils.formataData(listaDocente[i].dataEntrada);
+
 		document.getElementById("fotoDocenteDados" + i).src = "/../upload/uploads/fotosDocente/" + listaDocente[i].id + ".jpg";
 
 		var utils = require('./../../utils.js');

@@ -137,16 +137,16 @@ function verificaCadastro(){
 		$("#erroModal").modal("show");
 		return false;
 	}
-	var verificaDataEntrada = document.getElementById("dataEntradaDocenteCadastrar").value.split("-");
-	var anoEntrada = verificaDataEntrada[0];
+	// var verificaDataEntrada = document.getElementById("dataEntradaDocenteCadastrar").value.split("-");
+	// var anoEntrada = verificaDataEntrada[0];
 
-	if(document.getElementById("dataEntradaDocenteCadastrar").value > anoEntrada){
-		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
-		document.getElementById("msgErroModal").innerHTML = "<p>Ano de vínculo do docente maior que ano atual</p>";
-		$("#erroModal").modal("show");
-		return false;
-	}
-	return true;
+	// if(document.getElementById("dataEntradaDocenteCadastrar").value > anoAtual){
+	// 	document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+	// 	document.getElementById("msgErroModal").innerHTML = "<p>Ano de vínculo do docente maior que ano atual</p>";
+	// 	$("#erroModal").modal("show");
+	// 	return false;
+	// }
+	 return true;
 }
 
 

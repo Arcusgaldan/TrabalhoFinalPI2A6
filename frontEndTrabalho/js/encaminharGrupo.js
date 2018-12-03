@@ -29,6 +29,42 @@ function buscaGrupo(sigla, cb){
     req.end();
 }
 
+function listarReuinioesPassadas(){
+    var utils = require("./../../utils.js");
+    utils.enviaRequisicao("DataAtual","DATAATUAL","",function(res){
+        var dataAtual;
+        res.on('data', function(chunk){
+            dataAtual = chunk;
+            var argumentos = {};
+            argumentos.aliasTabela = "r";
+            argumentos.selectCampos = ["r.*", "day(r.data) dia", "month(r.data) mes", "year(r.data) ano", "hour(r.horarioInicio) horaInicio", "hour(r.horarioTermino) horaTermino", "minute(r.horarioInicio) minutoInicio", "minute(r.horarioTermino) minutoTermino"];
+            var url = window.location.pathname;
+            buscaGrupo(url.split("/")[2], function(idGrupo){
+              argumentos.where = "r.codGrupo = " + idGrupo + " AND month(r.data) = " + dataAtual.split('-')[1] + " AND year(r.data) = " + dataAtual.split('-')[0] + " AND day(r.data) < " + dataAtual.split('-')[2];
+              utils.enviaRequisicao("Reuniao", "BUSCARCOMPLETO", argumentos, function(res){
+                if(res.statusCode == 200){
+                  var msg = "";
+                  res.on('data', function(chunk){
+                    msg += chunk;
+                  });
+                  res.on('end', function(){
+                    var vetorReunioes = JSON.parse(msg);
+                    console.log("Vetor de reuniões = " + msg);
+                    for(let i = 0; i < vetorReunioes.length; i++){
+                        $("#reunioesRealizadas").append("<li>"+ vetorReunioes[i].pauta +"<br>"+ vetorReunioes[i].data +"</li>");
+                    }
+                  });
+                }else if(res.statusCode != 747){
+                  document.getElement('msgErroModal').innerHTML = "Não foi possível buscar reuniões";
+                  $("#erroModal").modal('show');
+                }
+              });
+            }); 
+        });
+               
+    });
+
+}
 function listarEquipamentos(){
     var url = window.location.pathname;
     buscaGrupo(url.split("/")[2], function(idGrupo){
@@ -190,16 +226,14 @@ var req = http.request(opcoesHTTP, (res) => {
 
 			if(grupo.codUsuario == localStorage.id){
 				$("#cardHeaderGrupo").append('\
-                <button id="" class="btn btn-warning float-right" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button>\
+          		<button id="btnModalAlterarLider" class="btn btn-success float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>\
+                <button id="" class="btn btn-success float-right" data-toggle="modal" data-target="#alteraModal">Alterar Grupo</button>\
                 <a id="" href="/tecnicos/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Técnico</a>\
                 <a id="" href="/docentes/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Docentes</a>\
                 <a id="" href="/linhas/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Linhas de Pesquisa</a>\
-                <a id="" href="/reunioes/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Reuniões</a>\
-                <a id="" href="/paginaRelatorios/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Página de Relatórios</a>\
                 <a id="" href="/equipamentos/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Equipamentos</a>\
                 <a id="" href="/publicacoes/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Publicações</a>\
                 <a id="" href="/pesquisas/'+siglaGrupo+'" class="btn btn-warning float-right" style="margin-right:5px;">Gerenciar Pesquisas</a>\
-          		<button id="btnModalAlterarLider" class="btn float-right" data-toggle="modal" data-target="#alteraLiderModal" style="margin-right:5px;">Alterar Lider</button>\
             ');
 			}
 
