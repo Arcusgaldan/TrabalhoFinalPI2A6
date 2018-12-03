@@ -32,9 +32,9 @@ function buscaGrupo(sigla, cb){
 function listarReuinioesPassadas(){
     var utils = require("./../../utils.js");
     utils.enviaRequisicao("DataAtual","DATAATUAL","",function(res){
-        var dataAtual;
+        var dataAtual = "";
         res.on('data', function(chunk){
-            dataAtual = chunk;
+            dataAtual += chunk;
             var argumentos = {};
             argumentos.aliasTabela = "r";
             argumentos.selectCampos = ["r.*", "day(r.data) dia", "month(r.data) mes", "year(r.data) ano", "hour(r.horarioInicio) horaInicio", "hour(r.horarioTermino) horaTermino", "minute(r.horarioInicio) minutoInicio", "minute(r.horarioTermino) minutoTermino"];
@@ -51,7 +51,7 @@ function listarReuinioesPassadas(){
                     var vetorReunioes = JSON.parse(msg);
                     console.log("Vetor de reuniões = " + msg);
                     for(let i = 0; i < vetorReunioes.length; i++){
-                        $("#reunioesRealizadas").append("<li>"+ vetorReunioes[i].pauta +"<br>"+ vetorReunioes[i].data +"</li>");
+                        $("#reunioesRealizadas").append("<li>"+ vetorReunioes[i].pauta +"<br>"+ utils.formataData(vetorReunioes[i].data) +"</li>");
                     }
                   });
                 }else if(res.statusCode != 747){
@@ -60,11 +60,45 @@ function listarReuinioesPassadas(){
                 }
               });
             }); 
-        });
-               
+        });               
     });
-
 }
+
+function listarReuinioesFuturas(){
+    var utils = require("./../../utils.js");
+    utils.enviaRequisicao("DataAtual","DATAATUAL","",function(res){
+        var dataAtual = "";
+        res.on('data', function(chunk){
+            dataAtual += chunk;
+            var argumentos = {};
+            argumentos.aliasTabela = "r";
+            argumentos.selectCampos = ["r.*", "day(r.data) dia", "month(r.data) mes", "year(r.data) ano", "hour(r.horarioInicio) horaInicio", "hour(r.horarioTermino) horaTermino", "minute(r.horarioInicio) minutoInicio", "minute(r.horarioTermino) minutoTermino"];
+            var url = window.location.pathname;
+            buscaGrupo(url.split("/")[2], function(idGrupo){
+              argumentos.where = "r.codGrupo = " + idGrupo + " AND month(r.data) = " + dataAtual.split('-')[1] + " AND year(r.data) = " + dataAtual.split('-')[0] + " AND day(r.data) >= " + dataAtual.split('-')[2];
+              utils.enviaRequisicao("Reuniao", "BUSCARCOMPLETO", argumentos, function(res){
+                if(res.statusCode == 200){
+                  var msg = "";
+                  res.on('data', function(chunk){
+                    msg += chunk;
+                  });
+                  res.on('end', function(){
+                    var vetorReunioes = JSON.parse(msg);
+                    console.log("Vetor de reuniões = " + msg);
+                    for(let i = 0; i < vetorReunioes.length; i++){
+                        $("#reunioesFuturas").append("<li>"+ vetorReunioes[i].pauta +"<br>"+ utils.formataData(vetorReunioes[i].data) +"</li>");
+                    }
+                  });
+                }else if(res.statusCode != 747){
+                  document.getElement('msgErroModal').innerHTML = "Não foi possível buscar reuniões";
+                  $("#erroModal").modal('show');
+                }
+              });
+            }); 
+        });               
+    });
+}
+
 function listarEquipamentos(){
     var url = window.location.pathname;
     buscaGrupo(url.split("/")[2], function(idGrupo){
@@ -145,6 +179,8 @@ function listarPublicacoes(){
 listarEquipamentos();
 listarPesquisas();
 listarPublicacoes();
+listarReuinioesFuturas();
+listarReuinioesPassadas();
 
 var url = window.location.pathname;
 var siglaGrupo = url.split("/")[2];

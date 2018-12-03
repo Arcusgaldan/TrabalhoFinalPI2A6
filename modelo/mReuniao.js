@@ -24,7 +24,7 @@ module.exports = {
 	},
 
 	isString: function(atributo){
-		var strings = ["data", "horarioInicio", "pauta", "horarioTermino", "pauta", "horarioTermino", "concidado"];
+		var strings = ["data", "horarioInicio", "pauta", "horarioTermino", "convidado"];
 		for (var i = strings.length - 1; i >= 0; i--) {
 			if(strings[i] == atributo)
 				return true;

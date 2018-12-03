@@ -95,7 +95,7 @@ module.exports = {
 
 	inserir: function(reuniao, cb){
 		if(!this.validar(reuniao)){							
-				return false;
+				cb(410);
 		}else{
 		// 	reuniao['id'] = 0;
 		// 	var sql = "INSERT INTO TBReuniao (";
