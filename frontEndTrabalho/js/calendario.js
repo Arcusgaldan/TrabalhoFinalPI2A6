@@ -10,6 +10,37 @@
  * For event resizing, requires jQuery UI resizable.
  */
 
+ function buscaGrupo(sigla, cb){
+  var utils = require('./../../utils.js');
+  var http = require('http');
+  var objeto = {
+    campo: "sigla",
+    valor: sigla
+  };
+  var texto = JSON.stringify(objeto);
+
+  var opcoesHTTP = utils.opcoesHTTP(texto);
+  opcoesHTTP.headers.Objeto = "Grupo";
+  opcoesHTTP.headers.Operacao = "BUSCAR";
+
+  var req = http.request(opcoesHTTP, (res) => {
+    console.log("Chegou a resposta!");
+    res.setEncoding('utf8');
+
+    if(res.statusCode == 200){
+      res.on('data', function(chunk){
+        var grupo = JSON.parse(chunk).resultado[0];
+        cb(grupo.id);
+      });
+    }else{
+      cb(0);
+    }
+  });
+
+  req.write(texto);
+  req.end();
+}
+
  var eventos = [];
  function novoCalendarioEventos(){
     $("#calendar > *").remove();
@@ -40,19 +71,7 @@
     selectHelper: true,
     select: function(start, end, allDay) {
       // $("#erroModal").modal("show");
-      var title = prompt('Titulo do evento:');
-      if (title) {
-        calendar.fullCalendar('renderEvent',
-          {
-            title: title,
-            start: start,
-            end: end,
-            allDay: allDay
-          },
-          true // make the event "stick"
-        );
-      }
-      calendar.fullCalendar('unselect');
+      
     },
     droppable: true, // this allows things to be dropped onto the calendar !!!
     drop: function(date, allDay) { // this function is called when something is dropped
@@ -150,18 +169,37 @@
     selectHelper: true,
     select: function(start, end, allDay) {
       // $("#erroModal").modal("show");
-      var title = prompt('Titulo do evento:');
-      if (title) {
-        calendar.fullCalendar('renderEvent',
-          {
-            title: title,
-            start: start,
-            end: end,
-            allDay: allDay
-          },
-          true // make the event "stick"
-        );
-      }
+      var utils = require('./../../utils.js');
+      $("#modalCadastraReuniao").modal('show');
+      document.getElementById('btnCadastrarReuniao').addEventListener('click', function(){
+        var reuniao = require('./../../modelo/mReuniao.js').novo();
+        reuniao.data = start.getFullYear() + "-" + (start.getMonth() + 1) + "-" + start.getDate();
+        reuniao.horarioInicio = document.getElementById('horaReuniao').value;
+        reuniao.pauta = document.getElementById('pautaReuniao').value;
+        var url = window.location.pathname;
+        buscaGrupo(url.split("/")[2], function(idGrupo){
+          if(idGrupo != 0){
+            reuniao.codGrupo = idGrupo;
+            utils.enviaRequisicao("Reuniao", "INSERIR", reuniao, function(res){
+              if(res.statusCode == 200){
+                $("#modalCadastraReuniao").modal('toggle');
+                calendar.fullCalendar('renderEvent',
+                  {
+                    title: reuniao.pauta,
+                    start: start,
+                    allDay: allDay
+                  },
+                  true // make the event "stick"
+                );                
+              }
+            });
+          }else{
+            document.getElementById('msgErroModal').innerHTML = "Não foi possível buscar ID do grupo".
+            $("#erroModal").modal('show');
+            return;
+          }
+        });
+      }, false);      
       calendar.fullCalendar('unselect');
     },
     droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -189,52 +227,7 @@
       
     },
     
-    events: [
-      {
-        title: 'All Day Event',
-        start: new Date(y, m, 1)
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: new Date(y, m, d-3, 16, 0),
-        allDay: false,
-        className: 'info'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: new Date(y, m, d+4, 16, 0),
-        allDay: false,
-        className: 'info'
-      },
-      {
-        title: 'Meeting',
-        start: new Date(y, m, d, 10, 30),
-        allDay: false,
-        className: 'important'
-      },
-      {
-        title: 'Lunch',
-        start: new Date(y, m, d, 12, 0),
-        end: new Date(y, m, d, 14, 0),
-        allDay: false,
-        className: 'important'
-      },
-      {
-        title: 'Birthday Party',
-        start: new Date(y, m, d+1, 19, 0),
-        end: new Date(y, m, d+1, 22, 30),
-        allDay: false,
-      },
-      {
-        title: 'Click for Google',
-        start: new Date(y, m, 28),
-        end: new Date(y, m, 29),
-        url: '',
-        className: 'success'
-      }
-    ],      
+    events: [],      
   });  
 });
  
@@ -4267,77 +4260,77 @@ function AgendaEventRenderer() {
     var snapHeight = getSnapHeight();
     var snapMinutes = getSnapMinutes();
     var minMinute = getMinMinute();
-    eventElement.draggable({
-      opacity: opt('dragOpacity', 'month'), // use whatever the month view was using
-      revertDuration: opt('dragRevertDuration'),
-      start: function(ev, ui) {
-        trigger('eventDragStart', eventElement, event, ev, ui);
-        hideEvents(event, eventElement);
-        origWidth = eventElement.width();
-        hoverListener.start(function(cell, origCell) {
-          clearOverlays();
-          if (cell) {
-            revert = false;
-            var origDate = cellToDate(0, origCell.col);
-            var date = cellToDate(0, cell.col);
-            dayDelta = dayDiff(date, origDate);
-            if (!cell.row) {
-              // on full-days
-              renderDayOverlay(
-                addDays(cloneDate(event.start), dayDelta),
-                addDays(exclEndDay(event), dayDelta)
-              );
-              resetElement();
-            }else{
-              // mouse is over bottom slots
-              if (isStart) {
-                if (allDay) {
-                  // convert event to temporary slot-event
-                  eventElement.width(colWidth - 10); // don't use entire width
-                  setOuterHeight(
-                    eventElement,
-                    snapHeight * Math.round(
-                      (event.end ? ((event.end - event.start) / MINUTE_MS) : opt('defaultEventMinutes')) /
-                        snapMinutes
-                    )
-                  );
-                  eventElement.draggable('option', 'grid', [colWidth, 1]);
-                  allDay = false;
-                }
-              }else{
-                revert = true;
-              }
-            }
-            revert = revert || (allDay && !dayDelta);
-          }else{
-            resetElement();
-            revert = true;
-          }
-          eventElement.draggable('option', 'revert', revert);
-        }, ev, 'drag');
-      },
-      stop: function(ev, ui) {
-        hoverListener.stop();
-        clearOverlays();
-        trigger('eventDragStop', eventElement, event, ev, ui);
-        if (revert) {
-          // hasn't moved or is out of bounds (draggable has already reverted)
-          resetElement();
-          eventElement.css('filter', ''); // clear IE opacity side-effects
-          showEvents(event, eventElement);
-        }else{
-          // changed!
-          var minuteDelta = 0;
-          if (!allDay) {
-            minuteDelta = Math.round((eventElement.offset().top - getSlotContainer().offset().top) / snapHeight)
-              * snapMinutes
-              + minMinute
-              - (event.start.getHours() * 60 + event.start.getMinutes());
-          }
-          eventDrop(this, event, dayDelta, minuteDelta, allDay, ev, ui);
-        }
-      }
-    });
+    // eventElement.draggable({
+    //   opacity: opt('dragOpacity', 'month'), // use whatever the month view was using
+    //   revertDuration: opt('dragRevertDuration'),
+    //   start: function(ev, ui) {
+    //     trigger('eventDragStart', eventElement, event, ev, ui);
+    //     hideEvents(event, eventElement);
+    //     origWidth = eventElement.width();
+    //     hoverListener.start(function(cell, origCell) {
+    //       clearOverlays();
+    //       if (cell) {
+    //         revert = false;
+    //         var origDate = cellToDate(0, origCell.col);
+    //         var date = cellToDate(0, cell.col);
+    //         dayDelta = dayDiff(date, origDate);
+    //         if (!cell.row) {
+    //           // on full-days
+    //           renderDayOverlay(
+    //             addDays(cloneDate(event.start), dayDelta),
+    //             addDays(exclEndDay(event), dayDelta)
+    //           );
+    //           resetElement();
+    //         }else{
+    //           // mouse is over bottom slots
+    //           if (isStart) {
+    //             if (allDay) {
+    //               // convert event to temporary slot-event
+    //               eventElement.width(colWidth - 10); // don't use entire width
+    //               setOuterHeight(
+    //                 eventElement,
+    //                 snapHeight * Math.round(
+    //                   (event.end ? ((event.end - event.start) / MINUTE_MS) : opt('defaultEventMinutes')) /
+    //                     snapMinutes
+    //                 )
+    //               );
+    //               eventElement.draggable('option', 'grid', [colWidth, 1]);
+    //               allDay = false;
+    //             }
+    //           }else{
+    //             revert = true;
+    //           }
+    //         }
+    //         revert = revert || (allDay && !dayDelta);
+    //       }else{
+    //         resetElement();
+    //         revert = true;
+    //       }
+    //       eventElement.draggable('option', 'revert', revert);
+    //     }, ev, 'drag');
+    //   },
+    //   stop: function(ev, ui) {
+    //     hoverListener.stop();
+    //     clearOverlays();
+    //     trigger('eventDragStop', eventElement, event, ev, ui);
+    //     if (revert) {
+    //       // hasn't moved or is out of bounds (draggable has already reverted)
+    //       resetElement();
+    //       eventElement.css('filter', ''); // clear IE opacity side-effects
+    //       showEvents(event, eventElement);
+    //     }else{
+    //       // changed!
+    //       var minuteDelta = 0;
+    //       if (!allDay) {
+    //         minuteDelta = Math.round((eventElement.offset().top - getSlotContainer().offset().top) / snapHeight)
+    //           * snapMinutes
+    //           + minMinute
+    //           - (event.start.getHours() * 60 + event.start.getMinutes());
+    //       }
+    //       eventDrop(this, event, dayDelta, minuteDelta, allDay, ev, ui);
+    //     }
+    //   }
+    // });
     function resetElement() {
       if (!allDay) {
         eventElement
@@ -5876,41 +5869,41 @@ function DayEventRenderer() {
   function draggableDayEvent(event, eventElement) {
     var hoverListener = getHoverListener();
     var dayDelta;
-    eventElement.draggable({
-      delay: 50,
-      opacity: opt('dragOpacity'),
-      revertDuration: opt('dragRevertDuration'),
-      start: function(ev, ui) {
-        trigger('eventDragStart', eventElement, event, ev, ui);
-        hideEvents(event, eventElement);
-        hoverListener.start(function(cell, origCell, rowDelta, colDelta) {
-          eventElement.draggable('option', 'revert', !cell || !rowDelta && !colDelta);
-          clearOverlays();
-          if (cell) {
-            var origDate = cellToDate(origCell);
-            var date = cellToDate(cell);
-            dayDelta = dayDiff(date, origDate);
-            renderDayOverlay(
-              addDays(cloneDate(event.start), dayDelta),
-              addDays(exclEndDay(event), dayDelta)
-            );
-          }else{
-            dayDelta = 0;
-          }
-        }, ev, 'drag');
-      },
-      stop: function(ev, ui) {
-        hoverListener.stop();
-        clearOverlays();
-        trigger('eventDragStop', eventElement, event, ev, ui);
-        if (dayDelta) {
-          eventDrop(this, event, dayDelta, 0, event.allDay, ev, ui);
-        }else{
-          eventElement.css('filter', ''); // clear IE opacity side-effects
-          showEvents(event, eventElement);
-        }
-      }
-    });
+    // eventElement.draggable({
+    //   delay: 50,
+    //   opacity: opt('dragOpacity'),
+    //   revertDuration: opt('dragRevertDuration'),
+    //   start: function(ev, ui) {
+    //     trigger('eventDragStart', eventElement, event, ev, ui);
+    //     hideEvents(event, eventElement);
+    //     hoverListener.start(function(cell, origCell, rowDelta, colDelta) {
+    //       eventElement.draggable('option', 'revert', !cell || !rowDelta && !colDelta);
+    //       clearOverlays();
+    //       if (cell) {
+    //         var origDate = cellToDate(origCell);
+    //         var date = cellToDate(cell);
+    //         dayDelta = dayDiff(date, origDate);
+    //         renderDayOverlay(
+    //           addDays(cloneDate(event.start), dayDelta),
+    //           addDays(exclEndDay(event), dayDelta)
+    //         );
+    //       }else{
+    //         dayDelta = 0;
+    //       }
+    //     }, ev, 'drag');
+    //   },
+    //   stop: function(ev, ui) {
+    //     hoverListener.stop();
+    //     clearOverlays();
+    //     trigger('eventDragStop', eventElement, event, ev, ui);
+    //     if (dayDelta) {
+    //       eventDrop(this, event, dayDelta, 0, event.allDay, ev, ui);
+    //     }else{
+    //       eventElement.css('filter', ''); // clear IE opacity side-effects
+    //       showEvents(event, eventElement);
+    //     }
+    //   }
+    // });
   }
 
   
@@ -6337,11 +6330,70 @@ function HorizontalPositionCache(getElement) {
 
 })(jQuery);
 
+function buscaGrupo(sigla, cb){
+  var utils = require('./../../utils.js');
+  var http = require('http');
+  var objeto = {
+    campo: "sigla",
+    valor: sigla
+  };
+  var texto = JSON.stringify(objeto);
+
+  var opcoesHTTP = utils.opcoesHTTP(texto);
+  opcoesHTTP.headers.Objeto = "Grupo";
+  opcoesHTTP.headers.Operacao = "BUSCAR";
+
+  var req = http.request(opcoesHTTP, (res) => {
+    console.log("Chegou a resposta!");
+    res.setEncoding('utf8');
+
+    if(res.statusCode == 200){
+      res.on('data', function(chunk){
+        var grupo = JSON.parse(chunk).resultado[0];
+        cb(grupo.id);
+      });
+    }else{
+      cb(0);
+    }
+  });
+
+  req.write(texto);
+  req.end();
+}
+
 var utils = require('./../../utils.js');
 
 var argumentos = {};
 argumentos.aliasTabela = "r";
-argumentos.selectCampos = ["r.*"];
-argumentos.joins = [{}];
-
-utils.enviaRequisicao("Reuniao", "BUSCAR",)
+argumentos.selectCampos = ["r.*", "day(r.data) dia", "month(r.data) mes", "year(r.data) ano", "hour(r.horarioInicio) horaInicio", "hour(r.horarioTermino) horaTermino", "minute(r.horarioInicio) minutoInicio", "minute(r.horarioTermino) minutoTermino"];
+var url = window.location.pathname;
+buscaGrupo(url.split("/")[2], function(idGrupo){
+  argumentos.where = "r.codGrupo = " + idGrupo;
+  utils.enviaRequisicao("Reuniao", "BUSCARCOMPLETO", argumentos, function(res){
+    if(res.statusCode == 200){
+      var msg = "";
+      res.on('data', function(chunk){
+        msg += chunk;
+      });
+      res.on('end', function(){
+        var vetorReunioes = JSON.parse(msg);
+        console.log("Vetor de reuniões = " + msg);
+        for(let i = 0; i < vetorReunioes.length; i++){
+          let evento = {};
+          evento.title = "Reuniao";
+          evento.start = new Date(vetorReunioes[i].ano, vetorReunioes[i].mes - 1, vetorReunioes[i].dia/*, vetorReunioes[i].horaInicio, vetorReunioes[i].minutoInicio*/);
+          //evento.allDay = true;
+          //evento.end = new Date(vetorReunioes[i].ano, vetorReunioes[i].mes - 1, vetorReunioes[i].dia, vetorReunioes[i].horaTermino, vetorReunioes[i].minutoTermino);
+          console.log("Evento sendo colocado no vetor: " + JSON.stringify(evento));
+          console.log("Data sendo inserida: " + new Date(vetorReunioes[i].ano, vetorReunioes[i].mes - 1, vetorReunioes[i].dia));
+          eventos.push({title: "Reuniao", start: new Date(2018, 12 - 1, 2)}/*evento*/);
+        }
+        console.log("Vetor de eventos: " + JSON.stringify(eventos));    
+        novoCalendarioEventos();
+      });
+    }else if(res.statusCode != 747){
+      document.getElement('msgErroModal').innerHTML = "Não foi possível buscar reuniões";
+      $("#erroModal").modal('show');
+    }
+  });
+});
