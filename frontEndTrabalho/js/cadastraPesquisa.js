@@ -40,7 +40,45 @@ function cadastraAluno(){
 
 }
 
+function verificaCadastroPesquisa(){
+	if(document.getElementById("tituloPesquisaCadastrar").value.length == 0){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome";
+		$("#erroModal").modal("show");
+		return false;
+	}else if (document.getElementById("tituloPesquisaCadastrar").value.length < 3){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome com mais de três caracteres";
+		$("#erroModal").modal("show");
+		return false;
+	}
+		  
+	if(document.getElementById("dataInicioPesquisaCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>insira uma data </p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("dataFimPesquisaCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>insira uma data</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	// var verificaDataEntrada = document.getElementById("dataEntradaDocenteCadastrar").value.split("-");
+	// var anoEntrada = verificaDataEntrada[0];
+
+	// if(document.getElementById("dataEntradaDocenteCadastrar").value > anoAtual){
+	// 	document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+	// 	document.getElementById("msgErroModal").innerHTML = "<p>Ano de vínculo do docente maior que ano atual</p>";
+	// 	$("#erroModal").modal("show");
+	// 	return false;
+	// }
+	 return true;
+}
+
 function cadastra(){
+	if(!verificaCadastroPesquisa()){
+		return;
+	}
 	if(document.getElementById('cursoAlunoCadastrarTemp').value === ""){
 		document.getElementById('msgErroModal').innerHTML = "Por favor cadastre um aluno";
 		$("#erroModal").modal('show');

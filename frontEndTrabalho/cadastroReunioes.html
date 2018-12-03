@@ -23,113 +23,20 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin.css" rel="stylesheet">
-    <link href="/css/calendario.css" rel="stylesheet">
 
-    <style type="text/css">
-      .autocomplete {
-        /*the container must be positioned relative:*/
-        position: relative;
-        display: inline-block;
-      }
-
-      .autocomplete-items {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        /*position the autocomplete items to be the same width as the container:*/
-        top: 100%;
-        left: 0;
-        right: 0;
-      }
-      .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: #fff; 
-        border-bottom: 1px solid #d4d4d4; 
-      }
-      .autocomplete-items div:hover {
-        /*when hovering an item:*/
-        background-color: #e9e9e9; 
-      }
-      .autocomplete-active {
-        /*when navigating through the items using the arrow keys:*/
-        background-color: DodgerBlue !important; 
-        color: #ffffff; 
-      }
-    </style>
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-
-    
-    <style>
-
-      #wrap {
-        width: 1100px;
-        margin: 30px auto 0;
-        }
-        
-      #external-events {
-        float: left;
-        width: 150px;
-        padding: 0 10px;
-        text-align: left;
-        }
-        
-      #external-events h4 {
-        font-size: 16px;
-        margin-top: 0;
-        padding-top: 1em;
-        }
-        
-      .external-event { /* try to mimick the look of a real event */
-        margin: 10px 0;
-        padding: 2px 4px;
-        background: #3366CC;
-        color: #fff;
-        font-size: .85em;
-        cursor: pointer;
-        }
-        
-      #external-events p {
-        margin: 1.5em 0;
-        font-size: 11px;
-        color: #666;
-        }
-        
-      #external-events p input {
-        margin: 0;
-        vertical-align: middle;
-        }
-
-      #calendar {
-    /*    float: right; */
-            margin: 0 auto;
-        width: 900px;
-        background-color: #FFFFFF;
-          border-radius: 6px;
-            box-shadow: 0 1px 2px #C3C3C3;
-        -webkit-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-    -moz-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-    box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-        }
-
-    </style>
- 
   </head>
 
   <body id="page-top" class="sidebar-toggled" >
 
-     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
       <a class="navbar-brand mr-1" href="/index">Pronn</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="/#">
         <i class="fas fa-bars"></i>
       </button>
- 
-   <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
+
+    <form id="formLogin" class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 offset-4 col-sm-6 display-none">
         <div class="form-row align-items-center">
           <div class="col-sm-4 my-1">
             <label class="sr-only" for="usuarioLogin">Email</label>
@@ -149,30 +56,29 @@
           <!-- </div> -->
         </div>
    </form>
-
-
+ 
     <!-- Navbar -->
     <ul id="boxLogado" class="navbar-nav ml-auto display-none">
-                 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="/#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <button id="logout" class="dropdown-item" >Sair do Sistema</button>
+            <button id="logout" class="dropdown-item">Sair do Sistema</button>
           </div>
         </li>
     </ul> 
 
-    </nav>  
+    </nav>
 
     <div id="wrapper">
 
-       <!-- Sidebar -->
+      <!-- Sidebar -->
       <!-- troquei o padrão a class toggled foi adicionada para o menu ficar fechado quando carregar o site -->
       <ul id="sidebarWrapper" class="sidebar navbar-nav toggled">
         
       </ul>
+      <!-- Fim Sidebar -->
 
       <div id="content-wrapper">
 
@@ -180,52 +86,26 @@
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Página de Reuniões</li>
+            <li class="breadcrumb-item active">Página Geral de Reuniões</li>
           </ol>
 
           <div class="container">
               <div class="card mx-auto mt-5 mb-5">
-                <div class="card-header">
-                  <p class="tlt-relatorio display-inline">Página de Reuniões </p>
+                <div class="card-header">Página Geral de Reuniões
+                  <button data-toggle="modal" data-target="#modalCadastraReuniao" id="btnCadastrarReunioes" class="btn btn-success float-right">Cadastrar Reuniões</button>
                   <a class="btn btn-warning float-right" onclick="goBack()" style="margin-right: 5px;">Voltar</a>
                 </div>
-
-                <div id="mostraRelatorio">
-                  
-                    <div id='wrap'>
-
-                    <div id='calendar'></div>
-
-                    <div style='clear:both'></div>
+                <div class="card-body margin-control-01">
+                  <p>
                     
-                    <div class="card card-body body-legenda">
-                      <p class="legenda-reuniao">Legenda</p>
-                      <ul>
-                        <li class="reuniao-check">Reuniões realizadas</li>
-                        <li class="reuniao-uncheck">Reuniões não-realizadas</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <!--Modelo output relatórios-->
-                  <!-- <div class="card card-body body-pesquisas">
-                    <h1>Linha 001</h1>
-                    <ul>
-                      <li>Professor 001</li>
-                      <li>Professor 002</li>
-                      <li>Professor 003</li>
-                      <li>Professor 004</li>
-                      <li>Professor 005</li>
-                    </ul>
-                  </div> -->
-
-                </div>
-
-                <div class="card-header bnt-relatorio" data-toggle="modal" data-target="#modalCadastraReuniao" style="margin-top: 30px">
-                  <i class="fas fa-plus plus-btn"></i>
-                  <p class="">Marcar uma nova reunião</p>                  
-                </div>
-                
+                  </p>
+                  
+                  <table class="table table-bordered table-dark text-center">
+                    <tbody id="tabelaReunioes">
+                      
+                    </tbody>
+                  </table>
+                 </div>
               </div>
             </div>
 
@@ -242,54 +122,9 @@
     <a class="scroll-to-top rounded" href="/#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+  
 
-     <!-- CADASTRA LINHA Modal -->
-    
-    <!-- <div class="modal fade" id="alteraLinhaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Linhas de pesquisa</h5>
-            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <p>
-              Neste formulário serão inseridas as informações para o cadastro de Linhas de pesquisa.
-            </p>
-
-            <form action="" method="get" >
-              
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                        <select id="linhaDocenteCadastrar" class="form-control form-control-lg">
-                          
-                        </select>
-                      </div>
-                  </div>
-                </div>
-              </div>  
-              <div style="display: none;" id="idDocenteCadLinha"></div>                           
-              
-            </form>
-            <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnCadastroLinhaDocente">Cadastrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- TEXTAREA para copiar texto -->
-
-    <textarea id="copiaTexto" style="display: none;"></textarea> 
-
-    <!-- CADASTRA REUNIÃO -->
+     <!-- CADASTRA REUNIÃO -->
     
     <div class="modal fade" id="modalCadastraReuniao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -357,182 +192,20 @@
       </div>
     </div>
 
-     <!-- CADASTRA REUNIÃO -->
     
-    <div class="modal fade" id="modalCadastraAtaReuniao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="tituloModalCadastrar">Cadastrar Ata da Reunião</h5>
-            <button class="close" type="button" id="fechaCadastraModal" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-
-            <form id="formCadastroAtaReuniao" action="" method="post" encType="multipart/form-data">
-           
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                      <label for="pautaReuniao">Ata da reunião</label>
-                      <textarea type="textarea" id="textoAlterar" class="form-control" name="texto" rows="10" required="required" placeholder="Digite aqui a ata da reunião" autofocus="autofocus"></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <div class="modal-footer">
-              <button class="btn btn-success" type="button" id="btnRelatorio">Cadastrar ata da reunião</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-     <!-- ALTERA Modal -->
-
-    <div class="modal fade" id="alteraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Alterar Docente</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-             <p>
-              Neste formulário serão inseridas as informações para a alteração do Docente
-            </p>
-            <form action="" method="post" id="formAlteraDocente" encType="multipart/form-data">
-
-              <div class="form-group">
-                <div class="form-row">
-
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                      <input type="text" id="nomeDocenteAlterar" class="form-control" name="nomeDocenteAlterar"  placeholder="Nome Completo" required="required" autofocus="autofocus">
-                      <label for="nomeDocenteAlterar">Nome Completo</label>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-        
-              <div class="form-group">
-                <div class="form-row">
-
-                  <div class="col-md-5">
-                    <div class="form-label-group">
-                        <select id="formacaoDocenteAlterar" class="form-control form-control-lg" style="font-size: 13px;padding: 0 0 0 5px;" onchange="getvalAlterar(this);">
-                          <option value="0" readonly >Maior formação <br> Academica</option>
-                          <option value="1">Ensino Fundamental</option>
-                          <option value="2">Ensino Médio</option>
-                          <option value="3">Ensino Superior</option>
-                          <option value="4">Especialização</option>
-                          <option value="5">Mestrado</option>
-                          <option value="6">Doutorado</option>
-                        </select>
-                      </div>
-                  </div>
-                  <i class="col-md-1 fas fa-user-circle fa-fw" style="padding-top: 16px;"></i> 
-              <script type="text/javascript">
-                function getvalAlterar(sel)
-                {
-                  if(sel.value != 0 && sel.value != 1 && sel.value != 2 ){
-                    $("#divNomeCursoAlterar").css("display", "block");
-                  }else{
-                    $("#divNomeCursoAlterar").css("display", "none");
-                  }
-                }
-              </script>
-
-                  <div class="col-md-6">
-                    <div class="form-label-group">
-                      <input type="text" id="anoConclusaoDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
-                      <label for="anoConclusaoDocenteAlterar" >Ano de Conclusão</label>
-                    </div>
-                  </div>
-                </div>
-              </div>  
-
-
-              <div id="divNomeCursoAlterar" class="form-group" style="display: none;">
-                <div class="form-row">
-
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                      <input type="text" id="nomeCursoDocenteAlterar" class="form-control" name="nomeCursoDocenteAlterar"  placeholder="Nome do Curso" required="required" autofocus="autofocus">
-                      <label for="nomeCursoDocenteAlterar">Nome do Curso</label>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="input-group">
-                      <input type="url" class="form-control" id="lattesDocenteAlterar" placeholder="Link do Lattes">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">http://lattes.cnpq.br/****</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12 ">
-                    <div class="form-label-group">
-                      <input type="file" id="fotoDocenteAlterar" class="form-control" placeholder="Foto de Perfil" required="required">
-                      <label for="fotoDocenteAlterar">Foto de Perfil</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="form-row">
-                  <div class="col-md-12">
-                    <div class="form-label-group">
-                      <input type="date" id="dataEntradaDocenteAlterar" class="form-control" placeholder="Ano de Conclusão" required="required" autofocus="autofocus">
-                      <label for="dataEntradaDocenteAlterar" >Data de entrada</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div style="display: none;" id="idDocenteAlterar"></div>
-              <!-- <div style="display: none;" id="codTipoUsuarioAlterar"></div>
-              <div style="display: none;" id="senhaUsuarioAlterar"></div> -->
-            </form>
-
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-alert" id="btnAlterarDocente" type="button">Alterar</button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- EXCLUIR Modal-->
       <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id=""></h5>
+              <h5 class="modal-title" id="">Realmente deseja excluir ?</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p style="color: #000">Você deseja realmente excluir esse Docentes <span id="nomeDocenteExcluir" style="color: #000"></span> ?</p></div>
-            <div style="display: none;" id="idDocenteExcluir"></div>
+            <div class="modal-body"><p  style="color: #000">Você reamente deseja excluir <span id=""></span> ?</p></div>
+            <div style="display: none;" id="idReuniaoExcluir"></div>
             <div class="modal-footer">
               <button class="btn btn-success" id="btnExcluir">SIM</button>
               <button class="btn btn-danger"  data-dismiss="modal">CANCELAR</button>
@@ -541,7 +214,7 @@
         </div>
       </div>
 
-    <!-- SUCESSO Modal -->
+    <!-- SUCESSO Modal-->
       <div class="modal fade" id="sucessoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -551,7 +224,7 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Sua operação foi realizada</p></div>
+            <div class="modal-body"><p id="nomeExcluir" style="color: #000">Sua operação foi realizada com sucesso!</p></div>
             <div class="modal-footer">
             </div>
           </div>
@@ -563,7 +236,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="">Erro</h5>
+              <h5 class="modal-title" id="tltErroModal">Erro</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -574,14 +247,16 @@
           </div>
         </div>
       </div>
-    <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Neumann Project</span>
+
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © Neumann Project</span>
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
 
       </div>
       <!-- /.content-wrapper -->
@@ -601,36 +276,21 @@
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugin JavaScript-->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-    <script src="/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <!-- <script src="/js/demo/datatables-demo.js"></script>
-    <script src="/js/demo/chart-area-demo.js"></script> -->
-
-    <script type="text/javascript" src="/js/loginFront.js"></script>
+    <!-- Scripts for this page-->
+    <script type="text/javascript" src="/js/listarReuniaoFront.js"></script>
+    <script type="text/javascript" src="/js/cadastraReuniaoFront.js"></script>
     <script type="text/javascript" src="/js/verificaLoginFront.js"></script>
-    <script type="text/javascript" src="/js/logout.js"></script>    
-    <script type="text/javascript" src="/js/calendario.js"></script>
-    <!-- <script type="text/javascript" src="/js/geraRelatorioFront.js"></script> -->
+    <script type="text/javascript" src="/js/loginFront.js"></script>
+    <script type="text/javascript" src="/js/logout.js"></script>
+    <script type="text/javascript" src="/js/alteraReuniaoFront.js"></script>
+    <script type="text/javascript" src="/js/excluiReuniaoFront.js"></script>
 
-    <!-- <script type="text/javascript" src="/js/listarLinhaDocenteFront.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/cadastraDocenteFront.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/listarDocenteFront.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/alterarDocenteFront.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/excluiDocenteFront.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/cadastraLinhaDocenteFront.js"></script> -->
 
   </body>
 
 </html>
-<script>
-  function goBack() {
-    window.history.back();
-  }
-</script>
+
+

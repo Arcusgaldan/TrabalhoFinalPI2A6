@@ -73,7 +73,99 @@ function buscaGrupo(sigla, cb){
 	req.end();
 }
 
+
+function verificaCadastro(){
+	if(document.getElementById("nomeTecnicoCadastrar").value.length == 0){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome no técnico";
+		$("#erroModal").modal("show");
+		return false;
+	}else if (document.getElementById("nomeTecnicoCadastrar").value.length < 3){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome com mais de três caracteres";
+		$("#erroModal").modal("show");
+		return false;
+	}
+
+	if(document.getElementById("atividadeTecnicoCadastrar").value.length == 0){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome em atividade";
+		$("#erroModal").modal("show");
+		return false;
+	}else if (document.getElementById("atividadeTecnicoCadastrar").value.length < 3){
+		document.getElementById("msgErroModal").innerHTML = "Favor inserir um nome com mais de três caracteres";
+		$("#erroModal").modal("show");
+		return false;
+	}
+
+	if(document.getElementById("formacaoTecnicoCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir formação do técnico";
+		document.getElementById("msgErroModal").innerHTML = "<p>Selecione uma formação para o técnico a ser cadastrado</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("formacaoTecnicoCadastrar").value > 2){
+		if (document.getElementById("nomeCursoTecnicoCadastrar").value.length == 0){
+			document.getElementById("tltErroModal").innerHTML = "Erro ao inserir nome";
+			document.getElementById("msgErroModal").innerHTML = "<p>Favor coloque o nome do curso do técnico</p>";
+			$("#erroModal").modal("show");	
+			return false;
+		}else if(document.getElementById("nomeCursoTecnicoCadastrar").value.length < 3){
+			document.getElementById("tltErroModal").innerHTML = "Erro ao inserir nome";
+			document.getElementById("msgErroModal").innerHTML = "<p>Nome do curso do técnico deve ter no mínimo 3 caracteres</p>";
+			$("#erroModal").modal("show");	
+			return false;
+		}
+
+	}
+	if(document.getElementById("anoConclusaoTecnicoCadastrar").value.length == 0){
+		// console.log("Entrou no if do ano");
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Favor insira um ano de formação para o técnico</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	var anoAtual = (new Date).getFullYear();
+	if(document.getElementById("anoConclusaoTecnicoCadastrar").value > anoAtual){
+		// console.log("Entrou no if do ano");
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Ano de conclusão maior que data atual</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("anoConclusaoTecnicoCadastrar").value.length != 4){
+		// console.log("Entrou no if do ano");
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>Ano de conclusão deve conter 4 digitos</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("linkLattesTecnicoCadastrar").value.length == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir Link Lattes";
+		document.getElementById("msgErroModal").innerHTML = "<p>Por favor insira um link lattes</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	if(document.getElementById("dataEntradaTecnicoCadastrar").value == 0){
+		document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+		document.getElementById("msgErroModal").innerHTML = "<p>insira uma data de vínculo do técnico com o grupo</p>";
+		$("#erroModal").modal("show");
+		return false;
+	}
+	// var verificaDataEntrada = document.getElementById("dataEntradaTecnicoCadastrar").value.split("-");
+	// var anoEntrada = verificaDataEntrada[0];
+
+	// if(document.getElementById("dataEntradaTecnicoCadastrar").value > anoEntrada){
+	// 	document.getElementById("tltErroModal").innerHTML = "Erro ao inserir data";
+	// 	document.getElementById("msgErroModal").innerHTML = "<p>Ano de vínculo do técnico maior que ano atual</p>";
+	// 	$("#erroModal").modal("show");
+	// 	return false;
+	// }
+	return true;
+}
+
+
 function cadastra(){
+	if(!verificaCadastro()){
+		return;
+	}
 	var modelo = require('./../../modelo/mTecnico.js');
 	var utils = require('./../../utils.js');
 	var http = require('http');
