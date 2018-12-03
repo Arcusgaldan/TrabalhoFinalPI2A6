@@ -436,9 +436,104 @@ CREATE TABLE IF NOT EXISTS `DBPronn`.`TBPublicacao` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `DBPronn`.`TBReuniao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DBPronn`.`TBReuniao` ;
+
+CREATE TABLE IF NOT EXISTS `DBPronn`.`TBReuniao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `data` DATE NOT NULL,
+  `horarioInicio` TIME NOT NULL,
+  `pauta` TEXT NOT NULL,
+  `horarioTermino` TIME NOT NULL,
+  `convidado` VARCHAR(100) NULL,
+  `codGrupo` INT NOT NULL,
+  PRIMARY KEY (`id`, `codGrupo`),
+  INDEX `fk_TBReuniao_TBGrupo1_idx` (`codGrupo` ASC),
+  CONSTRAINT `fk_TBReuniao_TBGrupo1`
+    FOREIGN KEY (`codGrupo`)
+    REFERENCES `DBPronn`.`TBGrupo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBPronn`.`TBVinculoDocenteReuniao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DBPronn`.`TBVinculoDocenteReuniao` ;
+
+CREATE TABLE IF NOT EXISTS `DBPronn`.`TBVinculoDocenteReuniao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `codReuniao` INT NOT NULL,
+  `codDocente` INT NOT NULL,
+  PRIMARY KEY (`id`, `codReuniao`, `codDocente`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_TBVinculoDocenteReuniao_TBReuniao2_idx` (`codReuniao` ASC),
+  INDEX `fk_TBVinculoDocenteReuniao_TBDocente1_idx` (`codDocente` ASC),
+  CONSTRAINT `fk_TBVinculoDocenteReuniao_TBReuniao2`
+    FOREIGN KEY (`codReuniao`)
+    REFERENCES `DBPronn`.`TBReuniao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TBVinculoDocenteReuniao_TBDocente1`
+    FOREIGN KEY (`codDocente`)
+    REFERENCES `DBPronn`.`TBDocente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBPronn`.`TBAta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DBPronn`.`TBAta` ;
+
+CREATE TABLE IF NOT EXISTS `DBPronn`.`TBAta` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `codReuniao` INT NOT NULL,
+  `assunto` TEXT NOT NULL,
+  PRIMARY KEY (`id`, `codReuniao`),
+  INDEX `fk_TBATAReuniao_TBReuniao1_idx` (`codReuniao` ASC),
+  CONSTRAINT `fk_TBATAReuniao_TBReuniao1`
+    FOREIGN KEY (`codReuniao`)
+    REFERENCES `DBPronn`.`TBReuniao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBPronn`.`TBVinculoDocenteReuniao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DBPronn`.`TBVinculoDocenteReuniao` ;
+
+CREATE TABLE IF NOT EXISTS `DBPronn`.`TBVinculoDocenteReuniao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `codReuniao` INT NOT NULL,
+  `codDocente` INT NOT NULL,
+  PRIMARY KEY (`id`, `codReuniao`, `codDocente`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_TBVinculoDocenteReuniao_TBReuniao2_idx` (`codReuniao` ASC),
+  INDEX `fk_TBVinculoDocenteReuniao_TBDocente1_idx` (`codDocente` ASC),
+  CONSTRAINT `fk_TBVinculoDocenteReuniao_TBReuniao2`
+    FOREIGN KEY (`codReuniao`)
+    REFERENCES `DBPronn`.`TBReuniao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_TBVinculoDocenteReuniao_TBDocente1`
+    FOREIGN KEY (`codDocente`)
+    REFERENCES `DBPronn`.`TBDocente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 
 
